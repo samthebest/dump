@@ -26,7 +26,7 @@ Suppose the user has actually logged in, and the URL is "mysite.com/vote/25" the
 
 Attacks 1 & 3 can be avoided without an Anti-request forgery state token - instead the website can use hidden form fields http://en.wikipedia.org/wiki/HTTP_cookie#Hidden_form_fields
 
-The Google+ Sign-In documentation essentially fleshes this out by making it explicit how to do this, but once the user is signed in the hidden field could just be the access_token (which we will come to). Perhaps Google just wanted to add in this somewhat redundant layer just in case web developers where submitting the access_token only using cookies, and given them the flexibility to submit access_tokens in this way.  
+The Google+ Sign-In documentation essentially fleshes this out by making it explicit how to do this, that is the token is a specific way of doing a hidden form field, but once the user is signed in the hidden field could just be the access_token (which we will come to). Perhaps Google just wanted to add in this somewhat redundant layer just in case web developers where submitting the access_token only using cookies, and given them the flexibility to submit access_tokens in this way.  
 
 Attack 2 can only be avoided with the Anti-request forgery state token, but is a strange somewhat pointless attack.
 
