@@ -38,3 +38,21 @@ These are the most important fields in the protocol, the point of the protocol i
 
 The id_token field is necessary for sites where different users have different permissions/ownership.  Some sites may have a simple "your in or your out" policy in which case the id isn't necessary.
 
+### Digression - SSL
+
+Here we give a super fast explanation of how SSL connections can encrypt all your traffic between two points.
+
+1. Browser requests public key
+2. Server sends public key
+3. Browser creates a symmetric session key, and encrypts it using the public key
+4. Server decrypts symmetric session key with private key
+5. Server and Browser can not use session key to encrypt all traffic
+
+### Step 1 - Website creates CLIENT_ID and CLIENT_SECRET fields
+
+Using SSL the webmasters use the google console to create their CLIENT_ID and CLIENT_SECRET fields, it's essential the CLIENT_SECRET is kept secret the ID cannot be kept secret as it will have to be given to the client.
+
+### Step 2 - User signs in using google button
+
+First the user is redirected, the username and password are not given to the website, only Google and the user knows the username and password thanks to SSL.
+
