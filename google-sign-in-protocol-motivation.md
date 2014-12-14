@@ -80,4 +80,8 @@ Anyway, google sends back three things: a "one-time code", the access_token and 
 
 ### Step 3 - Getting access_token and id_token onto server using one-time code
 
+The one-time code is sent from the browser to our server, for good measure it should be encrypted, but strictly speaking if the code is leaked it does not matter.  The server then constructs a call to Google using the one-time code and the CLIENT_SECRET, this is where Google checks the CLIENT_SECRET against the CLIENT_ID to be sure it's the correct app-server.  Google also knows the user really did sign in, and gives the server the access_token and id_token to the server - this will be over SSL.
 
+### Using the token
+
+Now the browser can send requests over SSL that mutate sensative state by including the access_token.  The browser can also include the id_token, or just the google id itself depending on the implementation of the back end user database.  The back end user database only need store user ids, no storage of passwords necessary!
