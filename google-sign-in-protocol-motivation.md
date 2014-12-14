@@ -46,7 +46,7 @@ Here we give a super fast explanation of how SSL connections can encrypt all you
 2. Server sends public key
 3. Browser creates a symmetric session key, and encrypts it using the public key
 4. Server decrypts symmetric session key with private key
-5. Server and Browser can not use session key to encrypt all traffic
+5. Server and Browser can now use session key to encrypt all traffic
 
 ### Step 1 - Website creates CLIENT_ID and CLIENT_SECRET fields
 
@@ -85,3 +85,7 @@ The one-time code is sent from the browser to our server, for good measure it sh
 ### Using the token
 
 Now the browser can send requests over SSL that mutate sensative state by including the access_token.  The browser can also include the id_token, or just the google id itself depending on the implementation of the back end user database.  The back end user database only need store user ids, no storage of passwords necessary!
+
+### Why not use Basic Authentication - why use Google Sign-In at all?
+
+TODO
