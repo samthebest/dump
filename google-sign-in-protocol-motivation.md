@@ -54,5 +54,16 @@ Using SSL the webmasters use the google console to create their CLIENT_ID and CL
 
 ### Step 2 - User signs in using google button
 
-First the user is redirected, the username and password are not given to the website, only Google and the user knows the username and password thanks to SSL.
+First the user is redirected, the username and password are not given to the website, only Google and the user knows the username and password thanks to SSL.  
+
+##### Digression into sign in saftey
+
+This is essence the most vulnerable part of the protocol if the user is on a dodgy network, where that network has a fake Google running and is tricking users into giving away their username and password.  The protections the user must take are:
+
+1. Make sure the URL starts with https - if a website is found out to be tricking users into giving away passwords, it's SSL certificate may get revoked and thus https wouldn't work.
+2. Make sure the website/login screen looks geniune
+3. Trust the network you are on (very difficult, basically impossible unless home or a good office)
+4. Immediately check that since your login you can now access data that only you knew, e.g. read emails or something, if you cannot view your emails then it may be a fake site.  **If you cannot view emails, you should straight away find another network, login to Google again, and change your password.**
+5. Use 2-step authentication - if someone obtains your password it means it's relatively useless without one of your devices.  Make sure you enable 2-step authentication while on a trusted network.
+
 
