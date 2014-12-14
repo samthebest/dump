@@ -1,4 +1,4 @@
-Having read the documentation on Google sign-in I've found it to only explain the how and the what developers need to do, not any of the WHY.  If your like me and find it hard to implement anything without understanding why, especially when you are concerned about users security, then this should be interesting.  We will go step by step through each bit of the protocol.
+Having read the documentation on Google sign-in I've found it to only explain the "**what**" developers need to do, not any of the WHY nor HOW the protocol works.  If your like me and find it hard to implement anything without understanding why, especially when you are concerned about users security, then this should be interesting.  This article does not include any code snippets or implementation details and assumes readers understand asymmetric and symmetric cryptography.  We will go step by step through each bit of the protocol.
 
 ### Anti-request forgery state token - prevents CSRF Attack
 
@@ -65,5 +65,19 @@ This is essence the most vulnerable part of the protocol if the user is on a dod
 3. Trust the network you are on (very difficult, basically impossible unless home or a good office)
 4. Immediately check that since your login you can now access data that only you knew, e.g. read emails or something, if you cannot view your emails then it may be a fake site.  **If you cannot view emails, you should straight away find another network, login to Google again, and change your password.**
 5. Use 2-step authentication - if someone obtains your password it means it's relatively useless without one of your devices.  Make sure you enable 2-step authentication while on a trusted network.
+
+Back to the core protocol. 
+
+Now when the user, Fred say, signs in, the CLIENT_ID is sent to Google this is then used later to ensure an EvilApp isn't trying to spoof your website.  
+
+##### Domain spoofing
+
+Google can be sure that it really is your website sending the CLIENT_ID, because when you create them you must specify Authorized domains, which cannot be wildcards, of course EvilApp can spoof your IP but this doesn't help them as the response won't be sent back to them (since they spoofed the IP).  In theory if someone broke into ISP gateways they might be able to do a whole lot of spoofing to trick Google into thinking they are from your site, but other gateways may be able to detect this (gateways should reject packets coming from inside that claim to have IPs outside and visa versa).  Google may also implement additional checks as to what gateway it comes from and some gateways may be more trusted (e.g. the gateways that AWS reside under).  Basically if someone really really wanted to spoof a domain they would have to break into a whole lot of ISP gateways or Google itself.  If a website really needs that level of security they should be using an additional security device (like banks, or VPNs).
+
+Anyway, google sends back three things: a "one-time code", the access_token and a id_token.  The next step is to get access_token and id_token onto the server in such a way that the servers knows it really was Fred that generated these tokens *for our specific app*.
+
+**NOTE**: At this point, if we just sent the access_token and id_token to the server without anything special, we have no way of knowing whether it was in fact EvilApp using some other CLIENT_ID.  We need to check that these things where generated using *our* CLIENT_ID.
+
+### Step 3 - Getting access_token and id_token onto server using one-time code
 
 
