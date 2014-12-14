@@ -29,3 +29,12 @@ Attacks 1 & 3 can be avoided without an Anti-request forgery state token - inste
 The Google+ Sign-In documentation essentially fleshes this out by making it explicit how to do this, but once the user is signed in the hidden field could just be the access_token (which we will come to). Perhaps Google just wanted to add in this somewhat redundant layer just in case web developers where submitting the access_token only using cookies, and given them the flexibility to submit access_tokens in this way.  
 
 Attack 2 can only be avoided with the Anti-request forgery state token, but is a strange somewhat pointless attack.
+
+### access_token and id_token fields
+
+The access_token should be considered as a shared secret between the client and server, and the id_token contains the id of the user (it needs to be decoded using the google public key).
+
+These are the most important fields in the protocol, the point of the protocol is to get the client and server into a state (the process by which we will explain) such that the server knows these fields and knows access_token is held by the user corresponding to the id_token, while no one else knows the access_token.  Then every time the user wants to do something which requires authentication, they can send the access_token (and an id, which can be extracted from the token_id) (SSL encrypted so no one else can read sniff it) to the server and the server can check "yup this access_token corresponds to the said user, let's do what they asked".
+
+The id_token field is necessary for sites where different users have different permissions/ownership.  Some sites may have a simple "your in or your out" policy in which case the id isn't necessary.
+
