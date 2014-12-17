@@ -52,3 +52,6 @@ brew cask install spotify
 
 # open office
 brew cask install openoffice
+
+# wget
+brew install wget
