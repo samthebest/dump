@@ -1,4 +1,6 @@
-Having read the documentation on Google sign-in I've found it to only explain the "**what**" developers need to do, not any of the WHY nor HOW the protocol works.  If your like me and find it hard to implement anything without understanding why, especially when you are concerned about users security, then this should be interesting.  This article does not include any code snippets or implementation details and assumes readers understand asymmetric and symmetric cryptography.  We will go step by step through each bit of the protocol.
+Having read the documentation on Google sign-in I've found it to only explain the "**what**" developers need to do, not any of the WHY nor HOW the protocol works.  If your like me and find it hard to implement anything without understanding why, especially when you are concerned about users security, then this should be interesting.  This article does not include any code snippets or implementation details and assumes readers understand asymmetric and symmetric cryptography.
+
+This article is a working copy and may be subject to updates and corrects.  Please feel free to make pull requests to update if you think something needs adding/correcting.
 
 ### Anti-request forgery state token - prevents CSRF Attack
 
