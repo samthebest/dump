@@ -18,21 +18,22 @@ val sprayV = "1.3.2"
 
 libraryDependencies ++= Seq(
   // Could try this in order to upgrade to newest specs2
-  "org.scalacheck" %% "scalacheck" % "1.12.1" % "test" withSources() withJavadoc(),
-  //"org.scalacheck" %% "scalacheck" % "1.10.1" % "test" withSources() withJavadoc(),
+//  "org.scalacheck" %% "scalacheck" % "1.12.1" % "test" withSources() withJavadoc(),
+  "org.scalacheck" %% "scalacheck" % "1.10.1" % "test" withSources() withJavadoc(),
   // newest specs2
-  "org.specs2" %% "specs2-core" % "2.4.15" % "test" withSources() withJavadoc(),
+//  "org.specs2" %% "specs2-core" % "2.4.15" % "test" withSources() withJavadoc(),
   // Trying this for 2.11, it caused "Modules were resolved with conflicting cross-version suffixes" BAA!
   //"org.specs2" % "specs2_2.11.0-RC3" % "2.3.10" % "test" withSources() withJavadoc(),
   // Only works with 2.10
-  //"org.specs2" %% "specs2" % "1.14" % "test" withSources() withJavadoc(),
+  "org.specs2" %% "specs2" % "1.14" % "test" withSources() withJavadoc(),
   // Used to be 7.0.5
-  "org.scalaz" %% "scalaz-core" % "7.1.0" withSources() withJavadoc(),
+//  "org.scalaz" %% "scalaz-core" % "7.1.0" withSources() withJavadoc(),
+  "org.scalaz" %% "scalaz-core" % "7.0.5" withSources() withJavadoc(),
   //
   "org.apache.commons" % "commons-math3" % "3.2" withSources() withJavadoc(),
   "org.apache.commons" % "commons-lang3" % "3.3.2" withSources() withJavadoc(),
   //
-  "org.parboiled" %% "parboiled" % "2.0.1" withSources() withJavadoc() exclude("com.chuusai", "shapeless_2.10.4") exclude("org.scalamacros", "quasiquotes_2.10.3") exclude("org.scalamacros", "quasiquotes_2.10.4") exclude("org.scalamacros", "quasiquotes_2.10"),
+  "org.parboiled" %% "parboiled" % "2.0.1" withSources() withJavadoc() exclude("com.chuusai", "shapeless_2.10.4") exclude("org.scalamacros", "quasiquotes_2.10"),
   //
   "com.googlecode.java-diff-utils" % "diffutils" % "1.2",
   //
