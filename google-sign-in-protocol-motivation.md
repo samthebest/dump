@@ -91,3 +91,8 @@ Now the browser can send requests over SSL that mutate sensative state by includ
 ### Why not use Basic Authentication - why use Google Sign-In at all?
 
 TODO
+
+### Further Reading, Links
+
+https://github.com/googleplus/gplus-verifytoken-java
+https://github.com/googleplus/gplus-quickstart-java/blob/master/src/com/google/plus/samples/quickstart/Signin.java
