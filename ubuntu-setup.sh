@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# To run execute:
+# wget https://raw.githubusercontent.com/samthebest/dump/master/ubuntu-setup.sh && chmod +x ubuntu-setup.sh && ./ubuntu-setup.sh
+
 # Java
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
