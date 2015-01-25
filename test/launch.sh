@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# TODO Tidy up by putting paths as variables
-# TODO Should cd back to CWD after we build or something (basically having a cd in a script is sloppy)
-
-cd src/open-maths
+project_dir=src/open-maths
+cd $project_dir
 
 git checkout develop
 git pull origin develop
