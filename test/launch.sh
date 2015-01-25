@@ -20,7 +20,7 @@ else
     shift
 fi
 
-if [ "$2" = "prod" ]
+if [ "$1" = "prod" ]
 then
     interface="0.0.0.0"
     port=80
