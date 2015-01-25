@@ -7,6 +7,7 @@ config=src/main/resources/config.txt
 pwd=`pwd`
 src_dir=`dirname $pwd`
 
+mkdir src/main/resources
 echo "jsonDB=$src_dir/open-maths-content/json" > $config
 echo "latexDB=$src_dir/open-maths-content/latex" >> $config
 echo "userDB=$src_dir/user-db/users" >> $config
