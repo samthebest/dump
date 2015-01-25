@@ -9,8 +9,8 @@ mkdir open-maths-content/json
 mkdir open-maths-content/latex
 
 # Will pull from a repo in future
-mkdir user-db/actions
-mkdir user-db/users
+mkdir -p user-db/actions
+mkdir -p user-db/users
 
 echo "Please setup gPlus client, then press enter"
 read client
