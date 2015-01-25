@@ -32,7 +32,7 @@ else
     use_sudo=""
 fi
     
-screen -dm $use_sudo java -cp target/scala-2.11/openmaths-assembly-0.1.0.jar io.openmaths.Main $interface $port $*  
+screen -dm $use_sudo java -cp target/scala-2.11/openmaths-assembly-0.1.0.jar io.openmaths.Main $interface $port $* | tee -a ~/open-maths.log
 
 
 
