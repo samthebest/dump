@@ -1,6 +1,10 @@
 #!/bin/bash
 
+# TODO Tidy up by putting paths as variables
+# TODO Should cd back to CWD after we build or something (basically having a cd in a script is sloppy)
+
 cd src/open-maths
+
 git checkout develop
 git pull origin develop
 config=src/main/resources/config.txt
@@ -32,9 +36,6 @@ else
     use_sudo=""
 fi
 
-set -x
-screen -dm "$use_sudo java -cp target/scala-2.11/openmaths-assembly-0.1.0.jar io.openmaths.Main $interface $port $* 2>&1 | tee -a open-maths.log"
-set +x
+echo "${use_sudo}java -cp target/scala-2.11/openmaths-assembly-0.1.0.jar io.openmaths.Main $interface $port $* 2>&1 | tee -a open-maths.log" > last-run.sh
 
-
-
+screen -dm bash -c "./last-run.sh"
