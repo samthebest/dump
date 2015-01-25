@@ -4,7 +4,7 @@ mkdir src
 cd src
 git clone https://github.com/OpenMaths/open-maths.git
 git clone https://github.com/OpenMaths/open-maths-content.git
-# Just in case
+# Just in case not already created
 mkdir open-maths-content/json
 mkdir open-maths-content/latex
 
@@ -12,4 +12,5 @@ mkdir open-maths-content/latex
 mkdir user-db/actions
 mkdir user-db/users
 
-
+echo "Please setup gPlus client, then press enter"
+read client
