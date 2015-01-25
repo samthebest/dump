@@ -34,6 +34,6 @@ else
     use_sudo=""
 fi
 
-echo "${use_sudo}java -cp target/scala-2.11/openmaths-assembly-0.1.0.jar io.openmaths.Main $interface $port $* 2>&1 | tee -a open-maths.log" > last-run.sh
+echo "${use_sudo}java -cp target/scala-2.11/openmaths-assembly-0.1.0.jar io.openmaths.Main $interface $port enable-db-mutation $* 2>&1 | tee -a open-maths.log" > last-run.sh
 
 screen -dm bash -c "./last-run.sh"
