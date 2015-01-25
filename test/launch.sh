@@ -1,6 +1,8 @@
 #!/bin/bash
 
 cd src/open-maths
+git checkout develop
+git pull origin develop
 config=src/main/resources/config.txt
 pwd=`pwd`
 src_dir=`dirname $pwd`
