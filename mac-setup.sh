@@ -66,3 +66,8 @@ brew cask install openoffice
 
 # wget
 brew install wget
+
+# nice alias for grepping history (cos CTRL + R not always that great)
+echo "function gh {" >> ~/.bash_profile
+echo "    cat ~/.bash_history | grep \$*" >> ~/.bash_profile
+echo "}" >> ~/.bash_profile
