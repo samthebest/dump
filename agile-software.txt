@@ -53,3 +53,10 @@ http://www.allaboutagile.com/agile-principle-7-done-means-done/
 "the practice is often reduced to the acronym YAGNI, for "You Aren't Gonna Need It"; this alludes to the usual counter-argument when a programmer tries to propose a costly design element based on its future benefits only ("We're going to need this Factory sooner or later, we might as well put it in now." "No, you aren't gonna need it.") "
 
 http://guide.agilealliance.org/guide/simple-design.html
+
+
+"Capture your initial architecture at the most compressed level of expression that covers the scope of your business. Avoid abstraction ..."
+
+http://www.leansoftwarearchitecture.com/home/lean-and-agile-architecture-techniques
+
+The point of abstraction is to DRY up your code (avoid duplication), and only some cases when methods or classes become very long and complicated to separate concerns - the principle of "separation of concerns" should come after the principles of simplicity and minimal code.
