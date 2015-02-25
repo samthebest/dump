@@ -1,0 +1,55 @@
+In Advanced Data Analytics team we take an agile MVP approach to everything we do.  This page is a rough collection of quotes and links to make clear our philosophy:
+
+
+
+"When writing code, agile developers often stop to ask themselves, "What is the simplest thing that could possibly work?" They seem to be obssessed with simplicity. Rather than anticipating changes and providing extensibility hooks and plug-in points, they create a simple design that anticipates as little as possible, as cleanly as possible. Unintuitively, this results in designs that are ready for any change, anticipated or not."
+
+"The XP guys have patterns in their toolbox, it's just that they refactor to the patterns once they need the flexibility."
+
+"Bill Venners: So what do the XP guys do first, if they don't use patterns? They just write the code?
+
+ 
+
+Erich Gamma: They write a test."
+
+"
+
+The system (code and tests together) must communicate everything you want to communicate.
+The system must contain no duplicate code. (1 and 2 together constitute the Once and Only Once rule).
+The system should have the fewest possible classes.
+The system should have the fewest possible methods.
+
+"
+ 
+
+http://www.jamesshore.com/Agile-Book/simple_design.html
+
+
+
+"A designer knows he has achieved perfection not when there is nothing left to add, but when there is nothing left to take away."
+
+http://www.brainyquote.com/quotes/quotes/a/antoinedes121910.html
+
+Do not over engineer, do not write code that is not used, do not abstract or encapsulate unnecessarily.
+
+
+
+"Any intelligent fool can make things bigger, more complex and more violent. It takes a touch of genius and a lot of courage to move in the opposite direction." —Albert Einstein.
+
+
+
+"Done means DONE!"
+
+http://www.allaboutagile.com/agile-principle-7-done-means-done/
+
+1 perfectly finished small feature is better than 10 half finished features.
+
+
+
+"YAGNI - You aren't gona need it"
+
+"design decisions should be deferred until the "last responsible moment", so as to collect as much information as possible on the benefits of the chosen option before incurring its costs."
+
+"the practice is often reduced to the acronym YAGNI, for "You Aren't Gonna Need It"; this alludes to the usual counter-argument when a programmer tries to propose a costly design element based on its future benefits only ("We're going to need this Factory sooner or later, we might as well put it in now." "No, you aren't gonna need it.") "
+
+http://guide.agilealliance.org/guide/simple-design.html
