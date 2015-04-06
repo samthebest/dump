@@ -18,3 +18,11 @@ sudo apt-get install git
 
 # mkdir src
 mkdir src
+
+# Curl (some distros don't have curl)
+sudo apt-get install curl
+
+# Google cloud
+curl https://sdk.cloud.google.com | bash
+
+# TODO See mac setup script
