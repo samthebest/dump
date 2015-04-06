@@ -26,4 +26,7 @@ sudo apt-get install curl
 curl https://sdk.cloud.google.com | bash
 source .bashrc
 
+#Flash
+sudo apt-get install adobe-flashplugin
+
 # TODO See mac setup script
