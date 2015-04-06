@@ -24,5 +24,6 @@ sudo apt-get install curl
 
 # Google cloud
 curl https://sdk.cloud.google.com | bash
+source .bashrc
 
 # TODO See mac setup script
