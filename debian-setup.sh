@@ -27,6 +27,6 @@ curl https://sdk.cloud.google.com | bash
 source .bashrc
 
 #Flash
-sudo apt-get install adobe-flashplugin
+sudo apt-get install pepperflashplugin-nonfree
 
 # TODO See mac setup script
