@@ -67,14 +67,21 @@ There are a bunch of nice bash scripts which make using the git-flow branching m
 
 For each repository when you try to run a git-flow command it will prompt you to configure it, please use the default branch prefixes (master for production releases and develop for integration of next release).  Actions in git flow should loosely map to actions in JIRA:
 
-1. When you move an issue into "In Progress" for the first time you should start a new feature branch and make sure you remember to name the branch with the ticket reference as a prefix. Use correct naming conventions for branch names, so use hyphenated lower case. If in doubt look around you, this is the best way to determine conventions.  Sometimes it may make sense to do more than one ticket in one branch - in general this should be avoided and may mean the JIRA tickets where created without enough thought with regard to separating concerns and order of completion; the larger the branch the harder it is to review and manage.
-2. Every time you commit make sure you prefix the commit message with the ticket reference as prefix - if you do not do this it can break Crucible and it can make producing release notes difficult.
-3. When the ticket has passed review, use git flow feature finish to merge it back into develop (you may not be able to do this unless you are a devmaster*). Now slide it to "Ready for release"
-4. To release the code (usually the responsibility of devmasters* and sometimes as a seperate ticket if it will involve several features) create a release branch using git flow. Final tests and sanity checks should be made on the release branch and any last quick fixes.  The version number should be bumped (in version.sbt), then use git flow to finish the branch (in future we will write a script (/ use a release framework) to automatically bump the version number upon merge with release).
+1. When you move an issue into "In Progress" for the first time you should start a new feature branch and make sure you *remember to name the branch with the ticket reference as a prefix*. Use correct naming conventions for branch names, so use hyphenated lower case. If in doubt look around you, this is the best way to determine conventions.  Sometimes it may make sense to do more than one ticket in one branch - in general this should be avoided and may mean the JIRA tickets where created without enough thought with regard to separating concerns and order of completion; the larger the branch the harder it is to review and manage.
+2. Every time you commit make sure you prefix the commit message with the ticket reference as prefix - *if you do not do this it can break Crucible and it can make producing release notes difficult*.
+3. When you are happy with your code you can submit it for review, please ensure:
+a) You have tested it and are convinced it works
+b) You have reviewed every diff yourself and are convinced you will not get any comments
+4. When the ticket has passed review, use git flow feature finish to merge it back into develop (you may not be able to do this unless you are a devmaster*). Now slide it to "Ready for release"
+5. To release the code (usually the responsibility of devmasters* and sometimes as a seperate ticket if it will involve several features) create a release branch using git flow. Final tests and sanity checks should be made on the release branch and any last quick fixes.  The version number should be bumped (in version.sbt), then use git flow to finish the branch (in future we will write a script (/ use a release framework) to automatically bump the version number upon merge with release).
 
 *Sam is the current devmaster, which means if you are not Sam, please do NOT push develop or master, only Sam should merge branches into develop/master and push them. The devmaster should either review all code, or at least oversee reviews had between other team members.
 
 NOTE: MAKE SURE YOU KEEP YOUR BRANCH UP TO DATE WITH DEVELOP, ESPECIALLY BEFORE SUBMITTING FOR REVIEW. If you diverge from develop it can cause a lot of problems.
 
-----Hotfixes
+
+## Hotfixes
+TODO
+
+## Artefact Repositories
 TODO
