@@ -83,11 +83,46 @@ Therefore the solution is to still have a nice build time automatic test using n
 
 This approach may seem perverse and may mean the effort required to ensure your automatic tests make debugging just as easy as if you had of done TDD is greatly increased, nevertheless tests are extraneous to functionality rather they serve to test the use case and only test the use case.  Your main code wants to be as simple as possible to meet the use case.
 
-Integrations Tests
+#### Integrations Tests
 TODO - scripts that run applications, over build time tests, but still test logic
 
-Accuracy and Performance Tests
+#### Accuracy and Performance Tests
 TODO - tests that do not test logic.  These can still be well defined by introducing thresholds, e.g. a ticket may say "Optimize Job X", if job X takes 5 hours the mission might be to make it run under 2.
+
+### Motivate Abstraction with Design - not tests
+
+Sometimes the choice to separate a class or method into many isn't motivated purely by DRYing up the code. Sometimes other design principles are at play, like the Single Responsibility Principle and general readability.  Now at the end of the spectrum we could pack all our code into as few classes and methods as possible that end up spanning hundreds of LOCs.  At the other end we could wrap every single line of code into a method and pull classes apart to the point that we only have one or two methods per class.  Each end of the spectrum has it's own cost, which effect the human brain in different ways, here we will go in detail as to what these are.
+
+#### Human RAM Readability Footprint
+The ultimate aim for design should be to FIRST minimise:
+
+1. The amount of short term memory a coder needs in order to read, edit and understand the codebase, then to
+2. Minimise the long term memory.
+
+And we believe the key to achieving this is to observe the following premise:
+
+##### Native Code Costs Nothing (NCCN):
+
+(star) (star) Native code or well accepted third party libraries, immediately on your screen (that is a small snippet), incur zero short term or long term memory cost. (star) (star)
+
+#### Over Abstraction Costs
+
+When we separate methods out into 100s of tiny trivial methods this means a coder must step through many layers of code to get to Native Code, this means the first time they read some code they must store the call sequence in their short term memory, which may gradually move to long term memory over repeated reading.  Or the reader has to read documentation and/or unit tests to determine what some code actually does.  Note that if the reader of the code has seen the methods used many times, or even wrote those methods, the short term memory cost may be negligible since the reader already has that code stored in their long term memory.
+
+#### Under Abstraction Costs
+
+When we do not separate out methods and we end up with huge blocks of endless native method chains, the reader will likely have to commit sections of the code to short term memory as it may not all be easily visible within a single screen (or snippet) ...
+
+#### So When to Split Up? A rule of Thumb
+
+... now if we gave a section of code a name, then we could read it once or twice, commit it to long term memory then we only need store it's name in our short term memory when we try to understand a block of code. This is made especially easy with good naming, so chosing which blocks to pull out should be motivated by which blocks are easy to name. We should only do this when blocks of code become too long and complicated to fit in our short term memory otherwise we will hit Over Abstraction Costs - that is trying to remember what all these little methods actually do and how they call each other.
+
+The rules of thumb are therefore:
+
+1. 5 - 10 LOCs in a functional languages is too long for a method, time to split it out
+2. similarly 10 - 20 LOCs in an OOP / procedural language
+3. Remove a collection of methods / functionality from a collection of classes / methods into a single place when there is a clear need for single responsibility. (Classic example is moving all serialization code into a single place that handles the serialization of many classes).
+4. When it's really really easy to name a method with a name that (together with it's signature) unambiguously exactly says what it does it can be beneficial to separate out the code even if it is quite simple code.  (Classic examples can be found in Pimps, e.g. `distinctBy`, `existsNot`, `findNot`, `keyBy`, `mapTupled`, `flatMapTupled`)
 
 # Random Quotes
 
