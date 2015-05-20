@@ -47,6 +47,9 @@ brew cask install firefox
 # git-flow
 brew install git-flow
 
+# Install GNU style bash commands (gives gdate and such and such)
+brew install coreutils
+
 # git auto completion
 brew install git bash-completion
 # add bash-completion to ~/.bash_profile
