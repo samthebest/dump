@@ -26,7 +26,10 @@ sudo apt-get install curl
 curl https://sdk.cloud.google.com | bash
 source .bashrc
 
-#Flash
+# Flash
 sudo apt-get install pepperflashplugin-nonfree
+
+# Sublime
+sudo apt-get install sublime-text
 
 # TODO See mac setup script
