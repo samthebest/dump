@@ -2,7 +2,7 @@
 
 In Advanced Data Analytics team we take an agile MVP approach to everything we do.
 
-## TDD & BDD & DHH
+## TDD & BDD & ATDD & DHH
 
 Technically TDD means writing tests before writing code, but one can end up with the same end by ensuring one unit tests everything, henceforth TDD will mean both "test first" and "test everything".  This section will discuss the pros and cons of this.  The overriding point of the section is to not do anything dogmatically, except to dogmatically pick the best and most relevant parts to the specific problem at hand.
 
@@ -34,7 +34,24 @@ One final point, before we move on to my solution is that in Data Science and Bi
 
 So I have invented a new term which I believe we should follow (but not dogmatically (smile) )
 
+### ATDD
+
+Focus on testers
+
 ## UCDD - Use Case Driven Development - Solving the TDD debate and providing Data professionals with hope
+
+Fundemental difference to TDD, ATDD and BDD is that tests:
+
+ - Need not be written before writing code*
+ - Need not be written in a specific ubiquitis language or using some special framework**
+ 
+* We invent a new criteria: any code that when deleted does NOT make any test fail, should be deleted. This means you need some E2E tests that are very simple.  In Data Science and Big Data this is the "does not throw exception and outputs more than 0 bytes".
+
+This way this stops people from deleting used code, but doesn't unnecessary test things that are so simple they cannot go wrong.  E.g. suppose a JIRA is "add --help to our CLI", testing the actual output of --help is silly, but checking it outputs something and does not error is not silly.
+
+Write some tests before writting code, particularly very simple easy to write tests.  Sometimes writting a logical test turns out to be unnecessary if the implementation turns out to be simple (or just a library).
+
+** Conventions are important and ensuring people understand the tests are important, but tests can be bash scripts, or whatever.
 
 The procedure step-by-step:
 
