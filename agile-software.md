@@ -53,6 +53,12 @@ Write some tests before writting code, particularly very simple easy to write te
 
 ** Conventions are important and ensuring people understand the tests are important, but tests can be bash scripts, or whatever.
 
+### Outside In
+
+Start with an Acceptence Test / E2E, application runs and does not through exception and produces output with more than 0 bytes.
+
+Complexity of tests should correspond to complexity of application.
+
 The procedure step-by-step:
 
 ### Step 1 - Map Work to a Ticket and the Ticket to a Use Case
@@ -90,7 +96,7 @@ Here is a good rule of thumb to follow when deciding whether to abstract:
  - The abstraction is motivated by a system outside of our control, again the common examples are above ...
  - ... and conversely to c, abstracting / decoupling raw business logic which is inside our control without an immediate use case should be strongly discouraged, for that we move on ...
 
-#### Black Box Build Time Tests
+#### Black Box Build Time Tests (testing frameworks)
 
 Unit tests usually correspond to a specific method or class and are named accordingly and use a unit testing framework, a build time black box test still use unit testing frameworks but do not necessarily correspond to a specific class or method - they can call many.
 
