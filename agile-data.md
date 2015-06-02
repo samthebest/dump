@@ -6,28 +6,43 @@ A decade or two ago delivery used be a problem in the software development indus
 
 This post will not labour over the subtle differences between the annoying number of terms, which will henceforth be collectively referred to as *DD, rather we will focus on how to apply the principles they each have in common to a field that at a glance precludes using them.  *DD has worked well in web development but it seems difficult to apply it to data driven fields.
 
-### Problems of *DD in Data Science and Big Data
+### "Problems" of *DD in Data Science and Big Data
 
 #### Data Science
 
-How does one write an "automatic test" for classification problem? What is the definition of passing? When we build models we run it, look at the ROC and some evaluation measures.  If the performance seems unbelievably good, we go back and review our features, or our cross validation process, to make sure our model is not cheating.  If the performance seems bad, we go back and iterate on the model a little more.  When the numbers seem reasonable we ship it.
+*Evaluation*: How does one write an "automatic test" for classification problem? What is the definition of passing? When we build models we run it, look at the ROC and some evaluation measures.  If the performance seems unbelievably good, we go back and review our features, or our cross validation process, to make sure our model is not cheating.  If the performance seems bad, we go back and iterate on the model a little more.  When the numbers seem reasonable we ship it.
 
-Similarly when we play around with clustering algorithms the line that defines done seems to be quite fuzzy.  We look at charts, we add more colours, we look at the clusters, and when it seems kinda reasonable we stop and consider the task done.
+*Model Exploration*: Similarly when we play around with clustering algorithms the line that defines done seems to be quite fuzzy.  We look at charts, we add more colours, we look at the clusters, and when it seems kinda reasonable we stop and consider the task done.
 
-We also have a habit of postponing automation, of say ETL, or running the models, or evaluating the models.  That isn't prototyping, that's productionization, and we will save that for later or get someone else to do it. We say to ourselves "we don't have an awesome model yet, why would I put any effort into productionization?".
+*Data Exploration*: We also have a habit of postponing automation, of say ETL, or running the models, or evaluating the models.  That isn't prototyping, that's productionization, and we will save that for later or get someone else to do it. We say to ourselves "we don't have an awesome model yet, why would I put any effort into productionization?".
 
-The process is interactive and iterative, which is good, but it is also quite manual, which is bad.  I will argue that these "problems" and arguments against automation are not unique to Data Science. Lack of automation is driven by a lack of imagination, clarity of objectives and focus on delivery.
+The process is interactive and iterative, which is good, but it is also quite manual, which is bad.
 
 #### Big Data
 
+*Long Running Jobs*: How can a test-cycle work for something that takes 5 hours to run? Aren't tests supposed to run in a few seconds?
 
+*Computational Resource Problems*: How can we write a test to catch out of memory errors? Or out of disk space errors?
 
-### The Core of *DD Practices
+### The Core Principle of *DD Practices
 
-1. Clearly defining the use case in such simple and unambiguous terms so that success can be defined formally and even executed by a machine
+The "problems" we use to justify not writting automated tests in the data world are not problems with the practice, but the mindset.  Lack of automation in *any* type of software development is driven by:
+
+ - Fear of delivering something that isn't perfect and awesome
+ - lack of imagination on how to test
+ - lack of clarity of objectives
+ - a natural propensity to focus on the fun and clever stuff, not on delivery
+
+Now communicating the core *DD principle can solve this problem of mindset, but over the years the core has been buried under superfluous aspects, such as frameworks, tools, ubiquitis languages, speed, and over emphasis on writting test code before writting main code.
+
+So *the core principle of *DD practices* is just:
+
+1. Defining the use case in such simple and unambiguous terms so that success can be defined formally and even executed by a machine
 2. Doing 1. *before* trying to solve the problem
+
+
 
 ### How to Apply *DD
 
 [1] - https://www.youtube.com/watch?v=hG4LH6P8Syk
-[2]  - http://en.wikipedia.org/wiki/Agile_software_development#Agile_practices
+[2] - http://en.wikipedia.org/wiki/Agile_software_development#Agile_practices
