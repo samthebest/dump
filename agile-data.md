@@ -12,9 +12,15 @@ This post will not labour over the subtle differences between the annoying numbe
 
 How does one write an "automatic test" for classification problem? What is the definition of passing? When we build models we run it, look at the ROC and some evaluation measures.  If the performance seems unbelievably good, we go back and review our features, or our cross validation process, to make sure our model is not cheating.  If the performance seems bad, we go back and iterate on the model a little more.  When the numbers seem reasonable we ship it.
 
-Similarly how can we write tests for our ETL, preprocessing and cleaning steps?  These steps can take a long time to run, have many external dependencies and we often believe (incorrectly) that we will only need to do this step once, or we are so keen to get to the modelling stage we perform the ETL manually and think about automating it later.
+Similarly when we play around with clustering algorithms the line that defines done seems to be quite fuzzy.  We look at charts, we add more colours, we look at the clusters, and when it seems kinda reasonable we stop and consider the task done.
 
-The process is interactive and iterative, which is good, but it is also quite manual, which is bad.
+We also have a habit of postponing automation, of say ETL, or running the models, or evaluating the models.  That isn't prototyping, that's productionization, and we will save that for later or get someone else to do it. We say to ourselves "we don't have an awesome model yet, why would I put any effort into productionization?".
+
+The process is interactive and iterative, which is good, but it is also quite manual, which is bad.  I will argue that these "problems" and arguments against automation are not unique to Data Science. Lack of automation is driven by a lack of imagination, clarity of objectives and focus on delivery.
+
+#### Big Data
+
+
 
 ### The Core of *DD Practices
 
