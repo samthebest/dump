@@ -2,7 +2,26 @@
 
 In Advanced Data Analytics team we take an agile MVP approach to everything we do.
 
-## TDD & BDD & ATDD & DHH
+## *DD, Agile Data Science and Agile Big Data Engineering - Agile Data
+
+Thanks to the hype and rapid growth of Big Data Engineering and Data Science it seems most companies and practioners have got so excited by hiring, building infrastructure, big clever sounding words and shiny clever sounding technology that one crucial part of the fields seems to be missing - *delivery*.  I hear of countless stories where teams are built, clusters are bought, algorithms are used and software is installed, but it then takes months or even longer to deliver working data driven applications.  It happens in startups and big corps alike, hype is thick in the air but delivery is thin on the ground.
+
+A decade or two ago delivery used be a problem in the software development industry as a whole.  Releasing working software would also take months and even years.  Then came along Agile, XP and TDD and for those correctly practicing it seemed to solve the problem and suddenly working software was delivered every few weeks.  Automatic tests are absalutely critical in correctly practicing Agile, and from TDD evolved more acronyms and terms than many Data Scientists have written automatic tests; theres TDD, BDD, DDD, ATDD, SDD, EDD, unit tests, integrations tests, black box tests, end-to-end tests, systems tests, acceptence tests, property based tests, example based tests, etc.
+
+This post will not labour over the subtle differences between the annoying number of terms, which will henceforth be collectively referred to as *DD, rather we will focus on how to apply the principles they each have in common to a field that at a glance precludes using them.  *DD has worked well in web development but it seems difficult to apply it to data driven fields.
+
+### Problems of *DD in Data Science and Big Data
+
+TODO
+
+### The Core of *DD Practices
+
+1. Clearly defining the use case in such simple and unambiguous terms that success can be defined formally and even executed by a machine
+2. Doing 1. *before* trying to solve the problem
+
+### How to Apply *DD
+
+## TDD & BDD & ATDD & DHH (or just *DD & DHH)
 
 Technically TDD means writing tests before writing code, but one can end up with the same end by ensuring one unit tests everything, henceforth TDD will mean both "test first" and "test everything".  This section will discuss the pros and cons of this.  The overriding point of the section is to not do anything dogmatically, except to dogmatically pick the best and most relevant parts to the specific problem at hand.
 
