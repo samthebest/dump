@@ -18,6 +18,8 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 brew install caskroom/cask/brew-cask
 
 # Spectacle means you can resize and move windows with shortcuts (requires manual step afterwards)
+# After you have done the manual step to start, remember to 
+# change the default shortcuts for snap right half and snap left half as they conflict with Intellij
 brew cask install spectacle
 
 # Install sublime (best text editor ever!)
