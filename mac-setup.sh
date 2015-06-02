@@ -9,7 +9,7 @@ echo "export EDITOR=nano" >> ~/.bash_profile
 echo "HISTFILESIZE=10000000" >> ~/.bash_profile
 
 # Change prompt to linux default
-echo "export PS1='$(whoami)@$(hostname):$(pwd) '" >> ~/.bash_profile
+echo "export PS1='\$(whoami)@\$(hostname):\$(pwd) '" >> ~/.bash_profile
 
 # Install brew
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
