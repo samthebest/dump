@@ -4,11 +4,11 @@ Subtitle: Time to deliver!
 
 Thanks to the hype and rapid growth of Big Data Engineering and Data Science it seems most companies and practioners have got so excited by hiring, building infrastructure, clever sounding words and shiny technology that one crucial part of the fields seems to be missing - **delivery**.  I hear of countless stories where teams are built, clusters are bought, prototype algorithms written and software is installed, but it then takes months or even longer to deliver working data driven applications.  It happens in startups and big corps alike, hype is thick in the air but delivery is thin on the ground.
 
-I felt it necessary to write this and two follow up posts after reading a Harvard Business Review "Data Scientist's Don't Scale" and related blogs 
+I felt it necessary to write this and two follow up posts after reading a Harvard Business Review "Data Scientist's Don't Scale" (LINK) and related blogs, which correctly point out that we should focus on AI **applications**. My addition is that these applications can not be easily bought in, rather that they should be built in-house and the builders ought to be **Agile** Data Scientists and Big Data Engineers, the title is *not dead* (LINK).
 
 https://hbr.org/2015/05/data-scientists-dont-scale
+
 http://blogs.wsj.com/cio/2014/04/30/its-already-time-to-kill-the-data-scientist-title/
-http://www.zdnet.com/article/data-scientists-dont-scale/
 
 A decade or two ago delivery used be a problem in the software development industry as a whole.  Releasing working software would also take months and even years.  Then came along Agile, XP, Scrum and TDD and for those correctly practicing it it seemed to solve the problem and suddenly working software was delivered every few weeks.
 
