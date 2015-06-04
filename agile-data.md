@@ -12,19 +12,19 @@ NOT TO BE PUBLISHED FOR NOW:
 
 ### Why Should Data Proffesionals Care?
 
-Data Scientists and Big Data Engineers have a collective moral responsibility to be Agile and focus more on delivery and less on having fun with the latest tech/algorithms.  If we do not then executives will eventually start noticing lack of delivery and that we are expensive, i.e. lack of return on investment.  The consequence of this will be awful, not only for the proffesion but for the business, and comes in two forms.
+Data Scientists and Big Data Engineers have a collective moral responsibility to be Agile and focus more on delivery and less on having fun with the latest tech/algorithms.  When executives start noticing lack of return on investment the consequences will be awful, not only for the proffesion but for the business, and comes in two forms.
 
 **Magic SaaS solutions**:  There may exist a genuinely powerful magic SaaS solution that automates away the job of data proffesionals. Nevertheless it's just common sense that in order to automate a very complicated field one would need a vastly more complicated application.
 
-**Outsourcing solutions**: There may also exist some genuinely efficient companies to outsource to.  Nevertheless it's just common sense that paying X data proffesionals to deliver a project ought to be cheaper than paying X data proffesionals plus managers, marketers, salespersons and shareholders, etc to do the same thing.  Such a company must be vastly more efficient than ones own.
+**Outsourcing solutions**: There may also exist some genuinely efficient companies to outsource to.  Nevertheless it's just common sense that paying X data proffesionals to deliver a project ought to be cheaper than paying X data proffesionals plus managers, marketers, salespersons and shareholders, etc to do the same thing but in a domain they have not even seen.  Such a company must be vastly more efficient than ones own.
 
 Eventually such solutions may emerge, but not this decade.
 
-The problem is that many managers/executives, particularly thos that have not slowly evolved into the role from some role 'lower in the pyramid', are quite stupid and even corrupt, like nearly all politicians.  If they were intelligent then they would have chosen to be engineers, mathematicians, doctors, scientists, etc, i.e. a proffesion that society actually needs.  They where either too lazy, stupid, greedy or egocentric to choose such a useful career and decided to get into management.
+The problem is that many managers/executives, particularly those that have not slowly evolved into the role from scientific or engineering careers, will be easily duped by colourful slides from salepersons.  They understand colours and charm, but they don't understand 90% of what comes out of our mouth and don't like our spikey personalities.
 
-Therefore some enthusiastic salespersons from these solutions providers will find it much easier to convince the executives to sack all their data proffesionals than we will find it to convince them to avoid the solutions providers.  After all the executives do not even understand 90% of what we say, but they will understand some bright colourful slides from a salesperson.  Furthermore they certainly do not like the idea that we should be paid anywhere near as much as they are.
+**But** there is hope.  It has happened in many companies since the early 2000s in software development - teams became Agile. Consequently projects got delivered and executives got their glory and bonuses, which is something else they can comprehend.  Agile in-house teams would often be chosen over the solutions providers, consequently the businesses saved money, developers made money, and society overall become more efficient.
 
-**But** there is hope.  It has happened in many companies since the early 2000s in software development; teams started being Agile, projects got delivered, and executives got their glory and bonuses.  When executives got their bonuses, they suddenly quite liked the software developers and this Agile thing. This meant that developers, especially contractors, made good money, the businesses were more efficient and consequently society also became more efficient.
+This is why you should care.
 
 ### "Problems" of *DD in Data Science and Big Data
 
