@@ -24,7 +24,7 @@ Data Scientists and Big Data Engineers have a collective moral responsibility to
 
 **Magic SaaS solutions**:  There may exist a genuinely powerful magic SaaS solution that automates away the job of data proffesionals. Nevertheless it's just common sense that in order to automate a very complicated field one would need a vastly more complicated application.
 
-**Outsourcing solutions**: There may also exist some genuinely efficient companies to outsource to.  Nevertheless it's just common sense that paying X data proffesionals to deliver a project ought to be cheaper than paying X data proffesionals plus managers, marketers, salespersons and shareholders, etc to do the same thing but in a domain they have not even seen.  Such a company must be vastly more efficient than ones own.
+**Outsourcing solutions**: There may also exist some genuinely efficient companies to outsource to.  Nevertheless it's just common sense that paying X data proffesionals to deliver a project ought to be cheaper than paying X data proffesionals plus managers, marketers, salespersons and shareholders, etc to do the same thing but in a domain they have not even seen.  Even if the employees are in a different time zone and being paid peanuts such a company must be vastly more efficient than ones own.
 
 Eventually such solutions may emerge, but not this decade.
 
