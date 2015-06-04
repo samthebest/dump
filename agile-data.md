@@ -2,9 +2,29 @@
 
 Thanks to the hype and rapid growth of Big Data Engineering and Data Science it seems most companies and practioners have got so excited by hiring, building infrastructure, clever sounding words and shiny technology that one crucial part of the fields seems to be missing - **delivery**.  I hear of countless stories where teams are built, clusters are bought, prototype algorithms written and software is installed, but it then takes months or even longer to deliver working data driven applications.  It happens in startups and big corps alike, hype is thick in the air but delivery is thin on the ground.
 
-A decade or two ago delivery used be a problem in the software development industry as a whole.  Releasing working software would also take months and even years.  Then came along Agile, XP and TDD and for those correctly practicing it it seemed to solve the problem and suddenly working software was delivered every few weeks.  Automatic tests are absalutely critical in correctly practicing Agile [1], [2], and from TDD evolved more acronyms and terms than many Data Scientists have written tests; there is TDD, BDD, DDD, ATDD, SDD, EDD, unit tests, integrations tests, black box tests, end-to-end tests, systems tests, acceptence tests, property based tests, example based tests, etc.
+A decade or two ago delivery used be a problem in the software development industry as a whole.  Releasing working software would also take months and even years.  Then came along Agile, XP and TDD and for those correctly practicing it it seemed to solve the problem and suddenly working software was delivered every few weeks.
+
+Automatic tests are absalutely critical in correctly practicing Agile [1], [2], and from TDD evolved more acronyms and terms than many Data Scientists have written tests; there is TDD, BDD, DDD, ATDD, SDD, EDD, unit tests, integrations tests, black box tests, end-to-end tests, systems tests, acceptence tests, property based tests, example based tests, etc.
 
 This post will not labour over the subtle differences between the annoying number of terms, which will henceforth be collectively referred to as *DD, rather we will focus on how to apply the principles they each have in common to a field that at a glance precludes using them.  *DD has worked well in web development but it seems difficult to apply in data driven fields.
+
+NOT TO BE PUBLISHED FOR NOW:
+
+### Why Should Data Proffesionals Care?
+
+Data Scientists and Big Data Engineers have a collective moral responsibility to be Agile and focus more on delivery and less on having fun with the latest tech/algorithms.  If we do not then executives will eventually start noticing lack of delivery and that we are expensive, i.e. lack of return on investment.  The consequence of this will be awful, not only for the proffesion but for the business, and comes in two forms.
+
+**Magic SaaS solutions**:  There may exist a genuinely powerful magic SaaS solution that automates away the job of data proffesionals. Nevertheless it's just common sense that in order to automate a very complicated field one would need a vastly more complicated application.
+
+**Outsourcing solutions**: There may also exist some genuinely efficient companies to outsource to.  Nevertheless it's just common sense that paying X data proffesionals to deliver a project ought to be cheaper than paying X data proffesionals plus managers, marketers, salespersons and shareholders, etc to do the same thing.  Such a company must be vastly more efficient than ones own.
+
+Eventually such solutions may emerge, but not this decade.
+
+The problem is that many managers/executives, particularly thos that have not slowly evolved into the role from some role 'lower in the pyramid', are quite stupid and even corrupt, like nearly all politicians.  If they were intelligent then they would have chosen to be engineers, mathematicians, doctors, scientists, etc, i.e. a proffesion that society actually needs.  They where either too lazy, stupid, greedy or egocentric to choose such a useful career and decided to get into management.
+
+Therefore some enthusiastic salespersons from these solutions providers will find it much easier to convince the executives to sack all their data proffesionals than we will find it to convince them to avoid the solutions providers.  After all the executives do not even understand 90% of what we say, but they will understand some bright colourful slides from a salesperson.  Furthermore they certainly do not like the idea that we should be paid anywhere near as much as they are.
+
+**But** there is hope.  It has happened in many companies since the early 2000s in software development; teams started being Agile, projects got delivered, and executives got their glory and bonuses.  When executives got their bonuses, they suddenly quite liked the software developers and this Agile thing. This meant that developers, especially contractors, made good money, the businesses were more efficient and consequently society also became more efficient.
 
 ### "Problems" of *DD in Data Science and Big Data
 
