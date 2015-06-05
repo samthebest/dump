@@ -82,7 +82,7 @@ So **the core principle of *DD practices** is just:
 ## Agile Data and Cross Functional Teams
 
 - code quality
-- language choice and tool choice
+- language choice and tool choice.  Particularly static typing.
 - pair programming (change every 30 mins, have two keyboards plugged into single computer, ensure shortcuts are the same across team).
 - Code review
 - Document review
