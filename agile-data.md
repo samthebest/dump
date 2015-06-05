@@ -79,6 +79,12 @@ So **the core principle of *DD practices** is just:
 ### How to Apply *DD
 
 
+## Agile Data and Cross Functional Teams
+
+- code quality
+- language choice and tool choice
+- pair programming (change every 30 mins, have two keyboards plugged into single computer, ensure shortcuts are the same across team).
+
 
 [1] - https://www.youtube.com/watch?v=hG4LH6P8Syk
 [2] - http://en.wikipedia.org/wiki/Agile_software_development#Agile_practices
