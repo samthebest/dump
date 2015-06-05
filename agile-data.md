@@ -84,6 +84,8 @@ So **the core principle of *DD practices** is just:
 - code quality
 - language choice and tool choice
 - pair programming (change every 30 mins, have two keyboards plugged into single computer, ensure shortcuts are the same across team).
+- Code review
+- Document review
 
 
 [1] - https://www.youtube.com/watch?v=hG4LH6P8Syk
