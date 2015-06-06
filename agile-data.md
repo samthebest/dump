@@ -16,7 +16,7 @@ A decade or two ago delivery used be a problem in the software development indus
 
 I have written two posts on how to apply Agile methodlogies in Data Science and Big Data. The two areas I have written about were chosen because they are critical in correctly practicing Agile while being the most overlooked and misunderstood practices in the data proffesions.
 
-**Automatic tests** are absalutely critical in correctly practicing Agile [1], [2], and from TDD evolved more acronyms and terms than many Data Scientists have written tests; there is TDD, BDD, DDD, ATDD, SDD, EDD, unit tests, integrations tests, black box tests, end-to-end tests, systems tests, acceptence tests, property based tests, example based tests, etc. So I wrote: (LINK)
+**Automatic tests** are absalutely critical in correctly practicing Agile [1], [2], and from TDD evolved more acronyms and terms than many Data Scientists have written tests; there is TDD, BDD, DDD, ATDD, SDD, EDD, unit tests, integrations tests, black box tests, end-to-end tests, systems tests, acceptence tests, property based tests, example based tests, functional tests, etc. So I wrote: (LINK)
 
 The second most lacking part in the data proffesions seems to be a lack of **high-quality code** and **cross-functional teams**.  Most definitions of Data Science actually include "hacking" as a skill.  If writting crap code is part of the definition of Data Science it's no wonder then that the proffesion is failing to deliver.  Cross-functional teams and cross-functional team members have the obvious benifit of being able to deliver end to end working (data-driven) software.  In the data proffesions this means the team must be able to ETL, clean, prototype, collaborate **and productionize**.  Collaboration and productionization cannot happpen without high-quality code, which is why I consider the two principles to go hand in hand. So I wrote: (LINK)
 
@@ -82,10 +82,13 @@ So **the core principle of *DD practices** is just:
 - Decouple your ETL from your model and from your evaluation framework and use TSVs to interface between them.  Then you can use a real language for as much as possible.  By real langue I mean a statically typed language, Java, Scala, C#, Julia, TypeScript, etc, and if you are in dealing with Big Data you will want to use Scala. Unlike in R and Python, when you write some code in a typed language you know what it does.  There are still notebooks for Scala, (LINKS), but you will find you do not need notebooks for much other than visualization - you do not need to run your code to know what it's doing in a statically typed world.  Anyway by using a real language you also get all the powerful testing frameworks, and you will need to write much less tests.  Only use scripting languages for just that, scripting, short one page scripts that call some scikit learn library that hasn't been written in Java or Scala yet.
 - Delete code that when removed no tests fail.
 
+- Now principle 1. is a controversial one, particularly actually writting tests before writting main code.  I personally break this rule from time to time because I'm unclear on what the interface/structure of the main code will end up looking like, or if the code will even need a test because I may end up solving the problem with a library/native then third party.  But what I will do is write a clear description of what the test should be in the test classes with a dummy test that will remind me to fill it in later, e.g. 1 must_== 2, this will fail, preventing me from merging into develop (thanks to CI pipelines).  Then I am forced to come back later and fillin the test.  The important thing is to think about what it is you are trying to do in clear unambiguous terms, **before** you try doing it.
 
 ### Do not dogmatically follow anything
 
-Notes from confluence on when not to abstract, DHH
+Notes from confluence on when not to abstract, DHH.
+
+Mapping tickets to use cases and mapping tickets to a test.
 
 ## Agile Data, Code Quality and Cross Functional Teams
 
