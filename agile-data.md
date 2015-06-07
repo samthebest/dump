@@ -76,6 +76,12 @@ So **the core principle of *DD practices** is just:
 1. Defining the use case in such simple and unambiguous terms so that success can be defined formally and even executed by a machine
 2. Doing 1. *before* trying to solve the problem
 
+Definition of a proffesional:
+Not ship a line of code that does not have an executing unit test - https://www.youtube.com/watch?v=KtHQGs3zFAM
+
+Definition of legacy code:
+Code that does not have tests.
+
 ### How to Apply *DD
 
 - Large cluster for dev, down scale for prod
