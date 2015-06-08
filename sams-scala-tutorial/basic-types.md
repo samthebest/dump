@@ -6,7 +6,7 @@ Scala docs definition is "... not implemented as objects in the underlying host 
 
 ##### Word - (OPTIONAL Digression into computer science and theory computation)
 
-A word is a sequence of bits where the length is usually a power of two which can be handled by processors by a single "*head read*" / "*head write*", that is the 2^N possible values for that word constitute the alphabet of a [[Turing Machine|http://en.wikipedia.org/wiki/Turing_machine]]. A [[Turing Machine|http://en.wikipedia.org/wiki/Turing_machine]] is the formal definition of a computer, and you must know it if you want to be a programmer.  Further reading [[Word Wiki Page|http://en.wikipedia.org/wiki/Word_%28computer_architecture%29]]
+A word is a sequence of bits where the length is usually a power of two which can be handled by processors by a single "*head read*" / "*head write*", that is the 2^N possible values for that word constitute the alphabet of a [Turing Machine](http://en.wikipedia.org/wiki/Turing_machine). A [Turing Machine](http://en.wikipedia.org/wiki/Turing_machine) is the formal definition of a computer, and you must know it if you want to be a programmer.  Further reading [Word Wiki Page](http://en.wikipedia.org/wiki/Word_%28computer_architecture%29)
 
 #### Any
 
