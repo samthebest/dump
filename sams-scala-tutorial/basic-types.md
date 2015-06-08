@@ -1,5 +1,7 @@
 ### Scala Basic Types - Primatives, Any, AnyRef, AnyVal, None, Nil, Unit, Nothing, and Null
 
+Recommend first reading [Introduction to Typing](https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/introduction-to-typing.md)
+
 #### Primative Types
 
 Scala docs definition is "... not implemented as objects in the underlying host system", what this really means is that the instance of the type can be represented by a single **word**.  Non-primative types have to be represented by a sequence of words. Examples include `Int` and `Double`.
