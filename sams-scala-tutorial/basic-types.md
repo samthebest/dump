@@ -1,25 +1,8 @@
-### Scala Type Basics - Primatives, Any, AnyRef, AnyVal, None, Nil, Unit, Nothing, and Null
-
-TODO Move this introduction to an introduction on types that talks about covariance and contravariance, and companion objects.
-
-#### Introduction - (OPTIONAL)
-
-It's assumed the reader has a basic understanding of types.  
-
-Very roughly, every value has a type, when you write code you can annotate and ascribe types to values, or leave the compiler to infer type. Then the compiler checks your code to ensure assignments, method calls, annotations, ascriptions, etc have a consistent typing. E.g.
-
-```scala
-val x: Int = 10  // would compile
-val y: Int = "hello"   // would not compile
-```
+### Scala Basic Types - Primatives, Any, AnyRef, AnyVal, None, Nil, Unit, Nothing, and Null
 
 #### Primative Types
 
-Scala docs definition is "... not implemented as objects in the underlying host system", what this really means is that the instance of the type can be represented by a single **word**.  Non-primative types have to be represented by a sequence of words.
-
-##### Word - (OPTIONAL Digression into Computer Science and Theory of Computation)
-
-A word is a sequence of bits where the length is usually a power of two which can be handled by processors by a single "*head read*" / "*head write*", that is the 2^N possible values for that word constitute the alphabet of a [Turing Machine](http://en.wikipedia.org/wiki/Turing_machine). A [Turing Machine](http://en.wikipedia.org/wiki/Turing_machine) is the formal definition of a computer, and you must know it if you want to be a programmer.  Further reading [Word Wiki Page](http://en.wikipedia.org/wiki/Word_%28computer_architecture%29)
+Scala docs definition is "... not implemented as objects in the underlying host system", what this really means is that the instance of the type can be represented by a single **word**.  Non-primative types have to be represented by a sequence of words. Examples include `Int` and `Double`.
 
 #### Any
 
