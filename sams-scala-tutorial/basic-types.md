@@ -1,6 +1,6 @@
 ### Scala Type Basics - Primatives, Any, AnyRef, AnyVal, None, Nil, Unit, Nothing, and Null
 
-TODO Move this introduction to an introduction on types that talks about covariance and contravariance.
+TODO Move this introduction to an introduction on types that talks about covariance and contravariance, and companion objects.
 
 #### Introduction - (OPTIONAL)
 
@@ -51,5 +51,17 @@ Analogy: the empty set is a subset of every set but nothing is a member of the e
 
 `None` is exactly analogous for `Nil` except for `Option`s, that is the type of `None` is `Option[Nothing]` and `None` is *the empty* `Option`.
 
-http://oldfashionedsoftware.com/2008/08/20/a-post-about-nothing/
-http://blog.sanaulla.info/2009/07/12/nothingness/
+#### Unit
+
+`Unit` is a bit like `Null` in that it has only a single instance, which can be written `Unit`, `()` or `{}`. It's companion object is also `Unit`, so it's type, it's companion object and it's instance are all written the same way which can be a little confusing.
+
+`Unit` is handled slightly differently by the compiler in that if you annotate it as the return type of any method that method will compile no matter what your *last line* or *return statement* is.  You will get a warning if what you are returning is not actually `()` as what the compiler will do is essentially return `()` for you and ignore whatever you put.  Therefore it is convenient to use when you have a method or function where you do not what it to actually return anything (technically it is returning something, it's returning `()`).  Therefore the return type of methods like `println` is `Unit`. E.g.
+
+```
+def x: Unit = 3
+// is sugar for
+def x: Unit = {
+  3
+  ()
+}
+```
