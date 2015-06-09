@@ -93,16 +93,45 @@ So **the core principle of *DD practices** is just:
 1. Defining the use case in such simple and unambiguous terms so that success can be defined formally and even executed by a machine
 2. Doing 1. *before* trying to solve the problem
 
-### How to Apply *DD - Outside In
+### Test Code First or Main Code First?
 
 The practice of actually writting tests before writting production code is not something I have always strictly followed in the past.  My justification was that the main code may turn out to be so simple it doesn't need a test, it might just a call one or two to native libraries, or well known third party libraries.  Then when code became complicated I would write a "TODO" or a reminder to stick in some tests for it.  Whether this approach actually worked was a matter of luck, and it tends to only really work for personal one man projects, not proffesional many man projects.  Sometimes I would successfully avoid spending time and effort on writing test code for main code that turned out to be trivial. Sometimes I would get into an utter mess and lose track of what my rather complicated code was actually doing.
 
-The solution is to always write a test but:
+A second and arguably valid reason is that too much focus on tests can result in bad and bloated design (see http://www.infoq.com/news/2014/06/tdd-dead-controversy and http://david.heinemeierhansson.com/2014/test-induced-design-damage.html).  This is more common in OO and procedural langauges, sometimes projects have overly decoupled code into hundreds of classes and methods, epic dependency injection and towering hierarchies of interfaces and abstractions.  I recall a DevOps coming from ruby and C once criticising Java projects saying "one has to step through endlessly deep method calls before one gets to code that actually *does anything*". In Big Data sometimes coupling is even desirable; to resuse computations and speed up jobs.
+
+Uncle Bob (in a talk I struggle to find) defined "legacy code", **not** as ugly code, or old code, but code that is not tested.  In [a TDD debate](https://www.youtube.com/watch?v=KtHQGs3zFAM) he also defined "proffesionalism" as "Not shipping a line of code that does not have an executing unit test". Both definitions are fantastic, but note how neither actually requires writting tests before code.
+
+So we seemingly have a conflict of interests. I believe what determines which to do first is the height of the layer of the code you are working on.  
+
+*  Jim Coplien makes a nice addition relating to CDD, that is we should write tests in terms of "contracts" or "properties" that execute via the random generation of examples rather than singular examples - we will come back to this point.
+
+### High Level TDD then Low Level DDT
+
+1. From *use cases* we motivate high level tests
+2. From high level tests we drive high level design and main code development in a TDD/BDD cycle
+3. Tests should start as simple as possible, that is at the entry point and integrations level
+4. Tests should gradually increase in logical complexity as we approach lower levels
+5. When you "hit the lower levels" stop writting tests and focus on making the complex logical tests pass
+6. *As and when* you write methods/functions/classes that becomes complex, introduce a test for them. I.e. let low level development drive low level tests.
+
+Definition of "low" level?
+
+
+I've coined this the "Bounce Flow" because test code is prioritized over main code until we "hit the bottom" then main code is prioritized over 
+
+
+In a soundbite: "Write high level tests before main code, motivate high level 
+
+High Level Test Before 
+
+The flow:
+
+1. Start at the outside, the entry points, the public API calls, the part closest to your
 
 1. Start from the outside in
 2. Start with extremly simple tests
 
-Uncle Bob (in a talk I struggle to find) defined "legacy code", **not** as ugly code, or old code, but code that is not tested.  In [a TDD debate](https://www.youtube.com/watch?v=KtHQGs3zFAM) he also defined "proffesionalism" as "Not shipping a line of code that does not have an executing unit test".  Jim Coplien makes a nice addition relating to CDD, that is we should write tests in terms of "contracts" or "properties" that execute via the random generation of examples rather than singular examples - we will come back to this point.
+
 
 I have come to agree with Uncle Bob and below is the step by step process one can follow to minimize effort and time while staying lean and agile.
 
@@ -126,7 +155,7 @@ For example suppose you are going to compute some basic insights, like what is t
 
 **Zeros Test**: Your application returns zero exit code and produces an output of non-zero size.
 
-
+#### Step 3: Enter a non-strict TDD/BDD cycle
 
 
 
