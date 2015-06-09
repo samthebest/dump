@@ -99,11 +99,11 @@ The practice of actually writting tests before writting production code is not s
 
 A second and arguably valid reason is that too much focus on tests can result in bad and bloated design (see http://www.infoq.com/news/2014/06/tdd-dead-controversy and http://david.heinemeierhansson.com/2014/test-induced-design-damage.html).  This is more common in OO and procedural langauges, sometimes projects have overly decoupled code into hundreds of classes and methods, epic dependency injection and towering hierarchies of interfaces and abstractions.  I recall a DevOps coming from ruby and C once criticising Java projects saying "one has to step through endlessly deep method calls before one gets to code that actually *does anything*". In Big Data sometimes coupling is even desirable; to resuse computations and speed up jobs.
 
-Uncle Bob (in a talk I struggle to find) defined "legacy code", **not** as ugly code, or old code, but code that is not tested.  In [a TDD debate](https://www.youtube.com/watch?v=KtHQGs3zFAM) he also defined "proffesionalism" as "Not shipping a line of code that does not have an executing unit test". Both definitions are fantastic, but note how neither actually requires writting tests before code.
+Uncle Bob (in a talk I struggle to find) defined "legacy code", **not** as ugly code, or old code, but code that is not tested.  In [a TDD debate](https://www.youtube.com/watch?v=KtHQGs3zFAM) he also defined "proffesionalism" as "Not shipping a line of code that does not have an executing unit test" \[1\]. Both definitions are fantastic, but note how neither actually requires writting tests before code.
 
 So we seemingly have a conflict of interests. I believe what determines which to do first is the height of the layer of the code you are working on.  
 
-*  Jim Coplien makes a nice addition relating to CDD, that is we should write tests in terms of "contracts" or "properties" that execute via the random generation of examples rather than singular examples - we will come back to this point.
+\[1\] Jim Coplien makes a nice addition relating to CDD, that is we should write tests in terms of "contracts" or "properties" that execute via the random generation of examples rather than singular examples - we will come back to this point.
 
 ### TDDT - High Level TDD then Low Level DDT
 
@@ -127,6 +127,43 @@ The benifits are then:
  - No redundant tests that test trivial code
  - **Low level** design is elegant, minimal, terse, concrete and optimizable
 
+### Applying TDDT and *DD To Data
+
+So now that we have resolved the TDD vs DHH debate, how should we apply this to Data Science & Big Data Engineering and how should we resolve the aforementioned difficulties.
+
+#### Ticket creation must map to a use case
+
+Firstly it's assumed your team uses git, a sensible branching model, like git-flow (or trunk can work for 1-2 person teams), and a light weight task tracker, like JIRA or Trello.
+
+All tickets must relate directly to a demonstratable use case.  Even for tickets for exploring data and producing some plots think about the output, the consumer of that output and what's the minimum work required to generate business value from the exploration.  If the ticket is quite technical/mathematical and just a step in order to achieve some other task that is more clearly business facing, then at least ensure the tickets are linked together using links, labels, epics or whatever - so that a business person could trace the ticket through the tracker and see it's (in)direct business value.
+
+#### Ensure a simple automatic test at the entry point exists
+
+So before you can write a test for your entry point, you need to ensure what you are going to do is going to have an entry point.  In the world of the notebooks, shells and labs, like iPython, iScala, iSpark, R Studio, ScalaLab, Jupyter, HUE, Zeplin, Intellij worksheets, bash, spark-shell, scala shell, python shell etc, we don't really have an entry point.  This is wrong, it's wrong for the following reasons
+
+1. There is no such thing as doing something once, you or someone else will always want to do it again
+2. Your output, your business value, has a dependency on a software environment
+3. It is now difficult for non-data proffesionals to use your code
+
+In essence you are coupling your output to yourself and your environment.  Use the environment to write the code, but plan to deliver something independent of that environment.
+
+For example suppose you are going to compute some basic insights, like what is the prior or a chart of how the prior changes week on week.  Use the environment to write the code that transforms and counts up the data, use the environment to choose the colours, the chart, the scale, etc - play, interact, fiddle.  But before you do that think about an entry point and a simple test for that entry point.  Suppose you decide on a python script that outputs a jpg, then write what I'm going to coin the *zeros test*:
+
+**Zeros Test**: Your application returns zero exit code and produces an output of non-zero size.
+
+You can also use the zeros test for Big Data jobs, like Spark and Hadoop jobs.  Similarly you might use HUE or something to write an SQL query, but be sure to put that query into a script and commit it to a repository.
+
+#### Threshold Based Tests For Performance
+
+Model evaluation or even speed benchmarks.
+
+#### Slow Tests & Distribution Tests
+
+Nightly runs, understand your job, does it downscale? If so run on a larger dev cluster.  Use samples for E2E tests.
+
+For complicated Big Data applications using complex multi-threading, write a single threaded version and run it on a sample, then test the outputs are the same.
+
+#### Avoid and Decouple Hacking Languages
 
 
 
@@ -155,26 +192,6 @@ Definition of "low" level?
 
 
 I have come to agree with Uncle Bob and below is the step by step process one can follow to minimize effort and time while staying lean and agile.
-
-#### Step 1: Ticket creation must map to a use case
-
-Firstly it's assumed your team uses git, a sensible branching model, like git-flow (or trunk can work for 1-2 person teams), and a light weight task tracker, like JIRA or Trello.
-
-All tickets must relate directly to a demonstratable use case.  Even for tickets for exploring data and producing some plots think about the output, the consumer of that output and what's the minimum work required to generate business value from the exploration.  If the ticket is quite technical/mathematical and just a step in order to achieve some other task that is more clearly business facing, then at least ensure the tickets are linked together using links, labels, epics or whatever - so that a business person could trace the ticket through the tracker and see it's (in)direct business value.
-
-#### Step 2: Ensure a simple automatic test at the entry point exists
-
-So before you can write a test for your entry point, you need to ensure what you are going to do is going to have an entry point.  In the world of the notebooks, shells and labs, like iPython, iScala, iSpark, R Studio, ScalaLab, Jupyter, HUE, Zeplin, Intellij worksheets, etc, we don't really have an entry point.  This is wrong, it's wrong for the following reasons
-
-1. There is no such thing as doing something once, you or someone else will always want to do it again
-2. Your output, your business value, has a dependency on a software environment
-3. It is now difficult for non-data proffesionals to use your code
-
-In essence you are coupling your output to yourself and your environment.  Use the environment to write the code, but plan to deliver something independent of that environment.
-
-For example suppose you are going to compute some basic insights, like what is the prior or a chart of how the prior changes week on week.  Use the environment to write the code that transforms and counts up the data, use the environment to choose the colours, the chart, the scale, etc.  Play, interact, fiddle.  But before you do that think about an entry point and a simple test for that entry point.  Suppose you decide on a python script that outputs a jpg, then write what I'm going to coin the *zeros test*:
-
-**Zeros Test**: Your application returns zero exit code and produces an output of non-zero size.
 
 #### Step 3: Enter a non-strict TDD/BDD cycle
 
