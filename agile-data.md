@@ -42,9 +42,11 @@ Random Links:
 
 [Agile Manifesto](http://agilemanifesto.org/)
 
+[(Hilarious) The Land That Scrum Forgot](https://www.youtube.com/watch?v=hG4LH6P8Syk)
+
 [Clean Architecture and Design](https://www.youtube.com/watch?v=Nsjsiz2A9mg)
 
-[Clean Architecture](https://www.youtube.com/watch?v=Nltqi7ODZTM)
+[(another) Clean Architecture](https://www.youtube.com/watch?v=Nltqi7ODZTM)
 
 [Simple Design](http://www.jamesshore.com/Agile-Book/simple_design.html)
 
@@ -53,9 +55,11 @@ Random Links:
 [(another) Simple Design](http://guide.agilealliance.org/guide/simple-design.html)
 
 
+
+
 ## Agile Data and *DD
 
-This post will not labour over the subtle differences between the annoying number of terms mentioned in the precursor post (LINK), which will henceforth be collectively referred to as *DD, rather we will focus on how to apply the principles they each have in common to a field that at a glance precludes using them.  *DD has worked well in web development but it seems difficult to apply in data driven fields.
+This post will not labour over the subtle differences between the annoying number of terms mentioned in the [precursor post](LINK), which will henceforth be collectively referred to as *DD, rather we will focus on how to apply the principles they each have in common to a field that at a glance precludes using them.  *DD has worked well in web development but it seems difficult to apply in data driven fields.
 
 #### "Problems" of *DD in Data Science
 
@@ -89,13 +93,7 @@ So **the core principle of *DD practices** is just:
 1. Defining the use case in such simple and unambiguous terms so that success can be defined formally and even executed by a machine
 2. Doing 1. *before* trying to solve the problem
 
-Definition of a proffesional:
-Not ship a line of code that does not have an executing unit test - https://www.youtube.com/watch?v=KtHQGs3zFAM
-
-Other guy responds with CDD - similar to property based tests.
-
-Definition of legacy code:
-Code that does not have tests.
+Uncle Bob (in a talk I struggle to find) defined "legacy code", **not** as ugly code, or old code, but code that is not tested.  In [a TDD debate](https://www.youtube.com/watch?v=KtHQGs3zFAM) he also defined "proffesionalism" as "Not shipping a line of code that does not have an executing unit test".  Jim Coplien makes a nice addition relating to CDD, that is we should write tests in terms of "contracts" or "properties" that execute via the random generation of examples rather than singular examples - we will come back to this point.
 
 ### How to Apply *DD
 
@@ -110,6 +108,8 @@ Code that does not have tests.
 Notes from confluence on when not to abstract, DHH.
 
 Mapping tickets to use cases and mapping tickets to a test.
+
+
 
 ## Agile Data, Code Quality and Cross Functional Teams
 
