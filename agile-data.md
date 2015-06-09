@@ -114,7 +114,25 @@ All tickets must relate directly to a demonstratable use case.  Even for tickets
 
 #### Step 2: Ensure a simple automatic test at the entry point exists
 
-So before you can write a test for your entry point, you need to ensure what you are going to do is going to have an entry point.  In the world of the notebooks and labs, like iPython, iScala, iSpark, R Studio, ScalaLab, Jupyter, 
+So before you can write a test for your entry point, you need to ensure what you are going to do is going to have an entry point.  In the world of the notebooks, shells and labs, like iPython, iScala, iSpark, R Studio, ScalaLab, Jupyter, HUE, Zeplin, Intellij worksheets, etc, we don't really have an entry point.  This is wrong, it's wrong for the following reasons
+
+1. There is no such thing as doing something once, you or someone else will always want to do it again
+2. Your output, your business value, has a dependency on a software environment
+3. It is now difficult for non-data proffesionals to use your code
+
+In essence you are coupling your output to yourself and your environment.  Use the environment to write the code, but plan to deliver something independent of that environment.
+
+For example suppose you are going to compute some basic insights, like what is the prior or a chart of how the prior changes week on week.  Use the environment to write the code that transforms and counts up the data, use the environment to choose the colours, the chart, the scale, etc.  Play, interact, fiddle.  But before you do that think about an entry point and a simple test for that entry point.  Suppose you decide on a python script that outputs a jpg, then write what I'm going to coin the *zeros test*:
+
+**Zeros Test**: Your application returns zero exit code and produces an output of non-zero size.
+
+
+
+
+
+Well your test will fail, you haven't even written the script yet
+
+it keeps you in a job, but only until managers get fed up of needing to go to you every time they want some report or charts. They want to click a button or run a script to do the same thing
 
 - Large cluster for dev, down scale for prod
 - Decouple your ETL from your model and from your evaluation framework and use TSVs to interface between them.  Then you can use a real language for as much as possible.  By real langue I mean a statically typed language, Java, Scala, C#, Julia, TypeScript, etc, and if you are in dealing with Big Data you will want to use Scala. Unlike in R and Python, when you write some code in a typed language you know what it does.  There are still notebooks for Scala, (LINKS), but you will find you do not need notebooks for much other than visualization - you do not need to run your code to know what it's doing in a statically typed world.  Anyway by using a real language you also get all the powerful testing frameworks, and you will need to write much less tests.  Only use scripting languages for just that, scripting, short one page scripts that call some scikit learn library that hasn't been written in Java or Scala yet.
