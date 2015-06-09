@@ -18,7 +18,7 @@ I have written two posts on how to apply Agile methodlogies in Data Science and 
 
 The second most lacking part in the data proffesions seems to be a lack of **high-quality code** and **cross-functional teams**.  Most definitions of Data Science actually include "hacking" as a skill.  If writting crap code is part of the definition of Data Science it's no wonder then that the proffesion is failing to deliver.  Cross-functional teams and cross-functional team members have the obvious benifit of being able to deliver end to end working (data-driven) software.  In the data proffesions this means the team must be able to ETL, clean, prototype, collaborate **and productionize**.  Collaboration and productionization cannot happpen without high-quality code, which is why I consider the two principles to go hand in hand. So I wrote: (LINK)
 
-Given sufficient interest I may write a couple more posts on applying Agile principles to archetecutre and even modelling.
+Given sufficient interest I may write a few more posts on applying Agile principles to archetecutre, work flow and even modelling.
 
 ### Why Should Data Proffesionals Care?
 
@@ -86,16 +86,35 @@ The "problems" we use to justify not writting automated tests in the data world 
  - lack of clarity of objectives
  - a natural propensity to focus on the fun and clever stuff, not on delivery
 
-Now communicating the core *DD principle can solve this problem of mindset, but over the years the core has been buried under superfluous aspects, such as frameworks, tools, ubiquitis languages, speed, and over emphasis on writting test code before writting main code.
+Now communicating the core *DD principle can solve this problem of mindset, but over the years the core has been buried under superfluous aspects, such as frameworks, tools, ubiquitis languages, speed, and ambiguity over what it means to write test code before writting main code.
 
 So **the core principle of *DD practices** is just:
 
 1. Defining the use case in such simple and unambiguous terms so that success can be defined formally and even executed by a machine
 2. Doing 1. *before* trying to solve the problem
 
+### How to Apply *DD - Outside In
+
+The practice of actually writting tests before writting production code is not something I have always strictly followed in the past.  My justification was that the main code may turn out to be so simple it doesn't need a test, it might just a call one or two to native libraries, or well known third party libraries.  Then when code became complicated I would write a "TODO" or a reminder to stick in some tests for it.  Whether this approach actually worked was a matter of luck, and it tends to only really work for personal one man projects, not proffesional many man projects.  Sometimes I would successfully avoid spending time and effort on writing test code for main code that turned out to be trivial. Sometimes I would get into an utter mess and lose track of what my rather complicated code was actually doing.
+
+The solution is to always write a test but:
+
+1. Start from the outside in
+2. Start with extremly simple tests
+
 Uncle Bob (in a talk I struggle to find) defined "legacy code", **not** as ugly code, or old code, but code that is not tested.  In [a TDD debate](https://www.youtube.com/watch?v=KtHQGs3zFAM) he also defined "proffesionalism" as "Not shipping a line of code that does not have an executing unit test".  Jim Coplien makes a nice addition relating to CDD, that is we should write tests in terms of "contracts" or "properties" that execute via the random generation of examples rather than singular examples - we will come back to this point.
 
-### How to Apply *DD
+I have come to agree with Uncle Bob and below is the step by step process one can follow to minimize effort and time while staying lean and agile.
+
+#### Step 1: Ticket creation must map to a use case
+
+Firstly it's assumed your team uses git, a sensible branching model, like git-flow (or trunk can work for 1-2 person teams), and a light weight task tracker, like JIRA or Trello.
+
+All tickets must relate directly to a demonstratable use case.  Even for tickets for exploring data and producing some plots think about the output, the consumer of that output and what's the minimum work required to generate business value from the exploration.  If the ticket is quite technical/mathematical and just a step in order to achieve some other task that is more clearly business facing, then at least ensure the tickets are linked together using links, labels, epics or whatever - so that a business person could trace the ticket through the tracker and see it's (in)direct business value.
+
+#### Step 2: Ensure a simple automatic test at the entry point exists
+
+So before you can write a test for your entry point, you need to ensure what you are going to do is going to have an entry point.  In the world of the notebooks and labs, like iPython, iScala, iSpark, R Studio, ScalaLab, Jupyter, 
 
 - Large cluster for dev, down scale for prod
 - Decouple your ETL from your model and from your evaluation framework and use TSVs to interface between them.  Then you can use a real language for as much as possible.  By real langue I mean a statically typed language, Java, Scala, C#, Julia, TypeScript, etc, and if you are in dealing with Big Data you will want to use Scala. Unlike in R and Python, when you write some code in a typed language you know what it does.  There are still notebooks for Scala, (LINKS), but you will find you do not need notebooks for much other than visualization - you do not need to run your code to know what it's doing in a statically typed world.  Anyway by using a real language you also get all the powerful testing frameworks, and you will need to write much less tests.  Only use scripting languages for just that, scripting, short one page scripts that call some scikit learn library that hasn't been written in Java or Scala yet.
