@@ -105,31 +105,52 @@ So we seemingly have a conflict of interests. I believe what determines which to
 
 *  Jim Coplien makes a nice addition relating to CDD, that is we should write tests in terms of "contracts" or "properties" that execute via the random generation of examples rather than singular examples - we will come back to this point.
 
-### High Level TDD then Low Level DDT
+### TDDT - High Level TDD then Low Level DDT
 
 1. From *use cases* we motivate high level tests
 2. From high level tests we drive high level design and main code development in a TDD/BDD cycle
 3. Tests should start as simple as possible, that is at the entry point and integrations level
 4. Tests should gradually increase in logical complexity as we approach lower levels
-5. When you "hit the lower levels" stop writting tests and focus on making the complex logical tests pass
-6. *As and when* you write methods/functions/classes that becomes complex, introduce a test for them. I.e. let low level development drive low level tests.
+5. When we hit a method that is not domain specific we do *not* write the test first.  "Not domain specific" can be equivilently defined as "there could exist a third party library or native method that does what I want".
+6. We try to implement the method as simply as possible (a couple of lines) using only native methods or standard third party libraries, if we succeed we do not write a test.
+7. If we fail we write a test for the method then try to implement it from scratch recursing through steps 5 - 7 in order to finish the method. We now have low level development drive low level tests.
+8. When all your tests have passed, revisit your code to see if any methods/funcitons/classes can be deleted while not breaking a test.  If you find such code, either it's pointless or you have not followed 1 - 7 correctly.
+
+The new part of this approach is iterating steps 5 - 7 and I've coined Development Driven Tests DDT. Note that when the tests are necessary they still ought to be written prior to the main code, but we first *attempt* to implement the method trivially before deciding if a test will be necessary.
+
+The benifits are then:
+ - **High level** design represents use cases and communicates domain
+ - No code bloat; all code contributes business value
+ - 100% test coverage in some form or another
+ - Unambiguous executable documentation
+ - Assurance that complicated code works
+ - No redundant tests that test trivial code
+ - **Low level** design is elegant, minimal, terse, concrete and optimizable
+
+
+
+
+
+Now programmers love rules, dogmas, conventions and design patterns, i.e. well defined problems or procedures. They love the pedantic and rigorous world of code so much they have started to program themselves in the form of hardcore TDD. But the approach I propose is more vague, particularly the distinction between high level and low level is going to be a fuzzy line. I do not see this as a problem, I see dogmatic rule following as a problem because it delludes one into believing one need not think about a situation and end up with optimal results.  Nevertheless I have tried to come up with a loose distinction as follows:
+
+**High Level** Methods where we have a clear idea that implementation will simply wire together a few other methods that *we* intend on implementing later.
+**Low Level** Methods which are likely to consist of calls to native code or standard third party libraries, which may need to be split out into mutliple methods should the code become complex.
+
+An obviously high level method would be the main method of an application, or a method called trainModel. An obviously low level method would be calculate average.  An ambiguous method might be a sorting function, we might start out thinking it's going to be 
+
+
+The only problem is then defining what exactly low and high level layers are. It will also vary wildly from project to project.  For example for a collection of simple scripts one might bottom ought immediately after penetrating the Command Line Interface.  Broadly speaking I think method fit into two categories
+
+
+
+So I would define it roughly as
+
+**The first method where we believe that 
+
+This approach ensures a good high level design motivated by use case
 
 Definition of "low" level?
 
-
-I've coined this the "Bounce Flow" because test code is prioritized over main code until we "hit the bottom" then main code is prioritized over 
-
-
-In a soundbite: "Write high level tests before main code, motivate high level 
-
-High Level Test Before 
-
-The flow:
-
-1. Start at the outside, the entry points, the public API calls, the part closest to your
-
-1. Start from the outside in
-2. Start with extremly simple tests
 
 
 
