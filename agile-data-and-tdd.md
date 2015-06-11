@@ -31,15 +31,13 @@ Arguments against writting test code first:
 
 Both (A) and (C) can usually be countered by just writting a simple low-effort test, *except* in the case where we would then need to redesign the code in order to abstract out or decouple context and dependencies, i.e. (B).  When you argue about anything (except mathematics) for long enough, and your a reasonable person, you usually conclude "well it depends".  What it depends on should become the focus of clarification, and in the TDD vs DDT argument it boils down to the following:
 
-\[1\] Jim Coplien makes a nice addition relating to CDD, that is we should write tests in terms of "contracts" or "properties" that execute via the random generation of examples rather than singular examples - we will come back to this point.
-
 ### Domain Specific Code and Generic Code
 
 As a rough rule of thumb:
 
 For **Domain Specific Code**: use \*DD, let use cases motivate tests, which in turn will then drive design and development. Then your tests and your design will both effectively meet exactly your use case while communicating your code in the context of the domain.
 
-For **Generic Domain Agnostic Code**: relax the rule a bit and let complexity and low level design drive tests (DDT). If it would be a small effort to write a simple failing test first, like "does not throw exception", then you might as well, remember even "not compiling" is considered a failing test in TDD.  You do not really need a complex test for a generic couple of lines of code that just call native or standard third party libraries.  If a method becomes complex or makes calls to non-native methods then time to write some logic tests.
+For **Generic / Domain Agnostic Code**: relax the rule a bit and let complexity and low level design drive tests (DDT). If it would be a small effort to write a simple failing test first, like "does not throw exception", then you might as well, remember even "not compiling" is considered a failing test in TDD.  You do not really need a complex test for a generic couple of lines of code that just call native or standard third party libraries.  If a method becomes complex or makes calls to non-native methods then time to write some logic tests.
 
 Which then should be combined with the following methodlogy.
 
@@ -55,7 +53,7 @@ Firstly it's assumed your team uses git, a sensible branching model, like git-fl
 
 The rule of thumb combined with the outside in methodology then gives us the best of all worlds:
 
- - **High level** design represents use cases and communicates domain
+ - **High level** design represents and communicates use cases in the language of the domain
  - No code bloat; all code contributes business value
  - 100% test coverage in some form or another
  - Unambiguous executable documentation
@@ -74,7 +72,6 @@ So before you can write a test for your entry point, you need to ensure what you
 3. They encourage manual testing
 4. They cannot be tracked by git (they are stored as JSON, not code)
 5. Your output, your business value, has a dependency on a software environment
-6. It is now difficult for non-data proffesionals to use your code
 
 In essence you are coupling your output to yourself and your environment.  Use the environment to write the code, but plan to deliver something independent of that environment.  The solution is to maintain two repositories, one for libraries and entry points, the other for notebooks.  Use the notebooks for playing, fiddling and exploring, but also use an IDE to produce production worthy code that has tests and commit this into the other repository.
 
@@ -84,20 +81,20 @@ In my other post on [Cross Functional Teams](LINK) I'll go into more detail on h
 
 What is the definition of passing for model performance? Don't we just look at the ROCs and say "yup, ship it, looks fine"?  No, we have a use case and that use case ought to be able determine a few desirable score-thresholds along with a minimum level of acceptable performance.  Then you can write a test that at thresholds A, B and C say, the models precision say, is greater than the acceptables levels of A', B' and C' say.
 
-Not only does this mean you now have a nice way to automatically test your model, you have also thought a lot about the business value of that model to arrive at the test. Now you won't waste any time over optimising a model, or focusing on a meaningless measure of accuracy like AUC (which I won't digress into, but I'll save for another post).
+Not only does this mean you now have a nice way to automatically test your model, you have also thought a lot about the business value of that model to arrive at the test. Now you won't waste any time over optimising a model, focusing on measures of performance that are not relevant or focusing on completely meaningless measures of accuracy like AUC (which I won't digress into, but I'll save for another post).
 
 #### Speed Tests and Slow Jobs
 
-This is a genuine problem because we ideally want tests to run quickly.  In the Big Data world that often just isn't the case.  The tests can be similar to the above, that is we have some "acceptable limit" on how long the jobs should take.  The best advice to give is to have a good CI pipeline that automatically runs nightly tests on your develop branch on a realistic cluster.  Provided your team correctly practices a good git-flow workflow if you introduce a bug that slows your job down at least you will probably find out tomorrow.  That's not as good as the sub minute times in web development, but it's better than finding out just before you want to release.
+This is a genuine problem because we ideally want tests to run quickly, which often just isn't the case with Big Data.  Tests can be similar to the above, that is we have some "acceptable limit" on how long the jobs should take.  The best advice to give is to have a good CI pipeline that automatically runs nightly tests on your develop branch on a realistic cluster.  Provided your team correctly practices a good git-flow workflow if you introduce a bug that slows your job down at least you will probably find out tomorrow.  That's not as good as the sub minute times in web development, but it's better than finding out just before you want to release.
 
-Another trick which can work well for jobs that are known to downscale (i.e. work on less nodes but just slower) is to make your dev cluster much larger than your prod cluster so you can test faster.
+Another trick which can work well for jobs that are known to downscale (i.e. work on less nodes but just slower) is to make your dev cluster much larger than your prod cluster so you can develop faster.
 
 #### Resource Problems
 
-This is again a real problem in Big Data. It's hard to write a test for out of memory errors, or out of disk space errors. The solution is again similar to the above, setup a good CI pipeline to automate the running of your jobs every night.
+This is again a real problem in Big Data. It's hard to write a test for out of memory errors, or disk space errors. The solution is again similar to the above, setup a good CI pipeline to automate the running of your jobs every night and before release.
 
 #### Writting Test Cases is Boring
 
-Yes it often is, that's why languages like Scala have awesome DSLs for **property based testing** (see ScalaCheck).  This is returning to the point made by Jim Coplien in the debate with Uncle Bob where he pointed out the power of CDD - Contract Driven Development.  Using these frameworks one can write high level properties, or contracts, in a predicate calculus like DSL, then the framework will automatically generate test cases for your - as many as you want!
+Yes it often is, that's why languages like Scala have awesome DSLs for **property based testing** (see ScalaCheck).  Jim Coplien in the debate with Uncle Bob pointed out the power of CDD - Contract Driven Development.  Using these frameworks one can write high level properties, or contracts, in a predicate calculus like DSL, then the framework will automatically generate test cases for you - as many as you want!
 
-Combining CDD with good automated CI can be awesome.  We have a parameter in our tests which switches on "uber test mode", this tells all the property based tests to use an order or two of magnitude more test cases when they test.  The tests then take an order or two longer to run, but if this is happening at night, then it doesn't really matter.  The "uber test mode" has sucessfully found several bugs while the developer effort was fractional.
+Combining CDD with good automated CI can be awesome.  We have a parameter in our tests which switches on "uber test mode", this tells all the property based tests to use an order or two of magnitude more test cases.  The tests then take an order or two longer to run, but if this is happening at night, then it doesn't really matter.  The "uber test mode" has sucessfully found several bugs while the developer effort was fractional.
