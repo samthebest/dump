@@ -22,7 +22,21 @@ Given sufficient interest I may write a few more posts on applying Agile princip
 
 ### Why Should Data Proffesionals Care?
 
-Data Scientists and Big Data Engineers have a collective moral responsibility to be Agile and focus more on delivery and less on having fun with the latest tech/algorithms.  When executives start noticing lack of return on investment the consequences will be awful, not only for the proffesion but for the business, and comes in two forms.
+Data Scientists and Big Data Engineers have a collective moral responsibility to the business and to the proffession to be Agile and focus more on delivery and less on having fun with the latest tech/algorithms.  Ask yourself "do I deliver working (data driven & automated) output that has some business value, has some entry point loosely coupled to my own skills & knowledge and do this every couple of weeks?". Any more than a month and you have been paid a salary in exchange for a promise. Furthermore if you get sick, die or leave prior to that delivery will a colleague be able to immediately pick up from where you left off? Documentation (or comments) at a technical level are largely useless and do not count, at a business or mathematical level it can have some value but won't explain to anyone how your code or model works. It's a known fact amoungst Agile proponents that there are only two things that truly document your code: tests and your code.  If you write hacky dirty code and you have no automatic tests then your code is not documented.
+
+Now when executives start noticing lack of return on investment they will start hunting for a silver bullet, i.e. an easy to understand solution to a complicated problem.  Sometimes silver bullets do exist, particularly when the solution required either is not domain specific, or the domain is large enough to span many companies.  For example it would be insane for a company to try to build their own chat platform since this is obviously going to be a solved problem with existing cheap and easy to deploy solutions.  As platforms or out-sourcing solutions are required by less and less companies there comes a cut off point where in house solutions become more efficient.  It's a trade off between economies of scale and diseconomies of middle men and lack specificity.
+
+If we as data proffesionals fail to show ongoing business value and keep saying "just one more month, just one more month", then 
+
+
+If the answer is you do, but every few months, how has the business
+
+
+When executives start noticing lack of return on investment the consequences will usually be bad, not only for the proffesion but for the business.  Executives will start hunting for a silver bullet, i.e. an easy to understand solution to a complicated problem.   
+
+, and comes in two forms.
+
+
 
 **Magic proprietary SaaS solutions**:  It's just common sense that in order to automate a complicated field one would need a vastly more complicated application. So usually such solutions don't work, it's only for domains which are common to dozens of businesses that such applications can be built externally and bought in.
 
@@ -54,7 +68,7 @@ Random Links:
 
 [(another) Simple Design](http://guide.agilealliance.org/guide/simple-design.html)
 
-
+[Proffesional Software Development](https://www.youtube.com/watch?v=zwtg7lIMUaQ)
 
 
 ## Agile Data and *DD
@@ -224,6 +238,12 @@ Mapping tickets to use cases and mapping tickets to a test.
 - Document review
 - Atlassian stack is awesome
 - Phds are unnecessary, more than one per team is unnecessary
+- 
+
+Engineers are roughly evaluated by the number of technologies multiplied the number of years of use.
+Data Scientists seem to currently be roughly evaluated by the number of out-of-box algorithms they can list multiplied by the number of projects they have applied it to.
+
+So engineers are happy to learn new technology and languages, it gets them excited, "great another acronym for my CV".  Data Scientists seem less enthused and just want to stick with whatever tools they are used to.  In Software Development you will see a lot of tech, but you will also see a lot of focus on 
 
 In order to increase collaboration, ramp up, cross project collaboration, job satisfaction, focus and productivity the team will try to implement more pairing.  We will also try to ensure each member has at least one JIRA from one project that is not their main project.  Such tickets are good candidates for pairing tasks.  We should aim to rotate and pair at least twice a week since the day to day distractions of BAU often mean we do not initialise pairing, nor do we want to drop what we are doing, I propose we use the Calendar to book slots.  Each slot ought to be either 10 - 12 or 14 - 16/17.  We should put the invites in at sprint planning, of course such slots can be moved, but once created it's harder to overlook.  After doing some reading I consider the following techniques to be ways to do good pairing, each rule is a rule of thumb not a law of god
 
