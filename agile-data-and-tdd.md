@@ -4,7 +4,7 @@ This post will not labour over the subtle differences between the annoying numbe
 
 ### The Core Principle of \*DD
 
-The "problems" we use to justify not writting automated tests in the data world are not problems with the practice, but the mindset.  Lack of automation in *any* type of software development is driven by:
+The "problems" we use to justify not writing automated tests in the data world are not problems with the practice, but the mindset.  Lack of automation in *any* type of software development is driven by:
 
  - Fear of delivering something that isn't perfect
  - a misconception that exploratory work precludes automated deliverables
@@ -12,16 +12,16 @@ The "problems" we use to justify not writting automated tests in the data world 
  - lack of clarity of objectives
  - a natural propensity to focus on the fun and clever stuff, not on delivery
 
-Over the years the core principles of \*DD have been buried under superfluous (but still desirable) aspects, such as frameworks, tools, ubiquitis languages, speed, and ambiguity over what it means to write test code before writting main code.  **The absalute core is simply**:
+Over the years the core principles of \*DD have been buried under superfluous (but still desirable) aspects, such as frameworks, tools, ubiquitous languages, speed, and ambiguity over what it means to write test code before writing main code.  **The absalute core is simply**:
 
 1. Defining the use case in such simple and unambiguous terms so that success can be defined formally and even executed by a machine
 2. Doing 1. *before* trying to solve the problem
 
 ### Test Code First (TDD) or Main Code First (DDT)?
 
-Uncle Bob (in a talk I struggle to find) defined "legacy code", **not** as ugly code, or old code, but code that is not tested.  In [a TDD debate](https://www.youtube.com/watch?v=KtHQGs3zFAM) he also defined "professionalism" as "Not shipping a line of code that does not have an executing unit test" \[1\]. Both definitions are fantastic, but note how neither actually requires writting tests before code even though Uncle Bob is a TDD evangelist.
+Uncle Bob (in a talk I struggle to find) defined "legacy code", **not** as ugly code, or old code, but code that is not tested.  In [a TDD debate](https://www.youtube.com/watch?v=KtHQGs3zFAM) he also defined "professionalism" as "Not shipping a line of code that does not have an executing unit test" \[1\]. Both definitions are fantastic, but note how neither actually requires writing tests before code even though Uncle Bob is a TDD evangelist.
 
-Arguments against writting test code first:
+Arguments against writing test code first:
 
 **(A)** The main code may turn out to be so simple it doesn't need a test, it might just call one or two native libraries, or well known third party libraries
 
@@ -29,13 +29,13 @@ Arguments against writting test code first:
 
 **(C)** This work is exploratory, I don't know if I'll need this method in future, I might ditch it
 
-Both (A) and (C) can usually be countered by just writting a simple low-effort test, *except* in the case where we would then need to redesign the code in order to abstract out or decouple context and dependencies, i.e. (B).  When you argue about anything (except mathematics) for long enough, and your a reasonable person, you usually conclude "well it depends".  What it depends on should become the focus of clarification, and in the TDD vs DDT argument it boils down to the following:
+Both (A) and (C) can usually be countered by just writing a simple low-effort test, *except* in the case where we would then need to redesign the code in order to abstract out or decouple context and dependencies, i.e. (B).  When you argue about anything (except mathematics) for long enough, and your a reasonable person, you usually conclude "well it depends".  What it depends on should become the focus of clarification, and in the TDD vs DDT argument it boils down to the following:
 
 ### Domain Specific Code and Generic Code
 
 As a rough rule of thumb:
 
-For **Domain Specific Code**: use \*DD, let use cases motivate tests, which in turn will then drive design and development. Then your tests and your design will both effectively meet exactly your use case while communicating your code in the context of the domain.
+For **Domain Specific Code**: use \*DD, let use cases motivate tests, which in turn will then drive design and development. Then your tests and your design will both effectively meet exactly your use case while communicating your code in the language of the domain.
 
 For **Generic / Domain Agnostic Code**: relax the rule a bit and let complexity and low level design drive tests (DDT). If it would be a small effort to write a simple failing test first, like "does not throw exception", then you might as well, remember even "not compiling" is considered a failing test in TDD.  You do not really need a complex test for a generic couple of lines of code that just call native or standard third party libraries.  If a method becomes complex or makes calls to non-native methods then time to write some logic tests.
 
@@ -93,7 +93,7 @@ Another trick which can work well for jobs that are known to downscale (i.e. wor
 
 This is again a real problem in Big Data. It's hard to write a test for out of memory errors, or disk space errors. The solution is again similar to the above, setup a good CI pipeline to automate the running of your jobs every night and before release.
 
-#### Writting Test Cases is Boring
+#### Writing Test Cases is Boring
 
 Yes it often is, that's why languages like Scala have awesome DSLs for **property based testing** (see ScalaCheck).  Jim Coplien in the debate with Uncle Bob pointed out the power of CDD - Contract Driven Development.  Using these frameworks one can write high level properties, or contracts, in a predicate calculus like DSL, then the framework will automatically generate test cases for you - as many as you want!
 
