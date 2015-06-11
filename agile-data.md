@@ -24,29 +24,13 @@ Given sufficient interest I may write a few more posts on applying Agile princip
 
 Data Scientists and Big Data Engineers have a collective moral responsibility to the business and to the proffession to be Agile and focus more on delivery and less on having fun with the latest tech/algorithms.  Ask yourself "do I deliver working (data driven & automated) output that has some business value, has some entry point loosely coupled to my own skills & knowledge and do this every couple of weeks?". Any more than a month and you have been paid a salary in exchange for a promise. Furthermore if you get sick, die or leave prior to that delivery will a colleague be able to immediately pick up from where you left off? Documentation (or comments) at a technical level are largely useless and do not count, at a business or mathematical level it can have some value but won't explain to anyone how your code or model works. It's a known fact amoungst Agile proponents that there are only two things that truly document your code: tests and your code.  If you write hacky dirty code and you have no automatic tests then your code is not documented.
 
-Now when executives start noticing lack of return on investment they will start hunting for a silver bullet, i.e. an easy to understand solution to a complicated problem.  Sometimes silver bullets do exist, particularly when the solution required either is not domain specific, or the domain is large enough to span many companies.  For example it would be insane for a company to try to build their own chat platform since this is obviously going to be a solved problem with existing cheap and easy to deploy solutions.  As platforms or out-sourcing solutions are required by less and less companies there comes a cut off point where in house solutions become more efficient.  It's a trade off between economies of scale and diseconomies of middle men and lack specificity.
+Now when executives start noticing lack of return on investment they will start hunting for a silver bullet, i.e. an easy to understand solution to a complicated problem.  Sometimes silver bullets do exist, particularly when the solution required either is not domain specific, or the domain is large enough to span many companies.  For example it would be insane for a company to try to build their own chat platform since this is obviously going to be a solved problem.  As platforms or out-sourcing solutions are required by less and less companies there comes a cut off point where in house solutions become more efficient.  It's a trade off between economies of scale and diseconomies of middle men and lack of specificity.
 
-If we as data proffesionals fail to show ongoing business value and keep saying "just one more month, just one more month", then 
+If we as data proffesionals fail to show ongoing business value in house and keep saying "just one more month", then executives may turn to an external solution when such a solution might be completely inappropriate and fail miserably.
 
+**But** there is hope.  It has happened in many companies since the early 2000s in software development - teams became Agile.  Agile in-house teams would often be chosen over the solutions providers, consequently the businesses saved money, developers made money, and society overall became more efficient.
 
-If the answer is you do, but every few months, how has the business
-
-
-When executives start noticing lack of return on investment the consequences will usually be bad, not only for the proffesion but for the business.  Executives will start hunting for a silver bullet, i.e. an easy to understand solution to a complicated problem.   
-
-, and comes in two forms.
-
-
-
-**Magic proprietary SaaS solutions**:  It's just common sense that in order to automate a complicated field one would need a vastly more complicated application. So usually such solutions don't work, it's only for domains which are common to dozens of businesses that such applications can be built externally and bought in.
-
-**Outsourcing solutions**: There may also exist some genuinely efficient companies to outsource to.  Nevertheless it's just common sense that paying X data proffesionals to deliver a project ought to be cheaper than paying X data proffesionals plus managers, marketers, salespersons and shareholders, etc to do the same thing but in a domain unfamiliar to them.  Even if the employees are being paid peanuts such a company must be vastly more efficient than ones own.
-
-The problem is that many executives, particularly those that have not slowly evolved into the role from scientific or engineering careers, can be easily duped by claims of silver bullets from salepersons.  The claim is usually "Pay X get Y and if not, sue us", which is easy to comprehend, but the reality is usually "Pay X get a fraction of Y and don't sue them anyway".
-
-**But** there is hope.  It has happened in many companies since the early 2000s in software development - teams became Agile. Consequently projects got delivered and executives got their glory and bonuses, which is something else that's easy to comprehend.  Agile in-house teams would often be chosen over the solutions providers, consequently the businesses saved money, developers made money, and society overall became more efficient.
-
-This is why you should care.  It's also up to you to change the culture bottom up because Agile happens mainly at the bottom.  All the executives can do is point and shout "hey do Agile, I don't know what it is, but do it!", so it's up to you to read and watch videos so you can know what it is.  Then applying the same principles to data may be challanging, but there are analogies that link the process of web development to the process of data science/engineering.
+This is why you should care.  It's also up to you to change the culture bottom up because Agile happens mainly at the bottom.  All the executives can do is point and shout "hey do Agile, I don't know what it is, but do it!", so it's up to you to read and watch videos so you can know what it is.  Applying the same principles to *data* may be challanging, and this is what my follow up posts explore.
 
 My Posts:
 
@@ -91,25 +75,110 @@ The process is interactive and iterative, which is good, but it is also quite ma
 
 *Computational Resource Problems*: How can we write a test to catch out of memory errors? Or out of disk space errors?
 
-### The Core Principle of *DD Practices
+### The Core Principle of \*DD Practices
 
 The "problems" we use to justify not writting automated tests in the data world are not problems with the practice, but the mindset.  Lack of automation in *any* type of software development is driven by:
 
- - Fear of delivering something that isn't perfect and awesome
+ - Fear of delivering something that isn't perfect
+ - a misconception that exploratory work precludes automated deliverables
  - lack of imagination on how to test
  - lack of clarity of objectives
  - a natural propensity to focus on the fun and clever stuff, not on delivery
 
-Now communicating the core *DD principle can solve this problem of mindset, but over the years the core has been buried under superfluous aspects, such as frameworks, tools, ubiquitis languages, speed, and ambiguity over what it means to write test code before writting main code.
-
-So **the core principle of *DD practices** is just:
+Over the years the core principles of \*DD have been buried under superfluous (but still desirable) aspects, such as frameworks, tools, ubiquitis languages, speed, and ambiguity over what it means to write test code before writting main code.  **The absalute core is simply**:
 
 1. Defining the use case in such simple and unambiguous terms so that success can be defined formally and even executed by a machine
 2. Doing 1. *before* trying to solve the problem
 
-### Test Code First or Main Code First?
+### Test Code First (TDD) or Main Code First (DDT)?
 
-The practice of actually writting tests before writting production code is not something I have always strictly followed in the past.  My justification was that the main code may turn out to be so simple it doesn't need a test, it might just a call one or two to native libraries, or well known third party libraries.  Then when code became complicated I would write a "TODO" or a reminder to stick in some tests for it.  Whether this approach actually worked was a matter of luck, and it tends to only really work for personal one man projects, not proffesional many man projects.  Sometimes I would successfully avoid spending time and effort on writing test code for main code that turned out to be trivial. Sometimes I would get into an utter mess and lose track of what my rather complicated code was actually doing.
+Uncle Bob (in a talk I struggle to find) defined "legacy code", **not** as ugly code, or old code, but code that is not tested.  In [a TDD debate](https://www.youtube.com/watch?v=KtHQGs3zFAM) he also defined "proffesionalism" as "Not shipping a line of code that does not have an executing unit test" \[1\]. Both definitions are fantastic, but note how neither actually requires writting tests before code even though Uncle Bob is a TDD evangelist.
+
+Arguments against writting test code first:
+(A) The main code may turn out to be so simple it doesn't need a test, it might just call one or two native libraries, or well known third party libraries
+(B) too much focus on tests can result in bad and bloated design (see http://www.infoq.com/news/2014/06/tdd-dead-controversy and http://david.heinemeierhansson.com/2014/test-induced-design-damage.html).  This is more common in OO and procedural langauges, sometimes projects have overly decoupled code into hundreds of classes and methods, epic dependency injection and towering hierarchies of interfaces and abstractions.
+(C) This work is exploratory, I don't know if I'll need this method in future, I might ditch it
+
+Both (A) and (C) can usually be countered by just writting a simple low-effort test, *except* in the case where we would then need to redesign the code in order to abstract out or decouple context and dependencies, i.e. (B).  When you argue about anything (except mathematics) for long enough, and your a reasonable person, you usually conclude "well it depends".  What it depends on should become the focus of clarification, and in the TDD vs DDT argument it boils down to the following:
+
+### Domain Specific Code and Generic Code
+
+As a rough rule of thumb:
+
+For **Domain Specific Code**: use \*DD, let use cases motivate tests, which in turn will then drive design and development. Then your tests and your design will both effectively meet exactly your use case while communicating your code in the context of the domain.
+
+For **Generic Domain Agnostic Code**: relax the rule a bit and let complexity and low level design drive tests (DDT). If it would be a small effort to write a simple failing test first, like "does not throw exception", then you might as well, remember even "not compiling" is considered a failing test in TDD.  You do not really need a complex test for a generic couple of lines of code that just call native or standard third party libraries.  If a method becomes complex or makes calls to non-native methods then time to write some logic tests.
+
+Which then should be combined with the following methodlogy.
+
+### Outside In methodology to *DD
+
+Firstly it's assumed your team uses git, a sensible branching model, like git-flow (or trunk can work for 1-2 person teams), and a light weight task tracker, like JIRA or Trello. I discuss work flow in more detail in my (Agile Cross Functional Teams)[LINK] post, but within the context of *DD here is the step by step process
+
+1. Broadly speaking all tickets must relate directly to a demonstratable use case and an automatable deliverable.  Even for tickets for exploring data and producing some plots / html pages think about the output, the consumer of that output, what's the minimum work required to generate business value from the exploration and how can I hook in an entry point (like a bash script).
+2. Given the ticket, start a TDD/BDD cycle from the *outside* in, so start with the entry point. My favourite first test is "script returns zero exit code and produces an output of non-zero size".
+3. Work your way down the layers in the TDD/BDD cycle filling out the high level business logic and design. As we get closer to details our tests ought to become more detailed and complex.
+4. When we hit the need for low level code that is domain agnostic code, apply the above rule of thumb. This is also an cycle, we try to implement simply, when we seem to be failing we introduce a test then get back to implementation, which then may require introduction of another even lower level routine, if we can't implement that simply we introduce a test for that, and so on.  We still have tight iteration between the test and main code, but unlike TDD main code can come slightly before test code.
+
+The rule of thumb combined with the outside in methodology then gives us the best of all worlds:
+
+ - **High level** design represents use cases and communicates domain
+ - No code bloat; all code contributes business value
+ - 100% test coverage in some form or another
+ - Unambiguous executable documentation
+ - Assurance that complicated code works
+ - No redundant tests that test trivial code
+ - **Low level** design is elegant, minimal in number of classes & methods, terse, concrete and optimizable
+
+
+
+
+
+
+
+Now you have a ticket that maps to a use case, map it to an automatic test.
+
+
+Then the *DD methodologies apply
+
+
+If the ticket is quite technical/mathematical and just a step in order to achieve some other task that is more clearly business facing, then at least ensure the tickets are linked together using links, labels, epics or whatever - so that a business person could trace the ticket through the tracker and see it's (in)direct business value.
+
+
+
+Combining this rule of thumb with an "outside in" methodology ought then to bring the following benifits:
+
+ - **High level** design represents use cases and communicates domain
+ - No code bloat; all code contributes business value
+ - 100% test coverage in some form or another
+ - Unambiguous executable documentation
+ - Assurance that complicated code works
+ - No redundant tests that test trivial code
+ - **Low level** design is elegant, minimal in number of classes & methods, terse, concrete and optimizable
+
+
+Then combine with a rough methodlogy:
+
+1. Start with 
+
+Combining this rule of thumb with a top down approach, that is start at the highest levels and work your way down, that is start with use case, then the entry points, then the high levels, then at some point you hit low level code 
+
+
+
+try to write a simple failing test like "does not throw exception", remember even "not compiling" is considered a failing test, or if this would mean having to mock out too many dependencies and pass in too many parameters
+
+Is the code **domain sepecific** or is it **generic**.
+
+Tests written before main code should map to use cases 
+
+Sometimes (A) can be countered by just writting a simple test
+**The entire problem boils down to two types of code: domain specific code and generic code.**
+
+
+
+The practice of actually writting tests before writting production code is not something I have always strictly followed in the past.  My justification was that the main code may turn out to be so simple it doesn't need a test, it might just call one or two to native libraries, or well known third party libraries.  
+
+Then when code became complicated I would write a "TODO" or a reminder to stick in some tests for it.  Whether this approach actually worked was a matter of luck, and it tends to only really work for personal one man projects, not proffesional many man projects.  Sometimes I would successfully avoid spending time and effort on writing test code for main code that turned out to be trivial. Sometimes I would get into an utter mess and lose track of what my rather complicated code was actually doing.
 
 A second and arguably valid reason is that too much focus on tests can result in bad and bloated design (see http://www.infoq.com/news/2014/06/tdd-dead-controversy and http://david.heinemeierhansson.com/2014/test-induced-design-damage.html).  This is more common in OO and procedural langauges, sometimes projects have overly decoupled code into hundreds of classes and methods, epic dependency injection and towering hierarchies of interfaces and abstractions.  I recall a DevOps coming from ruby and C once criticising Java projects saying "one has to step through endlessly deep method calls before one gets to code that actually *does anything*". In Big Data sometimes coupling is even desirable; to resuse computations and speed up jobs.
 
@@ -238,7 +307,7 @@ Mapping tickets to use cases and mapping tickets to a test.
 - Document review
 - Atlassian stack is awesome
 - Phds are unnecessary, more than one per team is unnecessary
-- 
+- two projects approach - one for notebooks one for libraries, tests and entry points
 
 Engineers are roughly evaluated by the number of technologies multiplied the number of years of use.
 Data Scientists seem to currently be roughly evaluated by the number of out-of-box algorithms they can list multiplied by the number of projects they have applied it to.
