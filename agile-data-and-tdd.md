@@ -2,22 +2,6 @@
 
 This post will not labour over the subtle differences between the annoying number of terms mentioned in the [precursor post](LINK), which will henceforth be collectively referred to as *DD, rather we will focus on how to apply the principles they each have in common to a field that at a glance precludes using them.  *DD has worked well in web development but it seems difficult to apply in data driven fields.
 
-#### "Problems" of *DD in Data Science
-
-*Evaluation*: How does one write an "automatic test" for a model? What is the definition of passing? We usually look at the ROCs, some charts and evaluation measures and consider the model "good" when the numbers are large (but not so large that something fishy is going on with our features or validation framework).
-
-*Model Exploration*: Often using single measures of performance doesn't really make sense, rather we look at charts, we add more colours and dimensions, we look at clusters, and when it seems kinda reasonable we stop and consider the task done.
-
-*Data Exploration*: We also have a habit of postponing automation, of say ETL, or running the models, or evaluating the models.  That isn't prototyping, that's productionization, and we will save that for later or get someone else to do it. We say to ourselves "we don't have an awesome model yet, why would I put any effort into productionization?".
-
-The process is interactive and iterative, which is good, but it is also quite manual, which is bad.
-
-#### "Problems" of *DD in Big Data
-
-*Long Running Jobs*: How can a test-cycle work for something that takes 5 hours to run? Aren't tests supposed to run in a few seconds?
-
-*Computational Resource Problems*: How can we write a test to catch out of memory errors? Or out of disk space errors?
-
 ### The Core Principle of \*DD Practices
 
 The "problems" we use to justify not writting automated tests in the data world are not problems with the practice, but the mindset.  Lack of automation in *any* type of software development is driven by:
@@ -39,11 +23,11 @@ Uncle Bob (in a talk I struggle to find) defined "legacy code", **not** as ugly 
 
 Arguments against writting test code first:
 
-*(A)* The main code may turn out to be so simple it doesn't need a test, it might just call one or two native libraries, or well known third party libraries
+**(A)** The main code may turn out to be so simple it doesn't need a test, it might just call one or two native libraries, or well known third party libraries
 
-*(B)* too much focus on tests can result in bad and bloated design (see http://www.infoq.com/news/2014/06/tdd-dead-controversy and http://david.heinemeierhansson.com/2014/test-induced-design-damage.html).  This is more common in OO and procedural langauges, sometimes projects have overly decoupled code into hundreds of classes and methods, epic dependency injection and towering hierarchies of interfaces and abstractions.
+**(B)** too much focus on tests can result in bad and bloated design (see http://www.infoq.com/news/2014/06/tdd-dead-controversy and http://david.heinemeierhansson.com/2014/test-induced-design-damage.html).  This is more common in OO and procedural langauges, sometimes projects have overly decoupled code into hundreds of classes and methods, epic dependency injection and towering hierarchies of interfaces and abstractions.
 
-*(C)* This work is exploratory, I don't know if I'll need this method in future, I might ditch it
+**(C)** This work is exploratory, I don't know if I'll need this method in future, I might ditch it
 
 Both (A) and (C) can usually be countered by just writting a simple low-effort test, *except* in the case where we would then need to redesign the code in order to abstract out or decouple context and dependencies, i.e. (B).  When you argue about anything (except mathematics) for long enough, and your a reasonable person, you usually conclude "well it depends".  What it depends on should become the focus of clarification, and in the TDD vs DDT argument it boils down to the following:
 
@@ -79,37 +63,41 @@ The rule of thumb combined with the outside in methodology then gives us the bes
  - No redundant tests that test trivial code
  - **Low level** design is elegant, minimal in number of classes & methods, terse, concrete and optimizable
 
+### "Problems" in applying *DD to Data Science & Big Data
 
+#### Use of Notebooks and Web GUIs
 
-#### Ensure a simple automatic test at the entry point exists
+So before you can write a test for your entry point, you need to ensure what you are going to do is going to have an entry point. Similarly for methods and classes one needs a testing framework.  In the world of the notebooks, shells and labs, like iPython, iScala, iSpark, R Studio, ScalaLab, Jupyter, HUE, Zeplin, Intellij worksheets, bash, spark-shell, scala shell, python shell etc, we don't really have an entry point or easy hook-ins for testing frameworks.  Notebooks are great for exploration and interactivity, but they encourage bad practices if used for production code.
 
-So before you can write a test for your entry point, you need to ensure what you are going to do is going to have an entry point.  In the world of the notebooks, shells and labs, like iPython, iScala, iSpark, R Studio, ScalaLab, Jupyter, HUE, Zeplin, Intellij worksheets, bash, spark-shell, scala shell, python shell etc, we don't really have an entry point.  This is wrong, it's wrong for the following reasons
+1. Notebooks encourage flat structure, resulting in disorganized code
+2. They are powerful interactive tools, but **not** powerful code editors; code inspections, refactoring tools, etc are weak
+3. They encourage manual testing
+4. They cannot be tracked by git (they are stored as JSON, not code)
+5. Your output, your business value, has a dependency on a software environment
+6. It is now difficult for non-data proffesionals to use your code
 
-1. There is no such thing as doing something once, you or someone else will always want to do it again
-2. Your output, your business value, has a dependency on a software environment
-3. It is now difficult for non-data proffesionals to use your code
+In essence you are coupling your output to yourself and your environment.  Use the environment to write the code, but plan to deliver something independent of that environment.  The solution is to maintain two repositories, one for libraries and entry points, the other for notebooks.  Use the notebooks for playing, fiddling and exploring, but also use an IDE to produce production worthy code that has tests and commit this into the other repository.
 
-In essence you are coupling your output to yourself and your environment.  Use the environment to write the code, but plan to deliver something independent of that environment.
+In my other post on [Cross Functional Teams](LINK) I'll go into more detail on how one should maintain two repositories.
 
-For example suppose you are going to compute some basic insights, like what is the prior or a chart of how the prior changes week on week.  Use the environment to write the code that transforms and counts up the data, use the environment to choose the colours, the chart, the scale, etc - play, interact, fiddle.  But before you do that think about an entry point and a simple test for that entry point.  Suppose you decide on a python script that outputs a jpg, then write what I'm going to coin the *zeros test*:
+#### Model Performance
 
-**Zeros Test**: Your application returns zero exit code and produces an output of non-zero size.
+What is the definition of passing for model performance? Don't we just look at the ROCs and say "yup, ship it, looks fine"?  No, we have a use case and that use case ought to be able determine a few desirable score-thresholds along with a minimum level of acceptable performance.  Then you can write a test that at thresholds A, B and C say, the models precision say, is greater than the acceptables levels of A', B' and C' say.
 
-You can also use the zeros test for Big Data jobs, like Spark and Hadoop jobs.  Similarly you might use HUE or something to write an SQL query, but be sure to put that query into a script and commit it to a repository.
+Not only does this mean you now have a nice way to automatically test your model, you have also thought a lot about the business value of that model to arrive at the test. Now you won't waste any time over optimising a model, or focusing on a meaningless measure of accuracy like AUC (which I won't digress into, but I'll save for another post).
 
-#### Threshold Based Tests For Performance
+#### Speed Tests and Slow Jobs
 
-Model evaluation or even speed benchmarks.
+This is a genuine problem because we ideally want tests to run quickly.  In the Big Data world that often just isn't the case.  The tests can be similar to the above, that is we have some "acceptable limit" on how long the jobs should take.  The best advice to give is to have a good CI pipeline that automatically runs nightly tests on your develop branch on a realistic cluster.  Provided your team correctly practices a good git-flow workflow if you introduce a bug that slows your job down at least you will probably find out tomorrow.  That's not as good as the sub minute times in web development, but it's better than finding out just before you want to release.
 
-#### Slow Tests & Distribution Tests
+Another trick which can work well for jobs that are known to downscale (i.e. work on less nodes but just slower) is to make your dev cluster much larger than your prod cluster so you can test faster.
 
-Nightly runs, understand your job, does it downscale? If so run on a larger dev cluster.  Use samples for E2E tests.
+#### Resource Problems
 
-For complicated Big Data applications using complex multi-threading, write a single threaded version and run it on a sample, then test the outputs are the same.
+This is again a real problem in Big Data. It's hard to write a test for out of memory errors, or out of disk space errors. The solution is again similar to the above, setup a good CI pipeline to automate the running of your jobs every night.
 
-#### Avoid and Decouple Hacking Languages
+#### Writting Test Cases is Boring
 
+Yes it often is, that's why languages like Scala have awesome DSLs for **property based testing** (see ScalaCheck).  This is returning to the point made by Jim Coplien in the debate with Uncle Bob where he pointed out the power of CDD - Contract Driven Development.  Using these frameworks one can write high level properties, or contracts, in a predicate calculus like DSL, then the framework will automatically generate test cases for your - as many as you want!
 
-
-- Large cluster for dev, down scale for prod
-- Decouple your ETL from your model and from your evaluation framework and use TSVs to interface between them.  Then you can use a real language for as much as possible.  By real langue I mean a statically typed language, Java, Scala, C#, Julia, TypeScript, etc, and if you are in dealing with Big Data you will want to use Scala. Unlike in R and Python, when you write some code in a typed language you know what it does.  There are still notebooks for Scala, (LINKS), but you will find you do not need notebooks for much other than visualization - you do not need to run your code to know what it's doing in a statically typed world.  Anyway by using a real language you also get all the powerful testing frameworks, and you will need to write much less tests.  Only use scripting languages for just that, scripting, short one page scripts that call some scikit learn library that hasn't been written in Java or Scala yet.
+Combining CDD with good automated CI can be awesome.  We have a parameter in our tests which switches on "uber test mode", this tells all the property based tests to use an order or two of magnitude more test cases when they test.  The tests then take an order or two longer to run, but if this is happening at night, then it doesn't really matter.  The "uber test mode" has sucessfully found several bugs while the developer effort was fractional.
