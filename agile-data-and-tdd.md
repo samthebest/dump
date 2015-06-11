@@ -38,11 +38,16 @@ Over the years the core principles of \*DD have been buried under superfluous (b
 Uncle Bob (in a talk I struggle to find) defined "legacy code", **not** as ugly code, or old code, but code that is not tested.  In [a TDD debate](https://www.youtube.com/watch?v=KtHQGs3zFAM) he also defined "proffesionalism" as "Not shipping a line of code that does not have an executing unit test" \[1\]. Both definitions are fantastic, but note how neither actually requires writting tests before code even though Uncle Bob is a TDD evangelist.
 
 Arguments against writting test code first:
-(A) The main code may turn out to be so simple it doesn't need a test, it might just call one or two native libraries, or well known third party libraries
-(B) too much focus on tests can result in bad and bloated design (see http://www.infoq.com/news/2014/06/tdd-dead-controversy and http://david.heinemeierhansson.com/2014/test-induced-design-damage.html).  This is more common in OO and procedural langauges, sometimes projects have overly decoupled code into hundreds of classes and methods, epic dependency injection and towering hierarchies of interfaces and abstractions.
-(C) This work is exploratory, I don't know if I'll need this method in future, I might ditch it
+
+*(A)* The main code may turn out to be so simple it doesn't need a test, it might just call one or two native libraries, or well known third party libraries
+
+*(B)* too much focus on tests can result in bad and bloated design (see http://www.infoq.com/news/2014/06/tdd-dead-controversy and http://david.heinemeierhansson.com/2014/test-induced-design-damage.html).  This is more common in OO and procedural langauges, sometimes projects have overly decoupled code into hundreds of classes and methods, epic dependency injection and towering hierarchies of interfaces and abstractions.
+
+*(C)* This work is exploratory, I don't know if I'll need this method in future, I might ditch it
 
 Both (A) and (C) can usually be countered by just writting a simple low-effort test, *except* in the case where we would then need to redesign the code in order to abstract out or decouple context and dependencies, i.e. (B).  When you argue about anything (except mathematics) for long enough, and your a reasonable person, you usually conclude "well it depends".  What it depends on should become the focus of clarification, and in the TDD vs DDT argument it boils down to the following:
+
+\[1\] Jim Coplien makes a nice addition relating to CDD, that is we should write tests in terms of "contracts" or "properties" that execute via the random generation of examples rather than singular examples - we will come back to this point.
 
 ### Domain Specific Code and Generic Code
 
