@@ -67,6 +67,7 @@ Firstly it's assumed your team uses git, a sensible branching model, like git-fl
 2. Given the ticket, start a TDD/BDD cycle from the *outside* in, so start with the entry point. My favourite first test is "script returns zero exit code and produces an output of non-zero size".
 3. Work your way down the layers in the TDD/BDD cycle filling out the high level business logic and design. As we get closer to details our tests ought to become more detailed and complex.
 4. When we hit the need for low level code that is domain agnostic code, apply the above rule of thumb. This is also an cycle, we try to implement simply, when we seem to be failing we introduce a test then get back to implementation, which then may require introduction of another even lower level routine, if we can't implement that simply we introduce a test for that, and so on.  We still have tight iteration between the test and main code, but unlike TDD main code can come slightly before test code.
+5. Before pushing your code delete any code that when removed does not make any tests fail, such code must either be pointless or steps 1 - 5 haven't been correctly followed.
 
 The rule of thumb combined with the outside in methodology then gives us the best of all worlds:
 
@@ -78,3 +79,37 @@ The rule of thumb combined with the outside in methodology then gives us the bes
  - No redundant tests that test trivial code
  - **Low level** design is elegant, minimal in number of classes & methods, terse, concrete and optimizable
 
+
+
+#### Ensure a simple automatic test at the entry point exists
+
+So before you can write a test for your entry point, you need to ensure what you are going to do is going to have an entry point.  In the world of the notebooks, shells and labs, like iPython, iScala, iSpark, R Studio, ScalaLab, Jupyter, HUE, Zeplin, Intellij worksheets, bash, spark-shell, scala shell, python shell etc, we don't really have an entry point.  This is wrong, it's wrong for the following reasons
+
+1. There is no such thing as doing something once, you or someone else will always want to do it again
+2. Your output, your business value, has a dependency on a software environment
+3. It is now difficult for non-data proffesionals to use your code
+
+In essence you are coupling your output to yourself and your environment.  Use the environment to write the code, but plan to deliver something independent of that environment.
+
+For example suppose you are going to compute some basic insights, like what is the prior or a chart of how the prior changes week on week.  Use the environment to write the code that transforms and counts up the data, use the environment to choose the colours, the chart, the scale, etc - play, interact, fiddle.  But before you do that think about an entry point and a simple test for that entry point.  Suppose you decide on a python script that outputs a jpg, then write what I'm going to coin the *zeros test*:
+
+**Zeros Test**: Your application returns zero exit code and produces an output of non-zero size.
+
+You can also use the zeros test for Big Data jobs, like Spark and Hadoop jobs.  Similarly you might use HUE or something to write an SQL query, but be sure to put that query into a script and commit it to a repository.
+
+#### Threshold Based Tests For Performance
+
+Model evaluation or even speed benchmarks.
+
+#### Slow Tests & Distribution Tests
+
+Nightly runs, understand your job, does it downscale? If so run on a larger dev cluster.  Use samples for E2E tests.
+
+For complicated Big Data applications using complex multi-threading, write a single threaded version and run it on a sample, then test the outputs are the same.
+
+#### Avoid and Decouple Hacking Languages
+
+
+
+- Large cluster for dev, down scale for prod
+- Decouple your ETL from your model and from your evaluation framework and use TSVs to interface between them.  Then you can use a real language for as much as possible.  By real langue I mean a statically typed language, Java, Scala, C#, Julia, TypeScript, etc, and if you are in dealing with Big Data you will want to use Scala. Unlike in R and Python, when you write some code in a typed language you know what it does.  There are still notebooks for Scala, (LINKS), but you will find you do not need notebooks for much other than visualization - you do not need to run your code to know what it's doing in a statically typed world.  Anyway by using a real language you also get all the powerful testing frameworks, and you will need to write much less tests.  Only use scripting languages for just that, scripting, short one page scripts that call some scikit learn library that hasn't been written in Java or Scala yet.
