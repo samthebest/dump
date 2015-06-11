@@ -39,7 +39,7 @@ For **Domain Specific Code**: use \*DD, let use cases motivate tests, which in t
 
 For **Generic / Domain Agnostic Code**: relax the rule a bit and let complexity and low level design drive tests (DDT). If it would be a small effort to write a simple failing test first, like "does not throw exception", then you might as well, remember even "not compiling" is considered a failing test in TDD.  You do not really need a complex test for a generic couple of lines of code that just call native or standard third party libraries.  If a method becomes complex or makes calls to non-native methods then time to write some logic tests.
 
-Which then should be combined with the following methodlogy.
+Which then should be combined with the following methodology.
 
 ### Outside In methodology to \*DD
 
@@ -59,7 +59,7 @@ The rule of thumb combined with the outside in methodology then gives us the bes
  - Unambiguous executable documentation
  - Assurance that complicated code works
  - No redundant tests that test trivial code
- - **Low level** design is elegant, minimal in number of classes & methods, terse, concrete and optimizable
+ - **Low level** design is elegant, minimal in number of classes & methods, terse, concrete and optimisable
 
 ### "Problems" in applying *DD to Data Science & Big Data
 
@@ -67,7 +67,7 @@ The rule of thumb combined with the outside in methodology then gives us the bes
 
 So before you can write a test for your entry point, you need to ensure what you are going to do is going to have an entry point. Similarly for methods and classes one needs a testing framework.  In the world of the notebooks, shells and labs, like iPython, iScala, iSpark, R Studio, ScalaLab, Jupyter, HUE, Zeplin, Intellij worksheets, bash, spark-shell, scala shell, python shell etc, we don't really have an entry point or easy hook-ins for testing frameworks.  Notebooks are great for exploration and interactivity, but they encourage bad practices if used for production code.
 
-1. Notebooks encourage flat structure, resulting in disorganized code
+1. Notebooks encourage flat structure, resulting in disorganised code
 2. They are powerful interactive tools, but **not** powerful code editors; code inspections, refactoring tools, etc are weak
 3. They encourage manual testing
 4. They cannot be tracked by git (they are stored as JSON, not code)
@@ -79,7 +79,7 @@ In my other post on [Cross Functional Teams](LINK) I'll go into more detail on h
 
 #### Model Performance
 
-What is the definition of passing for model performance? Don't we just look at the ROCs and say "yup, ship it, looks fine"?  No, we have a use case and that use case ought to be able determine a few desirable score-thresholds along with a minimum level of acceptable performance.  Then you can write a test that at thresholds A, B and C say, the models precision say, is greater than the acceptables levels of A', B' and C' say.
+What is the definition of passing for model performance? Don't we just look at the ROCs and say "yup, ship it, looks fine"?  No, we have a use case and that use case ought to be able determine a few desirable score-thresholds along with a minimum level of acceptable performance.  Then you can write a test that at thresholds A, B and C say, the models precision say, is greater than the acceptable levels of A', B' and C' say.
 
 Not only does this mean you now have a nice way to automatically test your model, you have also thought a lot about the business value of that model to arrive at the test. Now you won't waste any time over optimising a model, focusing on measures of performance that are not relevant or focusing on completely meaningless measures of accuracy like AUC (which I won't digress into, but I'll save for another post).
 
@@ -97,4 +97,4 @@ This is again a real problem in Big Data. It's hard to write a test for out of m
 
 Yes it often is, that's why languages like Scala have awesome DSLs for **property based testing** (see ScalaCheck).  Jim Coplien in the debate with Uncle Bob pointed out the power of CDD - Contract Driven Development.  Using these frameworks one can write high level properties, or contracts, in a predicate calculus like DSL, then the framework will automatically generate test cases for you - as many as you want!
 
-Combining CDD with good automated CI can be awesome.  We have a parameter in our tests which switches on "uber test mode", this tells all the property based tests to use an order or two of magnitude more test cases.  The tests then take an order or two longer to run, but if this is happening at night, then it doesn't really matter.  The "uber test mode" has sucessfully found several bugs while the developer effort was fractional.
+Combining CDD with good automated CI can be awesome.  We have a parameter in our tests which switches on "uber test mode", this tells all the property based tests to use an order or two of magnitude more test cases.  The tests then take an order or two longer to run, but if this is happening at night, then it doesn't really matter.  The "uber test mode" has successfully found several bugs while the developer effort was fractional.
