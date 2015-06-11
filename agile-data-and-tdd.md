@@ -25,7 +25,7 @@ Arguments against writing test code first:
 
 **(A)** The main code may turn out to be so simple it doesn't need a test, it might just call one or two native libraries, or well known third party libraries
 
-**(B)** too much focus on tests can result in bad and bloated design (see http://www.infoq.com/news/2014/06/tdd-dead-controversy and http://david.heinemeierhansson.com/2014/test-induced-design-damage.html).  This is more common in OO and procedural langauges, sometimes projects have overly decoupled code into hundreds of classes and methods, epic dependency injection and towering hierarchies of interfaces and abstractions.
+**(B)** too much focus on tests can result in bad and bloated design (see http://www.infoq.com/news/2014/06/tdd-dead-controversy and http://david.heinemeierhansson.com/2014/test-induced-design-damage.html).  This is more common in OO and procedural languages, sometimes projects have overly decoupled code into hundreds of classes and methods, epic dependency injection and towering hierarchies of interfaces and abstractions.
 
 **(C)** This work is exploratory, I don't know if I'll need this method in future, I might ditch it
 
