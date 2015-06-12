@@ -4,31 +4,33 @@
 In this post we will focus on how in Agile and XP delivery velocity was increased and *maintained* through
 
  - Teams that can build every part of the system, including even infrastructure and deployment
- - Code, design and architecture is kept clean so that at any given point in time adding to the system is easy
+ - Code, design, (mathematics) and architecture is kept clean so that at any given point in time adding to the system is easy
 
 Neither of these things currently are accepted and respected practices in the Data Science world at the moment.  The cause of this is due to a single problem:
 
 Analytics has become tightly coupled with productionization.
 
-This is a problem born out of the very definition of a Data Scientist; someone in between an analyst / mathematician and a software developer / engineer.  The analogy in web development is the full stack developer, who may have started out in their career by tightly coupling their view code (the FE) with the business logic (the BE).  The reaction was to invent and formalize a system of decoupling the roles so that systems became cleaner and easier to change, and so came MVC and it's derivatives.
+This is a problem born out of the very definition of a Data Scientist; someone in between an analyst / mathematician and a software developer / engineer.  The analogy in web development is the full stack developer, who may have started out in their career by tightly coupling their view code (the FE) with the business logic (the BE).  The reaction was to invent and formalize a system of decoupling the roles so that systems became cleaner and easier to change, and so came MVC and it's derivatives.  The first section of this post will propose a similar structure for Data Science.
+
+Data Science has been defined as "a person who is better at maths than a coder and better at coding than a mathematician", but the converse of this is less appealing - "someone who is a worse coder than developer and worse at maths than a mathematician". This is how cross functional feeds back into cleanliness, and cleanliness feeds back into closer collaboration. Get the two right and you have yourself a positive feedback loop that will pump out products at speed.  In the second section of this post we will discuss how to get your Data Scientists to go from jack of two trades to a master of both.
 
 ### Introducing A2EM
 
-A2EM is an acroynm, mnemonic, algebriac expression and represents work flow and separation.
+A2EM is an acroynm, mnemonic, "algebriac expression" and represents work flow and separation / decoupling.
 
 **A** - Ad hoc Analysis
-**2 x E** - ETL and Evalution
+**2 x E** - ETL and Evaluation
 **2 x M** - Model and Mathematics
 
 We flow from Ad Hoc Analysis 2 ETLs, Evaluation, Models and Mathematics.
 
-The "2" also represents a separation between the ad hoc world of interactivity and visualizations and the actual product which is the combination of ETL, models and evaluation.  This separation ought to be physically compounded by splitting a Data Science project out into two repositories and using a different toolset for each. Just as web development the back end development is done in a different IDE to the front end development.
+The "2" also represents a *separation* between the ad hoc world of interactivity and visualizations and the actual product which is the combination of ETL, models and evaluation.  This separation ought to be physically compounded by splitting a Data Science project out into two repositories and using a different toolset for each. Just as in web development the back end development is done in a different IDE to the front end development. The mantra of MVC is "don't put business logic in your view code" the mantra of A2EM will be "don't put production code, especially ETL & Evaluation, in your Ad hoc interactive environment".
 
-EM contains your product, your libraries, your entry poitns and your tests.
-
-In order for Data Science to embrace the lessons Agile and XP taught to web development, like clean code & design, TDD and cross-funtional teams, we must first embrace a framework that is conducive to clean decoupling of responsibilities and roles.
+In order for Data Science to embrace the lessons Agile and XP taught to software development, like clean code & design, TDD and cross-funtional teams, we must first embrace a framework that is conducive to clean decoupling of responsibilities and roles.
 
 ### Step by Step Work Flow of A2EM
+
+
 
 1. create 2 repositories (you need two distinct repos because A precludes effective version control).
 2. Start with a ticket (follow a parallel git-flow)
@@ -37,6 +39,8 @@ In order for Data Science to embrace the lessons Agile and XP taught to web deve
 4. The ticket should not be considered completed until some code has been commited into the EM part of the code base.
 5. You ship EM, you build artefacts from EM, A is only for the Ad hoc Analysis
 
+
+EM contains your product, your libraries, your entry poitns and your tests.
 
 
 
