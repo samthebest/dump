@@ -12,7 +12,39 @@ Analytics has become tightly coupled with productionization.
 
 This is a problem born out of the very definition of a Data Scientist; someone in between an analyst / mathematician and a software developer / engineer.  The analogy in web development is the full stack developer, who may have started out in their career by tightly coupling their view code (the FE) with the business logic (the BE).  The reaction was to invent and formalize a system of decoupling the roles so that systems became cleaner and easier to change, and so came MVC and it's derivatives.
 
+### Introducing A2EM
 
+A2EM is an acroynm, mnemonic, algebriac expression and represents work flow and separation.
+
+**A** - Ad hoc Analysis
+**2 x E** - ETL and Evalution
+**2 x M** - Model and Mathematics
+
+We flow from Ad Hoc Analysis 2 ETLs, Evaluation, Models and Mathematics.
+
+The "2" also represents a separation between the ad hoc world of interactivity and visualizations and the actual product which is the combination of ETL, models and evaluation.  This separation ought to be physically compounded by splitting a Data Science project out into two repositories and using a different toolset for each. Just as web development the back end development is done in a different IDE to the front end development.
+
+EM contains your product, your libraries, your entry poitns and your tests.
+
+In order for Data Science to embrace the lessons Agile and XP taught to web development, like clean code & design, TDD and cross-funtional teams, we must first embrace a framework that is conducive to clean decoupling of responsibilities and roles.
+
+### Step by Step Work Flow of A2EM
+
+1. create 2 repositories (you need two distinct repos because A precludes effective version control).
+2. Start with a ticket (follow a parallel git-flow)
+3. Start by writting a test, or if you really have no idea what you want to do, then go ahead and start exploring
+3. Suppose you have some dirty data, and you explore it, you start cleaning it as you go, trimming fields, adding types, etc.  Make sure you move any helper methods, etc into your EM code-base.
+4. The ticket should not be considered completed until some code has been commited into the EM part of the code base.
+5. You ship EM, you build artefacts from EM, A is only for the Ad hoc Analysis
+
+
+
+
+Data Scientists are quite familiar with notebooks and interactive environments, so let's start with the bit they are usually less familiar with IDEs and productionization.
+
+### 
+
+(Footnote: Alternatives, AV2EM, AI2EM, IV2EM, V2EM, A2P (p for product), IV2P, )
 
 AWESOME ACRONYM
 
