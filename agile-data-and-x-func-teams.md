@@ -32,32 +32,41 @@ In order for Data Science to embrace the lessons Agile and XP taught to software
 
 #### 1. Create 2 Repositories
 
-Suppose your project is called "my-project", create two repositories, one called "my-project" and called "my-project-ad-hoc".  In the latter you can put your notesbooks (like iScala, iSpark, Jupyter, R-Studio files, etc), interactive environments, images, etc.  In the former, henceforth "main", your going to put high quality, neatly structured, automatically tested, production worthy code.
+Suppose your project is called "my-project", create two repositories, one called "my-project" and one called "my-project-ad-hoc".  In the latter you can put your notesbooks (like iScala, iSpark, Jupyter, R-Studio files, etc), interactive environments, images, etc.  In the former, henceforth "main" or "EM", your going to put high quality, neatly structured, automatically tested, production worthy code, which you should use a proper IDE for. E.g. if you do Data Science in Scala choose something like Intellij, or if it's Python, choose PyCharm.
 
 You need 2 repositories because unfortunately most notebooks save as data, not code, which completely breaks history.  Still try to keep your images and actual data untracked as these things might bloat the size.  Instead ensure scripts can generate the images or grab the data from a warehouse as required.
 
+Note: I like using no suffix/prefix for the main repo as it is primary, only the ad hoc repo deserves a suffix/prefix as it should be considered secondary to the main repo.
+
 #### 2. Ticket Tracker and Git Flow
 
-Use a light weight tracker like Jira, Trello or even Mingle, avoid monolithic dinasours like ServiceNow.  Then follow the git flow branching model for your "main" repo.  What branching model you use for the ad-hoc repo is up to you as it's not so important.
+Use a light weight tracker like Jira, Trello or even Mingle, avoid monolithic dinasours like ServiceNow.  Then follow the [git flow branching model](http://danielkummer.github.io/git-flow-cheatsheet/) for your "main" repo.  What branching model you use for the ad-hoc repo is up to you as it's not so important.
 
-This post will not labour over the details of 
+This post will not labour over the details of various work flows, rather I have found the following key points are the most important in any Agile work flow:
 
-2. Start with a ticket (follow a parallel git-flow)
-3. Start by writting a test, or if you really have no idea what you want to do, then go ahead and start exploring
-3. Suppose you have some dirty data, and you explore it, you start cleaning it as you go, trimming fields, adding types, etc.  Make sure you move any helper methods, etc into your EM code-base.
-4. The ticket should not be considered completed until some code has been commited into the EM part of the code base.
-5. You ship EM, you build artefacts from EM, A is only for the Ad hoc Analysis
-6. 
+*(A)* [Done means done](http://www.allaboutagile.com/agile-principle-7-done-means-done/), completely finish a ticket before moving on to the next.  A single 100% done ticket is better than ten 99% complete tickets.
+*(B)* Try to map `git flow` commands to the moving a ticket between columns on JIRA.
+*(C)* Tickets should only last days, not a week or more.  If they take too long it means you have incorrectly scoped.
 
-Code review
-pairing
+#### 3. Write a Test
+
+Before writting code in the main repo write a test according to [Agile Data and *DD](LINK). Of course you might not know what main code you want to write, so go ahead and use the ad-hoc repo.
+
+#### 4. Ticket Completion - Tidy, Review and Run
+
+A ticket should not be considered completed if no code has been committed to the main repo. This can be some little utility functions you wrote to help you with your ad hoc analysis, a script to generate some images / html, some ETL code, some evaluation code, some mathematical functions or some modelling code.  You should then remove that code from the ad hoc repo and import it as a library upon further use.  You should not end up with production code in your ad hoc environment, and you definitely should not end up with any hacky ad hoc cruft in your main repo.
+
+Ensure your code is clean and tidy and submit it for review to a colleague.  The colleague ought to be able to run scripts and or tests in your main repo and see what you have acheived.  The colleague should not have to open your notebooks, or whatever ad hoc environment you use, in order to see what you have been doing.  The colleague should consider the ticket complete if and only if what they observe you have done is exactly what the ticket stated, the code is clean, and the code is automatically tested.
+
+#### 5. Ship It
+
+Artefacts for deployment onto production environments should only be from the main repo.  Be sure to use an artefact repository and CI along with git flow. You should be releasing once a week or fortnight. It might take many sprints to get to a full ETL -> Model -> Evaluation pipeline but get into the habbit of releasing even when it's not perfect. Downstream processes for taking the data and using it need to hook in until you are happy the data is of suitable quality, nevertheless you should be showing business value and progress every sprint. Agile embraces the philosophy that nothing is ever truly complete, most things are an ongoing iterative process. The smaller the iterations the faster the ultimate aim will be met and the higher the quality will be.
+
+### Cross Functional Teams
 
 
-EM contains your product, your libraries, your entry poitns and your tests.
 
 
-
-Data Scientists are quite familiar with notebooks and interactive environments, so let's start with the bit they are usually less familiar with IDEs and productionization.
 
 ### 
 
