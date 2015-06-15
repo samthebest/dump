@@ -19,7 +19,9 @@ Data Science has been defined as "a person who is better at maths than a coder a
 A2EM is an acroynm, mnemonic, "algebriac expression" and represents work flow and separation / decoupling.
 
 **A** - Ad hoc Analysis
+
 **2 x E** - ETL and Evaluation
+
 **2 x M** - Model and Mathematics
 
 We flow from Ad Hoc Analysis 2 ETLs, Evaluation, Models and Mathematics.
@@ -64,9 +66,17 @@ Artefacts for deployment onto production environments should only be from the ma
 
 ### Cross Functional Teams
 
+Mix of members:
 
+Maths degree, trad Data Scientist, Data Engineer, Software Developer, 0.5 DevOps for every four team members.
 
+### A Note On Language Choice
 
+Choose best tool for the job.
+
+Scala means you can prototype and deploy in a single language.
+
+Statically typed.
 
 ### 
 
