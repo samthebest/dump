@@ -12,7 +12,7 @@ Analytics has become tightly coupled with productionization.
 
 This is a problem born out of the very definition of a Data Scientist; someone in between an analyst / mathematician and a software developer / engineer.  The analogy in web development is the full stack developer, who may have started out in their career by tightly coupling their view code (the FE) with the business logic (the BE).  The reaction was to invent and formalize a system of decoupling the roles so that systems became cleaner and easier to change, and so came MVC and it's derivatives.  The first section of this post will propose a similar structure for Data Science.
 
-Data Science has been defined as "a person who is better at maths than a coder and better at coding than a mathematician", but the converse of this is less appealing - "someone who is a worse coder than developer and worse at maths than a mathematician". This is how cross functional feeds back into cleanliness, and cleanliness feeds back into closer collaboration. Get the two right and you have yourself a positive feedback loop that will pump out products at speed.  In the second section of this post we will discuss how to get your Data Scientists to go from jack of two trades to a master of both.
+Data Science has been defined as "a person who is better at maths than a coder and better at coding than a mathematician", but the converse of this is less appealing - "someone who is a worse coder than developer and worse at maths than a mathematician". This is how cross functional teams feeds back into cleanliness, and cleanliness feeds back into closer collaboration. Get the two right and you have yourself a positive feedback loop that will pump out products at speed.  In the second section of this post we will discuss how to get your Data Scientists to go from jack of two trades to a master of both.
 
 ### Introducing A2EM
 
@@ -30,14 +30,27 @@ In order for Data Science to embrace the lessons Agile and XP taught to software
 
 ### Step by Step Work Flow of A2EM
 
+#### 1. Create 2 Repositories
 
+Suppose your project is called "my-project", create two repositories, one called "my-project" and called "my-project-ad-hoc".  In the latter you can put your notesbooks (like iScala, iSpark, Jupyter, R-Studio files, etc), interactive environments, images, etc.  In the former, henceforth "main", your going to put high quality, neatly structured, automatically tested, production worthy code.
 
-1. create 2 repositories (you need two distinct repos because A precludes effective version control).
+You need 2 repositories because unfortunately most notebooks save as data, not code, which completely breaks history.  Still try to keep your images and actual data untracked as these things might bloat the size.  Instead ensure scripts can generate the images or grab the data from a warehouse as required.
+
+#### 2. Ticket Tracker and Git Flow
+
+Use a light weight tracker like Jira, Trello or even Mingle, avoid monolithic dinasours like ServiceNow.  Then follow the git flow branching model for your "main" repo.  What branching model you use for the ad-hoc repo is up to you as it's not so important.
+
+This post will not labour over the details of 
+
 2. Start with a ticket (follow a parallel git-flow)
 3. Start by writting a test, or if you really have no idea what you want to do, then go ahead and start exploring
 3. Suppose you have some dirty data, and you explore it, you start cleaning it as you go, trimming fields, adding types, etc.  Make sure you move any helper methods, etc into your EM code-base.
 4. The ticket should not be considered completed until some code has been commited into the EM part of the code base.
 5. You ship EM, you build artefacts from EM, A is only for the Ad hoc Analysis
+6. 
+
+Code review
+pairing
 
 
 EM contains your product, your libraries, your entry poitns and your tests.
