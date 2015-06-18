@@ -66,7 +66,28 @@ Artefacts for deployment onto production environments should only be from the ma
 
 ### Cross Functional Data Science Teams
 
-I have heard and seen increasing frustration in the market as to what actually is a "Data Scientist", and how finding candidates with the full skill set seems to be extremly hard.  How can a company build "a team of half a dozen Data Scientists", when they cannot even seem to find one.  When the goal is unrealistic, the posts should shift, and here the focus should be on building a "Data Science Team", not "a team of Data Scientists".
+I have heard and seen increasing frustration in the market as to what actually is a "Data Scientist", and how finding candidates with the full skill set seems to be extremly hard.  How can a company build "a team of half a dozen Data Scientists", when they cannot even seem to find one.  When the goal is unrealistic, the posts should shift, and here the focus should be on building a "Data Science Team", not "a team of Data Scientists".  To do that we need experts in many different fields that then mentor each other. By using Agile practices like paring and code review, hopefully over time team members asymptotically approach the perfect "Data Scientist" while constantly delivering high quality Data Science products.
+
+Some people have observed that Data Scientists spend a lot of time "cleaning data", the reaction for some is to then hire more people whose sole job it is to clean data.  Not only is this creating a very boring job but it's treating the symptoms not curing the cause.  Rather than digress too much in this post, please see [Dirty Data is a Process Problem](LINK).
+
+The key roles you do need in a Data Science Team, which may or may not be shared by a single person are:
+
+1. **Software Developer**: Role is to review code, ensure high quality code, ensure *DD is followed, and ensure proper work flow process is followed.
+2. **Big Data Engineer**: Role is to contribute skills regarding complexity theory, writting Map Reduce jobs, understand Big Data Databases, oversea ETL, ensure high quality engineering and ensure fast efficient pipelines.
+3. **Machine Learning Expert**: This role is most similar to what we call "Data Scientists", they must deeply understand the process of training, prediction and evaluation, and effective modelling techniques. They may be most used to scripting languages like R and Python, but must be willing to learn "production" languages like Scala and Java.
+4. **Mathematician**: This role is emphasized distinctly from the above in that they ought to have a mathematics degree.  Mathematics, especially probability, has many subtleties and depth that mean misuse is commonplace through having only a superficial understanding.  The Mathematician must keep a watchful eye on evaluation techniques and model details.
+5. Half of a **Big Data DevOps**: This role is the most understated yet important role in the entire Big Data era.  The logic is simple, no infrastructure, no Data Science.  ...
+
+**Software Developer**, **Big Data Engineer**, **Mathematician**, **Machine Learning Expert** and half of a **Big Data DevOps**, where all of them can write code in some capacity.
+
+
+3. A
+
+
+
+This should all be a separate mini post.
+
+#### Dirty Data is a Process Problem
 
 According to [this slightly offensive article](http://www.computerworld.com/article/2929766/data-analytics/youre-hiring-the-wrong-data-scientists.html) we should be hiring more "Data Engineers".  Now I agree with many of the points made in the article, but the attitude regarding Data Science is a little arrogant.  In particular it uses a hospital analogy where it compares Data Engineers to janitors and Data Scientists to Surgeons, ignoring the rudeness, it's quite wrong:
 
@@ -74,8 +95,6 @@ According to [this slightly offensive article](http://www.computerworld.com/arti
 2. Data Engineers can usually quickly (weeks/months) learn a lot of Data Science skills provided they closley work with good mentors.  It would take a janitor many years, even a decade, to become a surgeon.
 
 The key point being the length of time to switch places is probably roughly equal, but isn't for the janitor-surgeon analogy.  
-
-#### Dirty Data is a Process Problem
 
 Cleaning dirty data is not a job, so you shouldn't hire someone to do it.
 
