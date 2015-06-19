@@ -80,7 +80,17 @@ The key roles you do need in a Data Science Team, which may or may not be shared
 
 Here importance, and definitely recruitment order, is 5 and 4 first - you need computers and data before you can do Data Science. If you employ some Data Scientists without first having some DevOps and Big Data Engineers in place, quite frankly this is stupid, that would be like hiring some roofers without hiring any brick layers.
 
+### A Note On Language and Tooling
 
+I hate debugging and I hate having to run code to find out what it does.  I write code that works first time. If my code compiles and the tests pass, I ship it.  This is because I don't write procedural code, don't mutate state and don't confuse types.  Of course this means I write in a statically typed functional language. Nevertheless always always
+
+**Choose best tool for the job.**
+
+Sometimes I use Python, which I don't like, sometimes I use bash, and sometimes I learn tools I have no desire to learn.  I only use Python when there is some library that doesn't exist in Scala and I'll encapsulate it in a TSV interface. Mostly I choose Scala because Scala is usually the best tool for the job ...
+
+Scala means you can prototype and deploy in a single language.
+
+Statically typed.
 
 
 
@@ -106,13 +116,6 @@ Now let's correct the analogy.  Suppose a doctor spills blood onto the floor eve
 
 
 
-### A Note On Language Choice
-
-Choose best tool for the job.
-
-Scala means you can prototype and deploy in a single language.
-
-Statically typed.
 
 ### 
 
