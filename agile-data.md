@@ -4,7 +4,7 @@ Subtitle: Time to deliver!
 
 Picture: Venn diagram with "Software Development Skills", "Maths, particularly Probability", "Conception of MVP + iteration" title "Agile Data"
 
-Thanks to the hype and rapid growth of Big Data Engineering and Data Science it seems most companies and practioners have got so excited by hiring, building infrastructure, clever sounding words and shiny technology that one crucial part of the fields seems to be missing - **delivery**.  I hear of countless stories where teams are built, clusters are bought, prototype algorithms written and software is installed, but it then takes months or even longer to deliver working data driven applications, or for insights to be acted on.  It happens in startups and big corps alike, hype is thick in the air but delivery is thin on the ground.
+Thanks to the hype and rapid growth of Big Data Engineering and Data Science it seems most companies and practioners have got so excited by hiring, building infrastructure, fashionable models and shiny technology that one crucial part of the fields seems to be missing - **delivery**.  I hear of countless stories where teams are built, clusters are bought, prototype algorithms written and software is installed, but it then takes months or even longer to deliver working data driven applications, or for insights to be acted on.  It happens in startups and big corps alike, hype is thick in the air but delivery is thin on the ground.
 
 The Harvard Business Review [Data Scientist's Don't Scale](https://hbr.org/2015/05/data-scientists-dont-scale) and related blogs correctly point out that we should focus on AI **applications**, that is automation. My addition is that these applications can not be easily bought in for most domains, rather they should be built in-house and the builders ought to be **Agile** Data Scientists and Big Data Engineers. The title of Data Scientist is not dead, but keeping Data Science alive means shifting the focus of the Data Scientist away from hacking, ad hoc analysis and prototyping and on to high quality code, automation, applications and Agile methodologies.
 
@@ -12,11 +12,17 @@ Those Data Scientists that do not adapt into the role of the automator will be a
 
 A decade or two ago delivery used be a problem in the software development industry as a whole.  Releasing working software would also take months and even years.  Then came along Agile, XP, Scrum and TDD and for those correctly practicing it it seemed to solve the problem and suddenly working software was delivered every few weeks.
 
-I have written two posts on how to apply Agile methodlogies in Data Science and Big Data. The two areas I have written about were chosen because they are critical in correctly practicing Agile while being the most overlooked and misunderstood practices in the data proffesions.
+I'm going to write some posts on how to apply and adapt Agile methodlogies to Data Science and Big Data.  I doubt I'll cover all areas, but rather focus on those areas that seem most difficult to adapt for data and those areas that appear to be most overlooked.  Why Agile methodologies are so lacking in Data Science and Big Data I don't claim to understand.  Perhaps it's the age of the industry? To be frank I believe a smidgen of snobbism and elitism aim to completely distinguish the industries from *regular* software development as though the practices and principles are beneath the concerns of mighty data minds.  At the end of the day Data Scientists do write code and should be building applications, so it's time get off ones high horse.
 
-**Automatic tests** are absalutely critical in correctly practicing Agile [1], [2], and from TDD evolved more acronyms and terms than many Data Scientists have written tests; there is TDD, BDD, DDD, ATDD, SDD, EDD, CDD, unit tests, integrations tests, black box tests, end-to-end tests, systems tests, acceptence tests, property based tests, example based tests, functional tests, etc. So I wrote: (LINK)
+### Agile Topics
 
-The second most lacking part in the data proffesions seems to be a lack of **high-quality code** and **cross-functional teams**.  Most definitions of Data Science actually include "hacking" as a skill.  If writting crap code is part of the definition of Data Science it's no wonder then that the proffesion is failing to deliver.  Cross-functional teams and cross-functional team members have the obvious benifit of being able to deliver end to end working (data-driven) software.  In the data proffesions this means the team must be able to ETL, clean, prototype, collaborate **and productionize**.  Collaboration and productionization cannot happpen without high-quality code, which is why I consider the two principles to go hand in hand. So I wrote: (LINK)
+**Automatic tests** are absalutely critical in correctly practicing Agile [1], [2], and from TDD evolved more acronyms and terms than many Data Scientists have written tests; there is TDD, BDD, DDD, ATDD, SDD, EDD, CDD, unit tests, integrations tests, black box tests, end-to-end tests, systems tests, acceptence tests, property based tests, example based tests, functional tests, etc. At a glance things like exploratory and interactive work, long running jobs, unclear objectives, perculiar development environments, etc preclude \*DD approaches, but by only slightly adapting the \*DD process we *can* to accomodate such problems.
+
+The next most lacking parts in the data proffesions seems to be a lack of **high-quality code**, code structure and **cross-functional teams**, which go hand in hand.  Most definitions of Data Science actually include "hacking" as a skill.  If writting crap code is part of the definition of Data Science it's no wonder then that the proffesion is failing to deliver.  Cross-functional teams and cross-functional team members have the obvious benifit of being able to deliver end to end working (data-driven) software.  In the data proffesions this means the team must be able to ETL, clean, prototype, collaborate **and productionize**.  Collaboration and productionization cannot happpen without high-quality code, which is why I consider the principles to go hand in hand.
+
+The industry desperately needs to learn the lessons already learnt in web development about clean code structure that decouples seperate responsibilities, that take inspiration from the MVC (Model View Controller) architectural pattern to clean up Data Science development.  We'll introduce A2EM (Ad Hoc Analysis Two ETL & Evaluation, Models & Mathematics) that's primary goal is to decouple production code (EM) from ones ad hoc analytical enviornment via a simple pattern & process where two repositories and two development tools (notebooks & IDEs) are used.
+
+Other subjects I'd like to touch on are how to deal dirty data and how to evaluate models.
 
 Given sufficient interest I may write a few more posts on applying Agile principles to archetecutre, work flow and even modelling.
 
@@ -35,6 +41,16 @@ This is why you should care.  It's also up to you to change the culture bottom u
 My Posts:
 
 LINKS again to follow up posts.
+
+Agile Data - Clean Structure & Code
+
+Agile Data - Dirty Data
+
+Agile Data - Cross Functional Teams
+
+Agile Data - *DD
+
+Agile Data - Meaningful Evaluation
 
 Random Links:
 
