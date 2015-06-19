@@ -80,6 +80,10 @@ The key roles you do need in a Data Science Team, which may or may not be shared
 
 Here importance, and definitely recruitment order, is 5 and 4 first - you need computers and data before you can do Data Science. If you employ some Data Scientists without first having some DevOps and Big Data Engineers in place, quite frankly this is stupid, that would be like hiring some roofers without hiring any brick layers.
 
+#### Pair Programming
+
+#### Code Review
+
 ### A Note On Language and Tooling
 
 I hate debugging and I hate having to run code to find out what it does.  I write code that works first time. If my code compiles and the tests pass, I ship it.  This is because I don't write procedural code, don't mutate state and don't confuse types.  Of course this means I write in a statically typed functional language. Nevertheless always always
