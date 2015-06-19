@@ -1,7 +1,7 @@
 
 ## Agile Data, Code Quality and Cross Functional Teams
 
-In this post we will focus on how in Agile and XP delivery velocity was increased and *maintained* through
+In this post we will focus on how delivery velocity can be increased and *maintained* via the below Agile and XP principles adapted to Data Science
 
  - Teams that can build every part of the system, including even infrastructure and deployment
  - Code, design, (mathematics) and architecture is kept clean so that at any given point in time adding to the system is easy
