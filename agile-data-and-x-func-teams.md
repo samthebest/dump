@@ -73,15 +73,15 @@ Some people have observed that Data Scientists spend a lot of time "cleaning dat
 The key roles you do need in a Data Science Team, which may or may not be shared by a single person are:
 
 1. **Software Developer**: Role is to review code, ensure high quality code, ensure *DD is followed, and ensure proper work flow process is followed.
-2. **Big Data Engineer**: Role is to contribute skills regarding complexity theory, writting Map Reduce jobs, understand Big Data Databases, oversea ETL, ensure high quality engineering and ensure fast efficient pipelines.
-3. **Machine Learning Expert**: This role is most similar to what we call "Data Scientists", they must deeply understand the process of training, prediction and evaluation, and effective modelling techniques. They may be most used to scripting languages like R and Python, but must be willing to learn "production" languages like Scala and Java.
-4. **Mathematician**: This role is emphasized distinctly from the above in that they ought to have a mathematics degree.  Mathematics, especially probability, has many subtleties and depth that mean misuse is commonplace through having only a superficial understanding.  The Mathematician must keep a watchful eye on evaluation techniques and model details.
-5. Half of a **Big Data DevOps**: This role is the most understated yet important role in the entire Big Data era.  The logic is simple, no infrastructure, no Data Science.  ...
+2. **Machine Learning Expert**: This role is most similar to what we call "Data Scientists", they must deeply understand the process of training, prediction and evaluation, and effective modelling techniques. They may be most used to scripting languages like R and Python, but must be willing to learn "production" languages like Scala and Java.
+3. **Mathematician**: This role is emphasized distinctly from the above in that they ought to have a mathematics degree.  Mathematics, especially probability, has many subtleties and depth that mean misuse is commonplace through having only a superficial understanding.  The Mathematician must keep a watchful eye on evaluation techniques and model details.
+4. **Big Data Engineer**: Role is to contribute skills regarding complexity theory, writting Map Reduce jobs, understand Big Data Databases, oversea ETL, ensure high quality engineering and ensure fast efficient pipelines.
+5. Half of a **Big Data DevOps**: This role is the most understated yet important role in the entire Big Data era.  The logic is simple, no infrastructure, no Data Science.  This skills required to be a good Big Data DevOps are also the most understated - good DevOps can save you millions by correctly and efficiently configuring infrastructure. Now a whole DevOps employee per team may be excessive, I'd say as a rule of thumb you need one full DevOps for every eight Data Scientists, or every two teams.
 
-**Software Developer**, **Big Data Engineer**, **Mathematician**, **Machine Learning Expert** and half of a **Big Data DevOps**, where all of them can write code in some capacity.
+Here importance, and definitely recruitment order, is 5 and 4 first - you need computers and data before you can do Data Science. If you employ some Data Scientists without first having some DevOps and Big Data Engineers in place, quite frankly this is stupid, that would be like hiring some roofers without hiring any brick layers.
 
 
-3. A
+
 
 
 
@@ -102,26 +102,9 @@ Writting a function to remove trailing white space from IDs, or removing duplica
 
 Now let's correct the analogy.  Suppose a doctor spills blood onto the floor every time they take a blood sample due some process being followed incorrectly, this results in dirty floors all over the hospital and means other doctors have to clean it up themselves before doing their own job.  As a manager of the hospital, you observe this is ridiculous and your doctors are being slowed down, would you a) invent a new title, "Blood Cleaner", and employ ten of them immediately or b) track down the doctor that spills the blood and correct his behaviour?
 
-#### So who should we hire?
 
 
 
-
-Do not condone a culture of work arounds by working around the problem
-
-If your email client duplicated all your emails, would you write a script to deduplicate them then ignore it? I hope not, I hope you would raise a bug.
-
-
-
-Engineers, Scientists and Mathematicians cannot solve the problem of dirty data, they just.  
-
-Indeed some data engineering work 
-
-paraphrased states "Data Engineers are to nurses and cleaners as Data Scientists are to are compared with nurses and cleaners 
-
-Mix of members:
-
-Maths degree, trad Data Scientist, Data Engineer, Software Developer, 0.5 DevOps for every four team members.
 
 ### A Note On Language Choice
 
@@ -132,6 +115,27 @@ Scala means you can prototype and deploy in a single language.
 Statically typed.
 
 ### 
+
+A2EM
+
+Gianmario:
+
+ACEM
+
+MEAC
+
+CEAM
+
+CEMA
+
+MECA
+
+
+IVMECA
+
+IVMECA
+
+I don't like Computation or Driver - it's implementation details, and may not necessary. 
 
 (Footnote: Alternatives, AV2EM, AI2EM, IV2EM, V2EM, A2P (p for product), IV2P, )
 
