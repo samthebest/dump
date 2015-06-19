@@ -29,7 +29,13 @@ Arguments against writing test code first:
 
 **(C)** This work is exploratory, I don't know if I'll need this method in future, I might ditch it
 
-Both (A) and (C) can usually be countered by just writing a simple low-effort test, *except* in the case where we would then need to redesign the code in order to abstract out or decouple context and dependencies, i.e. (B).  When you argue about anything (except mathematics) for long enough, and your a reasonable person, you usually conclude "well it depends".  What it depends on should become the focus of clarification, and in the TDD vs DDT argument it boils down to the following:
+Both (A) and (C) can usually be countered by just writing a simple low-effort test, *except* in the case where we would then need to redesign the code in order to abstract out or decouple context and dependencies, i.e. (B).  The exception is genuinely exploratory / interactive code, which I define as:
+
+### Genuinely Interactive Code
+
+Code is genuinely exploratory, and therefore not testable, only when you are writting a single or couple of lines of code running them, then waiting for the result, then using that result to determine what the next one or two lines of code should be.  Such work ought to be done in an interactive environment, like a shell, worksheet or notebook, and must **not** be copied into a file for commit until one has first written a failing test.
+
+Other than interactive code, all other TDD vs DDT arguments boild down to the following:
 
 ### Domain Specific Code and Generic Code
 
