@@ -129,6 +129,8 @@ IVMECA
 
 I don't like Computation or Driver - it's implementation details, and may not necessary. 
 
+VAMP - Visualization & Analytics. Models, Mathematics & Productization.
+
 (Footnote: Alternatives, AV2EM, AI2EM, IV2EM, V2EM, A2P (p for product), IV2P, )
 
 AWESOME ACRONYM
