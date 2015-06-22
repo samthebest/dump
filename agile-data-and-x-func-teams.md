@@ -86,6 +86,8 @@ Here importance, and definitely recruitment order, is 5 and 4 first - you need c
 
 #### Code Review
 
+#### Collaboration and Time Management
+
 ### A Note On Language and Tooling
 
 I hate debugging and I hate having to run code to find out what it does.  I write code that works first time. If my code compiles and the tests pass, I ship it.  This is because I don't write procedural code, don't mutate state and don't confuse types.  Of course this means I write in a statically typed functional language. Nevertheless always always
@@ -159,7 +161,7 @@ So engineers are happy to learn new technology and languages, it gets them excit
 
 In order to increase collaboration, ramp up, cross project collaboration, job satisfaction, focus and productivity the team will try to implement more pairing.  We will also try to ensure each member has at least one JIRA from one project that is not their main project.  Such tickets are good candidates for pairing tasks.  We should aim to rotate and pair at least twice a week since the day to day distractions of BAU often mean we do not initialise pairing, nor do we want to drop what we are doing, I propose we use the Calendar to book slots.  Each slot ought to be either 10 - 12 or 14 - 16/17.  We should put the invites in at sprint planning, of course such slots can be moved, but once created it's harder to overlook.  After doing some reading I consider the following techniques to be ways to do good pairing, each rule is a rule of thumb not a law of god
 
-1. Pairing slots should not be too long (like an entire day), with the same person
+1. Pairing slots should be put into the calendar.  Fridays should perhaps be avoided as such days often have demos, releases, retros, interviews, long lunchs, early finishes, etc.
 2. Driver and navigator should switch every 30 minutes. Try to stick to this, this is quite important. Set a timer.
 3. Take a 5 minutes break at switches (if necessary), sometimes it can make sense for the navigator to take a short break while the driver is deep in thought
 4. Plug in two keyboards into the machine
