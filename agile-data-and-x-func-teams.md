@@ -86,25 +86,19 @@ Here importance, and definitely recruitment order, is 5 and 4 first - you need c
 
 #### Code Review
 
-#### Collaboration and Time Management
+Force code review using 2x approval via bitbucket/stash PRs. Crucible. JIRA.
+
+#### Collaboration vs Context Switching
 
 ### A Note On Language and Tooling
 
-I hate debugging and I hate having to run code to find out what it does.  I write code that works first time. If my code compiles and the tests pass, I ship it.  This is because I don't write procedural code, don't mutate state and don't confuse types.  Of course this means I write in a statically typed functional language. Nevertheless always always
+Always always **Choose the best tool for the job.** Invalid reasons to choose a tool: familiarity, convenience, low barrier to entry, easy to learn, etc.  Not only are they subjective by definition, they will be inconsistent across people, teams and companies, which will itself add overhead to overall efficiency.  The biggest problem of tooling in the Data Science world is over use of notebooks & interactive enviornments.  You should not be shipping code that was written in an editor that does not even support automatic variable renames, or automatic white space formatting.  Similarly the Data Science world has an overreliance on dynamically typed and interpreted languages.
 
-**Choose best tool for the job.**
+Ease of use is inversley proportional to functionality and power. Only use the quick and dirty tools when you have a task that is quick and dirty, when things become larger and more complicated use a more powerful tool.
 
-Sometimes I use Python, which I don't like, sometimes I use bash, and sometimes I learn tools I have no desire to learn.  I only use Python when there is some library that doesn't exist in Scala and I'll encapsulate it in a TSV interface. Mostly I choose Scala because Scala is usually the best tool for the job ...
+So time for a small digression on Scala.  I've found Scala, especially in conjunction with Spark, can have the best of all worlds.  One has notebooks: iScala, iSpark, Intellij-worksheets, shells: spark-shell, scala shell and IDEs: Intellij, Eclipse.  Scala is a statically typed functional programming language, what this means is when used correctly if your code compiles, it probably works!  By using Scala I have completly forgotten how to use a debugger and I rarely run my code to determine what it does, my code tends to work first time with the help of a bit of \*DD.  Yes Scala is harder to learn than dynamic languages like Python and R, and I claim it's because it's much more powerful.  Anyway, I could write a book on the advantages of Scala, so I'll stop here.
 
-Scala means you can prototype and deploy in a single language.
-
-Statically typed.
-
-
-
-
-
-
+Now even though I love Scala I will use other tools when they are indeed the best for the job.  I'll wrap Python code that calls libraries that don't exist in Scala in TSV interfaces, I'll write bash scripts and even dip into Java for low level optimizations.  We should always use the best tool for the job, which so happens to usually be Scala.
 
 
 
