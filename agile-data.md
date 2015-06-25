@@ -52,6 +52,8 @@ Random Links:
 
 [Agile Manifesto](http://agilemanifesto.org/)
 
+[new London meetup - Agile Data](http://www.meetup.com/Agile-Data-London-Meetup/)
+
 [(Hilarious) The Land That Scrum Forgot](https://www.youtube.com/watch?v=hG4LH6P8Syk)
 
 [Clean Architecture and Design](https://www.youtube.com/watch?v=Nsjsiz2A9mg)
