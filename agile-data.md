@@ -32,7 +32,7 @@ Now when executives start noticing lack of return on investment, slow delivery o
 
 If we as data professionals fail to show ongoing business value in-house and keep saying "just one more month", then executives may turn to an external solution when such a solution might be completely inappropriate and fail miserably.  The reaction in software development to heal the divide between the business and developers was Agile.  Agile in-house teams would often be chosen over the solutions providers, consequently the businesses saved money, developers made money, and society overall became more efficient.
 
-This is why data professionals should care.  It's also up to them to change the culture bottom up because Agile happens mainly at the bottom; in the details regarding processes and practices of writting code.  Agile is not just physically standing up for meetings, or having a retrospective every two weeks.  Executives don't write code so it's up to data professionals to read up on Agile and watch videos so you can know what it is in all it's fine details.  Applying the same principles to *data* may be challanging, and this is what my follow up posts explore.
+This is why data professionals should care.  It's also up to us to change the culture bottom up because Agile happens mainly at the bottom.  Agile is not just physically standing up for daily meetings, or having a retrospective every two weeks.  The devil is in the details, and we, engineers & scientsits, are the closest to those details.
 
 My Posts:
 
