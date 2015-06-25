@@ -38,6 +38,8 @@ Force code review using 2x approval via bitbucket/stash PRs. Crucible. JIRA.
 
 #### Collaboration vs Context Switching
 
+Keep projects to a minimum, try to focus.  Ideally whole team should work together on MVP, then MLP, then when a project becomes a matter of iteration and maintenance assign less people.
+
 ### A Note On Language and Tooling
 
 Always always **Choose the best tool for the job.** Invalid reasons to choose a tool: familiarity, convenience, low barrier to entry, easy to learn, etc.  Not only are they subjective by definition, they will be inconsistent across people, teams and companies, which will itself add overhead to overall efficiency.  The biggest problem of tooling in the Data Science world is over use of notebooks & interactive enviornments.  You should not be shipping code that was written in an editor that does not even support automatic variable renames, or automatic white space formatting.  Similarly the Data Science world has an overreliance on dynamically typed and interpreted languages.
