@@ -36,6 +36,8 @@ Here importance, and definitely recruitment order, is 5 and 4 first - you need c
 
 Force code review using 2x approval via bitbucket/stash PRs. Crucible. JIRA.
 
+devmasters
+
 #### Collaboration vs Context Switching
 
 Keep projects to a minimum, try to focus.  Ideally whole team should work together on MVP, then MLP, then when a project becomes a matter of iteration and maintenance assign less people.
