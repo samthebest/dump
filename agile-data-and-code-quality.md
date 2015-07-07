@@ -24,31 +24,18 @@ In order for Data Science to embrace the lessons Agile and XP taught to software
 
 ### Step by Step Work Flow of A2EM
 
-#### 1. Separate directories/repositories
+#### 1. Create 2 repositories
 
-There are two approaches to physically separating the ad hoc from the production code, one is to have two separate repositories, and the other is to have two directories in a single repository.  We will outline both along with the caveats. We believe that using the 2-repository approach is the safest.
+We highly recommend creating a separate repository for your notebooks and ad-hoc code.  We did try creating a separate directory inside a single repository but this had many problems we detail below.  The main issue is that notebooks where not designed to be version controlled, they are by definition ad-hoc throw away environments - best used to play and sometimes to present, not to productionize.  So suppose your project is called "my-project", create two repositories, one called "my-project" and one called "my-project-ad-hoc". In the latter you can put your notesbooks (like iScala, iSpark, Jupyter, R-Studio files, etc), interactive environments, scrap code, etc. In the former, henceforth "main" or "EM", your going to put high quality, neatly structured, automatically tested, production worthy code, which you should use a proper IDE for. E.g. if you do Data Science in Scala choose something like Intellij, or if it's Python, choose PyCharm.
 
-##### 1.1 Two repo approach
+Drawbacks of using 1 repository.
 
-Suppose your project is called "my-project", create two repositories, one called "my-project" and one called "my-project-ad-hoc". In the latter you can put your notesbooks (like iScala, iSpark, Jupyter, R-Studio files, etc), interactive environments, images, etc. In the former, henceforth "main" or "EM", your going to put high quality, neatly structured, automatically tested, production worthy code, which you should use a proper IDE for. E.g. if you do Data Science in Scala choose something like Intellij, or if it's Python, choose PyCharm.
+1. Special commit hooks required to attempt to turn notebooks into code for version control, since they are saved into JSON.  This never quite worked; we managed to minimize the JSON down to something smaller but a) it was still JSON, b) git started behaving unpreditably.
+2. Doesn't enforce strict separation that could result in the flow being violated and Data Scientists going back to the old ways of putting all their code in an ad hoc environment. Just as shells are treated as throw away environments, so should notebooks.
+3. More effort to setup, especially if not scripted in some way.
+4. Extra care must be taken to ensure ad-hoc code is not accidentally deployed along with main code.
 
-You need 2 repositories because unfortunately most notebooks save as data, not code, which completely breaks history. Still try to keep your images and actual data untracked as these things might bloat the size. Instead ensure scripts can generate the images or grab the data from a warehouse as required.
-
-Note: I like using no suffix/prefix for the main repo as it is primary, only the ad hoc repo deserves a suffix/prefix as it should be considered secondary to the main repo.
-
-Caveat: Loss of automatic synchronicity between the ad hoc world and the production world, but provided one only uses the ad hoc environments for ad hoc work, this shouldn't be a problem.
-
-##### 1.2 Single repo approach
-
-By using (http://stackoverflow.com/questions/18734739/using-ipython-notebooks-under-version-control) it's possible to setup git so that notebooks are not saved as huge JSONs that break version control, this is absolutely critical in ensuring your git history doesn't contain huge horrible change sets. Then you simply use two directories in a single repository.
-
-Caveat: Git history is still a little odd, since code will be wrapped in JSON.
-
-Caveat: Doesn't enforce strict separation that could result in the flow being violated and Data Scientists going back to the old ways of putting all their code in an ad hoc environment. Just as shells are treated as throw away environments, so should notebooks.
-
-Caveat: More effort to setup, especially if not scripted in some way.
-
-Caveat: Extra care must be taken to ensure ad-hoc code is not accidentally deployed along with main code.
+By keeping the ad-hoc repository completely separate, one can be less strict about committing binary, images or data.  Nevertheless care should be taken to keep the repo size small and use scripts to generate or pull non-code objects as required.
 
 #### 2. Ticket Tracker and Git Flow
 
@@ -78,4 +65,4 @@ Ensure your code is clean and tidy and submit it for review to a colleague.  The
 
 ### Summary
 
-The A2EM code structure and work flow model is designed to maximize Agile principles. Feedback loops should be many, and should be as tight as possible.  Automatic tests allow for constant code iteration and instant technical feedback.  Well structured code reviews on clearly defined objectives provide immediate feedback as to whether the objective has been met.  Writting libraries with tests, and entry points with integrations tests, may feel like this slows you down, especially when direction is particularly unclear. Nevertheless making your exploratory work clear, testable, and repeatable and can be immediately understood by a colleague, and picked up by a colleague, thus maximizing collaboration.  Frequent releases and interaction with stakeholders/users provide feedback on the wider picture and to ensure the project cannot deviate too far from what stakeholders/users have in mind.  These feedback loops allow for *greater exploration* and *faster* changes in direction.
+The A2EM code structure and work flow model is designed to maximize Agile principles. Feedback loops should be many, and should be as tight as possible.  Automatic tests allow for constant code iteration and instant technical feedback.  Well structured code reviews on clearly defined objectives provide immediate feedback as to whether the objective have been met.  Writting libraries with tests and entry points with integrations tests, even when doing exploratory work, means your work is clear, repeatable, scientific and easily transferable to a colleague.  Frequent releases and interaction with stakeholders provide feedback on the wider picture and ensure the project cannot deviate too far from what stakeholders have in mind.  These feedback loops allow for *greater* exploration and *faster* changes in direction.
