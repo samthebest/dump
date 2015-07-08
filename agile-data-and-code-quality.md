@@ -1,8 +1,8 @@
 ## Agile Data - Code Structure & Quality
 
-The single overriding cause of bad code and bad code structure in Data Science is **Analytics has become tightly coupled with productionization.**
+The main cause of bad code and bad code structure in Data Science is **the tight coupling of Analytics with productionization.**
 
-This is a problem born out of the very definition of a Data Scientist; someone in between an analyst / mathematician and a software developer / engineer.  The analogy in web development is the full stack developer, who may have started out in their career by tightly coupling their view code (the FE) with the business logic (the BE).  The reaction was to invent and formalize a system of decoupling the roles so that systems became cleaner and easier to change, and so came MVC and it's derivatives.  This post will propose a similar structure for Data Science.
+This is a problem born out of the very definition of a Data Scientist; someone in between an analyst, a mathematician and a software developer / engineer.  The analogy in web development is the full stack developer, who may have started out in their career by tightly coupling their view code (the FE) with the business logic (the BE).  The reaction was to invent and formalize a system of decoupling the roles so that systems became cleaner and easier to change, and so came MVC and it's derivatives.  This post will propose a similar structure for Data Science.
 
 A big benifit of good code quality and structure that will be explored in another post will be it's impact on collaboration.  Clean code and structure feeds back into collaborative teams, which itself has many benifits.
 
@@ -22,18 +22,20 @@ The "2" also represents a *separation* between the ad hoc world of interactivity
 
 In order for Data Science to embrace the lessons Agile and XP taught to software development, like clean code & design, TDD and cross-funtional teams, we must first embrace a framework that is conducive to clean decoupling of responsibilities and roles.
 
+(If you can think of a neater, easier to remember acronm, please leave your idea on the comments.)
+
 ### Step by Step Work Flow of A2EM
 
 #### 1. Create 2 repositories
 
-We highly recommend creating a separate repository for your notebooks and ad-hoc code.  We did try creating a separate directory inside a single repository but this had many problems we detail below.  The main issue is that notebooks where not designed to be version controlled, they are by definition ad-hoc throw away environments - best used to play and sometimes to present, not to productionize.  So suppose your project is called "my-project", create two repositories, one called "my-project" and one called "my-project-ad-hoc". In the latter you can put your notesbooks (like iScala, iSpark, Jupyter, R-Studio files, etc), interactive environments, scrap code, etc. In the former, henceforth "main" or "EM", your going to put high quality, neatly structured, automatically tested, production worthy code, which you should use a proper IDE for. E.g. if you do Data Science in Scala choose something like Intellij, or if it's Python, choose PyCharm.
+We highly recommend creating a separate repository for your notebooks and ad-hoc code.  We did try creating a separate directory inside a single repository but this had many problems we detail further below.  The main issue is that notebooks where not designed to be version controlled, they are by definition ad-hoc throw away environments - best used to play and sometimes to present, not to productionize.  So suppose your project is called "my-project", create two repositories, one called "my-project" and one called "my-project-ad-hoc". In the latter you can put your notesbooks (like iScala, iSpark, Jupyter, R-Studio files, etc), interactive environments, scrap code, etc. In the former, henceforth "main" or "EM", your going to put high quality, neatly structured, automatically tested, production worthy code, which you should use a proper IDE for. E.g. if you do Data Science in Scala choose something like Intellij, or if it's Python, choose PyCharm.
 
 Drawbacks of using 1 repository.
 
-1. Special commit hooks required to attempt to turn notebooks into code for version control, since they are saved into JSON.  This never quite worked; we managed to minimize the JSON down to something smaller but a) it was still JSON, b) git started behaving unpreditably.
-2. Doesn't enforce strict separation that could result in the flow being violated and Data Scientists going back to the old ways of putting all their code in an ad hoc environment. Just as shells are treated as throw away environments, so should notebooks.
-3. More effort to setup, especially if not scripted in some way.
-4. Extra care must be taken to ensure ad-hoc code is not accidentally deployed along with main code.
+(1). Special commit hooks required to attempt to turn notebooks into code for version control, since they are saved into JSON.  This never quite worked; we managed to minimize the JSON down to something smaller but a) it was still JSON, b) git started behaving unpreditably.
+(2). Doesn't enforce strict separation that could result in the flow being violated and Data Scientists going back to the old ways of putting all their code in an ad hoc environment. Just as shells are treated as throw away environments, so should notebooks.
+(3). More effort to setup, especially if not scripted in some way.
+(4). Extra care must be taken to ensure ad-hoc code is not accidentally deployed along with main code.
 
 By keeping the ad-hoc repository completely separate, one can be less strict about committing binary, images or data.  Nevertheless care should be taken to keep the repo size small and use scripts to generate or pull non-code objects as required.
 
@@ -65,4 +67,4 @@ Ensure your code is clean and tidy and submit it for review to a colleague.  The
 
 ### Summary
 
-The A2EM code structure and work flow model is designed to maximize Agile principles. Feedback loops should be many, and should be as tight as possible.  Automatic tests allow for constant code iteration and instant technical feedback.  Well structured code reviews on clearly defined objectives provide immediate feedback as to whether the objective have been met.  Writting libraries with tests and entry points with integrations tests, even when doing exploratory work, means your work is clear, repeatable, scientific and easily transferable to a colleague.  Frequent releases and interaction with stakeholders provide feedback on the wider picture and ensure the project cannot deviate too far from what stakeholders have in mind.  These feedback loops allow for *greater* exploration and *faster* changes in direction.
+The A2EM code structure and work flow model is designed to maximise Agile principles. Feedback loops should be many, and should be as tight as possible. Automatic tests allow for constant code iteration and instant technical feedback. Well structured code reviews on clearly defined objectives provide immediate feedback as to whether the objectives have been met. Writing libraries with tests and entry points with integrations tests, even when doing exploratory work, means your work is clear, repeatable, scientific and easily transferable to a colleague. Frequent releases and interaction with stakeholders provide feedback on the wider picture and ensure the project cannot deviate too far from what stakeholders have in mind. These feedback loops allow for greater exploration and faster changes in direction while preserving quality. "You don't go fast by rushing" in one direction, with one tool, with one person, with one way of thinking. You go fast by being Agile.
