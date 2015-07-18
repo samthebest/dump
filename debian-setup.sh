@@ -22,7 +22,7 @@ mkdir src
 # Curl (some distros don't have curl)
 sudo apt-get install curl
 
-# Google cloud
+# Google cloud https://cloud.google.com/sdk/
 curl https://sdk.cloud.google.com | bash
 source .bashrc
 
