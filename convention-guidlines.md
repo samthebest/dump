@@ -54,7 +54,7 @@ Please write in a functional style, avoid `var`s, avoid mutable types, avoid con
 
 #### private
 
-Please avoid private unless you really have a class that has some private mutable state (which is rare in FP). Even if you do have mutable volatile state in a class do not use private methods.  If you class, say class A, needs to encapsulate private mutable volatile state, that wrap that state in another class B with public methods.  Then you can have a private B field in A.  Usually in functional and open source programming private is never needed.
+Please avoid private unless you really have a class that has some private mutable state (which is rare in FP). Even if you do have mutable volatile state in a class do not use private methods.  If you class, say class A, needs to encapsulate private mutable volatile state, that wrap that state in another class B with public methods - this makes the API to class A clear without unnecessarily restricting usage.  Then you can have a private B field in A.  Usually in functional and open source programming private is never needed.
 
 #### Interfaces / traits / abstractions
 
