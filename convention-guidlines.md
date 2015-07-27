@@ -8,7 +8,7 @@ Please use an auto-reformatter, the out-of-box Intellij one is very good.  We ha
 
 1. minimum blank lines should be 1 for 'after package', all other minimum blank line values should be 0,
 2. All the fields under 'maximum blank lines' should be 1, 
-3. due to an ancient and still unfixed bug in Intellij please check "Align when multiline" for "Chained method calls" and put chains on a new line. This is how code looks before this rule:
+3. due to an ancient and still [unfixed bug in Intellij](https://youtrack.jetbrains.com/oauth?state=%2Fissue%2FSCL-5376) please check "Align when multiline" for "Chained method calls" and put chains on a new line. This is how code looks before this rule:
 
 ```
   val myList = List(1, 2, 3)
@@ -37,7 +37,7 @@ Clearly much nicer.
 
 #### Braces
 
-Please refrain from using curly braces wherever one can use round braces.  There is no need to seperate code over multiple lines for trivial one-line lambda expressions.
+Please refrain from using curly braces wherever one can use round braces.  There is no need to seperate code over multiple lines for trivial one-line lambda expressions. Furthermore it [increases compile checking](http://stackoverflow.com/a/4387118/1586965)
 
 ### Comments
 
@@ -51,6 +51,14 @@ The exceptions to this rule are TODOs, FIXMEs and a comment that explains a part
 ### Functional Programming
 
 Please write in a functional style, avoid `var`s, avoid mutable types, avoid control structures and loops, etc.
+
+#### private
+
+Please avoid private unless you really have a class that has some private mutable state (which is rare in FP). Even if you do have mutable volatile state in a class do not use private methods.  If you class, say class A, needs to encapsulate private mutable volatile state, that wrap that state in another class B with public methods.  Then you can have a private B field in A.  Usually in functional and open source programming private is never needed.
+
+#### Interfaces / traits / abstractions
+
+Only abstract when you have two or more concrete instances that justify the abstraction.  The only exception is to wrap things that cannot be easily included in unit tests, like file-systems or web-apis.
 
 #### Type Annotation
 
