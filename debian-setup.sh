@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # To run execute:
 # wget https://raw.githubusercontent.com/samthebest/dump/master/debian-setup.sh && chmod +x debian-setup.sh && ./debian-setup.sh
 
