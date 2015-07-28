@@ -18,6 +18,9 @@ sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /et
 sudo apt-get update 
 sudo apt-get install google-chrome-stable
 
+# git
+sudo apt-get install git
+
 # Java
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
@@ -27,9 +30,6 @@ sudo apt-get install oracle-java8-installer
 echo "deb http://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
 sudo apt-get update
 sudo apt-get install sbt
-
-# git
-sudo apt-get install git
 
 # mkdir src
 mkdir src
