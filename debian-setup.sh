@@ -41,4 +41,11 @@ sudo apt-get install pepperflashplugin-nonfree
 # Sublime
 sudo apt-get install sublime-text
 
+# Intellij (version dependent)
+wget -O /tmp/intellij.tar.gz http://download.jetbrains.com/idea/ideaIC-14.1.4.tar.gz
+mkdir idea-IC
+tar xfz /tmp/intellij.tar.gz -C idea-IC --strip-components=1
+cd idea-IC/bin
+./idea.sh
+
 # TODO See mac setup script
