@@ -48,10 +48,12 @@ tar xfz /tmp/intellij.tar.gz -C idea-IC --strip-components=1
 wget -O /tmp/idea-settings.jar https://github.com/jkaving/intellij-colors-solarized/blob/master/settings.jar?raw=true
 ./idea-IC/bin/idea.sh
 
-# MANUAL STEPS - Start intellij and load settings from /tmp
+# MANUAL STEP - Setup github ssh key
 
 # Clone my open-source repos
 cd ~/src
 git clone git@github.com:samthebest/sceval.git
+
+# MANUAL STEPS - Start intellij and load settings from /tmp
 
 # TODO See mac setup script
