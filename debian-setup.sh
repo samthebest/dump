@@ -2,6 +2,10 @@
 
 set -e
 
+test "${1}" != ""
+
+email=${1}
+
 # To run execute:
 # wget https://raw.githubusercontent.com/samthebest/dump/master/debian-setup.sh && chmod +x debian-setup.sh && ./debian-setup.sh
 
@@ -53,8 +57,8 @@ wget -O /tmp/idea-settings.jar https://github.com/jkaving/intellij-colors-solari
 # xclip
 sudo apt-get install xclip
 
-# Setup an ssh key (change the email)
-ssh-keygen -t rsa -b 4096 -C "email@address.com"
+# Setup an ssh key
+ssh-keygen -t rsa -b 4096 -C "$email"
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
 xclip -sel clip < ~/.ssh/id_rsa.pub
