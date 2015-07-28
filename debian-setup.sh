@@ -48,7 +48,15 @@ tar xfz /tmp/intellij.tar.gz -C idea-IC --strip-components=1
 wget -O /tmp/idea-settings.jar https://github.com/jkaving/intellij-colors-solarized/blob/master/settings.jar?raw=true
 ./idea-IC/bin/idea.sh
 
-# MANUAL STEP - Setup github ssh key
+# xclip
+sudo apt-get install xclip
+
+# Setup an ssh key (change the email)
+ssh-keygen -t rsa -b 4096 -C "email@address.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+xclip -sel clip < ~/.ssh/id_rsa.pub
+# MANUAL STEP - Paste into github https://github.com/settings/ssh
 
 # Clone my open-source repos
 cd ~/src
