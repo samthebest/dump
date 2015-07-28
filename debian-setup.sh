@@ -45,7 +45,13 @@ sudo apt-get install sublime-text
 wget -O /tmp/intellij.tar.gz http://download.jetbrains.com/idea/ideaIC-14.1.4.tar.gz
 mkdir idea-IC
 tar xfz /tmp/intellij.tar.gz -C idea-IC --strip-components=1
-cd idea-IC/bin
-./idea.sh
+wget -O /tmp/idea-settings.jar https://github.com/jkaving/intellij-colors-solarized/blob/master/settings.jar?raw=true
+./idea-IC/bin/idea.sh
+
+# MANUAL STEPS - Start intellij and load settings from /tmp
+
+# Clone my open-source repos
+cd ~/src
+git clone git@github.com:samthebest/sceval.git
 
 # TODO See mac setup script
