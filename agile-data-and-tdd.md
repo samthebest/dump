@@ -1,6 +1,6 @@
-## Agile Data and *DD
+## Agile Data and Test Driven Development
 
-This post will not labour over the subtle differences between the annoying number of terms mentioned in the [precursor post](LINK), which will henceforth be collectively referred to as *DD, rather we will focus on how to apply the principles they each have in common to a field that at a glance precludes using them.  *DD has worked well in web development but it seems difficult to apply in data driven fields.
+This post will not labour over the subtle differences between the annoying number of terms mentioned in the precursor post https://www.linkedin.com/pulse/agile-data-scientists-do-scale-sam-savage, which will henceforth be collectively referred to as \*DD, rather we will focus on how to apply the principles they each have in common to a field that at a glance precludes using them.  \*DD has worked well in web development but it seems difficult to apply in data driven fields.
 
 ### The Core Principle of \*DD
 
@@ -19,7 +19,7 @@ Over the years the core principles of \*DD have been buried under superfluous (b
 
 ### Test Code First (TDD) or Main Code First (DDT)?
 
-Uncle Bob (in a talk I struggle to find) defined "legacy code", **not** as ugly code, or old code, but code that is not tested.  In [a TDD debate](https://www.youtube.com/watch?v=KtHQGs3zFAM) he also defined "professionalism" as "Not shipping a line of code that does not have an executing unit test" \[1\]. Both definitions are fantastic, but note how neither actually requires writing tests before code even though Uncle Bob is a TDD evangelist.
+Uncle Bob (in a talk I struggle to find) defined "legacy code", **not** as ugly code, or old code, but code that is not tested.  In a TDD debate\[1\] he also defined "professionalism" as "Not shipping a line of code that does not have an executing unit test". Both definitions are fantastic, but note how neither actually requires writing tests before code even though Uncle Bob is a TDD evangelist.
 
 Arguments against writing test code first:
 
@@ -29,7 +29,7 @@ Arguments against writing test code first:
 
 **(C)** This work is exploratory, I don't know if I'll need this method in future, I might ditch it
 
-Both (A) and (C) can usually be countered by just writing a simple low-effort test, *except* in the case where we would then need to redesign the code in order to abstract out or decouple context and dependencies, i.e. (B).  The exception is genuinely exploratory / interactive code, which I define as:
+Both (A) and (C) can usually be countered by just writing a simple low-effort test, *except* in the case where we would then need to redesign the code in order to abstract out or decouple context and dependencies, i.e. (B).  The exception is genuinely exploratory / interactive code, which I define as follows:
 
 ### Genuinely Interactive Code
 
@@ -49,12 +49,12 @@ Which then should be combined with the following methodology.
 
 ### Outside In methodology to \*DD
 
-Firstly it's assumed your team uses git, a sensible branching model, like git-flow (or trunk can work for 1-2 person teams), and a light weight task tracker, like JIRA or Trello. I discuss work flow in more detail in my (Agile Cross Functional Teams)[LINK] post, but within the context of *DD here is the step by step process
+Firstly it's assumed your team uses git, a sensible branching model, like git-flow (or trunk can work for 1-2 person teams), and a light weight task tracker, like JIRA or Trello. Within the context of *DD here is the step by step process
 
 1. Broadly speaking all tickets must relate directly to a demonstrable use case and an automatable deliverable.  Even for tickets for exploring data and producing some plots / html pages think about the output, the consumer of that output, what's the minimum work required to generate business value from the exploration and how can I hook in an entry point (like a bash script).
 2. Given the ticket, start a TDD/BDD cycle from the *outside* in, so start with the entry point. My favourite first test is "script returns zero exit code and produces an output of non-zero size".
 3. Work your way down the layers in the TDD/BDD cycle filling out the high level business logic and design. As we get closer to details our tests ought to become more detailed and complex.
-4. When we hit the need for low level code that is domain agnostic code, apply the above rule of thumb. This is also an cycle, we try to implement simply, when we seem to be failing we introduce a test then get back to implementation, which then may require introduction of another even lower level routine, if we can't implement that simply we introduce a test for that, and so on.  We still have tight iteration between the test and main code, but unlike TDD main code can come slightly before test code.
+4. When we hit the need for low level code that is domain agnostic code, apply the above rule of thumb. This is also a cycle, we try to implement simply, when we seem to be failing we introduce a test then get back to implementation, which then may require introduction of another even lower level routine, if we can't implement that simply we introduce a test for that, and so on.  We still have tight iteration between the test and main code, but unlike TDD main code can come slightly before test code.
 5. Before pushing your code delete any code that when removed does not make any tests fail, such code must either be pointless or steps 1 - 5 haven't been correctly followed.
 
 The rule of thumb combined with the outside in methodology then gives us the best of all worlds:
@@ -81,19 +81,19 @@ So before you can write a test for your entry point, you need to ensure what you
 
 In essence you are coupling your output to yourself and your environment.  Use the environment to write the code, but plan to deliver something independent of that environment.  The solution is to maintain two repositories, one for libraries and entry points, the other for notebooks.  Use the notebooks for playing, fiddling and exploring, but also use an IDE to produce production worthy code that has tests and commit this into the other repository.
 
-In my other post on [Cross Functional Teams](LINK) I'll go into more detail on how one should maintain two repositories.
+This post goes into detail as to how one can maintain two repositories: https://www.linkedin.com/pulse/agile-data-code-structure-quality-sam-savage
 
 #### Model Performance
 
 What is the definition of passing for model performance? Don't we just look at the ROCs and say "yup, ship it, looks fine"?  No, we have a use case and that use case ought to be able determine a few desirable score-thresholds along with a minimum level of acceptable performance.  Then you can write a test that at thresholds A, B and C say, the models precision say, is greater than the acceptable levels of A', B' and C' say.
 
-Not only does this mean you now have a nice way to automatically test your model, you have also thought a lot about the business value of that model to arrive at the test. Now you won't waste any time over optimising a model, focusing on measures of performance that are not relevant or focusing on completely meaningless measures of accuracy like AUC (which I won't digress into, but I'll save for another post).
+Not only does this mean you now have a nice way to automatically test your model, you have also thought a lot about the business value of that model to arrive at the test. Now you won't waste any time over optimising a model nor focus on measures of performance that do not have clear business meaning.
 
 #### Speed Tests and Slow Jobs
 
-This is a genuine problem because we ideally want tests to run quickly, which often just isn't the case with Big Data.  Tests can be similar to the above, that is we have some "acceptable limit" on how long the jobs should take.  The best advice to give is to have a good CI pipeline that automatically runs nightly tests on your develop branch on a realistic cluster.  Provided your team correctly practices a good git-flow workflow if you introduce a bug that slows your job down at least you will probably find out tomorrow.  That's not as good as the sub minute times in web development, but it's better than finding out just before you want to release.
+This is a genuine problem because we ideally want tests to run quickly, which often just isn't the case with Big Data.  Performance tests can be similar to accuracy tests, that is we have some "acceptable limit" on how long the jobs should take.  Ideally have a good CI pipeline that automatically runs nightly tests on your develop branch on a realistic cluster.  Provided your team correctly practices a good git-flow workflow if you introduce a bug that slows your job down at least you will probably find out tomorrow.  That's not as good as the sub minute times in web development, but it's better than finding out just before you want to release.
 
-Another trick which can work well for jobs that are known to downscale (i.e. work on less nodes but just slower) is to make your dev cluster much larger than your prod cluster so you can develop faster.
+Another trick which can work well for jobs that are known to downscale (i.e. work on less nodes but just slower) is to make your dev cluster much larger than your prod cluster so you can speed up your development cycle.
 
 #### Resource Problems
 
@@ -103,4 +103,10 @@ This is again a real problem in Big Data. It's hard to write a test for out of m
 
 Yes it often is, that's why languages like Scala have awesome DSLs for **property based testing** (see ScalaCheck).  Jim Coplien in the debate with Uncle Bob pointed out the power of CDD - Contract Driven Development.  Using these frameworks one can write high level properties, or contracts, in a predicate calculus like DSL, then the framework will automatically generate test cases for you - as many as you want!
 
-Combining CDD with good automated CI can be awesome.  We have a parameter in our tests which switches on "uber test mode", this tells all the property based tests to use an order or two of magnitude more test cases.  The tests then take an order or two longer to run, but if this is happening at night, then it doesn't really matter.  The "uber test mode" has successfully found several bugs while the developer effort was fractional.
+Combining CDD with good automated CI can be awesome.  We have a parameter in our tests which switches on "uber test mode", this tells all the property based tests to use an order or two of magnitude more test cases.  The tests then take an order or two longer to run, but if this is happening at night, then it doesn't really matter.  The "uber test mode" has successfully found several bugs while the developer effort was just a fraction of conventional example based tests.
+
+### Conclusion
+
+Writing tests doesn't need to be boring, in fact it can require imagination and deep thought.  Deep thought in designing tests ensures clarity of business objectives and focus on delivery.  The techniques and types of tests may be quite different to those seen in web development, but the core principles can still be applied.  You cannot be Agile without *DD.
+
+\[1\] https://www.youtube.com/watch?v=KtHQGs3zFAM
