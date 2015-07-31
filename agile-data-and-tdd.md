@@ -1,4 +1,4 @@
-## Agile Data and Test Driven Development
+## Data Science and Test Driven Development
 
 This post will not labour over the subtle differences between the annoying number of terms mentioned in the precursor post https://www.linkedin.com/pulse/agile-data-scientists-do-scale-sam-savage, which will henceforth be collectively referred to as \*DD, rather we will focus on how to apply the principles they each have in common to a field that at a glance precludes using them.  \*DD has worked well in web development but it seems difficult to apply in data driven fields.
 
