@@ -6,6 +6,14 @@ object ProfilingUtils {
     println("Took " + took / (1000.0 * 1000.0) + " milli seconds")
     took
   }
+  
+  def time(f: => Unit, s: String): Double = {
+    val now = System.currentTimeMillis()
+    f
+    val took = System.currentTimeMillis() - now
+    println(s + " took " + took + " milli seconds")
+    took
+  }
 
   def doMany(n: Int, f: => Unit): Unit =
     (1 to n).foreach(i => f)
