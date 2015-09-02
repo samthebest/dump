@@ -1,4 +1,20 @@
 
+## Data Scientists Don't Exist, But Data Science Teams Do
+
+What distinguishes a Data Scientist from an Analyst, or a Software Developer, or an acedemic, or an Engineer, or a Big Data expert or a BI guy?  Well apparently they are supposed to be all of these things, which is ridiculous.  
+
+In a nutshell, the key difference between a Data Scientist and an Analyst is the productionisation and automation of their code, over the manual generation or reports or the handing over of prototypes to developers to do the productionisation for them.  Without productionisation, we are just renaming a long existing proffesion for the sake of being hip.  Some may argue that there has been a modernisation of tooling, like R over SAS or Hadoop over Teradata.  This too is an abuse of language, we haven't renamed "police persons" now that they use tasers in addition to trunchens.
+
+Anyway, let's not actually do away with the title "Data Scientist", but let's define it by the team they work in and the nature of work that team performs, rather than the individual.  So we propose the following updated definition:
+
+A Data Scientist is a member of a Data Science team, and a Data Science team pursues the productionisation and automation of analytics and machine learning to deliver business value.
+
+
+This definition seems difficult to satisfy since so many skills are required but possessed by very few.
+
+
+The reality is most define and interview for Data Science roles according to their own 
+
 ## Agile Data - Cross Functional Teams
 
 In this post we will focus on how delivery velocity can be increased and *maintained* via the below Agile and XP principles adapted to Data Science
