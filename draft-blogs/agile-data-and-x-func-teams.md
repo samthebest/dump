@@ -1,7 +1,13 @@
 
-## Data Scientists Don't Exist, But Data Science Teams Do
+## Defining Data Science by the Team not the Individual
 
-What distinguishes a Data Scientist from an Analyst, or a Software Developer, or an acedemic, or an Engineer, or a Big Data expert or a BI guy?  Well apparently they are supposed to be all of these things, which is ridiculous.  
+It seems the ambiguous and overly broad definition of a "Data Scientist" frustrates recruiters and candidates alike.
+
+What distinguishes a Data Scientist from an Analyst, Software Developer, Acedemic, Engineer, Big Data expert, Visualisation expert, or a BI guy, or even a DevOps?  It seems the industry wants vast quantities of proffesionals to emerge that claim to have all of these skills yet are willing to work for a salary that is not a multiple of all these skills.  Furthermore 
+
+(but probably in order to keep costs down ignores) seniority - which is absalutely necessary in order to become a master of many trades.
+
+Well apparently they are supposed to be all of these things, which is ridiculous.  Eventually they will exist, just as we have some senifull-stack web developers who are now both JavaScript ninjas and back-end masters.
 
 In a nutshell, the key difference between a Data Scientist and an Analyst is the productionisation and automation of their code, over the manual generation or reports or the handing over of prototypes to developers to do the productionisation for them.  Without productionisation, we are just renaming a long existing proffesion for the sake of being hip.  Some may argue that there has been a modernisation of tooling, like R over SAS or Hadoop over Teradata.  This too is an abuse of language, we haven't renamed "police persons" now that they use tasers in addition to trunchens.
 
@@ -12,6 +18,7 @@ A Data Scientist is a member of a Data Science team, and a Data Science team pur
 
 This definition seems difficult to satisfy since so many skills are required but possessed by very few.
 
+The most common issue of ambiguity in the Data Science industry at the moment, and I believe it frustrates recruiters and candidates alike, is the definitino of a Data Science.
 
 The reality is most define and interview for Data Science roles according to their own 
 
