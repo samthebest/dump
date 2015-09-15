@@ -36,6 +36,8 @@ http://spark.apache.org/docs/latest/programming-guide.html
 
 http://spark.apache.org/docs/latest/submitting-applications.html
 
+http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.package
+
 Old spark export configuration:
 
 export SPARK_JAVA_OPTS="-Dspark.serializer=org.apache.spark.serializer.KryoSerializer -Dspark.kryoserializer.buffer.mb=100"
