@@ -3,41 +3,19 @@
 
 It seems the ambiguous and overly broad definition of a "Data Scientist" frustrates recruiters and candidates alike.
 
-What distinguishes a Data Scientist from an Analyst, Software Developer, Acedemic, Engineer, Big Data expert, Visualisation expert, or a BI guy, or even a DevOps?  It seems the industry wants vast quantities of proffesionals to emerge that claim to have all of these skills yet are willing to work for a salary that is not a multiple of all these skills.  Furthermore 
+What distinguishes a Data Scientist from an Analyst, Software Developer, Acedemic, Engineer, Big Data expert, Visualisation expert, or a BI guy, or even a DevOps?  It seems the industry wants vast quantities of proffesionals to emerge that claim to have all of these skills, this has been sometimes referred to as the "Unicorn Problem of Data Science". Perhaps in time such unicorns will exist, but for now we need to solve this problem more realistically. With any business problem, the solution to the Unicorn Problem will emerge fastest if we focus on the business value Data Scientists bring. For the meantime ignore the more interesting stuff, like the details of machine learning algorithms or Big Data frameworks.
 
-(but probably in order to keep costs down ignores) seniority - which is absalutely necessary in order to become a master of many trades.
+In a nutshell, the key difference between a Data Scientist and an Analyst is the productionisation and automation of their code, over the manual generation or reports, or the handing over of prototypes to developers to do the productionisation for them.  Without productionisation, we are just renaming a long existing proffesion for the sake of being hip.  Some may argue that there has been a modernisation of tooling, like R over SAS, or Hadoop over Teradata.  This too is an abuse of language, upgrades in tooling do not justify reclassification of proffesions.
 
-Well apparently they are supposed to be all of these things, which is ridiculous.  Eventually they will exist, just as we have some senifull-stack web developers who are now both JavaScript ninjas and back-end masters.
+Now it is this difference, "productionisation and automation", that is key to the business value of Data Science.  Furthermore it is absalutely central to Agile methodologies.  With it we can close contentric feedback loops where the inner loops constitute logical tests, then evaluation frameworks, then user feedback.  Let's update the definition of a "Data Scientist" to make this central, and let's do away with the unicorn requirement for something more realistic - mulit-skilled teams:
 
-In a nutshell, the key difference between a Data Scientist and an Analyst is the productionisation and automation of their code, over the manual generation or reports or the handing over of prototypes to developers to do the productionisation for them.  Without productionisation, we are just renaming a long existing proffesion for the sake of being hip.  Some may argue that there has been a modernisation of tooling, like R over SAS or Hadoop over Teradata.  This too is an abuse of language, we haven't renamed "police persons" now that they use tasers in addition to trunchens.
+**A Data Scientist is a member of a Data Science team, and a Data Science team pursues the productionisation and automation of analytics and machine learning to deliver business value.**
 
-Anyway, let's not actually do away with the title "Data Scientist", but let's define it by the team they work in and the nature of work that team performs, rather than the individual.  So we propose the following updated definition:
+We will argue that adopting this definition will get a business to it's end goals significantly faster, with significantly higher quality results. Moreover the team members will be happier, more collaborative and eventually evolve into those unicorns over time.  Those focused on engineering practices can and will learn the subtlties of mathematics, and those focused on mathematics can and will learn the importance of clean code, tests, reliability, evaluation and clean archetecture.
 
-A Data Scientist is a member of a Data Science team, and a Data Science team pursues the productionisation and automation of analytics and machine learning to deliver business value.
+### Data Science Teams must be Cross Functional
 
-
-This definition seems difficult to satisfy since so many skills are required but possessed by very few.
-
-The most common issue of ambiguity in the Data Science industry at the moment, and I believe it frustrates recruiters and candidates alike, is the definitino of a Data Science.
-
-The reality is most define and interview for Data Science roles according to their own 
-
-## Agile Data - Cross Functional Teams
-
-In this post we will focus on how delivery velocity can be increased and *maintained* via the below Agile and XP principles adapted to Data Science
-
- - Teams that can build every part of the system, including even infrastructure and deployment
- - Code, design, (mathematics) and architecture is kept clean so that at any given point in time adding to the system is easy
-
-Neither of these things currently are accepted and respected practices in the Data Science world at the moment.  The cause of this is due to a single problem:
-
-
-Data Science has been defined as "a person who is better at maths than a coder and better at coding than a mathematician", but the converse of this is less appealing - "someone who is a worse coder than developer and worse at maths than a mathematician". In this post we will discuss how to get your Data Scientists to go from jack of two trades to a master of both with cross functional teams.  Cross functional teams then feed back into cleanliness (LINK), and cleanliness feeds back into closer collaboration. Get the two right and you have yourself a positive feedback loop that will pump out products at speed.
-
-
-### Cross Functional Data Science Teams
-
-Cross functional teams are important in Data Science firstly because it's a known fact that multiple specialized teams deliver much slower than a single cross functional team.  Returning to the web development analogy: having a back-end team, a front-end team, a team of DBAs, a team of system administrators, and a team of designers, may seem logical to a factory manager from the industrial revolution, but in software development it's completely counter productive.  Rather a single team devoted to a handful of projects with all the skills necessary to deliver those projects has been shown to be orders of magnitude faster.
+It's a known fact that multiple specialized teams deliver much slower than a single cross functional team.  Returning to the web development analogy of my other posts: having a back-end team, a front-end team, a team of DBAs, a team of system administrators, and a team of designers, may seem logical to a factory manager from the industrial revolution, but in software development it's completely counter productive.  Rather a single team devoted to a handful of projects with all the skills necessary to deliver those projects has been shown to be orders of magnitude faster.
 
 Secondly I have heard and seen increasing frustration in the market as to what actually is a "Data Scientist", and how finding candidates with the full skill set seems to be extremly hard.  How can a company build "a team of half a dozen Data Scientists", when they cannot even seem to find one.  When the goal is unrealistic, the posts should shift, and here the focus should be on building a "Data Science Team", not "a team of Data Scientists".  To do that we need experts in many different fields that then mentor each other. By using Agile practices like paring and code review, hopefully over time team members asymptotically approach the perfect "Data Scientist" while constantly delivering high quality Data Science products.
 
