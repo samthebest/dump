@@ -47,7 +47,7 @@ Keep projects to a minimum, try to focus.  Ideally the whole team should work to
 
 #### Some tools are counter to collaboration
 
-The biggest problem of tooling in the Data Science world is over use of notebooks & interactive enviornments.  You should not be shipping code that was written in an editor that does not even support automatic variable renames, or automatic white space formatting.  Other posts will go into the details of work flow and how to correctly switch between notebooks like iScala and iPython, and corresponding IDEs, like Intellij and PyCharm, but here we just note that the latter are more condusive to collaboration that the former.  This is because tested well written code is considerably easier for those other than the author to understand.  If only the author of code can understand it, this will cause divides and isolations in the team.
+The biggest problem of tooling in the Data Science world is over use of notebooks & interactive enviornments.  You should not be shipping code that was written in an editor that does not even support automatic variable renames, or automatic white space formatting.  Other posts will go into the details of work flow and how to correctly switch between notebooks like iScala and iPython, and corresponding IDEs, like Intellij and PyCharm, but here we just note that the latter are more condusive to collaboration than the former.  This is because tested well written code is considerably easier for those other than the author to understand.  If only the author of code can understand it, this will cause divides and isolations in the team.
 
 Just like one does not want to go round a friends home if it's a tip, one doesn't want to work with a colleague's code that is a mess.
 
