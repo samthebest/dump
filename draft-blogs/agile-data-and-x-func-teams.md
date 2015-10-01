@@ -43,7 +43,21 @@ Use some technology to assit, like crucible, JIRA, locking develop/master/integr
 
 #### Collaboration vs Context Switching
 
-Keep projects to a minimum, try to focus.  Ideally whole team should work together on MVP, then MLP, then when a project becomes a matter of iteration and maintenance assign less people.
+Keep projects to a minimum, try to focus.  Ideally the whole team should work together on MVP, then MLP, then when a project becomes a matter of iteration and maintenance assign less people.  If a single team is working on multiple projects then either that team will become divided and uncollaborative, or people will be constantly context switching to keep up with each project.
+
+#### Some tools are counter to collaboration
+
+The biggest problem of tooling in the Data Science world is over use of notebooks & interactive enviornments.  You should not be shipping code that was written in an editor that does not even support automatic variable renames, or automatic white space formatting.  Other posts will go into the details of work flow and how to correctly switch between notebooks like iScala and iPython, and corresponding IDEs, like Intellij and PyCharm, but here we just note that the latter are more condusive to collaboration that the former.  This is because tested well written code is considerably easier for those other than the author to understand.  If only the author of code can understand it, this will cause divides and isolations in the team.
+
+Just like one does not want to go round a friends home if it's a tip, one doesn't want to work with a colleague's code that is a mess.
+
+### Tests Over Documentation
+
+Finally we need to note the importance of tests and TDD over documentation.  Data Science seems littered with over documented code, comments in code, notebooks that have entire paragraphs of text explaining what some code does.  In the software development world this was recognised as ridiculous over a decade ago - Data Science is quite epically behind.  Documentation is ambiguous and goes out of date.  Tests not only validate code but serve as unambiguous executable documentation that cannot go out of date.
+
+
+...
+
 
 ### A Note On Language and Tooling
 
