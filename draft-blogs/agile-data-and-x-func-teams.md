@@ -33,11 +33,13 @@ Again, although listed seperately, the asymtotic goal of the team should be to s
 
 #### Pair Programming
 
+Pair anyone with anyone, and pairing should be done a significant amount of time.  10% of time spent pairing is far too little, aim for more like 50%.  Do not fall into patterns of putting the same pairs together.  Ensure you do pairing properly by having two keyboards, good desks, swap drivers every 30 minutes, etc, etc, lookup good pairing practices online.
+
 #### Code Review
 
-Force code review using 2x approval via bitbucket/stash PRs. Crucible. JIRA.
+Sometimes code reviews are not necessary for tasks completed by pairing since two pairs of eyes have seen the code.  Nevertheless if the pair was novice-novice, or when neither has software development skills, then reviewing is still necessary.  Code should be clean, having a Phd is no excuse for bad code not written with TDD. If you are smart enough to get a Phd, you are smart enough to realise you should be doing TDD.
 
-devmasters
+Use some technology to assit, like crucible, JIRA, locking develop/master/integrations branches to devmasters, using PRs, pre-commit hooks, etc, etc.
 
 #### Collaboration vs Context Switching
 
