@@ -52,6 +52,9 @@ brew install git-flow
 # Install GNU style bash commands (gives gdate and such and such)
 brew install coreutils
 
+# Hipchat
+brew cask install hipchat
+
 # git auto completion
 brew install git bash-completion
 # add bash-completion to ~/.bash_profile
@@ -78,4 +81,4 @@ echo "    cat ~/.bash_history | grep \$*" >> ~/.bash_profile
 echo "}" >> ~/.bash_profile
 
 # Remove DS_Store abomination for ever and ever
-echo "while true; do find / -name .DS_Store -exec rm -f \"{}\" \; ; sleep 2; done" > ~/.rm-DS_Store-abomination.sh && chmod +x ~/.rm-DS_Store-abomination.sh && echo "screen -ls | grep rm-DS_Store-abomination >/dev/null || screen -S rm-DS_Store-abomination -d -m ~/.rm-DS_Store-abomination.sh" >> ~/.bash_profile && screen -ls | grep rm-DS_Store-abomination >/dev/null || screen -S rm-DS_Store-abomination -d -m ~/.rm-DS_Store-abomination.sh
+# echo "while true; do find / -name .DS_Store -exec rm -f \"{}\" \; ; sleep 2; done" > ~/.rm-DS_Store-abomination.sh && chmod +x ~/.rm-DS_Store-abomination.sh && echo "screen -ls | grep rm-DS_Store-abomination >/dev/null || screen -S rm-DS_Store-abomination -d -m ~/.rm-DS_Store-abomination.sh" >> ~/.bash_profile && screen -ls | grep rm-DS_Store-abomination >/dev/null || screen -S rm-DS_Store-abomination -d -m ~/.rm-DS_Store-abomination.sh
