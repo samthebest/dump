@@ -57,14 +57,6 @@ brew cask install hipchat
 
 # git auto completion
 brew install git bash-completion
-# add bash-completion to ~/.bash_profile
-echo "if [ -f \$(brew --prefix)/etc/bash_completion ]; then" >> ~/.bash_profile
-echo "    . \$(brew --prefix)/etc/bash_completion" >> ~/.bash_profile
-echo "fi"  >> ~/.bash_profile
-# Then start git auto completion
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
-fi
 
 # spotify for concentration
 brew cask install spotify
@@ -74,6 +66,18 @@ brew cask install openoffice
 
 # wget
 brew install wget
+
+# s3cmd
+brew install s3cmd
+
+# add bash-completion to ~/.bash_profile
+echo "if [ -f \$(brew --prefix)/etc/bash_completion ]; then" >> ~/.bash_profile
+echo "    . \$(brew --prefix)/etc/bash_completion" >> ~/.bash_profile
+echo "fi"  >> ~/.bash_profile
+# Then start git auto completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+fi
 
 # nice alias for grepping history (cos CTRL + R not always that great)
 echo "function gh {" >> ~/.bash_profile
