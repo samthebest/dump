@@ -9,8 +9,8 @@ function get-version {
 }
 
 function get-value-from-file {
-	key="${1}"
-	file="${2}"
+    key="${1}"
+    file="${2}"
     key_len=`echo ${key} | wc -c`
     cat "${file}" | grep "${key}" | cut -c ${key_len}-
 }
