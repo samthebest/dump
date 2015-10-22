@@ -3,6 +3,12 @@
 2) Add
 
 ```
+name := projectName
+
+// Ensures fat jar gets published too
+
+addArtifact(Artifact(projectName, "assembly"), sbtassembly.AssemblyKeys.assembly)
+
 import ReleaseTransformations._
 
 credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
