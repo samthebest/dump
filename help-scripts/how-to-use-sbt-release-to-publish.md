@@ -6,7 +6,7 @@ import ReleaseTransformations._
 
 credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
-publishTo := Some(sys.props.get("publish.url").map(url => "altmetrics" at url).getOrElse(Resolver.file("Local ivy", Path.userHome / ".ivy2" / "local")))
+publishTo := Some(sys.props.get("publish.url").map(url => "project-name" at url).getOrElse(Resolver.file("Local ivy", Path.userHome / ".ivy2" / "local")))
 
 releaseProcess := Seq[ReleaseStep](
   publishArtifacts                       // : ReleaseStep, checks whether `publishTo` is properly set up
