@@ -1,4 +1,5 @@
 1) Add `addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.0")` to `project/plugins.sbt`
+
 2) Add
 
 ```
