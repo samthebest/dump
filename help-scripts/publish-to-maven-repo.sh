@@ -6,7 +6,7 @@ source ./scripts/utils.sh
 
 version=`get-version`
 
-maven_creds=/var/lib/jenkins/.ivy2/.credentials
+maven_creds=TODO
 
 user=`get-value-from-file "user=" $maven_creds`
 password=`get-value-from-file "password=" $maven_creds`
@@ -20,7 +20,7 @@ curl -v \
     -F "p=jar" \
     -F "file=@./target/scala-2.10/altmetrics-assembly-${version}.jar" \
     -u "${user}:${password}" \
-    http://packages.dev.pomboo.net:80/nexus/content/repositories/releases/ 2>&1 | tee curl-publish.log
+    http://your-domain:80/nexus/content/repositories/releases/ 2>&1 | tee curl-publish.log
 
 unauthorized="401 Unauthorized"
 status=`cat curl-publish.log | grep -o "${unauthorized}"`
