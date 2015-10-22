@@ -1,5 +1,5 @@
-1. Add `addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.0")` to `project/plugins.sbt`
-2. Add
+1) Add `addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.0")` to `project/plugins.sbt`
+2) Add
 
 ```
 import ReleaseTransformations._
@@ -15,4 +15,4 @@ releaseProcess := Seq[ReleaseStep](
 
 To your `build.sbt`
 
-3. Run `sbt -Dpublish.url=http://your-domain:80/nexus/content/repositories/releases/ release`
+3) Run `sbt -Dpublish.url=http://your-domain:80/nexus/content/repositories/releases/ release`
