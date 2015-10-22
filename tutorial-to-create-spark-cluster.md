@@ -8,5 +8,5 @@ xxx=project name say
 5. Add zeppelin sandbox and spark to the application list
 6. use key pair xxx-key-pair
 7. click create
-8. wait
+8. wait (best to wait until it not provisioning cos it won't have everything installed yet)
 9. when the SSH hyperlink shows up it will give you the command to be able ssh in
