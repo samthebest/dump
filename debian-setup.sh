@@ -12,6 +12,14 @@ email=${1}
 # Bash history to something sensible
 echo "HISTSIZE=1000000" >> ~/.bashrc
 
+echo "function json {" >> ~/.bash_profile
+echo "	python -m json.tool" >> ~/.bash_profile
+echo "}" >> ~/.bash_profile
+
+echo "function gh {" >> ~/.bash_profile
+echo "    cat ~/.bash_history | grep \$*" >> ~/.bash_profile
+echo "}" >> ~/.bash_profile
+
 # Chrome
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
