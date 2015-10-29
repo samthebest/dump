@@ -3,6 +3,8 @@
 2) Add
 
 ```
+import ReleaseTransformations._
+
 name := projectName
 
 // Ensures fat jar gets published too
