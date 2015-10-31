@@ -36,7 +36,7 @@ So finally we have
 
 I conjecture that females often facilitate the composability of individual intellects, let's call this skill "Kolmorogov Composition".  I'm not an evolutionary biologist, nor a psychologist, so I'm not going to attempt to explain why females seem better at this but I can see that this is probably true.  So given that females are better at this, and given the overwhelming evidence and logic that justifies the importance of Kolmogorov Composition in tech teams, the conclusion is a profound need for more women in tech *for the betterment of tech*.
 
-Please share 
+Please share, I don't usually ask, but if this post does actually manage to convince a single female to enter a career in tech then this post will actually be more than procrastination.
 
 
 
