@@ -77,4 +77,49 @@ object DistributedS3Ls {
     .takeWhile(_ => objects.isTruncated)
     .flatten
   }
+  
+  
+  // MORE s3 useful stuff
+  
+  case class SimpleAWSCreds(awsAccessKey: String, awsSecretKey: String) extends AWSCredentials {
+  def getAWSAccessKeyId: String = awsAccessKey
+  def getAWSSecretKey: String = awsSecretKey
+}
+def getS3Creds: SimpleAWSCreds = {
+    val awsAccessKey = sys.env("AWS_ACCESS_KEY_ID")
+    val awsSecretKey = sys.env("AWS_SECRET_KEY")
+
+    if (awsAccessKey == "" || awsSecretKey == "") {
+      println("ERROR: Creds not set fool!")
+      System.exit(1)
+    }
+
+    SimpleAWSCreds(awsAccessKey, awsSecretKey)
+  }
+  
+  def getDocuments(bucket: String, creds: SimpleAWSCreds, enc: String = "UTF-8")
+                  (partition: Iterator[String]): Iterator[String] = {
+    val client = new AmazonS3Client(creds)
+    partition.map { s3Key =>
+      val dataStream = scala.io.Source.fromInputStream(
+        is = client.getObject(new GetObjectRequest(bucket, s3Key)).getObjectContent,
+        enc = enc
+      )
+      val slurped = dataStream.mkString
+      dataStream.close()
+      slurped
+    }
+  }
+
+  def getDocument(bucket: String, creds: SimpleAWSCreds, enc: String = "UTF-8")(s3key: String): String =
+    scala.io.Source.fromInputStream(
+      is = new AmazonS3Client(creds).getObject(new GetObjectRequest(bucket, s3key)).getObjectContent,
+      enc = enc
+    )
+    .mkString
+  
+  
+  
+  
+  
 }
