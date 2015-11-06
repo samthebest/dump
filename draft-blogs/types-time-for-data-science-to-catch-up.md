@@ -24,6 +24,7 @@ If static types are so great, why did dynamically typed languages come about?  T
 The solution with Scala is to find a comprimise, in particular it offers type inference, implicit conversions and consequently smooth ways to do ad-hoc polymorphism.  This pretty much eliminates most redundant boiler plate code while giving a tolerably fast compiler (I say tolerable because it's not quite as fast as some people would like).  Perhaps when Ruby, R, JavaScript and Python where invented the effort and speed of computers would prohibit such approaches - consequently in the quest for eliminating boiler plate, language inventers chose dynamic typing.
 
 
+Maths is extremly typed, and extremly functional, and Machine Learning is just a rather straight forward application of mathematics & computer science.
 
 Rust
 
