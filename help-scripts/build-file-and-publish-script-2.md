@@ -34,18 +34,21 @@ releaseProcess := Seq[ReleaseStep](
 
 ```
 #!/bin/bash
-
 set -e
 
-sbt -Dpublish.url=http://blar.blar:80/nexus/content/repositories/releases/ release | tee publish.log
+sbt -Dpublish.url=${releases_url} release 2>&1 | tee publish.log
+#echo "it worky" | tee publish.log
 
 echo "INFO: Checking if publish had error because sbt sucks and always gives 0 exit code"
 
-grep "\[error\]" publish.log
+errors=`cat publish.log | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | grep "\[error\]"`
 
-publish_had_error=$?
-
-if [ ${publish_had_error} = 0 ]; then
+if [ "${errors}" != "" ]; then
+    echo "INFO: Publish had errors, errors:"
+    echo ${errors}
     exit 1
 fi
+
+exit 0
+
 ```
