@@ -34,7 +34,6 @@ releaseProcess := Seq[ReleaseStep](
 
 ```
 #!/bin/bash
-set -e
 
 sbt -Dpublish.url=${releases_url} release 2>&1 | tee publish.log
 #echo "it worky" | tee publish.log
