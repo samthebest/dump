@@ -45,6 +45,15 @@ So "yes", this is probably the main reason why adoption slow.
 
 
 
+
+...
+
+Another post: An Open Letter to The Creators of SBT, Scala, Spark and Intellij
+
+Type-class derivation (serialization is still a pain), spores, "staging" (typed-trees), GUI for SBT
+
+
+
 In fact heavy use of implicits in Scala does cause noticable lag in ones IDE, and many second, even many minute, compile times.
 
 
