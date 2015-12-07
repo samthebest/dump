@@ -3,23 +3,50 @@ Alternative title: Why Build Tools Block Data Science From Going Typed,
 
 # Spark + Scala + Build Tools Suck! - Why Data Science Isn't Going Typed
 
-This is an Open Letter to the committers of Scala, SBT and Spark.  
+This is an Open Letter to the committers of Scala, SBT and Spark.  I am a massive fan of all three, please don't be offended, take this post as jovial.
 
 The other day was the last straw when I realised even the front end world is going statically typed (and rather functional) after seeing TypeScript; a statically typed version of JavaScript used to write Angular 2.0.
 
-What is going on! Why is Data Science still largely driven by dynamically typed scripting languages? The often mathematical nature of Data Science makes this doubly shocking; if anything, Data Science should have be the first industry to fall in love with compiled statically typed languages, not the last. Common arguments are as follows:
+What is going on! Why is Data Science still largely driven by dynamically typed scripting languages? The often mathematical nature of Data Science makes this doubly shocking; if anything, Data Science should have be the first industry to fall in love with compiled statically typed languages, not the last. 
+
+Common arguments are as follows:
 
 1. Lack of high-level machine learning libraries in Scala
 2. Dynamic languages are low on boiler plate
 3. Barrier to entry, language difficulty
-4. Barrier to entry, tooling and dependency management
+4. Lack of interactive environment(s)
+5. Barrier to entry, tooling particularly dependency management
 
-1, 2 and 3 are largely misconceptions, but I'm not going to focus on those in this post since I'm usually bashing "Type A" Data Scientists for one reason or another (lack of unit testing, automation, transparency, clean code, collaboration, Agile methodologies, MVPs (POCs instead), etc). Rather I'm going to bash the "Type B" Data Scientists and the Scala community for not *doing* anything constructive to make the cross over easier. Hyping up the benifits of functional statically typed languages isn't enough, we need to address issue 4.
+1, 2, 3 and 4 are misconceptions, but I'm not going to focus on those in this post since I'm usually bashing "Type A" Data Scientists for one reason or another (lack of unit testing, automation, transparency, clean code, collaboration, Agile methodologies, MVPs (POCs instead), etc). Rather I'm going to bash the "Type B" Data Scientists and the Scala community for not doing anything *constructive* to make the cross over easier. Hyping up the benifits of functional statically typed languages isn't enough, we need to address issue 5.
 
-The following are overly brief counter to 1 - 3
+# Hello World in Big Data is a World of Hell
 
-1. Writing mathematical code in a mathemtical functional language is easier, more direct, flexible and transparent than using the high level highly parametric interpretations of mathematics provided by others, which is ultimately written in vast amounts of highly procedural impenatrable code.
-2. 
+The biggest complaint people have about Scala, and it's certainly mine, is getting an IDE, SBT and my libraries set up.  Sorting out a proper build file for a Scala project with multiple dependencies is a multi-day ticket in JIRA even for an experienced Scala/Java developer.  Throw in a release process, some quirky libraries, deduplicate issues and Spark, and it's more like an entire sprint.  Now try asking someone completely unfamiliar to Scala (and Java) and completely oblivious of it's benifits to spend potentially weeks figureing out how to get their laptop & production environment into a position where they can deploy a single line of code.
+
+Your essentially saying to a Data Scientist, your going to have to put more time and effort into getting a "word count" application to build than to get highly complex mathematical algorithm to work, it's ridiculous.
+
+Compare with Python, one just installs Anaconda and boom you have everything you ever wanted without ever even seeing a build file!
+
+Now throw in everyones favourite Big Data processing tool, Spark, a framework that is so epically complicated to setup dependencies it even comes with it's own scripts for "doing this for you" (not that it succeeds).  In the early versions of Spark you could run your jar with `java -cp`, now you have to use `spark-submit` because so many users had problems getting a working build file.
+
+I used to believe that I couldn't understand how to get build files to work was because I never invested enough time into it.  Now over the years I certainly have spend a lot of time on them.
+
+It's not an easy sell and I concede I don't have a counter argument other than "please just try to push through that barrier, *trust me* the other side is worth it".
+
+# An Interim Solution
+
+sbt-build-files
+
+# A brief rebuttal to points 1 - 4
+
+1. Writing mathematical code in a mathemtical functional language is easier, more direct, flexible and transparent than using the high level highly approximate highly parametric interpretations of mathematics provided by others, which is ultimately written in vast amounts of highly procedural impenatrable code.
+2. See language features type inference, implicits, and ad-hoc polymorphism. See the collections library, scalaz and shapeless.
+3. The language is easy, first unlearning OO and procedural styles is what is hard.  Mathematicians who have never learnt any language tend to find functional languages easier to learn.
+4. See iScala/iSpark notebook, Zeppelin, etc
+
+
+
+
 
 Some Data Scientists argue it's the lack of high-level machine learning libraries for Spark, orbut I somewhat disagree and I'll address this further down.
 
