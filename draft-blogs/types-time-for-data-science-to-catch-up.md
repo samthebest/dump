@@ -1,4 +1,6 @@
 
+Alternative title: Why Build Tools Block Data Science From Going Typed
+
 # Types - Time for Data Science to Catch Up
 
 Recently a front end / UX developer showed me his code and I was shocked to see beautifully typed and even functional looking code.  He wasn't showing me Javascript though, he was showing me TypeScript, which is the language Angular 2 is written in. It's basically a statically typed version of Javascript and seems to be gaining rapid adoption. Now even front end developers are using statically typed languages, something I didn't think would ever happen.
