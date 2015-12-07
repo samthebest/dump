@@ -1,5 +1,13 @@
 
-Alternative title: Why Build Tools Block Data Science From Going Typed
+Alternative title: Why Build Tools Block Data Science From Going Typed,
+create a github called sbt-build-files, format:
+
+find-project.sh
+example-name/
+/README.md
+/build.sbt
+/project/plugins.sbt
+
 
 # Types - Time for Data Science to Catch Up
 
