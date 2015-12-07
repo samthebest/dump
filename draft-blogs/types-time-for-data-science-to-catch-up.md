@@ -1,5 +1,31 @@
 
 Alternative title: Why Build Tools Block Data Science From Going Typed,
+
+# Spark + Scala + Build Tools Suck! - Why Data Science Isn't Going Typed
+
+This is an Open Letter to the committers of Scala, SBT and Spark.  
+
+The other day was the last straw when I realised even the front end world is going statically typed (and rather functional) after seeing TypeScript; a statically typed version of JavaScript used to write Angular 2.0.
+
+What is going on! Why is Data Science still largely driven by dynamically typed scripting languages? The often mathematical nature of Data Science makes this doubly shocking; if anything, Data Science should have be the first industry to fall in love with compiled statically typed languages, not the last. Common arguments are as follows:
+
+1. Lack of high-level machine learning libraries in Scala
+2. Dynamic languages are low on boiler plate
+3. Barrier to entry, language difficulty
+4. Barrier to entry, tooling and dependency management
+
+1, 2 and 3 are largely misconceptions, but I'm not going to focus on those in this post since I'm usually bashing "Type A" Data Scientists for one reason or another (lack of unit testing, automation, transparency, clean code, collaboration, Agile methodologies, MVPs (POCs instead), etc). Rather I'm going to bash the "Type B" Data Scientists and the Scala community for not *doing* anything constructive to make the cross over easier. Hyping up the benifits of functional statically typed languages isn't enough, we need to address issue 4.
+
+The following are overly brief counter to 1 - 3
+
+1. Writing mathematical code in a mathemtical functional language is easier, more direct, flexible and transparent than using the high level highly parametric interpretations of mathematics provided by others, which is ultimately written in vast amounts of highly procedural impenatrable code.
+2. 
+
+Some Data Scientists argue it's the lack of high-level machine learning libraries for Spark, orbut I somewhat disagree and I'll address this further down.
+
+
+...
+
 create a github called sbt-build-files, format:
 
 find-project.sh
@@ -17,7 +43,9 @@ This raises a big concern I have with the Data Science industry, Data Science is
 
 Let's try to understand why this is, and hopefully explain why Data Science needs to catch up. Though explaining static typing to someone who isn't used to it can feel like explaining red to a blind person, and perhaps this is part of the problem.
 
-# Why, In a Nutshell
+There are various arguments why Data Science hasn't caught up, but I'm going to argue that all but one are invalid.  My conclusion is in the title of course, the reason why the best candidate for statically typed Data Science, Scala, hasn't gained quite as much adoption as I wish is because of build tools, especially for projects using Spark.
+
+# Why should you care about static typing, in a nutshell
 
 "You can write literally 100s of lines with [Scala collections] or Spark [RDDs with the Scala API] then once all the type errors are fixed the chances are very very high that your program will run. If you don't have the static types that is of course not true, then essentially you run your program and debugging starts and you say *why did I get this weird thing!*" - Martin Odersky https://youtu.be/NW5h8d_ZyOs?t=18m40s
 
@@ -47,7 +75,15 @@ So "maybe" history and processing power is partly to blame for the existence of 
 
 ## Barrier to Entry?
 
-The biggest complaint people have about Scala, and it's certainly mine, is getting an IDE, SBT and my libraries set up.  Sorting out a proper build file for a Scala project with multiple dependencies is a multi-day ticket in JIRA even for an experienced Scala/Java developer.  Now try asking someone completely unfamiliar to Scala (and Java) and completely oblivious of it's benifits to spend potentially a week figureing out how to get their laptop & production environment into a position where they can deploy a single line of code.  
+The biggest complaint people have about Scala, and it's certainly mine, is getting an IDE, SBT and my libraries set up.  Sorting out a proper build file for a Scala project with multiple dependencies is a multi-day ticket in JIRA even for an experienced Scala/Java developer.  Throw in a release process, some quirky libraries, deduplicate issues and Spark, and it's more like an entire sprint.  Now try asking someone completely unfamiliar to Scala (and Java) and completely oblivious of it's benifits to spend potentially weeks figureing out how to get their laptop & production environment into a position where they can deploy a single line of code.
+
+Your essentially saying to a Data Scientist, your going to have to put more time and effort into getting a "word count" application to build than to get highly complex mathematical algorithm to work, it's ridiculous.
+
+Compare with Python, one just installs Anaconda and boom you have everything you ever wanted without ever even seeing a build file!
+
+Now throw in everyones favourite Big Data processing tool, Spark, a framework that is so epically complicated to setup dependencies it even comes with it's own scripts for "doing this for you" (not that it succeeds).  In the early versions of Spark you could run your jar with `java -cp`, now you have to use `spark-submit` because so many users had problems getting a working build file.
+
+I used to believe that I couldn't understand how to get build files to work was because I never invested enough time into it.  Now over the years I certainly have spend a lot of time on them.
 
 It's not an easy sell and I concede I don't have a counter argument other than "please just try to push through that barrier, *trust me* the other side is worth it".
 
