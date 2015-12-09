@@ -42,14 +42,18 @@ Now Scala, (and Java is similarily painful, but probably has more GUI tools to a
 7. add another plugin to your plugins file to get a tool to allow you to view a dependency graph so you can start debugging your version issues
 8. run the dependency graph tool which throws an AIOB exception, Google it and realise you need to use a different command which outputs a file
 9. run the graph tool which generates a .graphml file, download another tool to open this file (because a png would be way too simple)
-10. ... some time later ... 
-11. Run your jar using `java -cp com.company.EntryPointClass path/to/jar` (very intuitive!).  
-12. Now your code throws "ClassNotFoundException" or "NoSuchMethodError"
-13. commit suicide
+10. try using some shading plugins
+11. try changing the merge strategy
+12. Run your jar using `java -cp com.company.EntryPointClass path/to/jar` (much easier than `./my-script.py`!).  
+13. Now your code throws "ClassNotFoundException" or "NoSuchMethodError"
+14. commit suicide
 
-Compare with Python, one just installs Anaconda and boom you have everything you ever wanted without ever even seeing a build file!
+This isn't even considering using everyones favourite Big Data processing tool, Spark, a framework that is so epically complicated to setup dependencies it even comes with it's own script (`spark-submit`) for "doing this for you" (not that it succeeds).
 
-Now throw in everyones favourite Big Data processing tool, Spark, a framework that is so epically complicated to setup dependencies it even comes with it's own scripts for "doing this for you" (not that it succeeds).  In the early versions of Spark you could run your jar with `java -cp`, now you have to use `spark-submit` because so many users had problems getting a working build file.
+Some experienced developers might just think I'm lazy and have not invested enough time reading the source code for sbt or mvn to understand how it works (do python programmers read the source code for the python interpreter?).  That's partially true but I do have a good understanding of compilers and can undoubtedly say the issue with the JVM ecosystem is by design (rather lackof) not necessity.  In a nutshell, JVM language compilers should have shading by default and use intermediate abstract typed syntax trees for jar size optimization, runtime optimization and binary incompatiability resolution. Alas, I won't digress into the details, the conclusion is clear, build tools suck.
+
+
+
 
 I used to believe that I couldn't understand how to get build files to work was because I never invested enough time into it.  Now over the years I certainly have spend a lot of time on them.
 
