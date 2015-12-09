@@ -1,9 +1,9 @@
 
 Alternative title: Why Build Tools Block Data Science From Going Typed,
 
-# Spark + Scala + Build Tools Suck! - Why Data Science Isn't Going Typed
+Spark + Scala + Build Tools Suck! - Why Data Science Isn't Going Typed
 
-This is an Open Letter to the committers of Scala, SBT and Spark.  I am a massive fan of all three, please don't be offended, take this post as jovial.
+# Build Tools Suck! - Why Data Science Isn't Going Typed
 
 The other day was the last straw when I realised even the front end world is going statically typed (and rather functional) after seeing TypeScript; a statically typed version of JavaScript used to write Angular 2.0.
 
@@ -24,6 +24,28 @@ Common arguments are as follows:
 The biggest complaint people have about Scala, and it's certainly mine, is getting an IDE, SBT and my libraries set up.  Sorting out a proper build file for a Scala project with multiple dependencies is a multi-day ticket in JIRA even for an experienced Scala/Java developer.  Throw in a release process, some quirky libraries, deduplicate issues and Spark, and it's more like an entire sprint.  Now try asking someone completely unfamiliar to Scala (and Java) and completely oblivious of it's benifits to spend potentially weeks figureing out how to get their laptop & production environment into a position where they can deploy a single line of code.
 
 Your essentially saying to a Data Scientist, your going to have to put more time and effort into getting a "word count" application to build than to get highly complex mathematical algorithm to work, it's ridiculous.
+
+It's not like other languages have it perfect, but I've never had as much pain in my favourite language Scala as I have in others, perhaps with the exception of makefiles for C.  From what I gather it seems it goes as follows (please comment and I'll add to this list):
+
+ - Python: install Anacanda and voila you can add an import for nearly anything you ever wanted
+ - C# and F#: use a GUI, i.e. Visual Studio, to search for packages then click "add". Pretty simple.
+ - R: Not used R, but according to http://www.r-bloggers.com/installing-r-packages/ looks like adding one or two lines to one file
+
+Now Scala, (and Java is similarily painful, but probably has more GUI tools to assist built into IDEs)
+
+1. install sbt or mvn, 
+2. create an incomprehensible build file that is either an epic xml (mvn), or a sequence of largely random characters (sbt) and version numbers,
+3. create a ridiculous directory structure using this ridiculous reversed domain name convention
+4. create another directory and another file which says what plugins you want, because you always need at least one plugin to package up all your dependencies in some way
+5. use an IDE (usually Intellij) to open the build file, click "refresh project" (or setup auto-refreshing), go get a cup of tea, come back and start reading error messages
+6. error messages include things like "you need blank lines" (finally fixed in sbt 0.13.7), syntax errors, unresolved dependencies, but mainly crap about version numbers
+7. add another plugin to your plugins file to get a tool to allow you to view a dependency graph so you can start debugging your version issues
+8. run the dependency graph tool which throws an AIOB exception, Google it and realise you need to use a different command which outputs a file
+9. run the graph tool which generates a .graphml file, download another tool to open this file (because a png would be way too simple)
+10. ... some time later ... 
+11. Run your jar using `java -cp com.company.EntryPointClass path/to/jar` (very intuitive!).  
+12. Now your code throws "ClassNotFoundException" or "NoSuchMethodError"
+13. commit suicide
 
 Compare with Python, one just installs Anaconda and boom you have everything you ever wanted without ever even seeing a build file!
 
