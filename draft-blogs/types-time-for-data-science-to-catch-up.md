@@ -21,17 +21,17 @@ Common arguments are as follows:
 
 # Hello World in Big Data is a World of Hell
 
-The biggest complaint people have about Scala, and it's certainly mine, is getting an IDE, SBT and my libraries set up.  Sorting out a proper build file for a Scala project with multiple dependencies is a multi-day ticket in JIRA even for an experienced Scala/Java developer.  Throw in a release process, some quirky libraries, deduplicate issues and Spark, and it's more like an entire sprint.  Now try asking someone completely unfamiliar to Scala (and Java) and completely oblivious of it's benifits to spend potentially weeks figureing out how to get their laptop & production environment into a position where they can deploy a single line of code.
+Sorting out a proper build file for a Scala project with multiple dependencies is a multi-day ticket.  Throw in a release process, some quirky libraries, deduplicate issues and Spark, and it's more like a whole week.  Now try asking someone completely unfamiliar to Scala (and Java) and completely oblivious of it's benifits.
 
-Your essentially saying to a Data Scientist, your going to have to put more time and effort into getting a "word count" application to build than to get highly complex mathematical algorithm to work, it's ridiculous.
+Your essentially saying to a Data Scientist, your going to have to put more time and effort into getting a "word count" application to build than to get a highly complex mathematical algorithm to work, it's ridiculous.
 
-It's not like other languages have it perfect, but I've never had as much pain in my favourite language Scala as I have in others, perhaps with the exception of makefiles for C.  From what I gather it seems it goes as follows (please comment and I'll add to this list):
+It's not like other languages have it perfect, but I've never had as much pain in my favourite language Scala as I have in others (ignoring C and makefiles).  From what I gather it seems it goes as follows (please comment and I'll add to this list):
 
  - Python: install Anacanda and voila you can add an import for nearly anything you ever wanted
  - C# and F#: use a GUI, i.e. Visual Studio, to search for packages then click "add". Pretty simple.
  - R: Not used R, but according to http://www.r-bloggers.com/installing-r-packages/ looks like adding one or two lines to one file
 
-Now Scala, (and Java is similarily painful, but probably has more GUI tools to assist built into IDEs)
+Now Scala
 
 1. install sbt or mvn, 
 2. create an incomprehensible build file that is either an epic xml (mvn), or a sequence of largely random characters (sbt) and version numbers,
@@ -41,14 +41,15 @@ Now Scala, (and Java is similarily painful, but probably has more GUI tools to a
 6. error messages include things like "you need blank lines" (finally fixed in sbt 0.13.7), syntax errors, unresolved dependencies, but mainly crap about version numbers
 7. add another plugin to your plugins file to get a tool to allow you to view a dependency graph so you can start debugging your version issues
 8. run the dependency graph tool which throws an AIOB exception, Google it and realise you need to use a different command which outputs a file
-9. run the graph tool which generates a .graphml file, download another tool to open this file (because a png would be way too simple)
+9. run the graph tool which generates a .graphml file, download another tool to open this file (because a .png would be way too simple)
 10. try using some shading plugins
 11. try changing the merge strategy
-12. Run your jar using `java -cp com.company.EntryPointClass path/to/jar` (much easier than `./my-script.py`!).  
-13. Now your code throws "ClassNotFoundException" or "NoSuchMethodError"
-14. commit suicide
+12. try exlcusions, try "provided" annotation
+13. Run your jar using `java -cp com.company.EntryPointClass path/to/jar` (much easier than `./my-script.py`!).  
+14. Now your code throws "ClassNotFoundException" or "NoSuchMethodError"
+15. commit suicide
 
-This isn't even considering using everyones favourite Big Data processing tool, Spark, a framework that is so epically complicated to setup dependencies it even comes with it's own script (`spark-submit`) for "doing this for you" (not that it succeeds).
+This isn't even considering using everyones favourite Big Data processing tool, Spark, a framework that is so epically complicated to setup dependencies it even comes with it's own script `spark-submit` for "doing this for you" (not that it succeeds).
 
 Some experienced developers might just think I'm lazy and have not invested enough time reading the source code for sbt or mvn to understand how it works (do python programmers read the source code for the python interpreter?).  That's partially true but I do have a good understanding of compilers and can undoubtedly say the issue with the JVM ecosystem is by design (rather lackof) not necessity.  In a nutshell, JVM language compilers should have shading by default and use intermediate abstract typed syntax trees for jar size optimization, runtime optimization and binary incompatiability resolution. Alas, I won't digress into the details, the conclusion is clear, build tools suck.
 
