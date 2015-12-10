@@ -61,9 +61,7 @@ So firstly a build tool that did **full shading by default** would massively low
 
 When I start a new project I tend find a one on github that is similar to my needs, then modify their build file.  Starting from scratch or following a tutorial each time is quite painful and this is probably what Data Scientists are doing.
 
-Here is a new repo https://github.com/samthebest/scala-build-files that aims to serve as a repository or archive of build files examples and template projects.  The theory being that if just one Scala fan from every couple of companies removed the code, intellectual property, internal URLs and company names from their project it would serve as a 
-
-sbt-build-files
+Here is a new repo https://github.com/samthebest/scala-build-files that aims to serve as a repository or archive of build file examples and template projects.  The theory being that if just one Scala fan from every couple of companies removed the intellectual property, code, company name, etc from their project it would serve as a template project for someone else.  Eventually we may have enough permutations to partially eliminate that barrier to entry.
 
 # Finally a brief rebuttal to points 1 - 4
 
@@ -73,7 +71,7 @@ sbt-build-files
 4. See iScala/iSpark notebook, Zeppelin, etc
 
 
-
+----------
 
 
 Some Data Scientists argue it's the lack of high-level machine learning libraries for Spark, orbut I somewhat disagree and I'll address this further down.
