@@ -23,9 +23,9 @@ Common arguments are as follows:
 
 Sorting out a proper build file for a Scala project with multiple dependencies is a multi-day ticket.  Throw in a release process, some quirky libraries, deduplicate issues and Spark, and it's more like a whole week.  Now try asking someone completely unfamiliar to Scala (and Java) and completely oblivious of it's benifits.
 
-Your essentially saying to a Data Scientist, your going to have to put more time and effort into getting a "word count" application to build than to get a highly complex mathematical algorithm to work, it's ridiculous.
+Your basically asking a Data Scientist to put more time & effort into their build than into some complex algorithm! Furthermore the setup overhead hugely stifles innovation and spikes, something extremly important in Data Science.
 
-It's not like other languages have it perfect, but I've never had as much pain in my favourite language Scala as I have in others (ignoring C and makefiles).  From what I gather it seems it goes as follows (please comment and I'll add to this list):
+Let's loosley compare Scala with some other languages (please comment and I'll add to this list), it seems:
 
  - Python: install Anacanda and voila you can add an import for nearly anything you ever wanted
  - C# and F#: use a GUI, i.e. Visual Studio, to search for packages then click "add". Pretty simple.
@@ -45,26 +45,27 @@ Now Scala
 10. try using some shading plugins
 11. try changing the merge strategy
 12. try exlcusions, try "provided" annotation
-13. Run your jar using `java -cp com.company.EntryPointClass path/to/jar` (much easier than `./my-script.py`!).  
+13. Run your jar using `java -cp com.company.EntryPointClass path/to/jar` (much easier than `./my-script.py`!?).  
 14. Now your code throws "ClassNotFoundException" or "NoSuchMethodError"
 15. commit suicide
 
 This isn't even considering using everyones favourite Big Data processing tool, Spark, a framework that is so epically complicated to setup dependencies it even comes with it's own script `spark-submit` for "doing this for you" (not that it succeeds).
 
-Some experienced developers might just think I'm lazy and have not invested enough time reading the source code for sbt or mvn to understand how it works (do python programmers read the source code for the python interpreter?).  That's partially true but I do have a good understanding of compilers and can undoubtedly say the issue with the JVM ecosystem is by design (rather lackof) not necessity.  In a nutshell, JVM language compilers should have shading by default and use intermediate abstract typed syntax trees for jar size optimization, runtime optimization and binary incompatiability resolution. Alas, I won't digress into the details, the conclusion is clear, build tools suck.
+# Solutions
 
+The solution is **not** to bash on about how in Python you spend 90% of your time running and debugging code, or trying to understand someone elses high level libraries because writing your own code is so labourious, then asking them to push through that barrier to entry for Scala.  That is like trying to explain color to a blind person, then proposing some extremly painful five day brain surgery in order to add sight.
 
+So firstly a build tool that did **full shading by default** would massively lower the barrier to entry for Data Scientists (anyone care to volunteer a fork? please comment).  Some old school Java developers who still have magnetic disks might complain about jar sizes, load times and build times, but there are solutions to such problems.  In particular several times Martin Odersky has talked about "Typed Trees" or a "staging" layer to introduce abstract typed syntax trees mainly to tackle the binary incompatibility problem in Scala.  Such functionality could also allow for significantly greater compile time optimisations and jar size minimisation by deduplication at the AST level.  Though I doubt such solutions will arise any time soon.
 
+## An Interim Solution - Calling all Scala fans
 
-I used to believe that I couldn't understand how to get build files to work was because I never invested enough time into it.  Now over the years I certainly have spend a lot of time on them.
+When I start a new project I tend find a one on github that is similar to my needs, then modify their build file.  Starting from scratch or following a tutorial each time is quite painful and this is probably what Data Scientists are doing.
 
-It's not an easy sell and I concede I don't have a counter argument other than "please just try to push through that barrier, *trust me* the other side is worth it".
-
-# An Interim Solution
+Here is a new repo https://github.com/samthebest/scala-build-files that aims to serve as a repository or archive of build files examples and template projects.  The theory being that if just one Scala fan from every couple of companies removed the code, intellectual property, internal URLs and company names from their project it would serve as a 
 
 sbt-build-files
 
-# A brief rebuttal to points 1 - 4
+# Finally a brief rebuttal to points 1 - 4
 
 1. Writing mathematical code in a mathemtical functional language is easier, more direct, flexible and transparent than using the high level highly approximate highly parametric interpretations of mathematics provided by others, which is ultimately written in vast amounts of highly procedural impenatrable code.
 2. See language features type inference, implicits, and ad-hoc polymorphism. See the collections library, scalaz and shapeless.
@@ -76,6 +77,11 @@ sbt-build-files
 
 
 Some Data Scientists argue it's the lack of high-level machine learning libraries for Spark, orbut I somewhat disagree and I'll address this further down.
+
+
+
+
+Some experienced developers might just think I'm lazy and have not invested enough time reading the source code for sbt or mvn to understand how it works (do python programmers read the source code for the python interpreter?).  That's partially true but I do have a good understanding of compilers and can undoubtedly say the issue with the JVM ecosystem is by design (rather lackof) not necessity.  In a nutshell, the top two issues are (a) JVM language compilers should have shading by default and (b) use intermediate abstract typed syntax trees for jar size optimization, runtime optimization and binary incompatiability resolution. Alas, I won't digress into the details, the conclusion is clear, build tools suck.
 
 
 ...
