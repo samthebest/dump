@@ -33,27 +33,13 @@ Let's loosley compare Scala with some other languages (please comment and I'll a
 
 Now Scala
 
-1. install sbt or mvn, 
-2. create an incomprehensible build file that is either an epic xml (mvn), or a sequence of largely random characters (sbt) and version numbers,
-3. create a ridiculous directory structure using this ridiculous reversed domain name convention
-4. create another directory and another file which says what plugins you want, because you always need at least one plugin to package up all your dependencies in some way
-5. use an IDE (usually Intellij) to open the build file, click "refresh project" (or setup auto-refreshing), go get a cup of tea, come back and start reading error messages
-6. error messages include things like "you need blank lines" (finally fixed in sbt 0.13.7), syntax errors, unresolved dependencies, but mainly crap about version numbers
-7. add another plugin to your plugins file to get a tool to allow you to view a dependency graph so you can start debugging your version issues
-8. run the dependency graph tool which throws an AIOB exception, Google it and realise you need to use a different command which outputs a file
-9. run the graph tool which generates a .graphml file, download another tool to open this file (because a .png would be way too simple)
-10. try using some shading plugins
-11. try changing the merge strategy
-12. try exlcusions, try "provided" annotation
-13. Run your jar using `java -cp com.company.EntryPointClass path/to/jar` (much easier than `./my-script.py`!?).  
-14. Now your code throws "ClassNotFoundException" or "NoSuchMethodError"
-15. commit suicide
+Install sbt or mvn, create epic XML or incomprehensible SBT file, create dir structure with ridiculous reversed domain name convention, setup plugins file, because you always need at least one plugin to package your jar, click half a dozen buttons in an IDE to load the project, start reading error messages like "you need blank lines" (finally fixed in sbt 0.13.7), syntax errors, but mainly unresolved or conflicting dependencies, add dependency graph plugin to start debugging version issues that immediately throws AIOB exception, Google, run a different command generates a .graphml file, download another tool to open this file, try playing with shading plugins, merge strategy, exlcusions, "provided" annotation, finally you run it with `java -cp com.company.EntryPointClass path/to/jar` (compare to `./my-script.py`!), code throws "ClassNotFoundException" or "NoSuchMethodError", commit suicide.
 
 This isn't even considering using everyones favourite Big Data processing tool, Spark, a framework that is so epically complicated to setup dependencies it even comes with it's own script `spark-submit` for "doing this for you" (not that it succeeds).
 
 # Solutions
 
-The solution is **not** to bash on about how in Python you spend 90% of your time running and debugging code, or trying to understand someone elses high level libraries because writing your own code is so labourious, then asking them to push through that barrier to entry for Scala.  That is like trying to explain color to a blind person, then proposing some extremly painful five day brain surgery in order to add sight.
+The solution is **not** to bash on about how in Python you spend 90% of your time running and debugging code, or trying to understand someone elses high level libraries because writing your own code is so labourious, then asking them to push through that barrier to entry for Scala.  That is like explaining color to a blind person, then proposing extremly painful five day brain surgery in order to add sight.
 
 So firstly a build tool that did **full shading by default** would massively lower the barrier to entry for Data Scientists (anyone care to volunteer a fork? please comment).  Some old school Java developers who still have magnetic disks might complain about jar sizes, load times and build times, but there are solutions to such problems.  In particular several times Martin Odersky has talked about "Typed Trees" or a "staging" layer to introduce abstract typed syntax trees mainly to tackle the binary incompatibility problem in Scala.  Such functionality could also allow for significantly greater compile time optimisations and jar size minimisation by deduplication at the AST level.  Though I doubt such solutions will arise any time soon.
 
@@ -172,3 +158,6 @@ Even Natural Language is typed, if I say "I don't want much apples" this is gram
 
 
 The only industry where static typing has a genuine difficulty is infrastructure because it genuinely operates a level of text only and exit codes.  Nevertheless Puppet does have a type system of sorts. 
+
+
+Install sbt or mvn, create epic XML or incomprehensible SBT file, create dir structure with ridiculous reversed domain name convention, setup plugins file, because you always need at least one plugin to package your jar, click half a dozen buttons in an IDE to load the project, start reading error messages like "you need blank lines" (finally fixed in sbt 0.13.7), syntax errors, but mainly unresolved or conflicting dependencies, add another plugin to get a dependency graph tool to start debugging your version issues that immediately throws AIOB exception, Google, run a different command generates a .graphml file, download another tool to open this file, try playing with shading plugins, merge strategy, exlcusions, "provided" annotation, finally you run it with `java -cp com.company.EntryPointClass path/to/jar` (compare to `./my-script.py`!), code throws "ClassNotFoundException" or "NoSuchMethodError", commit suicide.
