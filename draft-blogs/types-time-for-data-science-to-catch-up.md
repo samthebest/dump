@@ -21,37 +21,39 @@ Common arguments are as follows:
 
 Sorting out a proper build file for a Scala project with multiple dependencies is a multi-day ticket.  Throw in a release process, some quirky libraries, deduplicate issues and Spark, and it's more like a whole week.  Now try asking someone completely unfamiliar to Scala (and Java) and completely oblivious of it's benifits.
 
-Your basically asking a Data Scientist to put more time & effort into their build than into some complex algorithm! Furthermore the setup overhead hugely stifles innovation and spikes, something extremly important in Data Science. Scala is seen as a "Big Project Tool" and not so much as a "experimenting tool"
+Your basically asking a Data Scientist to put more time & effort into their build than into some complex algorithm! Furthermore the setup overhead hugely stifles innovation and spikes, something extremly important in Data Science. Scala is seen as a "Big Project Tool" and not so much as a "experimenting tool" because setting up a project has a "Big Overhead".
 
 Let's loosley compare Scala with some other languages (please comment and I'll add to this list), it seems:
 
- - Python: install Anacanda and voila you can add an import for nearly anything you ever wanted
- - C# and F#: use a GUI, i.e. Visual Studio, to search for packages then click "add". Pretty simple.
- - R: Not used R, but according to http://www.r-bloggers.com/installing-r-packages/ looks like adding one or two lines to one file
+ - Python: install Anacanda
+ - C# and F#: use a GUI with a search bar
+ - R: add some lines to .Renviron
 
 Now Scala
 
-Install sbt or mvn, create epic XML or incomprehensible SBT file, create dir structure with ridiculous reversed domain name convention, setup plugins file, because you always need at least one plugin to package your jar, click half a dozen buttons in an IDE to load the project, start reading error messages like "you need blank lines" (finally fixed in sbt 0.13.7), syntax errors, but mainly unresolved or conflicting dependencies, add dependency graph plugin to start debugging version issues that immediately throws AIOB exception, Google, run a different command generates a .graphml file, download another tool to open this file, try playing with shading plugins, merge strategy, exlcusions, "provided" annotation, finally you run it with `java -cp com.company.EntryPointClass path/to/jar` (compare to `./my-script.py`!), code throws "ClassNotFoundException", "NoSuchMethodError" or "IncompatibleClassChangeError", commit suicide.
+*Install sbt or mvn, create epic XML or incomprehensible SBT file, create dir structure with ridiculous reversed domain name convention, setup plugins file, because you always need at least one plugin to package your jar, click half a dozen buttons in an IDE to load the project, start reading error messages like "you need blank lines", syntax errors, but mainly unresolved or conflicting dependencies, add dependency graph plugin to start debugging version issues that immediately throws AIOB exception, Google, run a different command generating a .graphml file, download another tool to open this file, try playing with shading plugins, merge strategy, exlcusions, "provided" annotation, finally you run it with `java -cp com.company.EntryPointClass path/to/jar` (compare to `./my-script.py`!), code throws "ClassNotFoundException", "NoSuchMethodError" or "IncompatibleClassChangeError", ... commit suicide.*
 
 This isn't even considering using everyones favourite Big Data processing tool, Spark, a framework that is so epically complicated to setup dependencies it even comes with it's own script `spark-submit` for "doing this for you" (not that it succeeds).
 
 # Solutions
 
-The solution is **not** to bash on about how in Python you spend 90% of your time running and debugging code, or trying to understand someone elses high level libraries because writing your own code is so labourious, then asking them to push through that barrier to entry for Scala.  That is like explaining color to a blind person, then proposing extremly painful five day brain surgery in order to add sight.
+The solution is **not** to bash on about how in Python you spend 90% of your time running and debugging code or trying to understand someone elses high level libraries because writing your own code is so labourious, then asking them to push through that barrier to entry for Scala.  That is like explaining color to a blind person, then proposing treatment to add sight that has immediate and ongoing pain.
 
-So firstly a build tool that did **full shading by default** would massively lower the barrier to entry for Data Scientists (anyone care to volunteer a fork? please comment).  Some old school Java developers who still have magnetic disks might complain about jar sizes, load times and build times, but there are solutions to such problems.  In particular several times Martin Odersky has talked about "Typed Trees" or a "staging" layer to introduce abstract typed syntax trees mainly to tackle the binary incompatibility problem in Scala.  Such functionality could also allow for significantly greater compile time optimisations and jar size minimisation by deduplication at the AST level.  Though I doubt such solutions will arise any time soon.
+So firstly a build tool that did **fat jars and full shading OUT OF BOX** would massively lower the barrier to entry for Data Scientists (anyone care to volunteer a fork? please comment).  Some old school Java developers who still have magnetic disks and dial-up might complain about jar sizes, load times and build times. That would be missing the point; to get up and running quickly in order to build an MVP.   Nevertheless changes to the compiler and build system could aleviate such concerns.  
+
+In particular several times Martin Odersky has talked about "Typed Trees" or a "staging" layer to introduce abstract typed syntax trees mainly to tackle the binary incompatibility problem in Scala.  Such functionality could also allow for significantly greater compile time optimisations and jar size minimisation by deduplication at the AST level.  Though I doubt such solutions will arise any time soon.
 
 ## An Interim Solution - Calling all Scala fans
 
-When I start a new project I tend find a one on github that is similar to my needs, then modify their build file.  Starting from scratch or following a tutorial each time is quite painful and this is probably what Data Scientists are doing.
+When I start a new project I tend to find a build file on github then modify it.  Starting from scratch, actually reading documentation or following a tutorial is quite painful and this is probably what Data Scientists are doing, and why they are getting put off.  Wouldn't it be great if we had a repository, ultimately with some 'search' functionality, that had 100s of permutations of template projects?
 
-Here is a new repo https://github.com/samthebest/scala-build-files that aims to serve as a repository or archive of build file examples and template projects.  The theory being that if just one Scala fan from every couple of companies removed the intellectual property, code, company name, etc from their project it would serve as a template project for someone else.  Eventually we may have enough permutations to partially eliminate that barrier to entry.
+Here is a new repo https://github.com/samthebest/scala-build-files that aims to serve as a repository or archive of build file examples and template projects.  The theory being that if just one Scala fan from every couple of companies removed the intellectual property, code, company name, etc from their project it would serve as a template project for someone else.  Eventually we may have enough permutations to partially eliminate that barrier to entry and could even write a little web gui to navigate it.  So please take the time to add your template.
 
 # Finally a brief rebuttal to points 1 - 4
 
 1. Writing mathematical code in a mathemtical functional language is easier, more direct, flexible and transparent than using the high level highly approximate highly parametric interpretations of mathematics provided by others, which is ultimately written in vast amounts of highly procedural impenatrable code.
 2. See language features type inference, implicits, and ad-hoc polymorphism. See the collections library, scalaz and shapeless.
-3. The language is easy, first unlearning OO and procedural styles is what is hard.  Mathematicians who have never learnt any language tend to find functional languages easier to learn.
+3. The language is easy, first **UNlearning** OO and procedural styles is what is hard.
 4. See iScala/iSpark notebook, Zeppelin, etc
 
 
