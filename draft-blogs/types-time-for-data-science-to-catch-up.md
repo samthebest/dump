@@ -3,7 +3,7 @@ Alternative title: Why Build Tools Block Data Science From Going Typed,
 
 Spark + Scala + Build Tools Suck! - Why Data Science Isn't Going Typed
 
-# Build Tools Suck! - Why Data Science Isn't Going Typed
+# Data Science isn't going Typed thanks to Build Tools
 
 Why is Data Science still largely driven by dynamically typed scripting languages? Even the front end world is going statically typed (and rather functional) having seeing TypeScript.  The often mathematical nature of Data Science makes this doubly shocking; if anything, Data Science should have be the first industry to fall in love with compiled statically typed languages, not the last.  The problem needs inspection and a solution.
 
