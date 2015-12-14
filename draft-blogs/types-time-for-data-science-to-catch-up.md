@@ -5,9 +5,7 @@ Spark + Scala + Build Tools Suck! - Why Data Science Isn't Going Typed
 
 # Build Tools Suck! - Why Data Science Isn't Going Typed
 
-The other day was the last straw when I realised even the front end world is going statically typed (and rather functional) after seeing TypeScript; a statically typed version of JavaScript used to write Angular 2.0.
-
-What is going on! Why is Data Science still largely driven by dynamically typed scripting languages? The often mathematical nature of Data Science makes this doubly shocking; if anything, Data Science should have be the first industry to fall in love with compiled statically typed languages, not the last. 
+Why is Data Science still largely driven by dynamically typed scripting languages? Even the front end world is going statically typed (and rather functional) having seeing TypeScript.  The often mathematical nature of Data Science makes this doubly shocking; if anything, Data Science should have be the first industry to fall in love with compiled statically typed languages, not the last.  The problem needs inspection and a solution.
 
 Common arguments are as follows:
 
@@ -17,7 +15,7 @@ Common arguments are as follows:
 4. Lack of interactive environment(s)
 5. Barrier to entry, tooling particularly dependency management
 
-1, 2, 3 and 4 are misconceptions, but I'm not going to focus on those in this post since I'm usually bashing "Type A" Data Scientists for one reason or another (lack of unit testing, automation, transparency, clean code, collaboration, Agile methodologies, MVPs (POCs instead), etc). Rather I'm going to bash the "Type B" Data Scientists and the Scala community for not doing anything *constructive* to make the cross over easier. Hyping up the benifits of functional statically typed languages isn't enough, we need to address issue 5.
+1, 2, 3 and 4 are misconceptions, which we touch on at the end, but 5 is very genuine and will be our focus.  I'm going to bash "Type B" Data Scientists and the Scala community for not doing anything *constructive* to make the cross over easier. Hyping up the benifits of functional statically typed languages isn't enough, we need to address issue 5.
 
 # Hello World in Big Data is a World of Hell
 
