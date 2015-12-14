@@ -15,13 +15,13 @@ Common arguments are as follows:
 4. Lack of interactive environment(s)
 5. Barrier to entry, tooling particularly dependency management
 
-1, 2, 3 and 4 are misconceptions, which we touch on at the end, but 5 is very genuine and will be our focus.  I'm going to bash "Type B" Data Scientists and the Scala community for not doing anything *constructive* to make the cross over easier. Hyping up the benifits of functional statically typed languages isn't enough, we need to address issue 5.
+1, 2, 3 and 4 are misconceptions, which we touch on at the end, but 5 is very genuine and will be our focus. We're going to bash "Type B" Data Scientists and the Scala community for not doing anything *constructive* to make the cross over easier. Dialogue regarding the benefits of functional statically typed languages isn't enough, we need some practical solutions to issue 5.
 
 # Hello World in Big Data is a World of Hell
 
 Sorting out a proper build file for a Scala project with multiple dependencies is a multi-day ticket.  Throw in a release process, some quirky libraries, deduplicate issues and Spark, and it's more like a whole week.  Now try asking someone completely unfamiliar to Scala (and Java) and completely oblivious of it's benifits.
 
-Your basically asking a Data Scientist to put more time & effort into their build than into some complex algorithm! Furthermore the setup overhead hugely stifles innovation and spikes, something extremly important in Data Science.
+Your basically asking a Data Scientist to put more time & effort into their build than into some complex algorithm! Furthermore the setup overhead hugely stifles innovation and spikes, something extremly important in Data Science. Scala is seen as a "Big Project Tool" and not so much as a "experimenting tool"
 
 Let's loosley compare Scala with some other languages (please comment and I'll add to this list), it seems:
 
