@@ -36,6 +36,15 @@ The benefits: production code is as simple as it can be, no unnecessary complexi
 
 Test code is also transparent and doesn't have to mock things up, nor track what is and what is not called.
 
+Only negative is that when one component breaks, for example we break isTitleMatch, then all the tests above that level will break too. It could then be hard to see which function is broken.  This isn't so much of an issue in modern times since we get feedback pretty quick, so we would have to forget which method it was we where editing.  This might not be so clear in refactors where we change many functions together, suppose we are moving things around and the code only compiles again after 5 methods are moved - in one we made a mistake in the move.
+
+This is indeed a problem, it's yet another example of "no free lunch theorem", or in other words "you have to put complexity somewhere".  The OOP mindset might be to put complexity in the production code to eliminate complexity in debugging times.  This bias is probably due to that debugging programs is much harder in OOP because you need so much more code to get anything done.
+
+In FP most of your time is spent thinking and reading code because little time is needed for actually writing code, so you want the code to be as simple and easy to reason about as possible.
+
+If we had better tooling that could analyse the stack and suggest which method is in the stack for all the newly broken tests, then we would be able to know which method broke.
+
+
 
 
 In OOP especially when mutating things, you don't have control over your own classes because you need a lot of code to do anything, and you mutate things. 
