@@ -44,7 +44,7 @@ In FP most of your time is spent thinking and reading code because little time i
 
 If we had better tooling that could analyse the stack and suggest which method is in the stack for all the newly broken tests, then we would be able to know which method broke.
 
-
+"No Free Lunch Theorem" https://en.wikipedia.org/wiki/No_free_lunch_theorem applies to software development and time spent.  When we optimise for one situation, like "debugging" time by using DI, we have costs somewhere else, like in production code complexity and readability (due to increased parameters).  Each language has it's own shortcomings which mean we need to prioritise certain kinds of optimisations.  In OOP DI makes sense, in FP, not as much.  My preference is to keep production code as simple as it can possibly be since the real truth lies in the code, in the details.  Furthermore as a general principle it is best to optimise for what is obviously a problem *now*, not for what we try to predict is going to be a problem in future.
 
 
 In OOP especially when mutating things, you don't have control over your own classes because you need a lot of code to do anything, and you mutate things. 
