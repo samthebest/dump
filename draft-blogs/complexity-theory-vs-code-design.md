@@ -24,14 +24,66 @@ The length of an AST doesn't correspond to difficulty in understanding linearly.
 
 Therefore when a human looks at code, although it formally is quite simple, a human may having much higher cognitive load than necessary since in parsing the code it may be reusing the same exponential time internal parser for the code.
 
+It's not surpising then that those languages that are the most verbose, due to lack of features or bad design, are ones that seem to have the greatest of "religous following" of patterns, practices and styles.  In more powerful langauges it seems the proffesionals care less about such practices.  The best example of verbosity causing dogmatic convention is Java.  Java is so verbose that great effort is required to keep it understandable.
+
 ## Abstractions can obfuscate complexity, not always eliminate it
 
+One "trick" used a lot in Java is to chop up a 20 line method into many smaller methods, sometimes just 2 or 3 lines long.  This shows a complete failure of the language, and does not result in code that is easier to understand.  By chopping the information up it does have an effect on cognitive load since the sum of exponents of numbers summing to N will always be smaller than the exponent of N.  But this is an utter failure on the language which then either places greater pressure on other mental resources, particularly memory, or great pressure on trust and naming.  To read Java you need a very good short term memory in order to wade through the call hearchy, or a lot of trust in method names.
+
+Reall the method it acheives this is also fake, in reality complexity has been increased, but the reader is prevented from viewing all of it at once by placing it in different locations.  The same ends albeit more crudely is acheived in other languages with whitespace or comments like //---------.   One sees this kind of thing in scientific code.
+
+Early abstraction obfuscates the possibility of refactoring.
+
+So what should we be doing instead? We should be trying to keep AST length down to an absalute minimum, including obfuscation. This means abstractions, like pulling apart one method into many can only be justified if it can result in deuplication.  Abstraction a method which is only used once should only ever be done when:
+
+1. The 
+2. 
+
+
+Example:
+
+Suppose method X has as a subroutine checks for an even number in a list
+
+val list = ???
+var foundEven: Boolean = false
+var index: Int = 0
+while (!foundEven && index < list.length) {
+  val nextNumber = list(index)
+  if (nextNumber % 2 == 0) {
+    foundEven = true
+  } else {
+    foundEven = false
+  }
+  index = index + 1
+}
 
 
 
+This example is an exhageration, but you will often see the first course of action is start abstractions.  E.g.
 
 
+def evenAtIndex(list: List[Int], index: Int): Boolean = {
+  val numberAtIndex = list(index)
+  if (numberAtIndex % 2 == 0) {
+    return true
+  } else {
+    return false
+  }
+}
 
+def hasEven(list: List[Int]): Boolean = {
+  var foundEven: Boolean = false
+  var index: Int = 0
+  while (!foundEven && index < list.length) {
+    foundEven = evenAtIndex(list, index)
+    index = index + 1
+  }
+}
+
+
+Using the Scala collections library we would just do:
+
+list.exists(_ % 2 == 0)
 
 
 
