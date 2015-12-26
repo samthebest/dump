@@ -61,8 +61,12 @@ while (!foundEven && index < list.length) {
 
 This example is an exhageration, but you will often see the first course of action is start abstractions.  E.g.
 
+class EvenUtils {
+   val list: List[Int]
 
-def evenAtIndex(list: List[Int], index: Int): Boolean = {
+   // constructor
+
+def evenAtIndex(index: Int): Boolean = {
   val numberAtIndex = list(index)
   if (numberAtIndex % 2 == 0) {
     return true
@@ -71,7 +75,7 @@ def evenAtIndex(list: List[Int], index: Int): Boolean = {
   }
 }
 
-def hasEven(list: List[Int]): Boolean = {
+def hasEven(): Boolean = {
   var foundEven: Boolean = false
   var index: Int = 0
   while (!foundEven && index < list.length) {
@@ -80,10 +84,72 @@ def hasEven(list: List[Int]): Boolean = {
   }
 }
 
+}
+
+But then it gets worse, because we need to test these two methods, and we need to then inject evenAtIndex.  In OOP, this is especially painful since we can't just change `hasEven(evenAtIndexEvaluator: Int => Boolean)`, we have to inject it as an object, hence:
+
+class EvenUtils {
+   val list: List[Int]
+
+   // constructor
+def evenAtIndex(index: Int): Boolean = {
+  val numberAtIndex = list(index)
+  if (numberAtIndex % 2 == 0) {
+    return true
+  } else {
+    return false
+  }
+}
+
+def hasEven(): Boolean = {
+  var foundEven: Boolean = false
+  var index: Int = 0
+  while (!foundEven && index < list.length) {
+    foundEven = evenAtIndex(list, index)
+    index = index + 1
+  }
+}
+
+}
+
+.... 
+class EvenEvaluator(list: List[Int], evenAtIndexEvaluator: EvenAtIndexEvaluator ) {
+
+def hasEven(): Boolean = {
+  var foundEven: Boolean = false
+  var index: Int = 0
+  while (!foundEven && index < list.length) {
+    foundEven = evenAtIndexEvaluator.evaluate(index)
+    index = index + 1
+  }
+}
+
+}
+
+class EvenAtIndexEvaluator(list: List[Int]) {
+
+def evaluate(index: Int): Boolean = {
+  val numberAtIndex = list(index)
+  if (numberAtIndex % 2 == 0) {
+    return true
+  } else {
+    return false
+  }
+}
+}
+
+
+But now it gets worse, since both these classes have a dependency on the list. So we need a factory for EvenAtIndexEvaluator, i.e. EvenAtIndexEvaluatorFactory, and for mocking we need AbstractEvenAtIndexEvaluator. Then we obfuscate things further using a DI framework, we now need another line in another file to control how the factory.  Finally, a few days down the line, we actually end up moving on and implementing the thing we where trying to implement to begin with.
+
+Now the code looks something like:
+
+val hasEvenEvaluator = diFramework.inject[HasEvenEvaluator]
+hasEvenEvaluator.evalute(list)
 
 Using the Scala collections library we would just do:
 
 list.exists(_ % 2 == 0)
 
 
+Now few developers will look at that code and refactor it.  It's tested, it's using DI, and it has "low cognitive load" since it's only two simple lines.  
 
