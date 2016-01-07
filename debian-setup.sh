@@ -63,6 +63,10 @@ sudo apt-get install jq
 
 # docker
 sudo apt-get install docker.io
+sudo gpasswd -a ${USER} docker
+newgrp docker
+sudo service docker restart
+# Requires restart
 
 # Intellij (version dependent)
 wget -O /tmp/intellij.tar.gz http://download.jetbrains.com/idea/ideaIC-14.1.4.tar.gz
