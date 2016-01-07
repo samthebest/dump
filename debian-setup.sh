@@ -24,46 +24,46 @@ echo "}" >> ~/.bash_profile
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
 sudo apt-get update 
-sudo apt-get install google-chrome-stable
+sudo apt-get install -y google-chrome-stable
 
 # git
-sudo apt-get install git
+sudo apt-get install -y git
 
 # Java
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
-sudo apt-get install oracle-java8-installer
+sudo apt-get install -y oracle-java8-installer
 
 # sbt
 echo "deb http://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
 sudo apt-get update
-sudo apt-get install sbt
+sudo apt-get install -y sbt
 
 # mkdir src
 mkdir src
 
 # Curl (some distros don't have curl)
-sudo apt-get install curl
+sudo apt-get install -y curl
 
 # Google cloud https://cloud.google.com/sdk/
 curl https://sdk.cloud.google.com | bash
 source .bashrc
 
 # Flash
-sudo apt-get install pepperflashplugin-nonfree
+sudo apt-get install -y pepperflashplugin-nonfree
 
 # Skype
-sudo apt-get install skype
+sudo apt-get install -y skype
 
 # Sublime
-sudo apt-get install sublime-text
+sudo apt-get install -y sublime-text
 
 # cool json tool
-sudo apt-get install jq
+sudo apt-get install -y jq
 
 # docker
-sudo apt-get install docker.io
+sudo apt-get install -y docker.io
 sudo gpasswd -a ${USER} docker
 newgrp docker
 sudo service docker restart
@@ -77,7 +77,7 @@ wget -O /tmp/idea-settings.jar https://github.com/jkaving/intellij-colors-solari
 #./idea-IC/bin/idea.sh
 
 # xclip
-sudo apt-get install xclip
+sudo apt-get install -y xclip
 
 # Setup an ssh key
 ssh-keygen -t rsa -b 4096 -C "$email"
@@ -91,7 +91,7 @@ sudo su
 echo "deb http://downloads.hipchat.com/linux/apt stable main" > /etc/apt/sources.list.d/atlassian-hipchat.list
 wget -O - https://www.hipchat.com/keys/hipchat-linux.key | apt-key add -
 apt-get update
-apt-get install hipchat
+apt-get install -y hipchat
 exit
 
 # Clone my open-source repos
