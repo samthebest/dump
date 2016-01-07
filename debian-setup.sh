@@ -62,7 +62,7 @@ sudo apt-get install sublime-text
 sudo apt-get install jq
 
 # docker
-sudo apt-get install docker
+sudo apt-get install docker.io
 
 # Intellij (version dependent)
 wget -O /tmp/intellij.tar.gz http://download.jetbrains.com/idea/ideaIC-14.1.4.tar.gz
