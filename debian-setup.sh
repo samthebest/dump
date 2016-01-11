@@ -63,7 +63,7 @@ sudo apt-get install -y sublime-text
 sudo apt-get install -y jq
 
 # docker
-sudo apt-get install -y docker.io
+wget -qO- https://get.docker.com/ | sh
 sudo gpasswd -a ${USER} docker
 newgrp docker
 sudo service docker restart
