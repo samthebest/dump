@@ -38,7 +38,7 @@ sudo apt-get install -y oracle-java8-installer
 # sbt
 echo "deb http://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
 sudo apt-get update
-sudo apt-get install -y sbt
+sudo apt-get install -y --force-yes sbt
 
 # mkdir src
 mkdir src
