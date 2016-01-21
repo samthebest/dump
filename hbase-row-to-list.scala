@@ -11,3 +11,8 @@ def hbaseRowToStringList(result: Result): List[(String, String, String, Long)] =
       (row, column, value, ts)
     }
   }
+
+
+def hbaseRowToStringList2(result: Result): List[String] = 
+    result.list().toList.map(keyValue => 
+      "Qualifier : " + keyValue.getKeyString() + " : Value : " + Bytes.toString(keyValue.getValue()))
