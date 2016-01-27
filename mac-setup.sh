@@ -82,6 +82,12 @@ brew cask install sourcetree
 # really cool json tool
 brew install jq
 
+# install pip
+sudo easy_install pip
+
+# install aws cli
+pip install awscli
+
 # add bash-completion to ~/.bash_profile
 echo "if [ -f \$(brew --prefix)/etc/bash_completion ]; then" >> ~/.bash_profile
 echo "    . \$(brew --prefix)/etc/bash_completion" >> ~/.bash_profile
