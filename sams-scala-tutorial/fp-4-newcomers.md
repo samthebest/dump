@@ -101,15 +101,20 @@ Basically if you never use variables (in Scala `var`), and never use any code th
 ### Key Design Differences to Procedural
 
  - Passing functions around as things
- - Purity
+ - Pure Functions
 
 ### Key Design Difference to OOP
 
- - In OOP you have classes that mix functions, state and data
- - In OOP deduplication and abstraction is acheived using complex class heiarchies, injection and interfaces
- - In FP you keep functions separate to data
- - In FP deduplication is acheived using static functions and ad-hoc polymorphism / type-classes
- - In FP state is delayed, or kept entirely outside the application code (like a DB, filesystem, client state)
+#### Deduplication, Scope control and Abstraction
+
+ - OOP: Use complex class heiarchies, injection and interfaces
+ - FP: Use static functions, ad-hoc polymorphism / type-classes and imports
+
+#### Functions, State and Data
+
+ - OOP: classes mix functions, state and data
+ - FP: functions are separate to data (`objects` for functions and `case class`es for data)
+ - FP: state is delayed, or kept entirely outside the application code (like a DB, filesystem, client state)
 
 So it's much harder to leap from OOP to FP, than Procedural to FP. The switch from OOP requires unlearning, which is harder than learning.
 
@@ -117,10 +122,53 @@ So it's much harder to leap from OOP to FP, than Procedural to FP. The switch fr
 
 ## VS both procedural & OOP
 
- - Higher Ordered Functions (like map) reduce endless repitition of idioms (like `for` loops)
- - Very easy to reason about as their are no hidden dependencies, nor effects. Little human memory required!
+ - Higher Ordered Functions (like map) remove endless repitition of idioms & control structures (like `for`, `while` loops)
+ - Very easy to reason about as there are no hidden dependencies, nor effects
  - Very easy to change FP code. E.g. no matter where you put a line of code, it will always do the same thing!
+ - Very easy to get code to run in parallel
 
 ## VS OOP
 
- - Principles and patterns become pointless in FP
+ - OOP has 100s of principles, rules, practices and design patterns, without them code becomes unmaintainable
+ - FP has only one rule: DRY (Don't repeat yourself), all other issues are addressed just by being Functional
+ - OOP ends up resulting in long strange names for things because all functions have to be wrapped into classes, e.g. `SimpleBeanFactoryAwareAspectInstanceFactory`, `AbstractSingletonProxyFactoryBean`, `BeanContextServiceProviderBeanInfo`, `AbstractAnnotationValueVisitor6`, `AbstractAnnotationConfigDispatcherServletInitializer`
+ - FP doesn't require functions to be in classes, nor even have a name (c.f. anonymous functions). 
+ - Furthermore abstract concepts are handled by the right tool - mathematics, so you will see things like `Monad`, `BifunctorOps`, `SemiGroup`, `Monoid`, which have established meanings you can Google and understand.
+
+# Why Scala in particular?
+
+We could use *OCaml, ML, Haskell, Clojure, F#, Scala, Lisp, Erlang, Rust, ...*
+
+If we want to avoid esoteric / acedemic languages and we want a lot of libraries that hook into modern technologies, then that (arguably) limits us to
+
+*F#, Clojure, Scala*
+
+If we want to avoid .NET, or we want to stick to the JVM, then we are limited to
+
+*Clojure, Scala*
+
+Finally, if we want a language that's *either* native to Big Data tools like Kafka and Spark, or we want *static typing* all that remains is:
+
+**Scala**
+
+## Dynamic vs Static - It's a tradeoff, like most things
+
+In a nutshell:
+
+ - Dynamic: reduces the time spent initially writting code, but increases the time spent debugging code. Great for high-level logic, or string based worlds, like DevOps.
+ - Static: increases the time spent initially writting code, but nearly eliminates time spent debugging code.  Great for detailed logic, or data driven worlds, like Big Data or low latency programming.
+
+# Why is it appropriate in terms of Big Data?
+
+Little left to say, to reiterate:
+
+ - Native to Kafka and Spark
+ - Hooks into other JVM tech
+ - Makes reasoning about parallel processing easy
+
+
+
+
+Now Static vs Dynamic typing is a big argument we will not digress into here, but in a nutshell it comes down to this:
+
+ - Dynamic languages 
