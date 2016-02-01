@@ -10,6 +10,15 @@ We will try to answer five questions:
 
 The hope is to mix between bullet points and code snippets that you could copy and paste into a shell then experiement further.  This talk will **not** cover stuff like Monoids, Monads, Functors, Categories, etc.
 
+
+
+
+
+
+
+
+
+
 # What is Functional Programming?
 
 ## Things are Functions
