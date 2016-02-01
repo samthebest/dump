@@ -8,7 +8,7 @@ We will try to answer five questions:
  - Why is it appropriate in terms of Big Data?
  - Why is it appropriate for server-side web development?
 
-The hope is to mix between bullet points and code snippets that you could copy and paste into a shell then experiement further.  This talk will **not** cover stuff like Monoids, Monads, Functors, Categories, etc.
+This talk will **not** cover stuff like Monoids, Monads, Functors, Categories, etc.
 
 .
 
