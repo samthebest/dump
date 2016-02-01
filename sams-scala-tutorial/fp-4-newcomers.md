@@ -28,6 +28,26 @@ This talk will **not** cover stuff like Monoids, Monads, Functors, Categories, e
 
 # What is Functional Programming?
 
+1. Things are functions
+2. Functions are things
+3. Functions are functions (huh?)
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
 ## Things are Functions
 
 You can *apply* most things in Scala as if they were a function, e.g.
@@ -77,6 +97,22 @@ scala> list.map(addOne)
 res6: List[Int] = List(2, 3, 3, 6, 6, 7)
 ```
 
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
 ## Functions are *really Functions*! AKA Pure Functions
 
  - That is they are functions in the formal *mathematical* sense
@@ -88,6 +124,22 @@ I.e.
 2. They can NOT depend on *change*
 
 (NOTE: Style and practice - not forced by the language.)
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
 
 ### Breaks 1
 
@@ -108,6 +160,22 @@ res17: Int = 10
 
 This is called a "side effect"
 
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
 ### Breaks 2
 
 ```
@@ -127,14 +195,62 @@ scala> notReallyAFunction(5)
 res10: Int = 8
 ```
 
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
 ### Pure Function Summary
 
 Basically if you never use variables (in Scala `var`), and never use any code that uses a `var` (e.g. mutable data structures) then your functions will be "Pure" (ignorning weird stuff like IO).
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
 
 ### Key Design Differences to Procedural
 
  - Passing functions around as things
  - Pure Functions
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
 
 ### Key Design Difference to OOP
 
@@ -151,6 +267,22 @@ Basically if you never use variables (in Scala `var`), and never use any code th
 
 So it's much harder to leap from OOP to FP, than Procedural to FP. The switch from OOP requires unlearning, which is harder than learning.
 
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
 # Why would we use it?
 
 ## VS both procedural & OOP
@@ -160,6 +292,22 @@ So it's much harder to leap from OOP to FP, than Procedural to FP. The switch fr
  - Very easy to change FP code. E.g. no matter where you put a line of code, it will always do the same thing!
  - Very easy to get code to run in parallel
 
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
 ## VS OOP
 
  - OOP has 100s of principles, rules, practices and design patterns, without them code becomes unmaintainable
@@ -167,6 +315,22 @@ So it's much harder to leap from OOP to FP, than Procedural to FP. The switch fr
  - OOP ends up resulting in long strange names for things because all functions have to be wrapped into classes, e.g. `SimpleBeanFactoryAwareAspectInstanceFactory`, `AbstractSingletonProxyFactoryBean`, `BeanContextServiceProviderBeanInfo`, `AbstractAnnotationValueVisitor6`, `AbstractAnnotationConfigDispatcherServletInitializer`
  - FP doesn't require functions to be in classes, nor even have a name (c.f. anonymous functions). 
  - Furthermore abstract concepts are handled by the right tool - mathematics, so you will see things like `Monad`, `BifunctorOps`, `SemiGroup`, `Monoid`, which have established meanings you can Google and understand.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
 
 # Why Scala in particular?
 
@@ -184,12 +348,44 @@ Finally, if we want a language that's *either* native to Big Data tools like Kaf
 
 **Scala**
 
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
 ## Dynamic vs Static - It's a tradeoff, like most things
 
 In a nutshell:
 
  - Dynamic: reduces the time spent initially writting code, but increases the time spent debugging code. Great for high-level logic, or string based worlds, like DevOps.
  - Static: increases the time spent initially writting code, but nearly eliminates time spent debugging code.  Great for detailed logic, or data driven worlds, like Big Data or low latency programming.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
 
 # Why is it appropriate in terms of Big Data?
 
@@ -198,6 +394,22 @@ Little left to say, to reiterate:
  - Native to Kafka and Spark
  - Hooks into other JVM tech
  - Makes reasoning about parallel processing easy
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
 
 # Why is it appropriate for server-side web development?
 
