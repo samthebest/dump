@@ -166,9 +166,13 @@ Little left to say, to reiterate:
  - Hooks into other JVM tech
  - Makes reasoning about parallel processing easy
 
+# Why is it appropriate for server-side web development?
+
+Little left to say, to reiterate:
+
+ - Detailed logic is robust, terse and easy to maintain
+ - Hooks into other JVM tech
+ - Makes reasoning about multi-threaded applications easy
 
 
 
-Now Static vs Dynamic typing is a big argument we will not digress into here, but in a nutshell it comes down to this:
-
- - Dynamic languages 
