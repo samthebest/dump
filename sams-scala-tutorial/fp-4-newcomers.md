@@ -43,3 +43,61 @@ list: List[Int] = List(1, 2, 2, 5, 5, 6)
 scala> list.map(addOne)
 res6: List[Int] = List(2, 3, 3, 6, 6, 7)
 ```
+
+## Functions are *really Functions*! AKA Pure Functions
+
+ - That is they are functions in the formal *mathematical* sense
+ - They **only** take some parameters and return a result
+
+I.e.
+
+1. They do NOT *change anything*
+2. They can NOT depend on *change*
+
+(NOTE: Style and practice - not forced by the language.)
+
+### Breaks 1
+
+```
+scala> var iCanChange = 0
+
+scala> def notReallyAFunction(bar: Int): Int = {
+     | iCanChange = iCanChange + 10
+     | bar
+     | }
+     
+scala> notReallyAFunction(5)
+res16: Int = 5
+
+scala> iCanChange
+res17: Int = 10
+```
+
+This is called a "side effect"
+
+### Breaks 2
+
+```
+scala> var iCanChange = 0
+iCanChange: Int = 0
+
+scala> def notReallyAFunction(bar: Int): Int = iCanChange + bar
+notReallyAFunction: (bar: Int)Int
+
+scala> notReallyAFunction(5)
+res9: Int = 5
+
+scala> iCanChange = iCanChange + 3
+iCanChange: Int = 3
+
+scala> notReallyAFunction(5)
+res10: Int = 8
+```
+
+### Summary
+
+Basically if you never use variables (in Scala `var`), and never use any code that uses a `var` (e.g. mutable data structures) then your functions will be "Pure" (ignorning weird stuff like IO).
+
+# Why would we use it?
+
+
