@@ -147,9 +147,9 @@ I.e.
 scala> var iCanChange = 0
 
 scala> def notReallyAFunction(bar: Int): Int = {
-     | iCanChange = iCanChange + 10
-     | bar
-     | }
+         iCanChange = iCanChange + 10
+         bar
+       }
      
 scala> notReallyAFunction(5)
 res16: Int = 5
