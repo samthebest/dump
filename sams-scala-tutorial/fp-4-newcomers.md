@@ -94,10 +94,33 @@ scala> notReallyAFunction(5)
 res10: Int = 8
 ```
 
-### Summary
+### Pure Function Summary
 
 Basically if you never use variables (in Scala `var`), and never use any code that uses a `var` (e.g. mutable data structures) then your functions will be "Pure" (ignorning weird stuff like IO).
 
+### Key Design Differences to Procedural
+
+ - Passing functions around as things
+ - Purity
+
+### Key Design Difference to OOP
+
+ - In OOP you have classes that mix functions, state and data
+ - In OOP deduplication and abstraction is acheived using complex class heiarchies, injection and interfaces
+ - In FP you keep functions separate to data
+ - In FP deduplication is acheived using static functions and ad-hoc polymorphism / type-classes
+ - In FP state is delayed, or kept entirely outside the application code (like a DB, filesystem, client state)
+
+So it's much harder to leap from OOP to FP, than Procedural to FP. The switch from OOP requires unlearning, which is harder than learning.
+
 # Why would we use it?
 
+## VS both procedural & OOP
 
+ - Higher Ordered Functions (like map) reduce endless repitition of idioms (like `for` loops)
+ - Very easy to reason about as their are no hidden dependencies, nor effects. Little human memory required!
+ - Very easy to change FP code. E.g. no matter where you put a line of code, it will always do the same thing!
+
+## VS OOP
+
+ - Principles and patterns become pointless in FP
