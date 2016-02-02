@@ -63,10 +63,17 @@ If you already have a ticket in Doing, but for whatever reason that ticket is pe
 
 ### Ready to Release -> Done/Released
 
+*(Desirable, but has caveats)* A merge to master should automatically trigger this step, but this does mean a feature branch should only be completed if it is to be deployed.
+
 This may result in the releasing of other features.
 
 1. In Jenkins click the "release" button (or "deploy") for the project, now all the following steps ought to be performed by Jenkins automatically:
-2. 
+2. checkout/pull master
+3. build the artefact (which will include running the unit tests). Note for some projects that are script based "building" might just be trivial
+4. Run the full test suite using that artefact (including extra tests that may be slow but are important before a release)
+5. If the tests pass tag the commit (by bumping the version number of the last tag) and push the tag
+6. Put the artefact into the artefact repo (e.g. nexus, s3, etc, something that doesn't allow overwrites)
+7. Then if necessary (i.e. for permanent clusters) trigger a deploy job that deploys the artefact to the prod environment
 
 
 
