@@ -256,14 +256,20 @@ Basically if you never use variables (in Scala `var`), and never use any code th
 
 #### Deduplication, Scope control and Abstraction
 
- - OOP: Use complex class heiarchies, injection and interfaces
- - FP: Use static functions, ad-hoc polymorphism / type-classes and imports
+ - OOP: Use functions, complex class heiarchies, injection, imports and interfaces
+ - FP: Use static functions and imports (with some syntactic sugar to allow for infix notation)
 
 #### Functions, State and Data
 
  - OOP: classes mix functions, state and data
  - FP: functions are separate to data (`objects` for functions and `case class`es for data)
  - FP: state is delayed, or kept entirely outside the application code (like a DB, filesystem, client state)
+
+#### Bug Elimination
+
+ - OOP: `private`, hiding functionality, and/or forcing people to copy and paste code instead of just calling it
+ - FP: immutability. (no code hiding is necessary, because there is no state to break)
+ - FP + Static Typing: The compiler checks your work for you!
 
 So it's much harder to leap from OOP to FP, than Procedural to FP. The switch from OOP requires unlearning, which is harder than learning.
 
