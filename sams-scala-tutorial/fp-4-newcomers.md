@@ -424,6 +424,6 @@ Little left to say, to reiterate:
  - Detailed logic is robust, terse and easy to maintain
  - Hooks into other JVM tech
  - Makes reasoning about multi-threaded applications easy
-
+ - Moore's law has run out, if our applications need to be fast, we need to use multiple CPUs
 
 
