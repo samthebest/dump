@@ -107,13 +107,8 @@ This differs significantly in that once the review is finished, you do NOT merge
 
 This will only release the specific hotfix.
 
-1. In Jenkins click the "release hotfix" button (or "deploy hotfix") for the project, now all the following steps ought to be performed by Jenkins automatically:
-2. checkout/pull the hotfix branch
-3. build the artefact (which will include running the unit tests). Note for some projects that are script based "building" might just be trivial
-4. Run the full test suite using that artefact (including extra tests that may be slow but are important before a release)
-5. If the tests pass tag the commit (by bumping the **minor** version number of the last tag) and push the tag. *(Desirable)* If they fail, send round an email of shame.
-6. Put the artefact into the artefact repo (e.g. nexus, s3, etc, something that doesn't allow overwrites)
-7. Then if necessary (i.e. for permanent clusters) trigger a deploy job that deploys the artefact to the prod environment
+1. In Jenkins click the "release hotfix" button (or "deploy hotfix") for the project, 
+2. now all the steps ought to be performed by Jenkins that where done for the "release" job in Feature branches, with the one difference being that the **minor** version number ought to be bumped
 
 Now at this point we have released the hotfix, but have not merged into master, so
 
@@ -137,7 +132,8 @@ It may be desirable when releasing to have a means to study which artefacts have
 
 # Adversarial Pairing
 
+TODO
 
 # Epics
 
-
+TODO
