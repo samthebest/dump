@@ -91,23 +91,21 @@ This may result in the releasing of other features.
 
 Steps Backlog -> Doing are the same as above, where hotfixes differ is as follows:
 
+TODO
 
+# Monorepo vs Multirepo
 
+The above flow assumes that for the given git repository there exists a single entry point to all tests, and a single entry point that builds a single artefact.  
 
+## Multirepo
 
+A multirepo, i.e. where each project corresponds to a separate git repo, solves the above assumption somewhat simply.  This means each repo has it's own corresponding Jenkins jobs.  The down side of multirepos is that releases to one project sometimes break other projects, and it's often the case that a single feature requires changes to many projects.  This creates a large development overhead and sometimes a manual deployment processs.
 
+## Monorepo
 
+In a monorepo one needs a script that runs all the test suites, and a script that builds all the artefacts then packages them into a single monoartefact.
 
-
-
-
-
-
-
-
-
-
-
+It may be desirable when releasing to have a means to study which artefacts have actually changed, or even to limit which artefacts are expected to change.  For example suppose a release is expected to only change project A and project B but not project C, then when one performs the release they specify that they expect only A and B to change.  The build checks the hashes of the artefacts to ensure this.  Then the deploy job could lazily only deploy the artefacts that have changed.  For temporary clusters this would be implicit since the artefact it needs would be grabbed from s3 prior to the production run.
 
 # Adversarial Pairing
 
