@@ -5,7 +5,7 @@ Task Tracker = An Agile task tracker with a horizontal board, like Trello or JIR
 
 # Fundemental Principles
 
- - To ensure that an action on the Task Tracker loosly corresponds to an actions in git
+ - To ensure that an actions and history on the Task Tracker corresponds to an actions and history in git
  - To ensure than a deployment to an environment corresponds to an action in the Task Tracker and git
  - Done means DONE! http://www.allaboutagile.com/agile-principle-7-done-means-done/
  - To ensure rollback is easy
@@ -47,7 +47,7 @@ If you already have a ticket in Doing, but for whatever reason that ticket is pe
 1. Create a branch *from master* that uses the ticket reference number as a prefix to the branch name.  In Trello these are just short numbers, in JIRA these are usually a short string that includes a project ID and a ticket number.  For example we may have a ticket "5 add back button", then the branch would be 5-add-back-button (observe lower kebab case convention).
 2. Slide the ticket from TODO to Doing and add a comment with the branch name (desirable). Ensure the ticket is assigned to you.
 3. Implement the ticket via ATDD, BDD, TDD cycles (TDD may not be possible for languages that don't naturally support unit tests).
-4. While you work on the ticket you should regularly merge master into your branch, and backup your branch by pushing it.  If you don't merge master into you branch regularly merge conflicts may become unweildy.
+4. While you work on the ticket you should regularly merge master into your branch, and backup your branch by pushing it.  If you don't merge master into you branch regularly merge conflicts may become unweildy. *When you commit use the ticket reference as a prefix to the commit message.*
 5. When you think you have finished **ask someone to review your branch** by mentioning them on the ticket.  It's nice to use a tool like Intellij, github or crucible to review code, but not necessary. There may be some back and forth to tidy things up between the reviewer and the reviewee.
 6. If they are happy the code is good, they should say "I'm happy, review passed" or something on the ticket, and they should perform step 1 in the next section
 
@@ -84,6 +84,8 @@ This may result in the releasing of other features.
 *(Desirable, but hard)* Automatically send a slack message
 
 *(Desirable, but hard)* Automatically move all the tickets that got deployed to Done.
+
+*(Desirable, but hard)* Automatically create release notes and commit them to a .md file.
 
 ## Hotfix Process Step by Step with Git and CI
 
