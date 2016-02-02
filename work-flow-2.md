@@ -26,7 +26,7 @@ The board should have the following columns:
  - **Ready to release**: A ticket that has been developmed, tested and reviewed and is ready to release
  - **Done**: Released tickets
 
-## Process Step by Step with Git 
+## Feature Process Step by Step with Git and CI
 
 ### Backlog -> TODO
 
@@ -49,13 +49,24 @@ If you already have a ticket in Doing, but for whatever reason that ticket is pe
 5. When you think you have finished **ask someone to review your branch** by mentioning them on the ticket.  It's nice to use a tool like Intellij, github or crucible to review code, but not necessary. There may be some back and forth to tidy things up between the reviewer and the reviewee.
 6. If they are happy the code is good, they should say "I'm happy, review passed" or something on the ticket, and they should perform step 1 in the next section
 
-### Doing -> Ready to release
+*(Desirable, but hard)* based on the comment, automatically perform the next step:
+
+### Doing -> Ready to Release
 
 1. The aforementioned reviewer should login to Jenkins and there should be a "merge feature branch" job or similar, with a parameter that is the branch.  The reviewer should run the job.  This job should:
-    - (Desirable) Check that the reviewer is not the assignee of the ticket
-    - asdf
+    - Checkout/pull the branch
+    - *(Desirable, but hard)* Check that the user is not the assignee of the ticket
+    - Run the test suite, this may include a suite that spins up temporary staging clusters
+    - If the test suite passes, it merges the feature branch into master and pushes master
+    - *(Desirable, but hard)* automatically do step 2
+2. Move the ticket to "Ready to Release"
 
+### Ready to Release -> Done/Released
 
+This may result in the releasing of other features.
+
+1. In Jenkins click the "release" button (or "deploy") for the project, now all the following steps ought to be performed by Jenkins automatically:
+2. 
 
 
 
