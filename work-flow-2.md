@@ -89,8 +89,6 @@ This may result in the releasing of other features.
 
 ## Hotfix Process Step by Step with Git and CI
 
-This is the similar as for Features.
-
 ### Backlog -> TODO
 
 Same as for Features
