@@ -57,7 +57,7 @@ If you already have a ticket in Doing, but for whatever reason that ticket is pe
 
 ### Doing -> Ready to Release
 
-1. The aforementioned reviewer should login to Jenkins and there should be a "merge feature branch" job or similar, with a parameter that is the branch.  The reviewer should run the job.  This job should:
+1. The aforementioned reviewer should login to Jenkins and there should be a "merge branch" job or similar, with a parameter that is the branch.  The reviewer should run the job.  This job should:
     - Checkout/pull the branch
     - *(Desirable, but hard)* Check that the user is not the assignee of the ticket
     - Run the test suite, this may include a suite that spins up temporary staging clusters
@@ -77,7 +77,7 @@ This may result in the releasing of other features.
 2. checkout/pull master
 3. build the artefact (which will include running the unit tests). Note for some projects that are script based "building" might just be trivial
 4. Run the full test suite using that artefact (including extra tests that may be slow but are important before a release)
-5. If the tests pass tag the commit (by bumping the version number of the last tag) and push the tag. *(Desirable)* If they fail, send round an email of shame.
+5. If the tests pass tag the commit (by bumping the **major** version number of the last tag) and push the tag. *(Desirable)* If they fail, send round an email of shame.
 6. Put the artefact into the artefact repo (e.g. nexus, s3, etc, something that doesn't allow overwrites)
 7. Then if necessary (i.e. for permanent clusters) trigger a deploy job that deploys the artefact to the prod environment
 
@@ -89,9 +89,39 @@ This may result in the releasing of other features.
 
 ## Hotfix Process Step by Step with Git and CI
 
-Steps Backlog -> Doing are the same as above, where hotfixes differ is as follows:
+This is the similar as for Features.
 
-TODO
+### Backlog -> TODO
+
+Same as for Features
+
+### TODO -> Doing
+
+Same as for Features except:
+
+In  1.: Create a branch *from the most recent tag* instead of *master*, this will ensure you are branching from code that is on production.
+
+### Doing -> Ready to Release
+
+This differs significantly in that once the review is finished, you do NOT merge into master.  The ticket may sit here waiting to be released, but essentially nothing "happens" in this transition other than the reviewer approving it.
+
+### Ready to Release -> Done
+
+This will only release the specific hotfix.
+
+1. In Jenkins click the "release hotfix" button (or "deploy hotfix") for the project, now all the following steps ought to be performed by Jenkins automatically:
+2. checkout/pull the hotfix branch
+3. build the artefact (which will include running the unit tests). Note for some projects that are script based "building" might just be trivial
+4. Run the full test suite using that artefact (including extra tests that may be slow but are important before a release)
+5. If the tests pass tag the commit (by bumping the **minor** version number of the last tag) and push the tag. *(Desirable)* If they fail, send round an email of shame.
+6. Put the artefact into the artefact repo (e.g. nexus, s3, etc, something that doesn't allow overwrites)
+7. Then if necessary (i.e. for permanent clusters) trigger a deploy job that deploys the artefact to the prod environment
+
+Now at this point we have released the hotfix, but have not merged into master, so
+
+8. Manually merge master into the hotfix branch to resolve any conflicts
+9. Now run the "merge branch" jenkins job as mentioned in "Doing -> Ready to Release" for Features
+10. Move the ticket to Done
 
 # Monorepo vs Multirepo
 
