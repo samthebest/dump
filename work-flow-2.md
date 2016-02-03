@@ -2,10 +2,9 @@
 # Glossary
 
 Task Tracker = An Agile task tracker with a horizontal board, like Trello or JIRA (nearly all other task/ticker trackers suck)
+# Fundamental Principles
 
-# Fundemental Principles
-
- - To ensure that an actions and history on the Task Tracker corresponds to an actions and history in git
+ - To ensure that actions and history on the Task Tracker corresponds to actions and history in git
  - To ensure than a deployment to an environment corresponds to an action in the Task Tracker and git
  - Done means DONE! http://www.allaboutagile.com/agile-principle-7-done-means-done/
  - To ensure rollback is easy
@@ -23,7 +22,7 @@ The board should have the following columns:
  - **Backlog / Icebox**: A long list of placeholders for work that needs to be done, not necessarily analysed, nor fleshed out
  - **TODO**: A list of tickets that the team has decided need to be done.  Hopefully some details should be fleshed out on the ticket sufficient for development to start.
  - **Doing**: In progress tickets, in progress includes development, testing and code review.
- - **Ready to release**: A ticket that has been developmed, tested and reviewed and is ready to release
+ - **Ready to release**: A ticket that has been developed, tested and reviewed and is ready to release
  - **Done**: Released tickets
 
 ## Feature Process Step by Step with Git and CI
@@ -47,7 +46,7 @@ If you already have a ticket in Doing, but for whatever reason that ticket is pe
 1. Create a branch *from master* that uses the ticket reference number as a prefix to the branch name.  In Trello these are just short numbers, in JIRA these are usually a short string that includes a project ID and a ticket number.  For example we may have a ticket "5 add back button", then the branch would be 5-add-back-button (observe lower kebab case convention).
 2. Slide the ticket from TODO to Doing and add a comment with the branch name (desirable). Ensure the ticket is assigned to you.
 3. Implement the ticket via ATDD, BDD, TDD cycles (TDD may not be possible for languages that don't naturally support unit tests).
-4. While you work on the ticket you should regularly merge master into your branch, and backup your branch by pushing it.  If you don't merge master into you branch regularly merge conflicts may become unweildy. *When you commit use the ticket reference as a prefix to the commit message.*
+4. While you work on the ticket you should regularly merge master into your branch, and backup your branch by pushing it.  If you don't merge master into your branch regularly then merge conflicts may become unwieldy. *When you commit use the ticket reference as a prefix to the commit message.*
 5. When you think you have finished **ask someone to review your branch** by mentioning them on the ticket.  It's nice to use a tool like Intellij, github or crucible to review code, but not necessary. There may be some back and forth to tidy things up between the reviewer and the reviewee.
 6. If they are happy the code is good, they should say "I'm happy, review passed" or something on the ticket, and they should perform step 1 in the next section
 
@@ -108,7 +107,9 @@ This differs significantly in that once the review is finished, you do NOT merge
 This will only release the specific hotfix.
 
 1. In Jenkins click the "release hotfix" button (or "deploy hotfix") for the project, 
-2. now all the steps ought to be performed by Jenkins that where done for the "release" job in Feature branches, with the one difference being that the **minor** version number ought to be bumped
+2. now all the steps ought to be performed by Jenkins that where done for the "release" job in Feature branches, with the key differences being:
+    - Jenkins pulls the hotfix branch, rather than master (so it will need to be a param to Jenkins)
+    - the **minor** version number ought to be bumped
 
 Now at this point we have released the hotfix, but have not merged into master, so
 
@@ -132,8 +133,26 @@ It may be desirable when releasing to have a means to study which artefacts have
 
 # Adversarial Pairing
 
-TODO
+It's important that when you pair:
 
-# Epics
+ - You both have a keyboard plugged in
+ - You can both easily see the monitor
+ - You communicate a lot, particularly the driver ought to say what they are doing
 
-TODO
+Adversarial pairing is defined by the following flow:
+
+1. Person A drives and writes a test, person B navigates
+2. Person B drives and makes that test pass while person A navigates
+3. Person B continues to drive and writes the next test while person A navigates
+4. Now person A drives and makes that test pass while B navigates.  Go back to 1.
+
+# Epics and Labels
+
+It's often the case tickets fall into a particular theme, or all contribute to delivering some wider goal.  Use labels to organize tickets into types, like DevOps, Tech Debt, etc, and use Epics (in Trello this is just another ticket, with perhaps an Epic label) to monitor a large goal.
+
+From experience using JIRA is unwieldy at doing Epics and Labels.  Trello is the best.  The nicest way to do Epics in Trello is to create a ticket, put it in TODO, create a Checklist, and each member of the checklist is simply a link to another ticket.  Trello will automatically convert the hyperlink to a pretty hyperlink. Then when eventually all the small tickets are completed and their member in the checklist is checked, that Epic can be moved to done.
+
+# Lists in Trello
+
+Given that Trello has a nice lists feature, it's easy to label lists according to releases if you so desire.  That is rather than calling "Ready to release" "Ready to release".
+
