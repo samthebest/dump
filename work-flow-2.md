@@ -2,6 +2,7 @@
 # Glossary
 
 Task Tracker = An Agile task tracker with a horizontal board, like Trello or JIRA (nearly all other task/ticker trackers suck)
+
 # Fundamental Principles
 
  - To ensure that actions and history on the Task Tracker corresponds to actions and history in git
@@ -47,8 +48,8 @@ If you already have a ticket in Doing, but for whatever reason that ticket is pe
 2. Slide the ticket from TODO to Doing and add a comment with the branch name (desirable). Ensure the ticket is assigned to you.
 3. Implement the ticket via ATDD, BDD, TDD cycles (TDD may not be possible for languages that don't naturally support unit tests).
 4. While you work on the ticket you should regularly merge master into your branch, and backup your branch by pushing it.  If you don't merge master into your branch regularly then merge conflicts may become unwieldy. *When you commit use the ticket reference as a prefix to the commit message.*
-5. When you think you have finished **ask someone to review your branch** by mentioning them on the ticket.  It's nice to use a tool like Intellij, github or crucible to review code, but not necessary. There may be some back and forth to tidy things up between the reviewer and the reviewee.
-6. If they are happy the code is good, they should say "I'm happy, review passed" or something on the ticket, and they should perform step 1 in the next section
+5. When you think you have finished **create a pull request** (you should configure git to require a certain number of reviewers, two is good to start (to stop people reviewing their own code)).  By creating a pull request this should trigger a jenkins job to run a test suite (just to be sure they didn't forget and so the reviewer can quickly see). There may be some back and forth to tidy things up between the reviewer and the reviewee.
+6. If they are happy the code is good, they should say "I'm happy, review passed" or something on the pull request, and they should perform step 1 in the next section
 
 *(Desirable, but hard)* Automatically send a slack message
 
@@ -56,11 +57,12 @@ If you already have a ticket in Doing, but for whatever reason that ticket is pe
 
 ### Doing -> Ready to Release
 
-1. The aforementioned reviewer should login to Jenkins and there should be a "merge branch" job or similar, with a parameter that is the branch.  The reviewer should run the job.  This job should:
-    - Checkout/pull the branch
+1. The aforementioned reviewer should login to Jenkins and there should be a "merge branch" / "close PR" job or similar, with a parameter that is the branch.  The reviewer should run the job.  This job should:
     - *(Desirable, but hard)* Check that the user is not the assignee of the ticket
+    - Pull master, and merge in the branch
+    - does a commit with messsage "Closes #<PR-number>." (might need to be jenkins param for now)
     - Run the test suite, this may include a suite that spins up temporary staging clusters
-    - If the test suite passes, it merges the feature branch into master and pushes master.
+    - If and only if the test suite passes, it pushes master.
     - *(Desirable, but hard)* automatically do step 2
 2. Move the ticket to "Ready to Release"
 
