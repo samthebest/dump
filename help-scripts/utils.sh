@@ -21,6 +21,7 @@ function get-value-from-file {
 function run-script-remotely {
     user=`whoami`
     poll_time=5
+    local OPTIND
     while getopts "h?s:S:l:u:p:H:w:" opt; do
         case "$opt" in
         h|\?)
@@ -30,11 +31,12 @@ function run-script-remotely {
         s)  script_path=$OPTARG
             script_name=`basename $script_path`
             ;;
-        l)  script_log_file=$OPTARG
+        l)  script_log_path=$OPTARG
             ;;
         S)  ssh_args=$OPTARG
             ;;
-        u)  user=$OPTARG
+        u)  echo "Setting user to $OPTARG"
+            user=$OPTARG
             ;;
         p)  poll_time=$OPTARG
             ;;
@@ -52,6 +54,7 @@ function run-script-remotely {
     job_ended_file=job-ended-`date +%s`
 
     tmp_script=/tmp/tmp-script-for-run-script-remotely.sh
+    tmp_script_name=`basename $tmp_script`
 
     echo "#!/bin/bash" > $tmp_script
     echo "chmod +x $script_name" >> $tmp_script
@@ -61,12 +64,13 @@ function run-script-remotely {
     echo "INFO (run-script-remotely): scp-ing scripts"
     scp ${ssh_args} ${script_path} ${user}@${host}:${remote_work_dir}/
     scp ${ssh_args} ${tmp_script} ${user}@${host}:${remote_work_dir}/
+    ssh ${ssh_args} ${user}@${host} chmod +x ${remote_work_dir}/${tmp_script_name}
 
     echo "INFO (run-script-remotely): running script remotely"
-    ssh ${ssh_args} ${user}@${host} "screen -dm bash -c \"${remote_work_dir}/${tmp_script}\""
+    ssh ${ssh_args} ${user}@${host} "screen -dm bash -c \"${remote_work_dir}/${tmp_script_name}\""
 
     function grab-job-ended-file {
-        scp ${ssh_args} ${user}@${host}:${remote_work_dir}/${job_ended_file} /tmp/
+        scp ${ssh_args} ${user}@${host}:/tmp/${job_ended_file} /tmp/
         echo $?
     }
 
@@ -78,6 +82,10 @@ function run-script-remotely {
         grabbed_exit_code=`grab-job-ended-file`
     done
 
+    scp ${ssh_args} ${user}@${host}:${script_log_path} /tmp/
+    echo "INFO (run-script-remotely): Remote logs:"
+    cat /tmp/`basename ${script_log_path}`
+    
     return `cat /tmp/${job_ended_file}`
 }
 
