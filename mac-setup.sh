@@ -3,19 +3,40 @@
 
 # Change editor (for next step):
 export EDITOR=nano
-echo "export EDITOR=nano" >> ~/.bash_profile
 
-# Increase bash history to a million commands (should be enough)
-echo "HISTFILESIZE=10000000" >> ~/.bash_profile
+# Checking if bash_profile already setup
+grep "bash profile already setup" .bash_profile
+already_setup=$?
 
-# Change prompt to linux default
-echo "export PS1='\$(whoami)@\$(hostname):\$(pwd) '" >> ~/.bash_profile
+if [ "$already_setup" != "0" ]; then
+    echo "# bash profile already setup" >> ~/.bash_profile
+    echo "export EDITOR=nano" >> ~/.bash_profile
 
-echo "" >> ~/.bash_profile
+    # Increase bash history to a million commands (should be enough)
+    echo "HISTFILESIZE=10000000" >> ~/.bash_profile
 
-echo "function json {" >> ~/.bash_profile
-echo "	python -m json.tool" >> ~/.bash_profile
-echo "}" >> ~/.bash_profile
+    # Change prompt to linux default
+    echo "export PS1='\$(whoami)@\$(hostname):\$(pwd) '" >> ~/.bash_profile
+
+    echo "" >> ~/.bash_profile
+
+    echo "function json {" >> ~/.bash_profile
+    echo "	python -m json.tool" >> ~/.bash_profile
+    echo "}" >> ~/.bash_profile
+    echo "" >> ~/.bash_profile
+    
+    # nice alias for grepping history (cos CTRL + R not always that great)
+    echo "function gh {" >> ~/.bash_profile
+    echo "    cat ~/.bash_history | grep \$*" >> ~/.bash_profile
+    echo "}" >> ~/.bash_profile
+    
+    echo ""  >> ~/.bash_profile
+    
+    # add bash-completion to ~/.bash_profile
+    echo "if [ -f \$(brew --prefix)/etc/bash_completion ]; then" >> ~/.bash_profile
+    echo "    . \$(brew --prefix)/etc/bash_completion" >> ~/.bash_profile
+    echo "fi"  >> ~/.bash_profile
+fi
 
 # Install brew
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -43,7 +64,7 @@ brew install scala
 # Install sbt
 brew install sbt
 
-# Install Intellij (Community edition)
+# Install Intellij (Community edition) (doesn't seem to work anymore)
 brew cask install intellij-idea-ce
 
 # ifstat
@@ -92,19 +113,10 @@ pip install awscli
 curl https://sdk.cloud.google.com | bash
 # manual: restart shell, run gcloud init
 
-# add bash-completion to ~/.bash_profile
-echo "if [ -f \$(brew --prefix)/etc/bash_completion ]; then" >> ~/.bash_profile
-echo "    . \$(brew --prefix)/etc/bash_completion" >> ~/.bash_profile
-echo "fi"  >> ~/.bash_profile
-# Then start git auto completion
+# start git auto completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
 fi
-
-# nice alias for grepping history (cos CTRL + R not always that great)
-echo "function gh {" >> ~/.bash_profile
-echo "    cat ~/.bash_history | grep \$*" >> ~/.bash_profile
-echo "}" >> ~/.bash_profile
 
 # Remove DS_Store abomination for ever and ever
 # echo "while true; do find / -name .DS_Store -exec rm -f \"{}\" \; ; sleep 2; done" > ~/.rm-DS_Store-abomination.sh && chmod +x ~/.rm-DS_Store-abomination.sh && echo "screen -ls | grep rm-DS_Store-abomination >/dev/null || screen -S rm-DS_Store-abomination -d -m ~/.rm-DS_Store-abomination.sh" >> ~/.bash_profile && screen -ls | grep rm-DS_Store-abomination >/dev/null || screen -S rm-DS_Store-abomination -d -m ~/.rm-DS_Store-abomination.sh
