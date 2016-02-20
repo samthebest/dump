@@ -1,6 +1,8 @@
 #!/bin/bash
 # MAC SETUP SCRIPT
 
+set -e
+
 # Change editor (for next step):
 export EDITOR=nano
 
@@ -43,6 +45,8 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 
 # Install brew cask (makes it easier to install mac apps)
 brew install caskroom/cask/brew-cask
+
+brew cask install google-chrome
 
 # Spectacle means you can resize and move windows with shortcuts (requires manual step afterwards)
 # After you have done the manual step to start, remember to 
