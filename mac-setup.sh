@@ -41,7 +41,7 @@ if [ "$already_setup" != "0" ]; then
 fi
 
 # Install brew
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew >/dev/null || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 # Install brew cask (makes it easier to install mac apps)
 brew install caskroom/cask/brew-cask
