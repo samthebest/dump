@@ -105,7 +105,7 @@ brew cask install sourcetree
 brew install jq
 
 # install pip
-sudo easy_install pip
+brew install python
 
 # install aws cli
 pip install awscli
