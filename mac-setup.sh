@@ -56,9 +56,6 @@ brew cask install spectacle
 # Install sublime (best text editor ever!)
 brew cask install sublime-text
 
-# Setup a link so you can run sublime from command line
-ln -s /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl /usr/local/bin/sublime
-
 # Install java
 brew cask install java
 
