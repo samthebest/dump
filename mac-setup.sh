@@ -1,14 +1,14 @@
 #!/bin/bash
 # MAC SETUP SCRIPT
 
-set -e
-
 # Change editor (for next step):
 export EDITOR=nano
 
 # Checking if bash_profile already setup
 grep "bash profile already setup" .bash_profile
 already_setup=$?
+
+set -e
 
 if [ "$already_setup" != "0" ]; then
     echo "# bash profile already setup" >> ~/.bash_profile
