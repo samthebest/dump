@@ -69,7 +69,7 @@ brew install scala
 brew install sbt
 
 # Install Intellij (Community edition) (doesn't seem to work anymore)
-brew cask install intellij-idea-ce
+# brew cask install intellij-idea-ce
 
 # ifstat
 brew install ifstat
