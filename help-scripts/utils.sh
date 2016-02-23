@@ -22,7 +22,7 @@ function run-script-remotely {
     user=`whoami`
     poll_time=5
     local OPTIND
-    while getopts "h?s:S:l:u:p:H:w:" opt; do
+    while getopts "h?s:S:l:u:p:H:w:a:" opt; do
         case "$opt" in
         h|\?)
             show_help
@@ -44,6 +44,8 @@ function run-script-remotely {
             ;;
         w)  remote_work_dir=$OPTARG
             ;;
+        a)  script_args=$OPTARG
+            ;;
         esac
     done
 
@@ -57,8 +59,9 @@ function run-script-remotely {
     tmp_script_name=`basename $tmp_script`
 
     echo "#!/bin/bash" > $tmp_script
+    echo "cd $remote_work_dir" >> $tmp_script
     echo "chmod +x $script_name" >> $tmp_script
-    echo "$remote_work_dir/$script_name" >> $tmp_script
+    echo "$remote_work_dir/${script_name} ${script_args}" >> $tmp_script
     echo "echo \$? > /tmp/$job_ended_file" >> $tmp_script
 
     echo "INFO (run-script-remotely): scp-ing scripts"
@@ -88,4 +91,3 @@ function run-script-remotely {
     
     return `cat /tmp/${job_ended_file}`
 }
-
