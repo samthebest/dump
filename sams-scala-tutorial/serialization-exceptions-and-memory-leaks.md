@@ -142,6 +142,14 @@ res0: Long = 1000
 
 .
 
+.
+
+.
+
+.
+
+.
+
 ### Q2. Will any of these cause serialization exception?
 
 ```
@@ -154,6 +162,12 @@ scala> sc.makeRDD(1 to 1000, 1).map(i => (i, new NotSerializable(i))).collect()
 
 scala> sc.broadcast(new NotSerializable(10))
 ```
+
+.
+
+.
+
+.
 
 .
 
