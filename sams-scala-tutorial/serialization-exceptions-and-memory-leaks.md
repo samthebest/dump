@@ -762,12 +762,16 @@ scala> sc.makeRDD(1 to 1000, 100).map(ias.addTwo).reduce(_ + _)
 res1: Int = 502500
 ```
 
- - Observe size difference.
+### Lessons
+
+ - Observe difference in memory cost
+ - Observe time difference (caused by serializing and broadcasting)
  - Much better since later versions of spark (1.5.0?) since broadcasting is automatic
- - Complex applications with many large objects user needs to be aware of cost of accidental broadcasting
-    - Memory
-    - Cost of broadcasting! Can be time consuming
  - Make sure you only have one executor per node
+
+.
+
+.
 
 .
 
@@ -791,7 +795,90 @@ res1: Int = 502500
 
 ### Common Solutions to Serialization Exceptions
 
- - Add `extends Serializable` to everything
- - Prefix `val`s with `@transient`
- - Turn methods into functions
+ - Add `extends Serializable` to everything - BAD: ugly, could cause aforementioned issues
+ - Prefix `val`s with `@transient` - OK: ugly
+ - Turn methods into functions - BAD: very ugly, could create more problems
+ - Use `com.twitter.chill.MeatLocker` - BAD: very ugly boilerplate everywhere
+ - Use Spores - OK: Not really finished yet, again adds boilerplate
+
+So what should we do? :(
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+## General Solution: Ban OOP! Go Functional
+
+Object Oriented Programming together with it's horrible design principles causes these problems.
+
+Use FP in it's purest sense, that is **Don't mix your data with your functions**.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+Practically this means
+
+ - Never put vals in `objects`
+ - Never put methods in `class`es
+ - Use `case class`es for your data
+ - Only put methods in `case object`s or `implicit case class`es
+ - Use type-classes and `implicit case class`es to create syntactic sugar
+ - Use implicit parameters to ease context passing - Do NOT use `class` scope
+ - `val`s only really exist in the scope of a method
+
+The benifits are
+
+ - Closure problems vanish
+ - Inheritance becomes purely for scope control
+ - Inheritance does not effect initialization
+ - Clear separation between data and functions acting on data
+ - Single responsibility principle is automatic (each function is a responsibility)
+ - Multiple inheritence is easy
+ - Discourages mutable state
+ - Discourage pointless encapsulation (never use `private`!)
+ - All application context and initialization is visible in the `main` method
+ - GC is faster
+ - Serializing tasks is faster
+
+
+
 
