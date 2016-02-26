@@ -350,7 +350,7 @@ res10: Int = 5150
 
 ## IMPORTANT LESSON
 
-In Scala `map(something)` is NOT the same as `map(x => something(x))`!
+In Scala `map(something)` is NOT (always) the same as `map(x => something(x))`!
 
 Will be important later when we talk about memory leaks.
 
@@ -409,12 +409,14 @@ Observe extra stack before we see `TraversableLike`
 
 .
 
-### Q3: 
+.
+
+### Q5: 
 
 ```
 scala> class NotSerializableA {
-     |   def addOne(i: Int): Int = i + 1
-     | }
+         def addOne(i: Int): Int = i + 1
+       }
      
 scala> val nsa = new NotSerializableA()
 
@@ -443,24 +445,259 @@ scala> sc.makeRDD(1 to 100).map(nsa.addOne).reduce(_ + _)
 
 .
 
-# A4: Yes
+### A5: Yes
+
+For **methods** `map(nsa.addOne)` is actually the same as `map(i => nsa.addOne(i))`
 
 ```
-scala> sc.makeRDD(1 to 100).map(nsa.addOne).reduce(_ + _)
+scala> List(1, 2, 3).map(new Silly().addOne)
+scala.NotImplementedError: an implementation is missing
+	at scala.Predef$.$qmark$qmark$qmark(Predef.scala:252)
+	at Silly.addOne(<console>:9)
+	at $anonfun$1.apply$mcII$sp(<console>:10)
+	at $anonfun$1.apply(<console>:10)
+	at $anonfun$1.apply(<console>:10)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+
+scala> List(1, 2, 3).map(i => new Silly().addOne(i))
+scala.NotImplementedError: an implementation is missing
+	at scala.Predef$.$qmark$qmark$qmark(Predef.scala:252)
+	at Silly.addOne(<console>:9)
+	at $anonfun$1.apply$mcII$sp(<console>:10)
+	at $anonfun$1.apply(<console>:10)
+	at $anonfun$1.apply(<console>:10)
+	at scala.collection.TraversableLike$$anonfun$map$1.apply(TraversableLike.scala:244)
+```
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+### Q6: 
+
+```
+scala> class NotSerializableB {
+         val addOne = (i: Int) => i + 1
+       }
+     
+scala> val nsb = new NotSerializableB()
+
+scala> sc.makeRDD(1 to 100).map(nsb.addOne).reduce(_ + _)
+```
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+### A7: No exception, it works.
+
+Here, the function `(i: Int) => i + 1` is serializable.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+### Q8: Now, can add 3 chars so that it WILL cause a serialization exception?
+
+```
+scala> class NotSerializableB {
+         val addOne = (i: Int) => i + 1
+       }
+     
+scala> val nsb = new NotSerializableB()
+
+scala> sc.makeRDD(1 to 100).map(nsb.addOne).reduce(_ + _)
+```
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+### A8: Yes!
+
+```
+scala> class NotSerializableB {
+         val addOne = (i: Int) => i + 1
+       }
+     
+scala> val nsb = new NotSerializableB()
+
+scala> sc.makeRDD(1 to 100).map(nsb.addOne(_)).reduce(_ + _)
+```
+
+This causes the exception because **the closure** requires that we serialize `nsb`, not just `nsb.addOne`.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+### Q9: Will this one throw exception?
+
+```
+scala> class NotSerializableB {
+         val addOne = (i: Int) => i + 1
+       }
+   
+scala> class IShouldBeSerializable extends Serializable {
+         val nsb = new NotSerializableB()
+       
+         def addTwo(i: Int): Int = i + 2
+       }
+     
+scala> val ibs = new IShouldBeSerializable()
+
+scala> sc.makeRDD(1 to 100).map(ibs.addTwo).reduce(_ + _)
+```
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+### A9: Yup!
+
+```
+scala> sc.makeRDD(1 to 100).map(ibs.addTwo).reduce(_ + _)
 org.apache.spark.SparkException: Task not serializable
-        at org.apache.spark.util.ClosureCleaner$.ensureSerializable(ClosureCleaner.scala:304)
-        ...
-Caused by: java.io.NotSerializableException: $iwC$$iwC$NotSerializableA
+...
+Caused by: java.io.NotSerializableException: $iwC$$iwC$NotSerializableB
 Serialization stack:
-        - object not serializable (class: $iwC$$iwC$NotSerializableA, value: $iwC$$iwC$NotSerializableA@1cadc82c)
-        - field (class: $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC, name: nsa, type: class $iwC$$iwC$NotSerializableA)
-        ...
-        - field (class: $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$anonfun$1, name: $outer, type: class $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC)
-        - object (class $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$anonfun$1, <function1>)
-        ...
+        - object not serializable (class: $iwC$$iwC$NotSerializableB, value: $iwC$$iwC$NotSerializableB@7dcbb74)
+        - field (class: $iwC$$iwC$IShouldBeSerializable, name: nsb, type: class $iwC$$iwC$NotSerializableB)
+        - object (class $iwC$$iwC$IShouldBeSerializable, $iwC$$iwC$IShouldBeSerializable@15d92772)
+        - field (class: $iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC$$iwC, name: ibs, type: class $iwC$$iwC$IShouldBeSerializable)
 ```
 
-.
+Because closures are transative! Nor can they be "lazy".
+
+If `nsb` was serializable and a large data set, say a big lookup, then we have a **Memory leak**.
 
 .
 
@@ -485,13 +722,19 @@ Serialization stack:
 .
 
 .
+
+## Memory Leaks
 
 ```
-scala> class NotSerializableA {
-     |   def addOne(i: Int): Int = i + 1
-     | }
-     
-scala> val nsa = new NotSerializableA()
+scala> class IAmSerializable extends Serializable {
+         val hugeMap = (1 to 1000).map(i => (i, i.toString)).toMap
+         
+         def addTwo(i: Int): Int = i + 2
+       }
+       
+scala> val ias = new IAmSerializable()
 
-scala> sc.makeRDD(1 to 100).map(i => nsa.addOne(i)).reduce(_ + _)
+scala> sc.makeRDD(1 to 100, 10).map(ias.addTwo).reduce(_ + _)
 ```
+
+ - 
