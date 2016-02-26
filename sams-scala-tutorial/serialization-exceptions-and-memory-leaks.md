@@ -727,7 +727,7 @@ If `nsb` was serializable and a large data set, say a big lookup, then we have a
 
 ```
 scala> class IAmSerializable extends Serializable {
-         val hugeMap = (1 to 1000).map(i => (i, i.toString)).toMap
+         val hugeMap = (1 to 10).map(i => (i, i.toString)).toMap
          
          def addTwo(i: Int): Int = i + 2
        }
