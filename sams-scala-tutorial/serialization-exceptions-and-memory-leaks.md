@@ -861,7 +861,7 @@ Practically this means
  - Never put methods in `class`es
  - Use `case class`es for your data
  - Only put methods in `case object`s or `implicit case class`es
- - Use type-classes and `implicit case class`es to create syntactic sugar
+ - Use type-classes and `implicit case class`es to create sugar (infix & dot notation over postfix)
  - Use implicit parameters to ease context passing - Do NOT use `class` scope
  - `val`s only really exist in the scope of a method
 
