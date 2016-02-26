@@ -755,8 +755,8 @@ scala> val ias = new IAmSerializable()
 
 scala> sc.makeRDD(1 to 1000, 100).map(ias.addTwo).reduce(_ + _)
 ...
-16/02/26 13:12:29 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on ip-172-31-45-69.eu-west-1.compute.internal:55818 (size: 1965.0 B, free: 535.0 MB)
-16/02/26 13:12:29 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on ip-172-31-45-68.eu-west-1.compute.internal:58794 (size: 1965.0 B, free: 535.0 MB)
+16/02/26 13:12:29 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on ... (size: 1965.0 B, free: 535.0 MB)
+16/02/26 13:12:29 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on ... (size: 1965.0 B, free: 535.0 MB)
 ...
 16/02/26 13:12:29 INFO DAGScheduler: Job 1 finished: reduce at <console>:19, took 0.555915 s
 res1: Int = 502500
@@ -865,7 +865,28 @@ Practically this means
  - Use implicit parameters to ease context passing - Do NOT use `class` scope
  - `val`s only really exist in the scope of a method
 
-The benifits are
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+The benifits include
 
  - Closure problems vanish
  - Inheritance becomes purely for scope control
@@ -879,6 +900,26 @@ The benifits are
  - GC is faster
  - Serializing tasks is faster
 
+.
 
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
 
 
