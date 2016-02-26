@@ -6,7 +6,6 @@ Talk:
 2. Quiz
 3. Discussion of ways to prevent/stop these problems
 4. The best way to prevent these problems
-5. The ideal future way to prevent these problems
 
 .
 
@@ -921,5 +920,21 @@ The benifits include
 .
 
 .
+
+
+## Recap
+
+1. Serialization problems are very subtle, make sure you understand the details
+2. Making exceptions go away could be just hiding your problem
+3. As always, functional programming is the solution!
+
+.
+
+.
+
+.
+
+.
+
 
 
