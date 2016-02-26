@@ -405,6 +405,10 @@ Observe extra stack before we see `TraversableLike`
 
 .
 
+.
+
+.
+
 ### Q3: 
 
 ```
