@@ -723,18 +723,75 @@ If `nsb` was serializable and a large data set, say a big lookup, then we have a
 
 .
 
-## Memory Leaks
+## Memory Leaks / Performance Issues
 
+### With hugeMap
 ```
 scala> class IAmSerializable extends Serializable {
-         val hugeMap = (1 to 10).map(i => (i, i.toString)).toMap
+         val hugeMap = (1 to 100000).map(i => (i, i.toString)).toMap
          
          def addTwo(i: Int): Int = i + 2
        }
        
 scala> val ias = new IAmSerializable()
 
-scala> sc.makeRDD(1 to 100, 10).map(ias.addTwo).reduce(_ + _)
+scala> sc.makeRDD(1 to 1000, 100).map(ias.addTwo).reduce(_ + _)
+...
+16/02/26 13:08:31 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on ... (size: 1065.1 KB, free: 534.0 MB)
+16/02/26 13:08:31 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on ... (size: 1065.1 KB, free: 534.0 MB)
+...
+16/02/26 13:08:35 INFO DAGScheduler: Job 0 finished: reduce at <console>:19, took 4.973575 s
+res0: Int = 502500
 ```
 
- - 
+### Without
+
+```
+scala> class IAmSerializable extends Serializable {
+         def addTwo(i: Int): Int = i + 2
+       }
+       
+scala> val ias = new IAmSerializable()
+
+scala> sc.makeRDD(1 to 1000, 100).map(ias.addTwo).reduce(_ + _)
+...
+16/02/26 13:12:29 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on ip-172-31-45-69.eu-west-1.compute.internal:55818 (size: 1965.0 B, free: 535.0 MB)
+16/02/26 13:12:29 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on ip-172-31-45-68.eu-west-1.compute.internal:58794 (size: 1965.0 B, free: 535.0 MB)
+...
+16/02/26 13:12:29 INFO DAGScheduler: Job 1 finished: reduce at <console>:19, took 0.555915 s
+res1: Int = 502500
+```
+
+ - Observe size difference.
+ - Much better since later versions of spark (1.5.0?) since broadcasting is automatic
+ - Complex applications with many large objects user needs to be aware of cost of accidental broadcasting
+    - Memory
+    - Cost of broadcasting! Can be time consuming
+ - Make sure you only have one executor per node
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+### Common Solutions to Serialization Exceptions
+
+ - Add `extends Serializable` to everything
+ - Prefix `val`s with `@transient`
+ - Turn methods into functions
+
