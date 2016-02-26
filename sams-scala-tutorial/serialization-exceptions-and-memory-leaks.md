@@ -37,9 +37,9 @@ Talk:
 Two things:
 
 1. Spark jobs that *may* require transfer of *object* data between JVMs
-    a Trying to broadcast non-serializable data
-    b Trying to collect non-serializable data
-    c Tryiny to *shuffle* non-serializable data
+    - Trying to broadcast non-serializable data
+    - Trying to collect non-serializable data
+    - Tryiny to *shuffle* non-serializable data
 2. Spark jobs that transfer *meta* data between JVMs via (intentional or unintentional) **transative closure capture**
 
 Both reasons can be very subtle.
