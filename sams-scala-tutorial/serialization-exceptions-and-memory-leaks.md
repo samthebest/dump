@@ -4,6 +4,8 @@ http://www.datasciencemanifesto.org/
 
 There is a version of this talk without blocks of whitespace here: 
 
+https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/serialization-exceptions-and-memory-leaks-no-ws.md
+
 
 ## Introduction
 
