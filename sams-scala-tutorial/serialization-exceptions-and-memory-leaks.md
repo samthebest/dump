@@ -1,3 +1,10 @@
+Please take a look at the Manifesto for Agile Data Science: 
+
+http://www.datasciencemanifesto.org/
+
+There is a version of this talk without blocks of whitespace here: 
+
+
 ## Introduction
 
 Talk:
