@@ -94,6 +94,33 @@ Here be dragons! Making data serializable can make exceptions go away, but incre
 .
 
 .
+## Definition - Closure Capture
+
+The *captured closure* of a function *F* is the set of values *C* where *x* is in *C* if and only if:
+
+1. *x* is referenced in the scope of *F*, or
+2. *x* is referenced in the scope of a function *G* where there exists a sequence of function calls *F_1, ..., F_N* such that *F* calls *F_1*, *F_1* calls *F_2*, ... , *F_N* calls *G*, or
+3. *x* is a value of or referenced in the scope of an instance *h* of a class *H* where *h* is a value of the form 1. or 2.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
 
 ## QUIZ!
 
