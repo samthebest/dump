@@ -110,6 +110,9 @@ brew install python
 # install aws cli
 pip install awscli
 
+# vagrant - a orchestration for virtual box
+brew cask install vagrant
+
 # gcloud
 curl https://sdk.cloud.google.com | bash
 # manual: restart shell, run gcloud init
