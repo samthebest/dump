@@ -1,0 +1,561 @@
+package com.mendeley.altmetrics
+
+object ScalaPresentation {
+
+
+
+  // INTRO
+  // Some basic basic scala - mainly about style and good practice.
+  // Although basic, useful for those from other languages, and given the frequency of some of these style errors
+  // it might be good for even more experienced Scala users.
+  //
+  // May try to cover type-classes, unlikely - subject in itself
+  //
+  // Don't know how far we will get.
+  //
+  // Resources:
+  // Great video by odersky - "Scala With Style"
+  // Memorize the style guide - something to do before bed
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  ////
+  //
+  //
+  //
+  //
+  ////
+  //
+  //
+  //
+  //
+  //
+
+
+  // BASIC STYLE
+
+  // Use type annotations for vals that are not primative types (like Int, String, etc).
+  val ll: List[List[Int]] = ???
+
+  // Really bad
+  ll.map {l=>l(3)+1+2+3}
+
+  // Quite bad
+  ll.map { l => l(3) + 1 + 2 + 3 }
+
+  // Bad
+  ll.map { l =>
+    l(3) + 1 + 2 + 3
+  }
+
+  // Spot the mistake?
+  ll.map { l =>
+    l(3) +
+      1 +
+      2
+      3
+  }
+
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
+  // Compile error!
+    l.map ( i =>
+      i(3) +
+        1 +
+        2
+        3
+    )
+
+
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
+  // Good
+  ll.map(l => l(3) + 1 + 2 + 3)
+
+  // Best
+  ll.map(_(3) + 1 + 2 + 3)
+
+  // Think of "_" like "it" in natural language, it makes sentences flow better. (pun intended)
+  // See http://stackoverflow.com/questions/25763400/motivation-for-scala-underscore-in-terms-of-formal-language-theory-and-good-styl
+
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
+
+  // NEVER USE
+  // return (similar to throw, is kind of side effecting)
+  // null - to set an optional value, use None
+
+  // AVOID
+  // throw - use \/ to control logic, throw only when you want to kill the application
+  // if you use an evil horrible idiot library that uses exceptions, try to wrap in a monadic way with \/
+  // example on confluence
+
+  // USE ONLY FOR LOW LEVEL FAST CODE
+  // var  -  see Actors!?
+  // mutable
+
+  // NOTE: Use recursion with care, it's generally less efficient, always try to do things in an iterative way
+  // e.g. use foldLeft
+  // if your using tail recursion, then you can probably use a method from the collections API
+  // Reserve recursion for recursive structures, like Graphs and Trees.  Don't jump to recursion when you want to avoid var.
+
+  // Wrong:
+//   import scala.collection.mutable.Map
+  val myMap: Map[Int, Int] = ???
+  // Right:
+  import scala.collection.mutable
+  val mutableMap: mutable.Map[Int, Int] = ???
+
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
+
+  def expensiveFunction: Int = {
+    println("hello")
+    2
+  }
+
+  def foo(a: Int, b: Int): Int = a + b
+
+  List(1, 2, 3).map(x => foo(expensiveFunction, x))
+
+  // Java solution (epic verbosity! Value only used once! Oh the horror!)
+  val x = expensiveFunction
+  List(1, 2, 3).map(foo(x, _))
+
+
+  // Scala Solution A (when `foo` is mainly used in this context and you wrote `foo`)
+  def fooCurry(a: Int)(b: Int): Int = a + b
+
+  val f: Int => Int = fooCurry(expensiveFunction)
+
+
+
+  List(1, 2, 3).map(f)
+
+  // Scala Solution B (when you don't want to change `foo`)
+  List(1, 2, 3).map((foo _).curried(expensiveFunction))
+
+  // Don't use currying for the sake of it!! Main use cases:
+  // 1. Simplifying complex dependency injection without using a framework (or macros & traits)
+  // 2. Avoiding repeating an expensive function, or creating billions of objects on the heap (for Spark)
+
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
+
+  // OO vs FP, particularly Encapsulation
+
+  // Java way
+
+  class MyClass {
+    val a: Int = ???
+    val b: Int = ???
+
+    var state: Int = 4
+
+    // def someConstructor (I've forgotten the syntax)
+
+    def sum: Int = a + b
+
+    private def subRoutineAPIUsersShouldNotDependOn: Int = a * 33
+
+    private def clutter: Int = b * 44
+
+    private def dodgyState(): Unit = state += 7
+  }
+
+  // General Negatives:
+  // - Two classes with same data are not equal
+  // - Verbose constructor / field declaration
+  // - null pointer exceptions (because we don't know what the fields are yet and we forget to set them)
+  // - toString is just a weird number
+  // - not automatically serializable
+  // - why is the constructor inside the object? That feels odd, one constructs an object from the OUTSIDE
+  //   this leads to jillions of "design patterns" to handle the clunky object creation in Java.
+
+  // Encapsulation Negatives
+  // - a pain to test the private methods
+  // - stops users using a routine, which may end up sticking around for a year or two (really force them to copy paste!?).
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
+  // Scala way
+
+  case class MyData(a: Int, b: Int, state: Int = 4)
+
+  // Often just written `MyData` again if these functions only apply to MyData
+  object MyFunctionsOnMyData {
+    def sum(myData: MyData): Int = myData.a + myData.b
+
+    // When paths are a pain for more complex methods
+    def sum2(myData: MyData): Int = {
+      import myData._
+      a + b
+    }
+
+    // We can't put MyData into a dodgy state, it's immutable, it's data, it doesn't have a state
+    def dodgyNEWDATA(myData: MyData): MyData = myData.copy(state = myData.state + 7)
+  }
+
+  object ExtraFunctions {
+    def clutter(myData: MyData): Int = myData.b * 44
+  }
+
+  // Could introduce an annotation too (like Spark does)
+  object Experimental {
+    def subRoutine(myData: MyData): Int = myData.a * 33
+  }
+
+  // This resolves all the negatives of Java, but also has a big impact on design, particularly in order to respect
+  // the Single Responsibility Principle.  We are more naturally inclined to put our different responsibilities into
+  // different places because we separate the FUNCTIONS / TRANSFORMATIONs from the DATA.
+
+  // There are some other ways to do Encapsulation too that also work well in Java.  The example given here doesn't
+  // work so well in Java ...
+
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
+  // But what about method chains :(.  Now I can't do myData.sum.somethingElse.andAnother ... ?
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
+
+  // AHA!
+
+  object MyDataPimps {
+    implicit class PimpedMyData(myData: MyData) {
+      def sum: Int = MyFunctionsOnMyData.sum(myData)
+    }
+  }
+
+  import MyDataPimps._
+
+  val example: MyData = ???
+
+  example.sum
+
+  // So now you control what methods you get with import statements
+
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
+  // But now how can I abstract? Like when many things have a `sum` operation?
+
+  // def generic(myData: MyDataSuper) = myData.sum
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
+
+  // TYPE CLASSES!! (Ad-hoc polymorphism)
+
+
+  // (A lot of typing and heiarchies happen at the 'static' level, making for simple abstraction)
+  trait Summer[T] {
+    def sum(t: T): Int
+  }
+
+  object MyDataPimps2 {
+    implicit class PimpedMyData[T: Summer](myData: T) {
+      val summer = implicitly[Summer[T]]
+      def sum: Int = summer.sum(myData)
+    }
+  }
+
+  import MyDataPimps2._
+
+  object MyFunctionsOnMyData2 extends Summer[MyData] {
+    def sum(t: MyData): Int = t.a + t.b
+  }
+
+  def generic[T : Summer](myData: T) = myData.sum
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
+
+  // But I thought Scala was about reducing boiler plate, and type-classes seem to add a fair bit of boiler plate?
+  // True, we do have a little bit of boiler plate for this, but in most projects it doesn't get that bad.  Then
+  // if the boiler plate does get bad one ought to start considering using Shapeless that can automatically derive
+  // type classes for you.
+
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
+
+  // Some Reasons Type Classes are Awesome
+
+  // 1. solves the Dynamic Dispatch problem (e.g. serialize could be controlled to be either json or xml at run time)
+
+  // 2. solves the type-erasure problem (see Magnet Pattern) on method overloading of parameterized types
+
+  // 3. another way to do native DI (e.g. Scalding used an implicit Mode that determined if local or cluster mode)
+
+  // 4. Now we have separated data from functions inheritence and type heiarchies become much easier to
+  // understand because it's only the FUNCTIONS that are extended, the data is kept separate.  In fact inheritence
+  // becomes so simple it makes sense to have mutliple inheritence (see mixins / traits).
+
+
+
+  // (note this doesn't quite solve the diamond problem, as traits cannot have conflicting members)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  LIst
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
+  // BONUS PEDANT POINT! xD xD
+
+  // If have time: avoid using vals if you only use it once - try to chop up code with FUNCTIONS,
+  // it's FUNCTIONAL programming remember :)
+
+  case class A(sillyFooBar: Double) {
+    def calcMegaThing: Double = ???
+  }
+
+  // e.g. you start out with:
+  def m1(l: List[Int]): Int =
+    l.map(_ + 1 * 4 - 3).map(x => x + 44 * 3 + A(math.acos(x.toDouble * math.min(x + 1, 2345))).calcMegaThing.toInt).sum
+
+  // We often see
+  def m2(l: List[Int]): Int =
+    l.map(_ + 1 * 4 - 3).map { x =>
+      val sillyFooBar = math.acos(x.toDouble * math.min(x + 1, 2345))
+      x + x + 44 * 3 + A(sillyFooBar).calcMegaThing.toInt
+    }
+    .sum
+
+  // ^^ This adds a value that is only used one and only in a local scope - the codebase gains nothing except slight
+  // readability in this scope. And we have now created a multiline expression somewhat unnecessarily
+
+  // Solution A: Use named arguments and formatting
+  def m1A(l: List[Int]): Int =
+    l.map(_ + 1 * 4 - 3).map(x =>
+      x + 44 * 3 +
+        A(
+          sillyFooBar = math.acos(x.toDouble * math.min(x + 1, 2345))
+        )
+        .calcMegaThing.toInt
+    )
+    .sum
+
+  // Solution B: Use a function called sillyFooBar
+
+  def sillyFooBar(x: Int): Double = math.acos(x.toDouble * math.min(x + 1, 2345))
+
+  def m1B(l: List[Int]): Int =
+    l.map(_ + 1 * 4 - 3).map(x => x + 44 * 3 + A(sillyFooBar(x)).calcMegaThing.toInt).sum
+}
