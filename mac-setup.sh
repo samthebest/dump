@@ -113,6 +113,9 @@ pip install awscli
 # vagrant - a orchestration for virtual box
 brew cask install vagrant
 
+# VLC
+brew cask install vlc
+
 # gcloud
 curl https://sdk.cloud.google.com | bash
 # manual: restart shell, run gcloud init
