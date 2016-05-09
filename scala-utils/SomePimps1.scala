@@ -168,10 +168,10 @@ object Pimps {
   }
 
   implicit class PimpedMap[K, V](map: Map[K, V]) {
-    def outerJoin[V2](map2: Map[K, V2]): Map[K, (Option[V], Option[V2])] =
-      (for (key <- map.keys ++ map2.keys) yield (key, (map.get(key), map2.get(key)))).toMap
+    def join[V2](map2: Map[K, V2]): Map[K, (V, V2)] =
+      map.keys.filter(map2.contains).map(key => (key, (map(key), map2(key)))).toMap
 
-    def innerJoin[V2](map2: Map[K, V2]): Map[K, (V, V2)] =
-      (for (key <- map.keys if map2.contains(key)) yield (key, (map(key), map2(key)))).toMap
+    def outerJoin[V2](map2: Map[K, V2]): Map[K, (Option[V], Option[V2])] =
+      (map.keys ++ map2.keys).map(key => (key, (map.get(key), map2.get(key)))).toMap
   }
 }
