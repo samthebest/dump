@@ -1,4 +1,25 @@
 
+Given a list `l` of `Int`s, that is `val l: List[Int]`, where it is known that exactly one number in the list occurs an odd number of times, write an expression that's value will be the number that occurs an odd number of times.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
