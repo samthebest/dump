@@ -10,7 +10,7 @@ I still include myself in the confrontational generic "you" of the title since I
 
  - "Multi-Paradigm" languages like Scala, F#, Python, C# & Java 8 are really OOP plus syntactic sugar.
  - Using lambdas and 2nd-order functions doesn't mean you're doing FP
- - OOP was useful, but not anymore, PLEASE stop doing OOP
+ - OOP is still useful, but just not for what your using it for
 
 ## Introduction
  
@@ -19,3 +19,28 @@ I still include myself in the confrontational generic "you" of the title since I
 You don't access a field in data using `myData.myField`, you actually call a function `myField` on `myData` like this: `myField myData`.
 
 In Haskell you don't have inheritence, you have typeclasses. In Scala you kind of have the same thing, but since Scala provides no way to introduce infix notation, it's not as useful.
+
+## Clearly define the entry point to your application
+
+Defer all mutations till the end of your application.  E.g.
+
+```
+def main(args: Array[String]): Unit = {
+  
+
+  applicationLogic(args = args, db = readEntireDatabase(args)).foreach(mutation => do(mutation))
+}
+```
+
+This works even for any application, 
+
+## Why you don't even understand OOP
+
+OOP is all about encapsulating and protecting state. Sometimes, it really is difficult to write your entire application as a bunch of entry points that return a sequence of mutations. The usual reasons are:
+
+ - FP just isn't fast enough
+ - FP creates GC pressure
+ - You can't just plonk your entire database into memory for every entry point
+
+
+
