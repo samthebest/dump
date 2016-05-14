@@ -11,6 +11,8 @@ I still include myself in the confrontational generic "you" of the title since I
  - "Multi-Paradigm" languages like Scala, F#, Python, C# & Java 8 are really OOP plus syntactic sugar.
  - Using lambdas and 2nd-order functions doesn't mean you're doing FP
  - OOP is still useful, but just not for what your using it for
+ - You really don't have enough traffic / data to justify mutation (unless you are Google)
+ - Databases are the root of evil
 
 ## Introduction
  
@@ -40,7 +42,7 @@ OOP is all about encapsulating and protecting state. Sometimes, it really is dif
 
  - FP just isn't fast enough
  - FP creates GC pressure
- - You can't just plonk your entire database into memory for every entry point
+ - You really do have so much data that you cannot just log it all. Use Vector or HashMap for everything else.
 
 
 
