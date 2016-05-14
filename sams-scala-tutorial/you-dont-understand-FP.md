@@ -66,3 +66,48 @@ The objective in FP is to make mutation a single responability of some uber-muta
 What could greatly improve this, and leave even less to do for the uber-mutator would be if the uber-mutator worked in a similar way to a blockchain, or the git version control system.  That is threads or users, or views have their own copy of the database, and some other process handles "merging" these.
 
 
+## Approach 1 - Locking DB with merges
+
+Need to express the below more simply for sake of talk
+
+```
+case class AtomStore[K, V](root: String, keyStr: Str[K], valueStr: Str[V], config: AtomStoreConfig = AtomStoreConfig())
+
+case class AtomView[K](keyToEventKey: HashMap[K, String])
+
+case class DBView(rootToAtomViews: Map[String, AtomView[_]], eventKey: String, prevEventKey: String)
+
+case class Mutation[K, V](atomStore: AtomStore[K, V], key: K, value: V, allowKeyCollisions: Boolean = true)
+
+case class Event(dBView: DBView, eventType: EventType, mutations: List[Mutation[_, _]], ts: Long)
+
+def apply[T](event: Event, validator: Event => \/[DBValidationFail, T], newEventKey: String)
+            (implicit fs: FS, logDir: String, serializer: Event => String): \/[DBFail, (DBView, T)]
+            
+// plus some way to specify how to merge DBViews
+```
+
+In fact the idea of periodic saves of in memory hashmaps with event logging is a nice idea. It would probably massively simplify the above.  May want to ditch the above design after all!
+
+
+## Approach 2 - Blockchain
+
+Instead of specifying a single validation function and some kind of merge function that could merge divergent sequences of events, we specify a function for processing a block of events.
+
+A thread checks to see which thread has the "longest block chain", i.e. has already processed the most events.  It then assumes that to be the true state of affairs and copies any blocks it doesn have.  It then grabs a block of events from the event queue, and executs the "process" function, which may reject some events as inconsistent with earlier events (using some nano-timestamp).
+
+It then writes this block to it's own copy of the block chain.
+
+Now in parallel another thread processes another block of events (which need not be disjoint).
+
+To ensure we do actually get parallel behaviour, we cannot just select the "longest block chain", rather we must merge the longest block chains to form a new block chain.
+
+I guess in essence this is similar to the other model except the merging isn't something happening idly in the background, but the merging happens before the processing of a (block of) event(s).  The elegant aspect is that as the chain grows, when it rejects certain threads chains as not mergable, the orphaning is implicit.
+
+The entry point to the application needs to take the event, put it on the queue, then wait for it to enter any block, then respond with "accepted-1", then after some reasonable length of time, it ought to send a second response saying "confirmed", meaning the probability of it being orphaned is very low.
+
+Now unlike in a real block chain, where there is the potential that threads are evil, and do not reject a chain because they wish to preserve those events over the currently longest chain, we need not worry about such an situation. Therefore only some small fudge factor of a couple of blocks is required to ensure that threads don't get confused, or use out of date information to decide which block is longest.
+
+
+
+
