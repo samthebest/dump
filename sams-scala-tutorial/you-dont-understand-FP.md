@@ -12,7 +12,7 @@ I still include myself in the confrontational generic "you" of the title since I
  - Using lambdas and 2nd-order functions doesn't mean you're doing FP
  - OOP is still useful, but just not for what your using it for
  - You really don't have enough traffic / data to justify mutation (unless you are Google)
- - Databases are the root of evil
+ - Databases are evil, they are the children of premature optimisation
 
 ## Introduction
  
@@ -36,6 +36,10 @@ def main(args: Array[String]): Unit = {
 
 This works even for any application, 
 
+## Databases create side effects
+
+You don't need a database, really you don't.
+
 ## Why you don't even understand OOP
 
 OOP is all about encapsulating and protecting state. Sometimes, it really is difficult to write your entire application as a bunch of entry points that return a sequence of mutations. The usual reasons are:
@@ -43,6 +47,15 @@ OOP is all about encapsulating and protecting state. Sometimes, it really is dif
  - FP just isn't fast enough
  - FP creates GC pressure
  - You really do have so much data that you cannot just log it all. Use Vector or HashMap for everything else.
+
+
+Log each event
+process event
+log processed event
+
+If node dies, if count(log) != count(log processed) then your data is inconsistent and you will need to replay.
+
+Have a thread that dumps your hashmaps to disk every so often with a key that points to the event. Then if your node dies, you don't need to replay your entire event history to restore your DB, you can start from the cache.
 
 
 
