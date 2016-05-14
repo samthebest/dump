@@ -11,10 +11,11 @@ I still include myself in the confrontational generic "you" of the title since I
  - "Multi-Paradigm" languages like Scala, F#, Python, C# & Java 8 are really OOP plus syntactic sugar.
  - Using lambdas and 2nd-order functions doesn't mean you're doing FP
  - OOP was useful, but not anymore, PLEASE stop doing OOP
+
+## Introduction
  
- ## Introduction
+## In Haskell
  
- ## In Haskell
- 
- You don't access a field in data using `myData.myField`, you actually call a function `myField` on `myData` like this: `myField myData`.
- 
+You don't access a field in data using `myData.myField`, you actually call a function `myField` on `myData` like this: `myField myData`.
+
+In Haskell you don't have inheritence, you have typeclasses. In Scala you kind of have the same thing, but since Scala provides no way to introduce infix notation, it's not as useful.
