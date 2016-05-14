@@ -57,5 +57,12 @@ If node dies, if count(log) != count(log processed) then your data is inconsiste
 
 Have a thread that dumps your hashmaps to disk every so often with a key that points to the event. Then if your node dies, you don't need to replay your entire event history to restore your DB, you can start from the cache.
 
+## How to update state and multithreading
+
+Many argue FP isn't about eliminating all mutations, and this is true.  FP is often confused with "immutability", rather FP encourages you, especially if built into the language by design (like Haskell) to completely decouple business logic from mutations.  The functional programmers delays mutation. When a function in an OOP world would ordinarily "mutate", in a functional world it returns a "mutation" of somesort then later some "mutator" thing has the responability of "commiting" it or actually doing the mutation.
+
+The objective in FP is to make mutation a single responability of some uber-mutator thing that barely has any of it's own business logic - it just handles wiring the business logic together from the POV of multithreading.
+
+What could greatly improve this, and leave even less to do for the uber-mutator would be if the uber-mutator worked in a similar way to a blockchain, or the git version control system.  That is threads or users, or views have their own copy of the database, and some other process handles "merging" these.
 
 
