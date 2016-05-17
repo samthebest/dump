@@ -6,7 +6,7 @@ Task Tracker = An Agile task tracker with a horizontal board, like Trello or JIR
 # Fundamental Principles
 
  - To ensure that actions and history on the Task Tracker corresponds to actions and history in git
- - To ensure than a deployment to an environment corresponds to an action in the Task Tracker and git
+ - To ensure that a deployment to an environment corresponds to an action in the Task Tracker and git
  - Done means DONE! http://www.allaboutagile.com/agile-principle-7-done-means-done/
  - To ensure rollback is easy
  - To ensure hotfixing is easy
@@ -18,7 +18,7 @@ Task Tracker = An Agile task tracker with a horizontal board, like Trello or JIR
 
 ## Board
 
-The board should have the following columns:
+The board should have the following columns/sections:
 
  - **Backlog / Icebox**: A long list of placeholders for work that needs to be done, not necessarily analysed, nor fleshed out
  - **TODO**: A list of tickets that the team has decided need to be done.  Hopefully some details should be fleshed out on the ticket sufficient for development to start.
