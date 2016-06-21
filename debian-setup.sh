@@ -62,12 +62,24 @@ sudo apt-get install -y sublime-text
 # cool json tool
 sudo apt-get install -y jq
 
-# docker
+# docker (may be out of date, try one below)
 wget -qO- https://get.docker.com/ | sh
 sudo gpasswd -a ${USER} docker
 newgrp docker
 sudo service docker restart
 # Requires restart
+
+# Docker
+sudo apt-get -y install apt-transport-https ca-certificates
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+
+echo "deb https://apt.dockerproject.org/repo ubuntu-trusty main" | sudo tee /etc/apt/sources.list.d/docker.list
+
+sudo apt-get update
+sudo apt-get -y purge lxc-docker
+sudo apt-get -y install linux-image-extra-$(uname -r)
+sudo apt-get -y install docker-engine
+sudo service docker start
 
 # Intellij (version dependent)
 wget -O /tmp/intellij.tar.gz http://download.jetbrains.com/idea/ideaIC-14.1.4.tar.gz
