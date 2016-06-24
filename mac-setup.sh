@@ -116,6 +116,9 @@ brew cask install vagrant
 # VLC
 brew cask install vlc
 
+# Virtual box
+brew cask install virtualbox
+
 # gcloud
 curl https://sdk.cloud.google.com | bash
 # manual: restart shell, run gcloud init
