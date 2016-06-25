@@ -27,6 +27,9 @@ Given a list `l` of `Int`s, that is `val l: List[Int]`, where it is known that e
 def e(s: String): List[Int] = 
   s.grouped(2).toList.take(5).map(Integer.parseInt(_, 16) % 50) ++ s.grouped(2).toList.take(2).map(Integer.parseInt(_, 16) % 9)
 
+def l(s: String): List[Int] = 
+  s.grouped(2).toList.take(6).map(Integer.parseInt(_, 16) % 60)
+
 // How to solve the RAID problem in 11 chars:
 
 (0/:l)(_^_)
