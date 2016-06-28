@@ -30,7 +30,7 @@ The motivation for OOP (i.e. breaking these rules) is as follows:
 
  - Humans like to anthropocentrise things to make it easier to understand.  The real world, and especially natural langauge, is indeed object oriented so it "feels" right to use OOP.
  - OOP allows one to manage scope without resorting to boiler plate param passing, nor global mutable state.
- - OOP provides syntacic means to heavily use postfix notation, e.g. `myObject.myMethod(something)` instead of `myMethod(myObject, something)`
+ - OOP provides syntactic means to heavily use postfix notation, e.g. `myObject.myMethod(something)` instead of `myMethod(myObject, something)`
  - OOP provides a mechanism for protecting mutable state
 
 Of course the first motivation is illogical and using a tool of **fuzzy** abstraction, that is natural language, to attempt to deal with programming.  The correct approach is to treat programming as a mathematical discipline since that is what it is, and that means using the abstractions of mathematics that are designed to handle rigorous and precise concepts.  Natural language abstractions are built on fuzzy rules, and hence OOP results in a mess since it's using a means of abstraction that does not work for precise domain like programming.
