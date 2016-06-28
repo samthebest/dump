@@ -64,4 +64,14 @@ This is likely the most unusual rule I suggest, even for functional programmers.
 
 # What about `Function`s in `case class` fields?
 
-...
+Surely this is one of the biggest advantages of functional programming - functions are first class citizens.
+
+This is quite different to a method in a class because it doesn't have access to the fields as part of it's scope.
+
+One of the main reasons it is unpleasant to put methods into classes is that it creates a scope dependency. This means that method cannot be "moved around" just as though it where a lego brick.  Imagine if a red lego brick when placed in certain place changed into a green lego brick - trying to build a pretty house becomes quite hard.
+
+Nevertheless we should still use functions in case classes with caution and only use them when necessary. Common use cases are non-static type-classes, e.g. serialisation that can change at run time.
+
+Keep such functions small and simple, and avoid putting business logic here.
+
+
