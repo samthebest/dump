@@ -61,3 +61,7 @@ Put `val`s inside `case class`es and put them in the constructor list. If you ha
 ## 1 Avoid putting `val`s in `object`s
 
 This is likely the most unusual rule I suggest, even for functional programmers.
+
+# What about `Function`s in `case class` fields?
+
+...
