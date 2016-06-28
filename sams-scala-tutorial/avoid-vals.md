@@ -62,7 +62,17 @@ Put `val`s inside `case class`es and put them in the constructor list. If you ha
 
 ## 1 Avoid putting `val`s in `object`s
 
-This is likely the most unusual rule I suggest, even for functional programmers.
+This is likely the most unusual rule I suggest, even for functional programmers. Surely there is nothing wrong with "constants" in `object`s?  Well, as a rule of thumb there are reasons to avoid it, but there are times when it's _not that bad_. The things to note are:
+
+ - There is no such thing as contants, they are initialised at some point, and
+ - Application initialisation order will become non-trivial when using `val`s in `object`s
+ - Serialising `object`s can become non-trivial
+
+For literal numbers and String literals, this usually doesn't really matter, but if you say depend on a resource file, e.g. `val referenceData: Map[String, String] = readSomeResource` things get really bad.  It could be said that this is really global mutable state, so even wrong by OOP standards, but the distinction is subtle.  Suppose instead that `referenceData` doesn't read from disk, but performs some expensive calculation.  An application may slow down when some `val` in that `object` is used. Then comes the `lazy val`s, this doesn't really fix the problem - in fact now initialisation order becomes even less granular.  If some function uses `referenceData` and that function is trivial, it shouldn't cause an OOM nor a slow down.  Suppose the code has a bug and just returns null. Perhaps it uses the time, again stritly speaking a side effect, but often not treated as one.
+
+The issue is that the point in the application when the `val`s initialise is non well defined. Put if we inject these things then they are - they initialise at the entry point of the application.
+
+The solution then is to have a `case class` serve the function of these `val`s, which I usually call `AppContext`, which is implicitly injected using `implicit` params. This can also serve as a place to store configurations, db connections, and other "context" like objects (e.g. `SparkContext`).
 
 # What about `Function`s in `case class` fields?
 
