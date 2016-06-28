@@ -28,7 +28,7 @@ And more specifically to Big Data:
 
 The motivation for OOP (i.e. breaking these rules) is as follows:
 
- - Humans and we like to anthropocentrise things to make it easier to understand.  The real world, and especially natural langauge, is indeed object oriented so it "feels" right to use OOP.
+ - Humans like to anthropocentrise things to make it easier to understand.  The real world, and especially natural langauge, is indeed object oriented so it "feels" right to use OOP.
  - OOP allows one to manage scope without resorting to boiler plate param passing, nor global mutable state.
  - OOP provides syntacic means to heavily use postfix notation, e.g. `myObject.myMethod(something)` instead of `myMethod(myObject, something)`
  - OOP provides a mechanism for protecting mutable state
