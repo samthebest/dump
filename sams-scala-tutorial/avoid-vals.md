@@ -52,6 +52,8 @@ So this is the least contentious / controversial dictim of functional programmin
 
 In a nutshell, putting methods in classes *makes a decision*, particularly regarding what should be in a scope, and every time you make a decision you a) might be wrong, and b) have created future work to undo that decision should it ever be desirable to do so.  One cannot be wrong if one puts a function in an object and passes all the data into the function since no decision about scope has been made.
 
+If you think you never make the wrong choices, and you write code that you never need to go back and shift around, you are dellusional.  Everyone makes mistakes, and change is inevitable.  Ask yourself how many code bases have you come to where every decision made was the right decision?
+
 ## 2 Avoid putting `val`s in `class` bodies
 
 Put `val`s inside `case class`es and put them in the constructor list. If you have dependencies between `val`s introduce an `apply` method to handle initialisation.  There ought to be no reason why you can't use apply, except in cases when you are doing something non-functional (like accessing some mutable state).
