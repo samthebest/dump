@@ -15,9 +15,7 @@ Talk will include:
 
  - Misconceptions
  - Linguistic Fundementals
- - Databases
- - Efficiency
- - Compiler speed
+ - The Real World: Databases, Efficiency, Compiler speed
  - Education
 
 We will sometimes use examples from Scala, simply because this is a popular 
