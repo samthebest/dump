@@ -98,7 +98,32 @@ Having methods inside classes means their scope closes over the scope of the cla
 
 Using inheritance heiarchies to implement polymorphism again means functions now depend on their enclosing scope.
 
-examples
+## Slide 9
+
+All complexity and all immutable unmaintainable code bases can be attributed to Lego Axiom ignorance. Especially the first.
+
+ - If we can move code around, refacotring and rearcetecting is easier
+ - Pure functions are easier to test
+ - Restricted closures are easier to test - no need for dependency injection
+
+OOP makes changing code much harder, their solution is
+
+DESIGN PATTERNS, DI, decoupling, MVC, encapsulation, and millions and millions of people writing millions and millions of lines of code, frameworks, libraries.
+
+## Slide 10
+
+If OOP sucks so bad, why is it so popular? 
+
+Because we needed it, but we don't need it anymore.
+
+ - OOP is indeed the best way to encapsulate state
+ - State is very important for low level efficiency or when memory isn't cheap
+
+We cannot jump straight to diggers, we had to invent a shovel first. With the shovel, we built digger factories.
+
+(could have an image of a shovel and digger)
+
+We needed OOP frameworks to handle databases.
 
 ...
 
