@@ -114,16 +114,26 @@ DESIGN PATTERNS, DI, decoupling, MVC, encapsulation, and millions and millions o
 
 If OOP sucks so bad, why is it so popular? 
 
-Because we needed it, but we don't need it anymore.
+Two reasons
+
+1. Because we needed it, but we don't need it anymore.
 
  - OOP is indeed the best way to encapsulate state
  - State is very important for low level efficiency or when memory isn't cheap
 
 We cannot jump straight to diggers, we had to invent a shovel first. With the shovel, we built digger factories.
 
-(could have an image of a shovel and digger)
+(could have an image of a shovel, digger factory (show first ever digger) and digger, with an arrow pointing between the factory and the digger and call that "now")
 
-We needed OOP frameworks to handle databases.
+2. Infix notation
+
+## Slide 11
+
+How to move forwards?
+
+ - Need more mathematicians
+ - Better education - it can seem harder to use a digger, but if we don't learn we will never build skyscrappers.
+
 
 ...
 
