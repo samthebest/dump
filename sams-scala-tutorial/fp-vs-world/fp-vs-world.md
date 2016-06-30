@@ -76,14 +76,15 @@ So what is it all about?
 The Lego Axioms!
 
 1. Lexical closures should be restricted to a functions scope
-2. Referential transparency
-3. Purity
+2. Purity
 
 Or roughly speaking, expressions and function definitions can be moved around a code base without changing what they do.
 
 A yellow brick is always a yellow brick, no matter where you put it.
 
 A cog is always a cog, no matter where you put it.
+
+(note referential transparency is omitted since most formal linguistic definitions define it in terms of purity)
 
 ## Slide 7
 
