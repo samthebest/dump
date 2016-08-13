@@ -14,5 +14,5 @@ The building of something in either DS or SD is the easy part, then by The Law o
 
 In spite of my claims, DS and SD may still *appear* to be quite different, now that I will argue is just historical and methodological.  SD has a longer history, and so longer for people to realise the importance of clarity of objective, and the automation of testing against this objective.  Not that this means SD is always successful; there are still a great number of developers who don't write tests before their main code.
 
-Ask a Software Developer "do you do TDD?" and they might say "yeah I know what that is, but I don't really understand it so I keep making these complicated messes instead", but ask a Data Scientist "do you do TDD?" and they will "What's TDD? Thinking clearly about what I'm trying to do? Pfft, I have a Phd, I don't need to do that, look at this wonderful complicated mess I made".
+Ask a Software Developer "do you do TDD?" and they might say "yeah I know what that is, but I'm too lazy to think clearly so I keep making these complicated messes instead", but ask a Data Scientist "do you do TDD?" and they will "What's TDD? Thinking clearly about what I'm trying to do? Pfft, I have a Phd, I don't need to do that, look at this wonderful complicated mess I made".
 
