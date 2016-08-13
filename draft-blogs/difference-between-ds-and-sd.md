@@ -1,15 +1,18 @@
 I claim that the difference between Data Science and Software Development can be succinctly captured by the difference between < and = respectively. That is Data Science (DS) corresponds to the Order relation, while Software Development (SD) corresponds to the Equality relation.
 
-What I mean by this is that in DS success is defined by a function satisfying a certain threshold, while in SD success is defined by a function satisfying an equality.  For example a Fraud Detection algorithm may require that *less than* 100 frauds are missed a year, while a sorting algorithm requires that the resulting list is precisely a sorted list.
+In DS success is defined by a function satisfying a certain threshold, while in SD success is defined by a function satisfying an equality.  For example a Fraud Detection algorithm may require that *less than* 100 frauds are missed a year, while a sorting algorithm requires that the resulting list *is precisely* the sorted list.
 
 Furthermore I claim there really is nothing else to it. All beliefs that DS is more than "just checking f(x) > y" or that SD is more than "just checking f(x) = y", is in fact lack of clarity of thought regarding the objective.
 
-Lack of clarity of objective is the number one cause of delivery failure in both DS and SD. When a problem is clearly defined, the problem tends to solve itself - rather quickly!
+Lack of clarity of objective is the number one cause of delivery failure in both DS and SD. When a problem is clearly defined, the problem tends to solve itself - rather quickly!  Therefore anyone can be both good at DS and SD, for the real skill is writing down your problem in terms of a single simple symbol.
 
+All other differences are detail and detail can be Googled.  What's the fastest algorithm for lexicographical sorting for uniformly distrubted random strings? Google it.  What's the best Neural Net configuration for recognising speech? Google it. At the end of the day you are probably wiring and composing together a bunch of libraries, tools and frameworks that is mostly already built.  This is true for both DS and SD.
 
+Now what is it that I am actually trying to do? Hmm, can't Google that, will actually have to think about it!
 
-Is, in a nutshell, the difference between < and = respectively.
+The building of something in either DS or SD is the easy part, then by The Law of Triviality this is what people focus on before even focusing on clarifying their objectives.  The result is a lot of Rube Goldberg (Keith Robinson) machines in both industries, that is very complicated contraptions that greatly obfuscate a very simple purpose, mainly because the creator didn't put enough effort into understanding what the purpose was prior to building the contraption.
 
-Acceptence tests.
+In spite of my claims, DS and SD may still *appear* to be quite different, now that I will argue is just historical and methodological.  SD has a longer history, and so longer for people to realise the importance of clarity of thought.  Not that this means SD is successful in clarity of thought, there are still a great number of developers who don't write tests before their main code. But at least there are a few people who have said "hey wait a minute, this job is easy as long as I clearly write down what it is I'm trying to do prior to trying to do it", whereas that epiphany doesn't seem to have happened so much in Data Science.
 
-Does this mean Data Science really is more complex than Software Development? I don't think so.
+Ask a Software Developer "do you do TDD?" and they might say "yeah I know what that is, but I don't really understand it so I keep making these complicated messes instead", but ask a Data Scientist "do you do TDD?" and they will "What's TDD? Thinking clearly about what I'm trying to do? Pfft, I have a Phd, I don't need to do that, look at this wonderful complicated mess I made".
+
