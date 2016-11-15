@@ -46,7 +46,9 @@ defined class NotSerializable
 scala> sc.makeRDD(1 to 1000, 1).map(i => (i, new NotSerializable(i))).count()
 ```
 
-### A1. No. Because method count only process objects in current node and return number for shuffle, in this scenario, objects of NotSerializable won't be shipped between worker nodes and driver node.
+### A1. No. 
+
+Because method count only process objects in current node and return number for shuffle, in this scenario, objects of `NotSerializable` won't be shipped between worker nodes or between worker and driver.
 
 ```
 scala> sc.makeRDD(1 to 1000, 1).map(i => (i, new NotSerializable(i))).count()
@@ -69,7 +71,9 @@ scala> sc.makeRDD(1 to 1000, 1).map(i => (i, new NotSerializable(i))).collect()
 scala> sc.broadcast(new NotSerializable(10))
 ```
 
-### A2: All of them! Because method groupByKey and collect will send elements in RDD to driver node, but instantiations from class NotSerializable cannot be serialized.
+### A2: All of them! 
+
+Because method `groupByKey` and `collect` will send elements in RDD to driver node, but instantiations from class `NotSerializable` cannot be serialized.
 
 ```
 ...
@@ -92,7 +96,9 @@ scala> class NotSerializableFunction extends (Int => Int) {
 scala> sc.makeRDD(1 to 100).map(new NotSerializableFunction()).reduce(_ + _)
 ```
 
-### A3 Yes. Because objects of NotSerializable in RDD cannot be shipped to phase shuffle that is required by method reduce.
+### A3 Yes. B
+
+Because objects of `NotSerializable` in RDD cannot be shipped to phase shuffle that is required by method reduce.
 
 ```
 scala> sc.makeRDD(1 to 100).map(new NotSerializableFunction()).reduce(_ + _)
