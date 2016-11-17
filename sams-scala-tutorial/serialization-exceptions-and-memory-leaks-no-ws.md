@@ -21,6 +21,139 @@ Two things:
     - Trying to *shuffle* non-serializable data
 2. Spark jobs that try to transfer non-serializable "*meta*" data between JVMs via (intentional or unintentional) **transative closure capture**.
 
+## Examples
+```
+object TestSerializable {
+  def main(args: Array[String]): Unit = {
+    val sparkConf = new SparkConf
+    val sc = new SparkContext(sparkConf)
+
+    val data = List(1, 2, 3, 4, 5)
+    val rdd = sc.makeRDD(data)
+
+    /* What is the unserializable task?
+     * When some methods applied in the RDD closure, everything necessary to execute the closure will be packaged up, serialized and sent to executors.
+     * In this process, all functions would be passed into a process called ClosureCleaner. 
+     * If the functions in the closure cannot be cut off from its context, there will be an exception called NotSerializableException.
+     * */
+
+    val unSerializableClassHandler = new NonSerializableClass(1)
+    rdd.map { x => unSerializableClassHandler.func_1 }.count()
+
+    val unSerializableObjectHandler = NonSerilizableObject
+    rdd.map { x => unSerializableObjectHandler.func_1(x) }.count()
+
+    /* 2 above examples do not work, error information shown below:
+     * Exception in thread "main" org.apache.spark.SparkException: Task not serializable
+     * 	at org.apache.spark.util.ClosureCleaner$.ensureSerializable
+     * 
+     * The reason of the exception: all functions in RDD closure need to go through a process called ClosureCleaner.
+     * If ClosureCleaner is not able to cut off functions in the closure from context, it will try to serialize context.
+     * If the context cannot be serialized, this exception will happen.
+     * In both these 2 examples, closures have a reference outside respectively(unSerializableClassHandler and unSerializableObjectHandler).
+     * Obviously, because they do not extend Serializable, neither of them can be serialized. 
+     * */
+
+    /*How to solve unserilizable problem */
+
+    /*
+     * solution 1: Use outside reference and make object or class extend interface Serializable
+     * In this way, outside reference can be serialized by colusure cleaner and the task can be shipped from driver to data nodes.
+     * */
+    val SerializableClassHandler = new SerializableClass(1)
+    rdd.map { x => SerializableClassHandler.func_1 }.count()
+
+    val SerializableObjectHandler = SerilizableObject
+    rdd.map { x => SerializableObjectHandler.func_1(x) }.count()
+    /*
+     * Above 2 examples can be executed successfully because outside reference (SerializableClassHandler, SerializableObjectHandler) can be serialized by closure cleaner.
+     * */
+
+    /*
+     * Solution 2: Do not use outside reference, and instantiate a object for every element in RDD.
+     * In this way, for each element in RDD, a class will be instantiated or a local object will be referenced, so there is no worry about serialization.
+     * */
+    rdd.map { x =>
+      {
+        val handler = new NonSerializableClass(1)
+        handler.func_1
+      }
+    }.count()
+
+    rdd.map { x =>
+      {
+        val handler = NonSerilizableObject
+        handler.func_1(x)
+      }
+    }.count()
+    /*
+     * Above 2 examples works because no objects need to be serialized. 
+     * As I use nonSerializable object and class in RDD closure, whether serializable or not does not matter. 
+     * */
+
+    /*
+     * Solution 3: Do not use outside reference, and only use static functions.
+     * In scala, static functions only exist in Object so this method only work for Object
+     * */
+    rdd.map { x =>
+      {
+        NonSerilizableObject.func_1(x)
+      }
+    }.count()
+    /*
+     * The example works. Actually this method is the same as second example in solution 2.
+     * Method func_1 is directly from object without any outside reference.
+     * */
+
+    /*
+     * Tip for object in spark
+     * A static object is bound to one JVM, so if a static variable is used in RDD closure, it will only change within its own node
+     * */
+    rdd.map { x =>
+      {
+        val handler = staticObj
+        handler.counter += 1
+        (x, handler.counter)
+      }
+    }.collect().foreach { println }
+    println(staticObj.counter)
+    /* results:
+     * (1,3)
+     * (2,2)
+     * (3,2)
+     * (4,3)
+     * (5,2)
+     * 1
+     * After counter increment in worker node, the counter in driver node's object is still 1.
+     * That means worker node have objects attached itself. If you want to change values in driver node, the variable needs to be broadcasted.
+     * */
+  }
+}
+
+class NonSerializableClass(input: Int) {
+  def func_1 = input + 1
+}
+
+object NonSerilizableObject {
+  def func_1(input: Int): Int = {
+    input + 1
+  }
+}
+
+class SerializableClass(input: Int) extends Serializable {
+  def func_1 = input + 1
+}
+
+object SerilizableObject extends Serializable {
+  def func_1(input: Int): Int = {
+    input + 1
+  }
+}
+
+object staticObj {
+  var counter = 1
+}
+```
 ## What causes "Memory Leaks" and performance issues
 
 Spark jobs that try to transfer serializable "*meta*" data between JVMs via (intentional or unintentional) **transative closure capture**, and that data is large, or slow to serialize/deserialize.
