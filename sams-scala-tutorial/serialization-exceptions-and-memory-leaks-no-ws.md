@@ -13,7 +13,7 @@ Talk:
 
 ## What causes serialization problems
 
-Two things:
+Unserializable data trnasferred across nodes, there are 2 kinds of problems:
 
 1. Spark jobs that *may* require transfer of *object* data between JVMs
     - Trying to broadcast non-serializable data
@@ -21,7 +21,7 @@ Two things:
     - Trying to *shuffle* non-serializable data
 2. Spark jobs that try to transfer non-serializable "*meta*" data between JVMs via (intentional or unintentional) **transative closure capture**.
 
-## Examples
+## Examples for problem 2 and solutions
 ```
 object TestSerializable {
   def main(args: Array[String]): Unit = {
@@ -54,11 +54,11 @@ object TestSerializable {
      * Obviously, because they do not extend Serializable, neither of them can be serialized. 
      * */
 
-    /*How to solve unserilizable problem */
+    /*How to solve this kind of exceptions? */
 
     /*
-     * solution 1: Use outside reference and make object or class extend interface Serializable
-     * In this way, outside reference can be serialized by colusure cleaner and the task can be shipped from driver to data nodes.
+     * solution 1: Use reference outside and make object or class extend interface Serializable
+     * In this way, outer reference can be serialized by colusure cleaner and the task can be shipped from driver to data nodes.
      * */
     val SerializableClassHandler = new SerializableClass(1)
     rdd.map { x => SerializableClassHandler.func_1 }.count()
@@ -66,12 +66,12 @@ object TestSerializable {
     val SerializableObjectHandler = SerilizableObject
     rdd.map { x => SerializableObjectHandler.func_1(x) }.count()
     /*
-     * Above 2 examples can be executed successfully because outside reference (SerializableClassHandler, SerializableObjectHandler) can be serialized by closure cleaner.
+     * Above 2 examples can be executed successfully because SerializableClassHandler and SerializableObjectHandler can be serialized by closure cleaner.
      * */
 
     /*
      * Solution 2: Do not use outside reference, and instantiate a object for every element in RDD.
-     * In this way, for each element in RDD, a class will be instantiated or a local object will be referenced, so there is no worry about serialization.
+     * In this way, for each element in RDD, a class will be instantiated or a local object will be referenced in its own node, so there is no worry about serialization.
      * */
     rdd.map { x =>
       {
