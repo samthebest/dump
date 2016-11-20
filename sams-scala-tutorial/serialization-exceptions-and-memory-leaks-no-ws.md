@@ -23,6 +23,26 @@ Unserializable data trnasferred across nodes, there are 2 kinds of problems:
 
 ## Examples for problem 2 and solutions
 ```
+class NonSerializableClass(input: Int) {
+  def func_1 = input + 1
+}
+
+object NonSerilizableObject {
+  def func_1(input: Int): Int = input + 1
+}
+
+class SerializableClass(input: Int) extends Serializable {
+  def func_1 = input + 1
+}
+
+object SerilizableObject extends Serializable {
+  def func_1(input: Int): Int = input + 1
+}
+
+object staticObj {
+  var counter = 1
+}
+
 object TestSerializable {
   def main(args: Array[String]): Unit = {
     val sparkConf = new SparkConf
@@ -55,9 +75,19 @@ object TestSerializable {
      * */
 
     /*How to solve this kind of exceptions? */
+	
+    /*
+     * Solution 1(best solution): Do not use outside reference, and only use static functions.
+     * In scala, static functions only exist in Object so this method only work for Object
+     * */
+    rdd.map { x =>
+      {
+        NonSerilizableObject.func_1(x)
+      }
+    }.count()
 
     /*
-     * solution 1: Use reference outside and make object or class extend interface Serializable
+     * solution 2 (this may not good because the memory leak problem): Use reference outside and make object or class extend interface Serializable
      * In this way, outer reference can be serialized by colusure cleaner and the task can be shipped from driver to data nodes.
      * */
     val SerializableClassHandler = new SerializableClass(1)
@@ -70,7 +100,7 @@ object TestSerializable {
      * */
 
     /*
-     * Solution 2: Do not use outside reference, and instantiate a object for every element in RDD.
+     * Solution 3 (actually this is the same with solution 1): Do not use outside reference, and instantiate a object for every element in RDD.
      * In this way, for each element in RDD, a class will be instantiated or a local object will be referenced in its own node, so there is no worry about serialization.
      * */
     rdd.map { x =>
@@ -90,68 +120,7 @@ object TestSerializable {
      * Above 2 examples works because no objects need to be serialized. 
      * As I use nonSerializable object and class in RDD closure, whether serializable or not does not matter. 
      * */
-
-    /*
-     * Solution 3: Do not use outside reference, and only use static functions.
-     * In scala, static functions only exist in Object so this method only work for Object
-     * */
-    rdd.map { x =>
-      {
-        NonSerilizableObject.func_1(x)
-      }
-    }.count()
-    /*
-     * The example works. Actually this method is the same as second example in solution 2.
-     * Method func_1 is directly from object without any outside reference.
-     * */
-
-    /*
-     * Tip for object in spark
-     * A static object is bound to one JVM, so if a static variable is used in RDD closure, it will only change within its own node
-     * */
-    rdd.map { x =>
-      {
-        val handler = staticObj
-        handler.counter += 1
-        (x, handler.counter)
-      }
-    }.collect().foreach { println }
-    println(staticObj.counter)
-    /* results:
-     * (1,3)
-     * (2,2)
-     * (3,2)
-     * (4,3)
-     * (5,2)
-     * 1
-     * After counter increment in worker node, the counter in driver node's object is still 1.
-     * That means worker node have objects attached itself. If you want to change values in driver node, the variable needs to be broadcasted.
-     * */
   }
-}
-
-class NonSerializableClass(input: Int) {
-  def func_1 = input + 1
-}
-
-object NonSerilizableObject {
-  def func_1(input: Int): Int = {
-    input + 1
-  }
-}
-
-class SerializableClass(input: Int) extends Serializable {
-  def func_1 = input + 1
-}
-
-object SerilizableObject extends Serializable {
-  def func_1(input: Int): Int = {
-    input + 1
-  }
-}
-
-object staticObj {
-  var counter = 1
 }
 ```
 ## What causes "Memory Leaks" and performance issues
