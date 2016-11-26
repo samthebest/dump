@@ -338,7 +338,7 @@ Practically this means
  - Almost never put methods in `class`es
  - Use `case class`es for your data
  - Only put methods in `object`s or `implicit class`es
- - Use type-classes and `implicit case class`es to create sugar (infix & dot notation over postfix)
+ - Use type-classes and `implicit class`es to create sugar (infix & dot notation over postfix)
  - Use implicit parameters to ease context passing - Do NOT use `class` scope
  - `val`s only really exist in the scope of a method
 
@@ -351,10 +351,11 @@ The benifits include
  - Single responsibility principle is automatic (each function is a responsibility)
  - Multiple inheritence is easy
  - Discourages mutable state
- - Discourage pointless encapsulation (never use `private`!)
- - All application context and initialization is visible in the `main` method
+ - Discourage pointless encapsulation (avoid `private`!)
+ - All application context, initialization and injection is visible in the `main` method (avoid DI frameworks)
  - GC is faster
  - Serializing tasks is faster
+ - Reference dependencies always point into data (case classes), except data may be structured (so point to other data)
  
 ## Recap
 
