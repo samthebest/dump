@@ -39,7 +39,7 @@ It's extremly unlikely that a robber will steal your computer and stumble across
 
 #### 1.1.3 Rotation & Complexity (when to change)
 
-Since younger children will have data of virtually no value then start with simpler passwords.  Nevertheless _some_ complexity is desirable to train the child from an early age how to use secure passwords.  When the child gets their first bank account with online banking it's time to change password. Next should be 16, after 16 **only ever change a password** if it's believed it has been compromised.  Be sure to make this password as complex as possible, but still using the above system (so use more works, more digits in numbers, more weird ways to join words). 
+Since younger children will have data of virtually no value then start with simpler passwords.  Nevertheless _some_ complexity is desirable to train the child from an early age how to use secure passwords.  When the child gets their first bank account with online banking it's time to change password. Next should be 16, after 16 **only ever change a password** if it's believed it has been compromised.  Be sure to make this password as complex as possible, but still using the above system (so use more words, more digits in numbers, more weird ways to join words). 
 
 **Above all is length** contrary to corporate nonsense, the number of types of characters is not so important (like using punctuation, upper case and numbers).  Too long and it becomes a pain to type, and this is the main benifit of using other forms of complexity.
 
