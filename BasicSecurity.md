@@ -21,7 +21,7 @@ The younger the child, the simpler the password ought to be, but loosely use the
 
 
 
-### 1.1.3 Rotation & Complexity (and when to change)
+### 1.1.3 Rotation & Complexity (when to change)
 
 A password only needs to be as complex as the data it protects.  Since younger children will have data of virtually no value then start with simpler passwords.  Nevertheless _some_ complexity is desirable to train the child from an early age how to use secure passwords.
 
