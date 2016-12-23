@@ -5,7 +5,7 @@
 
 ### 1.1 Master Passwords
 
-This section will cover passwords for your Operating System (logging into your computer) and your email (we assume gmail, as this is probably the most secure for it's usability).
+This section will cover passwords for your Operating System (logging into your computer) and your email (we assume gmail). It is advised that these passwords _are the same_ but different to your *secondary passwords* (see section 1.2).
 
 ### 1.1.1 Invention
 
