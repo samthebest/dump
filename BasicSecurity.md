@@ -1,10 +1,6 @@
 # Basic Security - Aimed at ALL Ages (but mainly 8 year olds)
 
-.
-
 ## 1 Passwords
-
-.
 
 ### 1.1 Master Passwords
 
@@ -42,6 +38,10 @@ asdf
 All these new fancy techniques like finger recognition or voice recognition can be convenient for many use cases, but are not as secure as good passwords.  The more complex the technique of authenticating the higher the probability it will contain a flaw or exploit either now, or in the future.  A password guarantees mathematically a certain level of security.  Furthemore it's unclear what the longevity of such techniques are, fingers grow and change, will it always work?
 
 Always use the simplest possible thing that works, because that thing will work most predicably and for the longest amount of time.
+
+## Logging Into Email
+
+Only login to email on your own computer or a computer you trust.  You can only trust computers where you know that the user goes to the same lengths as you to keep your computer secure.
 
 # Notes
 
