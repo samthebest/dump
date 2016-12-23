@@ -23,7 +23,9 @@ A password only needs to be as complex as the data it protects.  Since younger c
 
 ## Multi Factor Authentication
 
-## Alternative Authentication Systems (like finger id)
+asdf
+
+## Alternative Authentication Systems (like finger id)
 
 All these new fancy techniques like finger recognition or voice recognition can be convenient for many use cases, but are not as secure as good passwords.  The more complex the technique of authenticating the higher the probability it will contain a flaw or exploit either now, or in the future.  A password guarantees mathematically a certain level of security.  Furthemore it's unclear what the longevity of such techniques are, fingers grow and change, will it always work?
 
