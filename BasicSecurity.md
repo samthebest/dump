@@ -19,4 +19,14 @@ The younger the child, the simpler the password ought to be, but loosely use the
 
 ### 1.3 Rotation & Complexity (and when to change)
 
+A password only needs to be as complex as the data it protects.  Since younger children will have data of virtually no value then start with simpler passwords.  Nevertheless _some_ complexity is desirable to train the child from an early age how to secure
+
+## Multi Factor Authentication
+
+## Alternative Authentication Systems (like finger id)
+
+All these new fancy techniques like finger recognition or voice recognition can be convenient for many use cases, but are not as secure as good passwords.  The more complex the technique of authenticating the higher the probability it will contain a flaw or exploit either now, or in the future.  A password guarantees mathematically a certain level of security.  Furthemore it's unclear what the longevity of such techniques are, fingers grow and change, will it always work?
+
+Always use the simplest possible thing that works, because that thing will work most predicably and for the longest amount of time.
+
 
