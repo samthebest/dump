@@ -1,5 +1,9 @@
 # Basic Security - Aimed at ALL Ages (but mainly 8 year olds)
 
+## 0 Intro
+
+As technology progresses gradually all of ones property will be accessible digitally.  It is therefore extremly important that young people understand basic security.  In the future a sufficiently savy hacker will be able to steal everything you own if you do not follow these instructions. Learn young.
+
 ## 1 Passwords
 
 ### 1.1 Master Passwords
@@ -27,7 +31,7 @@ asdf
 
 ### 1.1.3 Rotation & Complexity (when to change)
 
-Since younger children will have data of virtually no value then start with simpler passwords.  Nevertheless _some_ complexity is desirable to train the child from an early age how to use secure passwords.
+Since younger children will have data of virtually no value then start with simpler passwords.  Nevertheless _some_ complexity is desirable to train the child from an early age how to use secure passwords.  When the child gets their first bank account with online banking it's time to change password.
 
 ## Multi Factor Authentication
 
@@ -39,7 +43,11 @@ All these new fancy techniques like finger recognition or voice recognition can 
 
 Always use the simplest possible thing that works, because that thing will work most predicably and for the longest amount of time.
 
-## Logging Into Email
+## 2 Locking Your Computer
+
+Get into the habbit of locking your computer whenever you leave it unattended whereever you are.  Ensure the timeout is active, but it is not of great importance how long it is, it should be less than 12 hours.
+
+## 3 Logging Into Email
 
 Only login to email on your own computer or a computer you trust.  You can only trust computers where you know that the user goes to the same lengths as you to keep your computer secure.
 
