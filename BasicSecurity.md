@@ -5,7 +5,12 @@
 
 ### 1.1 Master Passwords
 
-This section will cover passwords for your Operating System (logging into your computer) and your email (we assume gmail). If you use Mac or Linux it is advised that these passwords _are the same_ for your computer and gmail. If you use Windows, the passwords should be different.
+This section will cover passwords for your 
+
+ - Operating System (logging into your computer) 
+ - and your email (we assume gmail). 
+ 
+If you use **Mac** or **Linux** it is advised that these passwords _are the same_ for your computer and gmail. If you use **Windows**, the passwords should be _different_.
 
 ### 1.1.1 Invention
 
@@ -19,11 +24,11 @@ The younger the child, the simpler the password ought to be, but loosely use the
 
 ### 1.1.2 Storage
 
-
+asdf
 
 ### 1.1.3 Rotation & Complexity (when to change)
 
-A password only needs to be as complex as the data it protects.  Since younger children will have data of virtually no value then start with simpler passwords.  Nevertheless _some_ complexity is desirable to train the child from an early age how to use secure passwords.
+Since younger children will have data of virtually no value then start with simpler passwords.  Nevertheless _some_ complexity is desirable to train the child from an early age how to use secure passwords.
 
 ## Multi Factor Authentication
 
@@ -37,4 +42,8 @@ Always use the simplest possible thing that works, because that thing will work 
 
 # Notes
 
-TODO
+This section contains explanations to the above instructions.
+
+### 1.1.3
+
+A password only needs to be as complex as the data it protects.  
