@@ -129,7 +129,9 @@ Large corporations cannot be trusted as examples of how to secure systems. They 
 
 "Anti virus" software will likely run as root or admin on your system.  Introducing any program and allowing to run 24/7 on your machine as root/admin is a bad idea.  In fact "Anit virus" software may contain back doors put in intentionally to spy on terrorists, which in all likelyhood is actually being used by scammers.
 
- 
+## 7
+
+Package managers cannot be fooled, but you can.  You may one day visit a website that is actually not the correct website.  This may seem unlikely, but it's better to get into the habit of using package managers.  They work because they check the softwares digital "signature" when they download it to make sure it's the real deal.
  
 
 
