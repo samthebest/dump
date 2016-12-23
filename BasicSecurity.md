@@ -1,7 +1,10 @@
-
 # Basic Security - Aimed at ALL Ages (but mainly 8 year olds)
 
+.
+
 ## 1 Passwords
+
+.
 
 ### 1.1 Master Passwords
 
