@@ -73,11 +73,11 @@ A password only needs to be as complex as the data it protects.
 
 Avoid changing passwords because this introduces complexity.  Complexity introduces work arounds and room for mistakes.  Keep the system simple **and stick to it**.  Large corporations often ask employees to change their passwords regularly, this is why large corportaions are frequently on the news for getting hacked - most have NO IDEA about security.  
 
-Large corporations cannot be trusted as examples of how to secure systems. They employ IT staff to handle security that do not have degrees in STEM. Corporations often **only** care about insurance, not about security.  Being insured and being secure are entirely different things.  Insurance companies also tend to employ uneducated people to determine their rules.  Crucially insurance polcies will require "anti-virus" software, maybe this is because the "anti-virus" software companies pay the insurance companies to do so - though incomptence is more likely.  The only **genuine** way to keep a corporation secure is to hire top STEM talent and frequent penetration testing from multiple independent testers - the smaller the tester, the better.
+Large corporations cannot be trusted as examples of how to secure systems. They employ IT staff to handle security that do not have degrees in STEM. Corporations often pay other large corporations to do security for them while not having any talent in house. Corporations often **only** care about insurance, not about security.  Being insured and being secure are entirely different things.  Insurance companies also tend to employ uneducated people to determine their rules.  Crucially insurance polcies will require "anti-virus" software, maybe this is because the "anti-virus" software companies pay the insurance companies to do so - though incomptence is more likely.  The only **genuine** way to keep a corporation secure is to hire top in house STEM talent and frequent penetration testing from multiple independent testers - the smaller the tester, the better.
 
 # 4
 
-Anti virus software will likely run as root or admin on your system.  Introducing any program and allowing to run 24/7 on your machine as root/admin is a bad idea.  Just because some software
+"Anti virus" software will likely run as root or admin on your system.  Introducing any program and allowing to run 24/7 on your machine as root/admin is a bad idea.  In fact "Anit virus" software may contain back doors put in intentionally to spy on terrorists, which in all likelyhood is actually being used by scammers.
 
  
  
