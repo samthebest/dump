@@ -1,8 +1,10 @@
-# Basic Security - Aimed at ALL Ages (but mainly 8 year olds)
+# Basic Security - Aimed at ALL Ages (but mainly 8+ year olds)
 
 ## 0 Intro
 
 As technology progresses gradually all of ones property will be accessible digitally.  It is therefore extremly important that young people understand basic security.  In the future a sufficiently savy hacker will be able to steal everything you own if you do not follow these instructions. Learn young.
+
+The Notes section at the end aims to provide _some_ explanation.
 
 ## 1 Passwords
 
@@ -31,7 +33,7 @@ asdf
 
 ### 1.1.3 Rotation & Complexity (when to change)
 
-Since younger children will have data of virtually no value then start with simpler passwords.  Nevertheless _some_ complexity is desirable to train the child from an early age how to use secure passwords.  When the child gets their first bank account with online banking it's time to change password.
+Since younger children will have data of virtually no value then start with simpler passwords.  Nevertheless _some_ complexity is desirable to train the child from an early age how to use secure passwords.  When the child gets their first bank account with online banking it's time to change password. Next should be 16, after 16 **only ever change a password** if it's believed it has been compromised.
 
 ## Multi Factor Authentication
 
@@ -51,10 +53,33 @@ Get into the habbit of locking your computer whenever you leave it unattended wh
 
 Only login to email on your own computer or a computer you trust.  You can only trust computers where you know that the user goes to the same lengths as you to keep your computer secure.
 
+## 4 Anti-virus Software
+
+Is utterly useless.  Contrary to their publicity. Avoid installing any anti virus software, they are likely to **decrease** the security of your machine. (See notes)
+
 # Notes
 
 This section contains explanations to the above instructions.
 
+## 1.1
+
+Mac, Linux and Gmail can be considered secure platforms (the BSD variants of Linux being the most secure). Windows cannot be trusted as highly so keep your password for a Windows system separate.
+
+**In general you want to minimise the number of passwords you remember** less is more.  Simplicity is key.
+
 ### 1.1.3
 
 A password only needs to be as complex as the data it protects.  
+
+Avoid changing passwords because this introduces complexity.  Complexity introduces work arounds and room for mistakes.  Keep the system simple **and stick to it**.  Large corporations often ask employees to change their passwords regularly, this is why large corportaions are frequently on the news for getting hacked - most have NO IDEA about security.  
+
+Large corporations cannot be trusted as examples of how to secure systems. They employ IT staff to handle security that do not have degrees in STEM. Corporations often **only** care about insurance, not about security.  Being insured and being secure are entirely different things.  Insurance companies also tend to employ uneducated people to determine their rules.  Crucially insurance polcies will require "anti-virus" software, maybe this is because the "anti-virus" software companies pay the insurance companies to do so - though incomptence is more likely.  The only **genuine** way to keep a corporation secure is to hire top STEM talent and frequent penetration testing from multiple independent testers - the smaller the tester, the better.
+
+# 4
+
+Anti virus software will likely run as root or admin on your system.  Introducing any program and allowing to run 24/7 on your machine as root/admin is a bad idea.  Just because some software
+
+ 
+ 
+
+
