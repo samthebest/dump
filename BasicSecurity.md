@@ -17,7 +17,7 @@ This section will cover passwords for your
  
 If you use **Mac** or **Linux** it is advised that these passwords _are the same_ for your computer and gmail. If you use **Windows**, the passwords should be _different_.
 
-### 1.1.1 Invention
+#### 1.1.1 Invention
 
 The younger the child, the simpler the password ought to be, but loosely use the following system. Then see section 1.1.3
 
@@ -27,47 +27,83 @@ The younger the child, the simpler the password ought to be, but loosely use the
   3. Invent a simple system to separate the words, e.g. a full stop, or the last letter is upper case, etc, e.g. `57,gianT,potatoeS,leakeD,14,lanternS,happilY`. The more complicated the better, but make sure you can remember it!  **Better start with something simple**
 2. Write it down REALLY clearly in big letters on a sheet of **paper with a pen**.
 
-### 1.1.2 Storage
+#### 1.1.2 Storage
 
-asdf
+Store the piece of paper in a safe place, provided you get into the habbit of locking your screen (section 4) you will soon memorise the password.
 
-### 1.1.3 Rotation & Complexity (when to change)
+Copy the password onto another piece of paper and ask your parents to keep it safe but NOT near something that is likely to get stolen (like in a jewlery box).  Better to keep it with something of little interest to a robber, like a photo album.
 
-Since younger children will have data of virtually no value then start with simpler passwords.  Nevertheless _some_ complexity is desirable to train the child from an early age how to use secure passwords.  When the child gets their first bank account with online banking it's time to change password. Next should be 16, after 16 **only ever change a password** if it's believed it has been compromised.
+**Do NOT label the paper** or label it with something misleading, like "Amazon Reference Number".
 
-## Multi Factor Authentication
+It's extremly unlikely that a robber will steal your computer and stumble across your password, _and_ want to get inside your computer to do something malicious.  It's more likely they will try to wipe your disk so they can sell it.  Therefore this guide will not cover advanced storage techniques that would protect against such a situation.
 
-asdf
+#### 1.1.3 Rotation & Complexity (when to change)
 
-## Alternative Authentication Systems (like finger id)
+Since younger children will have data of virtually no value then start with simpler passwords.  Nevertheless _some_ complexity is desirable to train the child from an early age how to use secure passwords.  When the child gets their first bank account with online banking it's time to change password. Next should be 16, after 16 **only ever change a password** if it's believed it has been compromised.  Be sure to make this password as complex as possible, but still using the above system (so use more works, more digits in numbers, more weird ways to join words). 
+
+**Above all is length** contrary to corporate nonsense, the number of types of characters is not so important (like using punctuation, upper case and numbers).  Too long and it becomes a pain to type, and this is the main benifit of using other forms of complexity.
+
+### 1.2 Secondary Passwords
+
+When you need to create an account for any website other than Gmail use a password manager, like this one https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd.  Do NOT use a password manager for Gmail. Do NOT use the same password for secondary passwords as your master passwords.
+
+## 2 Multi Factor Authentication
+
+**Two factor authentication is the best thing you can do to make something secure EVER**
+
+You should setup two factor authentication with your Gmail. This will mean Google will text your phone a password when you try to login for the first time on a device.
+
+It's assumed any online banking will require 2-factor authentication via a chip-and-pin device. If you happen to have a bank that doesn't require 2-factor auth, change bank right now.
+
+Any website that allows the spending of money at a button press should be setup with 2-factor auth.
+
+## 3 Alternative Authentication Systems (like finger id)
 
 All these new fancy techniques like finger recognition or voice recognition can be convenient for many use cases, but are not as secure as good passwords.  The more complex the technique of authenticating the higher the probability it will contain a flaw or exploit either now, or in the future.  A password guarantees mathematically a certain level of security.  Furthemore it's unclear what the longevity of such techniques are, fingers grow and change, will it always work?
 
 Always use the simplest possible thing that works, because that thing will work most predicably and for the longest amount of time.
 
-## 2 Locking Your Computer
+## 4 Locking Your Computer
 
 Get into the habbit of locking your computer whenever you leave it unattended whereever you are.  Ensure the timeout is active, but it is not of great importance how long it is, it should be less than 12 hours.
 
-## 3 Logging Into Email
+The shorcut on a Mac is CTRL + SHIFT + POWER-KEY, the shortcut for Linux is usually CTRL + ALT + L, and the shortcut for Windows is probably WIN + L.
 
-Only login to email on your own computer or a computer you trust.  You can only trust computers where you know that the user goes to the same lengths as you to keep your computer secure.
+To encourage the habbit, when you see a laptop unlocked, play a prank on that person.
 
-## 4 Anti-virus Software
+## 5 Logging Into Email
+
+Only login to email on your own computer or a computer you trust.  You can only trust computers where you know that the user goes to the same lengths as you to keep your computer secure. I only login to my gmail using computers I bought and I installed.  I once had to use a password for an online app on a shop computer, after which I immediately changed my password.  I would NEVER use a shop computer to login into gmail.
+
+## 6 Anti-virus Software
 
 Is utterly useless.  Contrary to their publicity. Avoid installing any anti virus software, they are likely to **decrease** the security of your machine. (See notes)
+
+## 7 Downloading And Installing Software
+
+Never download any software from a website and install it.  You must use a package manager, the package manager will be the only thing you install manually (not required for linux).
+
+### Linux
+
+Not required, will have something like `apt-get` or `yum` pre-installed
+
+### Mac
+
+
+
+`brew cask install steam`
 
 # Notes
 
 This section contains explanations to the above instructions.
 
-## 1.1
+### 1.1
 
 Mac, Linux and Gmail can be considered secure platforms (the BSD variants of Linux being the most secure). Windows cannot be trusted as highly so keep your password for a Windows system separate.
 
 **In general you want to minimise the number of passwords you remember** less is more.  Simplicity is key.
 
-### 1.1.3
+#### 1.1.3
 
 A password only needs to be as complex as the data it protects.  
 
@@ -75,7 +111,11 @@ Avoid changing passwords because this introduces complexity.  Complexity introdu
 
 Large corporations cannot be trusted as examples of how to secure systems. They employ IT staff to handle security that do not have degrees in STEM. Corporations often pay other large corporations to do security for them while not having any talent in house. Corporations often **only** care about insurance, not about security.  Being insured and being secure are entirely different things.  Insurance companies also tend to employ uneducated people to determine their rules.  Crucially insurance polcies will require "anti-virus" software, maybe this is because the "anti-virus" software companies pay the insurance companies to do so - though incomptence is more likely.  The only **genuine** way to keep a corporation secure is to hire top in house STEM talent and frequent penetration testing from multiple independent testers - the smaller the tester, the better.
 
-# 4
+## 2
+
+2 factor auth means someone will have to steal your phone as well as your password.
+
+## 6
 
 "Anti virus" software will likely run as root or admin on your system.  Introducing any program and allowing to run 24/7 on your machine as root/admin is a bad idea.  In fact "Anit virus" software may contain back doors put in intentionally to spy on terrorists, which in all likelyhood is actually being used by scammers.
 
