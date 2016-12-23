@@ -6,7 +6,7 @@
 ### Invention
 
 1. Pick a sentence with 7 words such that:
-   a) preferably where 2 of those words are unusual numbers.
+  1. preferably where 2 of those words are unusual numbers.
 
 ### Storage
 
