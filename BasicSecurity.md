@@ -83,15 +83,25 @@ Is utterly useless.  Contrary to their publicity. Avoid installing any anti viru
 
 Never download any software from a website and install it.  You must use a package manager, the package manager will be the only thing you install manually (not required for linux).
 
-### Linux
+### 7.1 Linux
 
 Not required, will have something like `apt-get` or `yum` pre-installed
 
-### Mac
+### 7.2 Mac
 
+Install brew by running the following command in a terminal:
 
+`brew >/dev/null || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
 
-`brew cask install steam`
+You can then install Steam using `brew cask install steam`.  You can then use Steam to download games.
+
+### 7.3 Windows
+
+Use Chocalatey (not documented here).
+
+### 7.4 How to Use a Package Manager
+
+When you want to install some software, put this into Google: `<name of package manager> install <name of software>`. For example if you wanted to install Open Office on a Mac search for `brew install open office`, then one of the links will have the command you need to copy and paste into your terminal.  The command will always be 1 simple line, like `sudo apt-get install open-office` or `brew install potatoes`, it should not look more complex than this.
 
 # Notes
 
