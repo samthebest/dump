@@ -124,7 +124,19 @@ Use Chocalatey (not documented here).
 
 When you want to install some software, put this into Google: `<name of package manager> install <name of software>`. For example if you wanted to install Open Office on a Mac search for `brew install open office`, then one of the links will have the command you need to copy and paste into your terminal.  The command will always be 1 simple line, like `sudo apt-get install open-office` or `brew install potatoes`, it should not look more complex than this.
 
-## 8 Storing Digital Value
+## 8 (OPTIONAL) Storing Digital Value / Property
+
+If you go to all the lengths taken in this tutorial to the highest degree the only mechanisms of loss can occur from the following:
+
+### 8.1 Company Hacking
+
+The company/tool you are using to digitally store or manage value is hacked. This is surprisingly common. Nevertheless in this situation **you** are not responsible and so you are entitled to compensation.  Of course whether or not a company actually will pay out is another matter and not covered in this tutorial.
+
+### 8.2 Loss of Authentication Keys
+
+It's possible that your house burns down, and/or a head injury means your lose your password, computer and phone.  For some types of company it will be possible to regain access to your property using your identification alone.  In such rare circumstances you can get a passport by having whitnesses vouch for you being you.
+
+This is especially true for companies like banks, therefore they are great places to store large amounts of value permanently.  Other legal mechanisms are useful, like land registries.  **But not everything works this way** for example bitcoin is not tied to your identity, if you lose keys to access your bitcoin it's gone forever and ever.  Therefore you need to be careful when choosing how to store large amounts of value permanently in order to protect yourself against the most special of circumstances.
 
 # Notes
 
