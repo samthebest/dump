@@ -167,6 +167,8 @@ If the above tips still do not help (so you must have a weird job that requires 
 Using a random password generator to generate a password of reasonable length (say 12 characters) can be a good idea, but is not covered in this tutorial.  We advise:
 
  - Use a secure device and a local application to generate the password, do NOT use online generators
+ - Make sure the tool you use doesn't have any bugs
+ - Make sure it uses a good random seed, perhaps randomly bashing at the keyboard plus using the system time is sufficient
  - Ensure the generator uses the entire range of typable symbols (e.g. \+'@ etc)
  - Be careful using short passwords, some corporations still use legacy protocols that can be brute forced for all passwords of length 10!
 
