@@ -53,10 +53,14 @@ For example this could be Amazon Prime, online banking etc, games that allow in 
 
  - If you need to invent a password use the same process as described in 1.1.1
  - Keep every password different
+ - Setup Multi-factor authentication (see section 2)
+ - See section 8
 
 ##### Storage
 
-To store these passwords (since it is hard to remember so many) try to invent a reminder system and store the reminders in emails sent to yourself from yourself.  For example you could store the first letters of each of the words along with the numbers.  E.g. `57,gianT,potatoeS,leakeD,14,lanternS,happilY` would become `57gpl14lh`
+To store these passwords (since it is hard to remember so many) try to invent a reminder system and store the reminders in emails sent to yourself from yourself.  For example you could store the first letters of each of the words along with the numbers.  E.g. `57,gianT,potatoeS,leakeD,14,lanternS,happilY` would become `57gpl14lh`.
+
+Other approaches could be to write down on paper the passwords (see section 1.1.2) but this can be quite inconvenient for passwords used regularly.
 
 #### 1.2.2 Websites/Tools That do NOT Manage Anything of Value
 
@@ -73,13 +77,15 @@ You should setup two factor authentication with your Gmail. This will mean Googl
 
 It's assumed any online banking will require 2-factor authentication via a chip-and-pin device. If you happen to have a bank that doesn't require 2-factor auth, change bank right now.
 
-Any website that allows the spending of money at a button press should be setup with 2-factor auth.
+To make it EVEN more unlikely that a robber could use your phone and your password, (and know your login ID), protect your phone with a pin or finger id.
 
 ## 3 Alternative Authentication Systems (like finger id)
 
-All these new fancy techniques like finger recognition or voice recognition can be convenient for many use cases, but are not as secure as good passwords.  The more complex the technique of authenticating the higher the probability it will contain a flaw or exploit either now, or in the future.  A password guarantees mathematically a certain level of security.  Furthemore it's unclear what the longevity of such techniques are, fingers grow and change, will it always work?
+All these new fancy techniques like finger recognition or voice recognition can be convenient for many use cases, but are not as secure as good passwords.  The more complex the technique of authenticating the higher the probability it will contain a flaw or exploit either now, or in the future.  A password guarantees mathematically a certain level of security.
 
 Always use the simplest possible thing that works, because that thing will work most predicably and for the longest amount of time.
+
+Nevertheless as an _additional_ form of authentication they are highly recommended for protecting digital value (see Section 2 & 1.2.1)
 
 ## 4 Locking Your Computer
 
@@ -120,6 +126,8 @@ Use Chocalatey (not documented here).
 ### 7.4 How to Use a Package Manager
 
 When you want to install some software, put this into Google: `<name of package manager> install <name of software>`. For example if you wanted to install Open Office on a Mac search for `brew install open office`, then one of the links will have the command you need to copy and paste into your terminal.  The command will always be 1 simple line, like `sudo apt-get install open-office` or `brew install potatoes`, it should not look more complex than this.
+
+## 8 Storing Digital Value
 
 # Notes
 
