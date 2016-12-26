@@ -52,7 +52,7 @@ When you need to create an account for any website other than Gmail or a non-ope
 For example this could be Amazon Prime, online banking etc, games that allow in app purchases, app stores where a credit/debit card has been added, any tool that allows you to buy something without entering card details by storing card details.
 
  - If you need to invent a password use the same process as described in 1.1.1
- - Keep every password different
+ - Keep every password different, including your gmail & operating system password
  - Setup Multi-factor authentication (see section 2)
  - See section 8
 
@@ -60,14 +60,13 @@ For example this could be Amazon Prime, online banking etc, games that allow in 
 
 To store these passwords (since it is hard to remember so many) try to invent a reminder system and store the reminders in emails sent to yourself from yourself.  For example you could store the first letters of each of the words along with the numbers.  E.g. `57,gianT,potatoeS,leakeD,14,lanternS,happilY` would become `57gpl14lh`.
 
-Other approaches could be to write down on paper the passwords (see section 1.1.2) but this can be quite inconvenient for passwords used regularly.
+Other approaches could be to write down on paper the passwords (see section 1.1.2) but this can be quite inconvenient for passwords used regularly.  For some things of low value plaintexting (i.e. written out in full without any encoding/encryption) the password in your email is acceptable, anything of high value should not be plaintexted.
 
 #### 1.2.2 Websites/Tools That do NOT Manage Anything of Value
 
 For example Forums, Stupid websites that want you to register, etc.
 
-
-that is NOT responsible for storing use a password manager, like this one https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd.  Do NOT use a password manager for Gmail. Do NOT use the same password for secondary passwords as your master passwords.
+Use a password manager, like this one https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd.  Do NOT use a password manager for Gmail. Do NOT use the same password for secondary passwords as your master passwords.
 
 ## 2 Multi Factor Authentication
 
@@ -81,9 +80,7 @@ To make it EVEN more unlikely that a robber could use your phone and your passwo
 
 ## 3 Alternative Authentication Systems (like finger id)
 
-All these new fancy techniques like finger recognition or voice recognition can be convenient for many use cases, but are not as secure as good passwords.  The more complex the technique of authenticating the higher the probability it will contain a flaw or exploit either now, or in the future.  A password guarantees mathematically a certain level of security.
-
-Always use the simplest possible thing that works, because that thing will work most predicably and for the longest amount of time.
+All these new fancy techniques like finger recognition or voice recognition can be convenient for many use cases, but are not as secure as good passwords.
 
 Nevertheless as an _additional_ form of authentication they are highly recommended for protecting digital value (see Section 2 & 1.2.1)
 
@@ -156,6 +153,12 @@ Large corporations cannot be trusted as examples of how to secure systems. They 
 ## 2
 
 2 factor auth means someone will have to steal your phone as well as your password.
+
+## 3
+
+The more complex the technique of authenticating the higher the probability it will contain a flaw or exploit either now, or in the future.  A password guarantees mathematically a certain level of security.
+
+Always use the simplest possible thing that works, because that thing will work most predicably and for the longest amount of time.
 
 ## 6
 
