@@ -45,7 +45,7 @@ Since younger children will have data of virtually no value then start with simp
 
 ### 1.2 Secondary Passwords
 
-When you need to create an account for any website other than Gmail or a non-operating-system password:
+When you need to create an account for any website other than Gmail or a non-operating-system password do NOT use the same passwords as Gmail or your operating system.
 
 #### 1.2.1 Websites/Tools That Manage Property or Money
 
@@ -66,7 +66,7 @@ Other approaches could be to write down on paper the passwords (see section 1.1.
 
 For example Forums, Stupid websites that want you to register, etc.
 
-Use a password manager, like this one https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd.  Do NOT use a password manager for Gmail. Do NOT use the same password for secondary passwords as your master passwords.
+Use a password manager, like this one https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd.  Do NOT use a password manager for Gmail.
 
 ## 2 Multi Factor Authentication
 
