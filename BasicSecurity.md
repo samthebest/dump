@@ -52,7 +52,7 @@ When you need to create an account for any website other than Gmail or a non-ope
 For example this could be Amazon Prime, online banking etc, games that allow in app purchases, app stores where a credit/debit card has been added, any tool that allows you to buy something without entering card details by storing card details.
 
  - If you need to invent a password use the same process as described in 1.1.1
- - Keep every password different, including your gmail & operating system password
+ - Keep every password different, especially different from your gmail & operating system password
  - Setup Multi-factor authentication (see section 2)
  - See section 8
 
