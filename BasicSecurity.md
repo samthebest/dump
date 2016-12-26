@@ -157,6 +157,18 @@ As noted this particular system of generating passwords ensures rather long pass
  - Test typing the password before becoming satisfied with it
  - Words/passwords that allow you to alternate left-right hands are often easier to type, e.g. jfjfjfjfjfjfjfjdkdkdkdkdkd
  - Words/passwords that allow you to use alternating fingers (rather than the same finger) are easier to type. For example jkjkjkjkjkjkdfdfdfdfdf is easier to type than jujujujujfrfrfrfr
+ 
+(Of course never choose a password that can utilises a pattern on the keyboard, like `asdfghjkl;` as someone watching can easily remember it).
+
+If the above tips still do not help (so you must have a weird job that requires frequently leaving and returning to your computer), then consider:
+
+##### Random Password Generation
+
+Using a random password generator to generate a password of reasonable length (say 12 characters) can be a good idea, but is not covered in this tutorial.  We advise:
+
+ - Use a secure device and a local application to generate the password, do NOT use online generators
+ - Ensure the generator uses the entire range of typable symbols (e.g. \+'@ etc)
+ - Be careful using short passwords, some corporations still use legacy protocols that can be brute forced for all passwords of length 10!
 
 #### 1.2.1
 
