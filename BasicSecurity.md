@@ -27,6 +27,8 @@ The younger the child, the simpler the password ought to be, but loosely use the
   3. Invent a simple system to separate the words, e.g. a full stop, or the last letter is upper case, etc, e.g. `57,gianT,potatoeS,leakeD,14,lanternS,happilY`. The more complicated the better, but make sure you can remember it!  **Better start with something simple**
 2. Write it down REALLY clearly in big letters on a sheet of **paper with a pen**.
 
+NOTE: This oftens results in a password that is tedious to type, if this is a problem for your use case see NOTES 1.1.1
+
 #### 1.1.2 Storage
 
 Store the piece of paper in a safe place, provided you get into the habbit of locking your screen (section 4) you will soon memorise the password.
@@ -147,6 +149,14 @@ This section contains explanations to the above instructions.
 Mac, Linux and Gmail can be considered secure platforms (the BSD variants of Linux being the most secure). Windows cannot be trusted as highly so keep your password for a Windows system separate.
 
 **In general you want to minimise the number of passwords you remember** less is more.  Simplicity is key.
+
+#### 1.1.1
+
+As noted this particular system of generating passwords ensures rather long passwords, that may be awkward to type.  With practice you ought to be able to type it fast so it shouldn't matter.  Nevertheless you may have a job that requires frequently logging out and logging in again.  Some tips for ensuring easy to type passwords:
+
+ - Test typing the password before becoming satisfied with it
+ - Words/passwords that allow you to alternate left-right hands are often easier to type, e.g. jfjfjfjfjfjfjfjdkdkdkdkdkd
+ - Words/passwords that allow you to use alternating fingers (rather than the same finger) are easier to type. For example jkjkjkjkjkjkdfdfdfdfdf is easier to type than jujujujujfrfrfrfr
 
 #### 1.2.1
 
