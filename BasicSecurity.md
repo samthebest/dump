@@ -45,7 +45,25 @@ Since younger children will have data of virtually no value then start with simp
 
 ### 1.2 Secondary Passwords
 
-When you need to create an account for any website other than Gmail use a password manager, like this one https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd.  Do NOT use a password manager for Gmail. Do NOT use the same password for secondary passwords as your master passwords.
+When you need to create an account for any website other than Gmail or a non-operating-system password:
+
+#### 1.2.1 Websites/Tools That Manage Property or Money
+
+For example this could be Amazon Prime, online banking etc, games that allow in app purchases, app stores where a credit/debit card has been added, any tool that allows you to buy something without entering card details by storing card details.
+
+ - If you need to invent a password use the same process as described in 1.1.1
+ - Keep every password different
+
+##### Storage
+
+To store these passwords (since it is hard to remember so many) try to invent a reminder system and store the reminders in emails sent to yourself from yourself.  For example you could store the first letters of each of the words along with the numbers.  E.g. `57,gianT,potatoeS,leakeD,14,lanternS,happilY` would become `57gpl14lh`
+
+#### 1.2.2 Websites/Tools That do NOT Manage Anything of Value
+
+For example Forums, Stupid websites that want you to register, etc.
+
+
+that is NOT responsible for storing use a password manager, like this one https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd.  Do NOT use a password manager for Gmail. Do NOT use the same password for secondary passwords as your master passwords.
 
 ## 2 Multi Factor Authentication
 
@@ -112,6 +130,12 @@ This section contains explanations to the above instructions.
 Mac, Linux and Gmail can be considered secure platforms (the BSD variants of Linux being the most secure). Windows cannot be trusted as highly so keep your password for a Windows system separate.
 
 **In general you want to minimise the number of passwords you remember** less is more.  Simplicity is key.
+
+#### 1.2.1
+
+##### Storage
+
+Only highly sophisticated hackers could write algorithms that could try to brute force the other words - furthermore most good websites will lock accounts that have too many authentication failures.
 
 #### 1.1.3
 
