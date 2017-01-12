@@ -23,7 +23,7 @@ The board should have the following columns/sections:
  - **Backlog / Icebox**: A long list of placeholders for work that needs to be done, not necessarily analysed, nor fleshed out
  - **TODO**: A list of tickets that the team has decided need to be done.  Hopefully some details should be fleshed out on the ticket sufficient for development to start.
  - **Doing**: In progress tickets, in progress includes development, testing and code review.
- - **Ready to release**: A ticket that has been developed, tested and reviewed and is ready to release
+ - **Ready to release**: A ticket that has been developed, tested and reviewed and is ready to release (this column is redundant in fully automated CI work flows)
  - **Done**: Released tickets
 
 ## Feature Process Step by Step with Git and CI
