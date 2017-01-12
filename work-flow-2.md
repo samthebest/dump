@@ -60,8 +60,8 @@ If you already have a ticket in Doing, but for whatever reason that ticket is pe
 1. The aforementioned reviewer should login to Jenkins and there should be a "merge branch" / "close PR" job or similar, with a parameter that is the branch.  The reviewer should run the job.  This job should:
     - *(Desirable, but hard)* Check that the user is not the assignee of the ticket
     - Pull master, and merge in the branch
-    - does a commit with messsage "Closes #<PR-number>." (might need to be jenkins param for now)
-    - Run the test suite, this may include a suite that spins up temporary staging clusters
+    - (optional) does a commit with messsage "Closes #<PR-number>." (might need to be jenkins param for now)
+    - Run the test suite, this may include a suite that spins up temporary staging clusters (this step ensures that the build still passes after merge, hypothetically if the branch was up to date with master then this step would be unnecessary, but getting the PR system to dissallow merges unless the branch is up to date with master is tricky).
     - If and only if the test suite passes, it pushes master.
     - *(Desirable, but hard)* automatically do step 2
 2. Move the ticket to "Ready to Release"
