@@ -48,7 +48,7 @@ If you already have a ticket in Doing, but for whatever reason that ticket is pe
 2. Slide the ticket from TODO to Doing and add a comment with the branch name (desirable). Ensure the ticket is assigned to you.
 3. Implement the ticket via ATDD, BDD, TDD cycles (TDD may not be possible for languages that don't naturally support unit tests).
 4. While you work on the ticket you should regularly merge master into your branch, and backup your branch by pushing it.  If you don't merge master into your branch regularly then merge conflicts may become unwieldy. *When you commit use the ticket reference as a prefix to the commit message.*
-5. When you think you have finished **create a pull request** (you should configure git to require a certain number of reviewers, two is good to start (to stop people reviewing their own code)).  By creating a pull request this should trigger a jenkins job to run a test suite (just to be sure they didn't forget and so the reviewer can quickly see). There may be some back and forth to tidy things up between the reviewer and the reviewee.
+5. When you think you have finished **create a pull request** (you should configure git to require a certain number of reviewers, two is good to start (to stop people reviewing their own code)).  By creating a pull request this should trigger a jenkins job to run a test suite, it should not be possible to merge the branch unless the suite passes. There may be some back and forth to tidy things up between the reviewer and the reviewee.
 6. If they are happy the code is good, they should say "I'm happy, review passed" or something on the pull request, and they should perform step 1 in the next section
 
 *(Desirable, but hard)* Automatically send a slack message
