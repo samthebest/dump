@@ -67,6 +67,7 @@ sudo apt-get install -y jq
 # https://docs.docker.com/engine/installation/linux/ubuntu/
 # Also need https://github.com/moby/moby/issues/20698
 
+# Perhaps https://get.docker.com/ | sh might work
 
 # Intellij (version dependent)
 wget -O /tmp/intellij.tar.gz http://download.jetbrains.com/idea/ideaIC-14.1.4.tar.gz
