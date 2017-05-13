@@ -48,6 +48,11 @@ brew install caskroom/cask/brew-cask
 
 brew cask install google-chrome
 
+# Fix bug with mac mouse & trackpad
+brew cask install steelseries-exactmouse-tool
+defaults write .GlobalPreferences com.apple.mouse.scaling -1
+defaults write .GlobalPreferences com.apple.trackpad.scaling -1
+
 # Spectacle means you can resize and move windows with shortcuts (requires manual step afterwards)
 # After you have done the manual step to start, remember to 
 # change the default shortcuts for snap right half and snap left half as they conflict with Intellij
