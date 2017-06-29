@@ -128,6 +128,9 @@ brew cask install virtualbox
 curl https://sdk.cloud.google.com | bash
 # manual: restart shell, run gcloud init
 
+# Keybase https://keybase.io/
+brew install keybase # not tested
+
 # start git auto completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
