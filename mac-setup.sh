@@ -76,6 +76,8 @@ defaults write .GlobalPreferences com.apple.trackpad.scaling -1
 
 # At this point should reboot to ensure the keyboard & mouse settings work
 
+mkdir -p ~/src
+
 # Spectacle means you can resize and move windows with shortcuts (requires manual step afterwards)
 # After you have done the manual step to start, remember to 
 # change the default shortcuts for snap right half and snap left half as they conflict with Intellij
@@ -102,18 +104,22 @@ brew install ifstat
 # firefox
 brew cask install firefox
 
-# DEPRECATED use oneflow
-# git-flow
-# brew install git-flow
-
 # Install GNU style bash commands (gives gdate and such and such)
 brew install coreutils
 
 # Hipchat
 brew cask install hipchat
 
+# DEPRECATED use oneflow
+# git-flow
+# brew install git-flow
+
 # git auto completion
 brew install git bash-completion
+
+# Skip annoying "yes" for cloning git repos
+git config --global http.sslVerify false
+echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
 # spotify for concentration
 brew cask install spotify
@@ -153,7 +159,8 @@ curl https://sdk.cloud.google.com | bash
 # manual: restart shell, run gcloud init
 
 # Keybase https://keybase.io/
-brew install keybase # not tested
+# manual: open and sign in (and add device)
+brew cask install keybase
 
 # start git auto completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
