@@ -40,16 +40,27 @@ if [ "$already_setup" != "0" ]; then
     echo "fi"  >> ~/.bash_profile
 fi
 
+# Disable thing that makes it impossible to run apps from internet
+sudo spctl --master-disable
+
 # Install brew
 brew >/dev/null || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 # Install brew cask (makes it easier to install mac apps)
-brew install caskroom/cask/brew-cask
+brew tap caskroom/cask
 
 brew cask install google-chrome
 
 # Fix bug with mac mouse & trackpad
-brew cask install steelseries-exactmouse-tool
+# Stopped working:
+# brew cask install steelseries-exactmouse-tool
+
+curl http://downloads.steelseriescdn.com/drivers/tools/steelseries-exactmouse-tool.dmg
+# Must then manually install the dmg (need to work out how to automate these steps:
+# https://apple.stackexchange.com/questions/73926/is-there-a-command-to-install-a-dmg
+# This seems best:
+# https://stackoverflow.com/questions/21428208/how-to-silently-install-dmg-file-in-mac-os-x-system-using-shell-script
+
 defaults write .GlobalPreferences com.apple.mouse.scaling -1
 defaults write .GlobalPreferences com.apple.trackpad.scaling -1
 
