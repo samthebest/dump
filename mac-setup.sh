@@ -47,7 +47,7 @@ sudo spctl --master-disable
 # sudo visudo # then change Defaults timestamp_timeout=0 to Defaults timestamp_timeout=60
 # OR ("dangerous" only try this on a fresh install (or rebuild required))
 
-# sudo sh -c 'echo "\nDefaults timestamp_timeout=-1">>/etc/sudoers'
+# sudo sh -c 'echo "\nDefaults timestamp_timeout=60">>/etc/sudoers'
 
 # Fix key repeat settings
 defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
