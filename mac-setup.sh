@@ -43,6 +43,16 @@ fi
 # Disable thing that makes it impossible to run apps from internet
 sudo spctl --master-disable
 
+# Increase timeout for sudo
+# sudo visudo # then change Defaults timestamp_timeout=0 to Defaults timestamp_timeout=60
+# OR ("dangerous" only try this on a fresh install (or rebuild required))
+
+# sudo sh -c 'echo "\nDefaults timestamp_timeout=-1">>/etc/sudoers'
+
+# Fix key repeat settings
+defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
+defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
+
 # Install brew
 brew >/dev/null || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
@@ -63,6 +73,8 @@ curl http://downloads.steelseriescdn.com/drivers/tools/steelseries-exactmouse-to
 
 defaults write .GlobalPreferences com.apple.mouse.scaling -1
 defaults write .GlobalPreferences com.apple.trackpad.scaling -1
+
+# At this point should log out and log in again
 
 # Spectacle means you can resize and move windows with shortcuts (requires manual step afterwards)
 # After you have done the manual step to start, remember to 
