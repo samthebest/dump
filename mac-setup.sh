@@ -74,7 +74,7 @@ curl http://downloads.steelseriescdn.com/drivers/tools/steelseries-exactmouse-to
 defaults write .GlobalPreferences com.apple.mouse.scaling -1
 defaults write .GlobalPreferences com.apple.trackpad.scaling -1
 
-# At this point should log out and log in again
+# At this point should reboot to ensure the keyboard & mouse settings work
 
 # Spectacle means you can resize and move windows with shortcuts (requires manual step afterwards)
 # After you have done the manual step to start, remember to 
