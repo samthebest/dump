@@ -102,8 +102,9 @@ brew install ifstat
 # firefox
 brew cask install firefox
 
+# DEPRECATED use oneflow
 # git-flow
-brew install git-flow
+# brew install git-flow
 
 # Install GNU style bash commands (gives gdate and such and such)
 brew install coreutils
