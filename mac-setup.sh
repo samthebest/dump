@@ -154,6 +154,10 @@ brew cask install vlc
 # Virtual box
 brew cask install virtualbox
 
+# Docker
+# Manual step - after you need to open docker from spotlight
+brew cask install docker
+
 # gcloud
 curl https://sdk.cloud.google.com | bash
 # manual: restart shell, run gcloud init
