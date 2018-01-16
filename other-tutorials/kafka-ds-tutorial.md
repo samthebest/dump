@@ -11,6 +11,10 @@ The components have been arbitrarily split between Scala and Python.  We could e
 
 In practice we would usually opt for building the entire application in Scala (or Java 8) and only use Python for machine learning libraries that performs well and does not exist in Scala.
 
+#### Questions, Corrections, Suggestions, Spelling
+
+Please raise a github issue or pull request.
+
 #### Target Audience
 
 The target audience is any data scientist or engineer that is interested in understanding the complete picture and who wishes to be involved in the leading and architecture of an entire project.  This would also be useful for data scientists and engineers in startups, where it is assumed a small number of people have to do everything.
