@@ -89,9 +89,7 @@ In the repo create a subdirecty called `ingestion-and-etl`, in that directory cr
 
 Observe we create our scala component inside a subdirectory instead of the root.  This is to allow for creating further subdirectories for components in different languages.  Then we only need a single repo, which is the modern recommended way to build applications (google Monorepo).
 
-**Estimated Time**:
-Scala Expert: 1 minute
-Scala Beginner: 1 - 2 hours
+**Estimated Time**: Scala Expert: 1 minute, Scala Beginner: 1 - 2 hours
 
 ### Step 3 - Create a Python dummy model project
 
@@ -101,9 +99,7 @@ Create another subdirectory called `model`, **using TDD**, within it write a pyt
 
 If you are not used to writing code using TDD, now is the time start as more and more companies require it, and it's an extremly logical way to write code.  It seems https://code.tutsplus.com/tutorials/beginning-test-driven-development-in-python--net-30137 is a reasonable tutorial on how to do TDD with Python, but I'm sure there are many more.
 
-**Estimated Time**
-TDD Expert: 5 - 20 minutes
-TDD beginner: 1 hour
+**Estimated Time**: TDD Expert: 5 - 20 minutes, TDD beginner: 1 hour
 
 ### Step 4 - Implement ingestion framework logic with unit tests
 
@@ -122,11 +118,15 @@ https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/avoid-recursi
 Consider looking for examples (particularly for unit tests) here:
 https://github.com/confluentinc/kafka-streams-examples
 
+**Estimated Time**: Scala, TDD & Kafka Expert: 1 day, beginner: 5+ days
+
 ### Step 5 - Implement model consumer/producer with unit tests
 
-Find an equivilant to https://github.com/manub/scalatest-embedded-kafka for Python (assuming one exists).  If no such unit testing framework exists, this would make Step 7 critical.
+Find an equivalant to https://github.com/manub/scalatest-embedded-kafka for Python (assuming one exists).  If no such unit testing framework exists, this would make Step 7 critical.
 
-Using the Consumer and Producer APIs for Python consume from the Feature Topic and write to the Prediction Topic.
+Using the Consumer and Producer APIs for Python, consume from the Feature Topic and write to the Prediction Topic.
+
+#### TUTORIAL UNFINISHED FROM HERE
 
 ### Step 6 - Implement ingestion framework application with integration tests
 
