@@ -15,7 +15,7 @@ In practice we would usually opt for building the entire application in Scala (o
 
 The target audience is any data scientist or engineer that is interested in understanding the complete picture and who wishes to be involved in the leading and architecture of an entire project.  This would also be useful for data scientists and engineers in startups, where it is assumed a small number of people have to do everything.
 
-The tutorial aims at giving the Why and the What, not the details of the How.  Determining the precise How oneself with the aid of man pages, google, github and stackoverflow is part of the day to day role of a data scientist or engineer.  Consequently tenacity and initiative will be required to understand and complete the tutorial.
+The tutorial aims at giving the Why and the What, not the details of the How.  Determining the precise How oneself with the aid of man pages, google, github, documentation and stackoverflow is part of the day to day role of a data scientist or engineer.  Consequently tenacity and initiative will be required to understand and complete the tutorial.
 
 For those who wish to get a better understanding of Kafka conceptually, but not necessarily understand all the technical and engineering details required to get into production, then only follow steps 1 to 5.
 
