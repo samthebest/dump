@@ -48,7 +48,7 @@ SZ Topic --> Window Processor --> FA Topic -->--|---> Join by client key        
                             |---> FD Topic -->--|          |--> Features Topic --> Predict Processor-->|
 ```
 
-It's assumed some downstream team will consume from the prediction Topic that will trigger an action that effects the client (e.g. send an email, change a setting on a device, etc).
+It's assumed some downstream component will consume from the prediction Topic that will trigger an action that effects the client (e.g. send an email, change a setting on a device, etc).
 
 Every Topic will be partitioned by client key and have 100 partitions, this means our Join will be easy.
 
