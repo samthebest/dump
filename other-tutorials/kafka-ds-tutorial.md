@@ -7,7 +7,7 @@ The tutorial will be guided by tests and encourage a test-first TDD approach.  T
 
 Since this tutorial aims to build a complete architecture, which would ordinarily take weeks in a typical enterprise, this tutorial is not short.  Rather it is meta-tutorial; a guide to following many tutorials in such a way to build a complete application.
 
-The components have been arbitrarily split between Scala and Python.  We could easily build the whole thing in Scala, but we split so that we can become familiar with having components in different languages.  Note that I don't think Kafka Streams has a Python equivilent API, and we will use Kafka Streams for Join, so will use Scala.
+The components have been arbitrarily split between Scala and Python.  We could easily build the whole thing in Scala, but we split so that we can become familiar with having components in different languages.  Note that I don't think Kafka Streams has a Python equivilent API, so we will have to use Scala for the Join.
 
 In practice we would usually opt for building the entire application in Scala (or Java 8) and only use Python for machine learning libraries that performs well and does not exist in Scala.
 
