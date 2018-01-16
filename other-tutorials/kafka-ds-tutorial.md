@@ -1,7 +1,7 @@
 
 ### Overview
 
-In this (high-level) tutorial we aim to build and architect a fully distributed streaming (with Kafka) data science application that includes ingestion, etl, feature extraction (in Scala) and prediction (in Python).  The architecture will ultimately include a Dataproc cluster for analysis.
+In this (high-level) tutorial we aim to build and architect a fully distributed streaming (with Kafka) data science application that includes ingestion, etl, feature extraction (in Scala) and prediction (in Python).  The architecture will ultimately include a Dataproc cluster for analysis and model training.
 
 The tutorial will be guided by tests and encourage a test-first TDD approach.  These tests will include unit, integration and end-to-end tests.
 
@@ -59,9 +59,11 @@ https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/avoid-recursi
 
 https://github.com/manub/scalatest-embedded-kafka
 
-### Step 5 - Implement model consumer/producer with unit tests
+### Step 5 - Implement model consumer/producer wiring with unit tests
 
 Find an equivilant to https://github.com/manub/scalatest-embedded-kafka for Python (assuming one exists).  If no such unit testing framework exists, this would make Step 7 critical.
+
+Will need to threshold.
 
 ### Step 6 - Implement ingestion framework application with integration tests
 
