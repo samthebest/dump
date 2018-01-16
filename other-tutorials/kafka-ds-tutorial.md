@@ -17,7 +17,30 @@ For those who wish to get a better understanding of Kafka conceptually, but not 
 
 #### Imaginary Use Case
 
-We are going to imagine that 
+We are going to imagine that we are going to build a system for a number of clients `N_C`, where each client has 3 sensors `SX`, `SY` and `SZ`.  Every time we receive an event from any sensor `S \in { SX, SY, SZ }` we will make a prediction whether or not to send an alert (which will just be binary, alert or do not alert).
+
+We will assume some we have already performmed some analysis and for a baseline implementation we believe the following logic could work
+
+ - We treat `SX` and `SY` as categorical inputs, so integer values
+ - We wish to extract derived features from a 10 minute sliding window of `SZ` as follows:
+   - We extract the sliding average, and bin uniformly into 10 buckets - (A)
+   - We extract the sliding AUC (integral), and bin uniformly into 10 buckets - (I)
+   - We extract the sliding delta (derivative), and bin uniformly into 10 buckets - (D)
+ - This will give us an integer feature vector of length 5
+   
+Variants of this excercise obviously involve different binning strategies, but such variations would not contribute to the intent of this tutorial.
+
+Consequently we wish to produce the following topic topology, where we assume some upstream team writes to our three input topics (one for each sensor) of the form `< client-key, sensor reading >`
+
+```
+SX Topic ------------->-------------------->-----------|
+SY Topic ------------->-------------------->-----------|
+SZ Topic --> Window Processor --> Feature A Topic -->--|---> Join by client key and Predict ---> prediction topic
+                            |---> Feature I Topic -->--|
+                            |---> Feature D Topic -->--|
+```
+
+
 
 ### Step 1
 
@@ -37,7 +60,7 @@ Scala Beginner: 1 - 2 hours
 
 For now we are going to write a dummy model in Python just to build something that wires together components.
 
-Create another subdirectory called `model`, **using TDD**, within it write a python method called `predict` that takes as input a vector of length 3 of integers and returns a random double between 0 and 1.  Since this is Python, you'll have to explicitly handle the cases when the vector is of the wrong type since Pythong is dynamically typed.
+Create another subdirectory called `model`, **using TDD**, within it write a python method called `predict` that takes as input a vector of length 5 of integers and returns a tuple random double between 0 and 1.  Since this is Python, you'll have to explicitly handle the cases when the vector is of the wrong type since Pythong is dynamically typed.
 
 If you are not used to writing code using TDD, now is the time start as more and more companies require it, and it's an extremly logical way to write code.  It seems https://code.tutsplus.com/tutorials/beginning-test-driven-development-in-python--net-30137 is a reasonable tutorial on how to do TDD with Python, but I'm sure there are many more.
 
