@@ -23,22 +23,44 @@ We will assume some we have already performmed some analysis and for a baseline 
 
  - We treat `SX` and `SY` as categorical inputs, so integer values
  - We wish to extract derived features from a 10 minute sliding window of `SZ` as follows:
-   - We extract the sliding average, and bin uniformly into 10 buckets - (A)
-   - We extract the sliding AUC (integral), and bin uniformly into 10 buckets - (I)
-   - We extract the sliding delta (derivative), and bin uniformly into 10 buckets - (D)
+   - We extract the sliding average, and bin uniformly into 10 buckets - (FA)
+   - We extract the sliding AUC (integral), and bin uniformly into 10 buckets - (FI)
+   - We extract the sliding delta (derivative), and bin uniformly into 10 buckets - (FD)
  - This will give us an integer feature vector of length 5
    
 Variants of this excercise obviously involve different binning strategies, but such variations would not contribute to the intent of this tutorial.
 
-Consequently we wish to produce the following topic topology, where we assume some upstream team writes to our three input topics (one for each sensor) of the form `< client-key, sensor reading >`
+Consequently we wish to produce the following topic topology, where we assume some upstream team writes to our three input topics (one for each sensor) of the form `< client-key, sensor reading >`, which are already partitioned by client-key with 100 partitions.
 
 ```
-SX Topic ------------->-------------------->-----------|
-SY Topic ------------->-------------------->-----------|
-SZ Topic --> Window Processor --> Feature A Topic -->--|---> Join by client key and Predict ---> prediction topic
-                            |---> Feature I Topic -->--|
-                            |---> Feature D Topic -->--|
+SX Topic ------------->------------->-----------|
+SY Topic ------------->------------->-----------|
+SZ Topic --> Window Processor --> FA Topic -->--|---> Join by client key and Predict ---> prediction Topic
+                            |---> FI Topic -->--|
+                            |---> FD Topic -->--|
 ```
+
+It's assumed some downstream team will consume from the prediction Topic that will trigger an action that effects the client (e.g. send an email, change a setting on a device, etc).
+
+We will essentially have two consumer-producer processor pairs that we need to write:
+
+#### Window Processor
+
+This will calculate the windowed values.  We choose to write this out to 3 topics, one for each feature, rather than combine this with the Predict processor.  Reasons that could justify this architectural choice include:
+
+ - For reporting/monitoring/analysis another consumer of these feature topics may exist
+ - If the Window Processor is computationally expensive and so we have finer control over
+   - threading
+   - maintenance windows
+   - replayability
+
+The Window Processor will have
+
+ - One consumer group
+ - Potentially many consumers within the group for parallelism. The feature extraction code should live with the consumer code.
+ - Three producers, one for each feature Topic
+
+#### Join and Predict
 
 
 
