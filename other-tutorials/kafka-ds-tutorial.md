@@ -7,7 +7,9 @@ The tutorial will be guided by tests and encourage a test-first TDD approach.  T
 
 Since this tutorial aims to build a complete architecture, which would ordinarily take weeks in a typical enterprise, this tutorial is not short.  Rather it is meta-tutorial; a guide to following many tutorials in such a way to build a complete application.
 
-The components have been arbitrarily split between Scala and Python.  We could easily build the whole thing in either Scala or Python, but we split so that we familiar with having components in different languages.  In practice we would usually opt for building the entire application in Scala (or Java 8) and only use Python for machine learning libraries that performs well and does not exist in Scala.
+The components have been arbitrarily split between Scala and Python.  We could easily build the whole thing in Scala, but we split so that we can become familiar with having components in different languages.  Note that I don't think Kafka Streams has a Python equivilent API, and we will use this for Join.
+
+In practice we would usually opt for building the entire application in Scala (or Java 8) and only use Python for machine learning libraries that performs well and does not exist in Scala.
 
 #### Target Audience
 
@@ -37,26 +39,27 @@ Consequently we wish to produce the following topic topology, where we assume so
 ```
 SX Topic ------------->------------->-----------|
 SY Topic ------------->------------->-----------|
-SZ Topic --> Window Processor --> FA Topic -->--|---> Join by client key and Predict ---> prediction Topic
-                            |---> FI Topic -->--|
-                            |---> FD Topic -->--|
+SZ Topic --> Window Processor --> FA Topic -->--|---> Join by client key                     prediction Topic
+                            |---> FI Topic -->--|          |                                           /\
+                            |---> FD Topic -->--|          |--> Features Topic --> Predict Processor-->|
 ```
 
 It's assumed some downstream team will consume from the prediction Topic that will trigger an action that effects the client (e.g. send an email, change a setting on a device, etc).
 
 Every Topic will be partitioned by client key and have 100 partitions, this means our Join will be easy.
 
-We will essentially have two consumer-producer processor pairs that we need to write:
+We will essentially have three consumer-producer processors that we need to write:
 
 #### Window Processor
 
-This will calculate the windowed values.  We choose to write this out to 3 topics, one for each feature, rather than combine this with the Predict processor.  Reasons that could justify this architectural choice include:
+This will calculate the windowed values.  We choose to write this out to 3 topics, one for each feature, rather than combine this with the Join processor.  Reasons that could justify this architectural choice include:
 
  - For reporting/monitoring/analysis another consumer of these feature topics may exist
  - If the Window Processor is computationally expensive and so we have finer control over
    - threading
    - maintenance windows
    - replayability
+   - the ability to use different languages / libraries with Kafka as an interface (note that if a Topic is *soley* used as an interface one would typically set it's retention policy to use less storage space)
 
 The Window Processor will have
 
@@ -64,9 +67,13 @@ The Window Processor will have
  - Potentially many consumers within the group for parallelism. The feature extraction code should live with the consumer code.
  - Three producers, one for each feature Topic
 
-#### Join and Predict
+#### Join Processor
 
+This will perform a copartitioned join on the 5 feature topics, and write out a `< client-key, feature-vector >` to the Feature Topic.
 
+#### Predict Processor
+
+This will consume from the Feature Topic, use the feature vector to make a prediction, then produce the prediction to the predicttion Topic.
 
 ### Step 1
 
@@ -96,17 +103,20 @@ TDD beginner: 1 - 2 hours
 
 ### Step 4 - Implement ingestion framework logic with unit tests
 
-new to scala:
+Implement the Window Processor and the Join Processor in Scala *via TDD*.  You will want to use the Kafka Streams API for the Join processor.  It may be a good exercise to implement the Window Processor in both the low level Kafka consumer-producer APIs, as well as the Kafka Streams API.  The API documentation can be found here: https://kafka.apache.org/documentation/#api
+
+Do not worry too much about topic creation code at this stage, assume they exist or are auto-created.  Try using an embedded kafka for unit tests: https://github.com/manub/scalatest-embedded-kafka
+
+If you are new to Scala, suggest reading the following:
+
 https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/fp-4-newcomers.md
 https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/introduction-to-typing.md
 https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/basic-types.md
 https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/avoid-vals.md
 https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/avoid-recursion.md
 
-
-
-
-https://github.com/manub/scalatest-embedded-kafka
+Consider looking for examples (particularly for unit tests) here:
+https://github.com/confluentinc/kafka-streams-examples
 
 ### Step 5 - Implement model consumer/producer wiring with unit tests
 
@@ -116,21 +126,19 @@ Will need to threshold.
 
 ### Step 6 - Implement ingestion framework application with integration tests
 
+TODO
+
 Let Docker create the topics on startup.
-
-
 
 Create an `it` integration test directory.
 
-Add ssh to the Docker file
+Add open-ssh to the Docker file (so we can reuse the deployment scripts).
 
-Call out to docker 
+Call out to docker commands from `it` tests, so we can spin up and run all tests with `sbt it:test`
 
 https://github.com/wurstmeister/kafka-docker
 
 (I have no recommended tutorial for Docker since it's usage has changed a lot since I first learnt it.)
-
-
 
 ### Step 7 - Wire in prediction component with integration tests
 
@@ -138,15 +146,31 @@ TODO
 
 ### Step 8 - Use a real Confluent Cloud kafka cluster with E2E tests
 
-https://www.confluent.io/confluent-cloud/
-
 TODO
+
+https://www.confluent.io/confluent-cloud/
 
 ### Step 9 - Add a consumer to copy data on kafka to Google Cloud Storage
 
 Do not use Spark, use the Parquet and Google Cloud Storage APIs directly!
 
 TODO
+
+
+```
+SX Topic ------------->------------->-----------|
+SY Topic ------------->------------->-----------|
+SZ Topic --> Window Processor --> FA Topic -->--|---> Join by client key                     prediction Topic
+                            |---> FI Topic -->--|          |                                           /\   |
+                            |---> FD Topic -->--|          |--> Features Topic --> Predict Processor-->|    |
+                                                                       |                                    |
+                                                                       \/                                  \/
+                                                                            Google Cloud Storage consumers
+                                                                                           |
+                                                                                           |
+                                                                                           \/
+                                                                                Google Cloud Storage Parquet
+```
 
 ### Step 10 - Create a dataproc cluster to analyse the data in Google Cloud Storage
 
