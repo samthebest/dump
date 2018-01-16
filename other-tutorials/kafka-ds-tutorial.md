@@ -59,7 +59,7 @@ We will essentially have three consumer-producer processors that we need to writ
 This will calculate the windowed values.  We choose to write this out to 3 topics, one for each feature, rather than combine this with the Join processor.  Reasons that could justify this architectural choice include:
 
  - For reporting/monitoring/analysis another consumer of these feature topics may exist
- - If the Window Processor is computationally expensive and so we have finer control over
+ - If the Window Processor is computationally expensive then we have finer control over
    - threading
    - maintenance windows
    - replayability
