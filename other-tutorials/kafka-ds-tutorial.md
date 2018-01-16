@@ -7,6 +7,8 @@ The tutorial will be guided by tests and encourage a test-first TDD approach.  T
 
 Since this tutorial aims to build a complete architecture, which would ordinarily take weeks in a typical enterprise, this tutorial is not short.  Rather it is meta-tutorial; a guide to following many tutorials in such a way to build a complete application.
 
+The components have been arbitrarily split between Scala and Python.  We could easily build the whole thing in either Scala or Python, but we split so that we familiar with having components in different languages.  In practice we would usually opt for building the entire application in Scala (or Java 8) and only use Python for machine learning libraries that performs well and does not exist in Scala.
+
 #### Target Audience
 
 The target audience is any data scientist or engineer that is interested in understanding the complete picture and who wishes to be involved in the leading and architecture of an entire project.  This would also be useful for data scientists and engineers in startups, where it is assumed a small number of people have to do everything.
@@ -30,7 +32,7 @@ We will assume some we have already performmed some analysis and for a baseline 
    
 Variants of this excercise obviously involve different binning strategies, but such variations would not contribute to the intent of this tutorial.
 
-Consequently we wish to produce the following topic topology, where we assume some upstream team writes to our three input topics (one for each sensor) of the form `< client-key, sensor reading >`, which are already partitioned by client-key with 100 partitions.
+Consequently we wish to produce the following topic topology, where we assume some upstream component writes to our three input topics (one for each sensor) of the form `< client-key, sensor reading >`, which are already partitioned by client-key with 100 partitions.
 
 ```
 SX Topic ------------->------------->-----------|
@@ -41,6 +43,8 @@ SZ Topic --> Window Processor --> FA Topic -->--|---> Join by client key and Pre
 ```
 
 It's assumed some downstream team will consume from the prediction Topic that will trigger an action that effects the client (e.g. send an email, change a setting on a device, etc).
+
+Every Topic will be partitioned by client key and have 100 partitions, this means our Join will be easy.
 
 We will essentially have two consumer-producer processor pairs that we need to write:
 
