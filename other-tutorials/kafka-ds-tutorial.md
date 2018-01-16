@@ -23,7 +23,7 @@ For those who wish to get a better understanding of Kafka conceptually, but not 
 
 We are going to imagine that we are going to build a system for a number of clients `N_C`, where each client has 3 sensors `SX`, `SY` and `SZ`.  Every time we receive an event from any sensor `S \in { SX, SY, SZ }` we will make a prediction whether or not to send an alert (which will just be binary, alert or do not alert).
 
-We will assume some we have already performmed some analysis and for a baseline implementation we believe the following logic could work
+We will assume some analysis has already been performmed, and for a baseline implementation we believe the following logic could work
 
  - We treat `SX` and `SY` as categorical inputs, so integer values
  - We wish to extract derived features from a 10 minute sliding window of `SZ` as follows:
