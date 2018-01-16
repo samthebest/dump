@@ -93,13 +93,13 @@ Scala Beginner: 1 - 2 hours
 
 For now we are going to write a dummy model in Python just to build something that wires together components.
 
-Create another subdirectory called `model`, **using TDD**, within it write a python method called `predict` that takes as input a vector of length 5 of integers and returns a tuple random double between 0 and 1.  Since this is Python, you'll have to explicitly handle the cases when the vector is of the wrong type since Pythong is dynamically typed.
+Create another subdirectory called `model`, **using TDD**, within it write a python method called `predict` that takes as input a vector of length 5 of integers and returns a random Boolean.  Since this is Python, you'll have to explicitly handle the cases when the vector is of the wrong type since Python is dynamically typed.
 
 If you are not used to writing code using TDD, now is the time start as more and more companies require it, and it's an extremly logical way to write code.  It seems https://code.tutsplus.com/tutorials/beginning-test-driven-development-in-python--net-30137 is a reasonable tutorial on how to do TDD with Python, but I'm sure there are many more.
 
 **Estimated Time**
-TDD Expert: 20 minutes
-TDD beginner: 1 - 2 hours
+TDD Expert: 5 - 20 minutes
+TDD beginner: 1 hour
 
 ### Step 4 - Implement ingestion framework logic with unit tests
 
@@ -118,11 +118,11 @@ https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/avoid-recursi
 Consider looking for examples (particularly for unit tests) here:
 https://github.com/confluentinc/kafka-streams-examples
 
-### Step 5 - Implement model consumer/producer wiring with unit tests
+### Step 5 - Implement model consumer/producer with unit tests
 
 Find an equivilant to https://github.com/manub/scalatest-embedded-kafka for Python (assuming one exists).  If no such unit testing framework exists, this would make Step 7 critical.
 
-Will need to threshold.
+Using the Consumer and Producer APIs for Python consume from the Feature Topic and write to the Prediction Topic.
 
 ### Step 6 - Implement ingestion framework application with integration tests
 
