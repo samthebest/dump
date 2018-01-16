@@ -1,7 +1,7 @@
 
 ### Overview
 
-In this (high-level) tutorial we aim to 
+In this (high-level) tutorial we aim to build and architect a fully distributed streaming (with Kafka) data science application that includes ingestion, etl, feature extraction (in Scala) and prediction (in Python).  The architecture will ultimately include a Dataproc cluster for analysis.
 
 ### Step 1
 
@@ -29,6 +29,51 @@ If you are not used to writing code using TDD, now is the time start as more and
 TDD Expert: 20 minutes
 TDD beginner: 1 - 2 hours
 
-### Step 4 - Write topic creation code
+### Step 4 - Implement ingestion framework logic with unit tests
+
+new to scala:
+https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/fp-4-newcomers.md
+https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/introduction-to-typing.md
+https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/basic-types.md
+https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/avoid-vals.md
+https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/avoid-recursion.md
+
+
+
+
+https://github.com/manub/scalatest-embedded-kafka
+
+### Step 5 - Implement model consumer/producer with unit tests
+
+Find an equivilant to https://github.com/manub/scalatest-embedded-kafka for Python (assuming one exists).  If no such unit testing framework exists, this would make Step 7 critical.
+
+### Step 6 - Implement ingestion framework application with integration tests
+
+Let Docker create the topics on startup.
+
+
+
+Create an `it` integration test directory.
+
+Add ssh to the Docker file
+
+Call out to docker 
+
+https://github.com/wurstmeister/kafka-docker
+
+(I have no recommended tutorial for Docker since it's usage has changed a lot since I first learnt it.)
+
+
+
+### Step 7 - Wire in prediction component with integration tests
+
+### Step 8 - Use a real Confluent Cloud kafka cluster with E2E tests
+
+### Step 9 - Add a consumer to relay all data on kafka to Google Cloud Storage in Parquet
+
+### Step 10 - Create a dataproc cluster to analyse the data in Google Cloud Storage
+
+
+
 
 
