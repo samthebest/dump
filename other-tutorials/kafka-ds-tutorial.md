@@ -89,9 +89,13 @@ TODO
 
 ### Step 8 - Use a real Confluent Cloud kafka cluster with E2E tests
 
+https://www.confluent.io/confluent-cloud/
+
 TODO
 
-### Step 9 - Add a consumer to relay all data on kafka to Google Cloud Storage in Parquet
+### Step 9 - Add a consumer to copy data on kafka to Google Cloud Storage
+
+Do not use Spark, use the Parquet and Google Cloud Storage APIs directly!
 
 TODO
 
