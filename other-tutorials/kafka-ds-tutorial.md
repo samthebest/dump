@@ -32,7 +32,7 @@ We will assume some analysis has already been performmed, and for a baseline imp
    - We extract the sliding delta (derivative), and bin uniformly into 10 buckets - (FD)
  - This will give us an integer feature vector of length 5
    
-Variants of this excercise obviously involve different binning strategies, but such variations would not contribute to the intent of this tutorial.
+Variants of this exercise obviously involve different binning strategies, but such variations would not contribute to the intent of this tutorial.
 
 Consequently we wish to produce the following topic topology, where we assume some upstream component writes to our three input topics (one for each sensor) of the form `< client-key, sensor reading >`, which are already partitioned by client-key with 100 partitions.
 
