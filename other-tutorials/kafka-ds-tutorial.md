@@ -3,6 +3,22 @@
 
 In this (high-level) tutorial we aim to build and architect a fully distributed streaming (with Kafka) data science application that includes ingestion, etl, feature extraction (in Scala) and prediction (in Python).  The architecture will ultimately include a Dataproc cluster for analysis.
 
+The tutorial will be guided by tests and encourage a test-first TDD approach.  These tests will include unit, integration and end-to-end tests.
+
+Since this tutorial aims to build a complete architecture, which would ordinarily take weeks in a typical enterprise, this tutorial is not short.  Rather it is meta-tutorial; a guide to following many tutorials in such a way to build a complete application.
+
+#### Target Audience
+
+The target audience is any data scientist or engineer that is interested in understanding the complete picture and who wishes to be involved in the leading and architecture of an entire project.  This would also be useful for data scientists and engineers in startups, where it is assumed a small number of people have to do everything.
+
+The tutorial aims at giving the Why and the What, not the details of the How.  Determining the precise How oneself with the aid of man pages, google, github and stackoverflow is part of the day to day role of a data scientist or engineer.  Consequently tenacity and initiative will be required to understand and complete the tutorial.
+
+For those who wish to get a better understanding of Kafka conceptually, but not necessarily understand all the technical and engineering details required to get into production, then only follow steps 1 to 5.
+
+#### Imaginary Use Case
+
+We are going to imagine that 
+
 ### Step 1
 
 Create a github repo for your Dummy Kafka project.  As you follow the tutorial try to populate your README.md, remember to include documentation on how to build, test and deploy your application.
@@ -67,13 +83,19 @@ https://github.com/wurstmeister/kafka-docker
 
 ### Step 7 - Wire in prediction component with integration tests
 
+TODO
+
 ### Step 8 - Use a real Confluent Cloud kafka cluster with E2E tests
+
+TODO
 
 ### Step 9 - Add a consumer to relay all data on kafka to Google Cloud Storage in Parquet
 
+TODO
+
 ### Step 10 - Create a dataproc cluster to analyse the data in Google Cloud Storage
 
-
+TODO
 
 
 
