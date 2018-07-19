@@ -6,3 +6,8 @@ https://cacm.acm.org/magazines/2016/7/204032-why-google-stores-billions-of-lines
 https://medium.com/@Jakeherringbone/you-too-can-love-the-monorepo-d95d1d6fcebe
 https://www.pantsbuild.org/index.html
 https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/
+
+# Other Benefits Not Mentioned Above
+
+ - Easy single view of all open PRs
+ - Every project will use same workflow (can't having diverging branching models across projects)
