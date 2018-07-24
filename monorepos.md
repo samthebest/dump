@@ -18,3 +18,4 @@ https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/
 
  - Easy single view of all open PRs
  - Every project will use same workflow (can't having diverging branching models across projects)
+ - Have to setup IDEs less often (no need to setup Intellij 10x for 10 different repos for example)
