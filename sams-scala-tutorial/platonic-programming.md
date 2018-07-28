@@ -15,7 +15,7 @@ Given functionally equivilent programs
 
 # Theorem - State Monism
 
-Given an infinitely fast processor and an infinite amount of memory, every program can be refactored to have at most 1 variable (i.e. `var` in Scala).  By the above principles we should favour these programs.
+Given an infinitely fast processor and an infinite amount of memory, every program can be refactored to have at most 1 variable (i.e. `var` in Scala) while remaining functionally equivilant.  By the above principles we should favour these programs.
 
 Theorem - 
 
