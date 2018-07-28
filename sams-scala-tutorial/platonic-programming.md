@@ -6,12 +6,20 @@ There does not exist an objectively perfect (non-trivial) program, but for any p
 
 Therefore an objective of subjects is to refactor programs so that we make objective improvements.
 
+# Definition - Triangulation
+
+Tests + type signature constrains Function.
+
 # Objective Comparative Principles of PP
 
 Given functionally equivilent programs
 
-1. We favour programs with shorter ASTs
-2. We favour programs with fewer non-referentially transparent expressions
+1. Triangulation
+2. We favour programs with shorter ASTs
+3. We favour programs with fewer non-referentially transparent expressions
+
+
+Not all are compatible, so those with a higher number are favoured over those with a lower number.
 
 # Theorem - State Monism
 
