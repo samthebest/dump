@@ -8,9 +8,34 @@ Another name for PP could be Extreme Functional Programming, meaning Functional 
 
 ### Hell Is Other Peoples Code
 
-PP is in stark contrast to SOLID, OOP and Design Patterns, which we will collectively refer to as Anthropocentric Programming.  Anthropocentric Programming is fundementally flawed and is the root of all of the following problems:
+PP is in stark contrast to SOLID, OOP and Design Patterns, which we will collectively refer to as Anthropocentric Principles or Anthropocentric Programming (or just AP). AP currently makes up the vast majority of code, and the vast majority of programmers follow these principles by faith and fashion.  We argue AP is fundementally flawed and is the root of all of the following problems:
 
-1. 
+1. High bug density
+2. Code that is difficult understand, refactor and test
+3. Code that is difficult to add new features to
+4. Verbose code
+5. Unhappy programmers, late delivery and the **end of the world**.  No seriously, due to compounding super-exponential technology advancments human programming incomptentency could be the main reason we don't yet live in a utopia.
+
+The justification is as follows:
+
+ - SOLID & Design Patterns are not formally defined, nor is it even possible in principle to formally define them (with the exception of Liskov Substitution).  They are inherently subjective.
+ - SOLID & Design Patterns are at best Social Sciences, yet try to apply to what is really Mathematics.  No other branch of mathematics has ever had some set of anthropocentric and social principles imposed upon it, to do so would be absurd.
+ - Even if we consider AP as a Social Science, for a theory of Social Science to be a success it will require vast amounts of experiments and statistical work.  AP has no such evidence base; very few studies exist.
+
+### Quick History of Languages
+
+The irony is that some languages make AP difficult, to nearly impossible.  For example Lisp, Erlang, Haskell and OCaml are founded on Functional Programming, which manages to eliminate the vast majority of the problems AP faces.  Ironically these languages are not that new, in fact Lisp is one of the oldest languages there is.
+
+Some modern attempts have been made to mitigate the hell we find ourselves in.  For example Rust and Go have made attempts to standardise approaches to programming that removes the subjectivity, verbosity and complexity.
+
+The worst languages ever invented and the main source of hell, unfortunately are probably the most popular, namely Java and C#.  The single worst decisions these two languages both made is:
+
+ - Every function has to be arbitrarily tied to a containing scope
+ - Class Oriented Programming, by design, forces a complex coupling of many functions
+ 
+This is perhaps why Ruby, and especially Python, is becoming increasingly popular since they allow writing functions without containing scopes.
+
+Observe how these catestrophically stupid language design decisions only occur in basically 2 languages out of dozens of others, yet these two languages are the most popular. Anyway, let's move on.
 
 ## Central Tenet of PP
 
@@ -92,3 +117,8 @@ Given two scopes S_1 and S_2 where S_2 is a subscope of S_1, moving a `var` from
 
 2. We favour programs with fewer non-referentially transparent expressions
 3. 
+
+
+### Other Links
+
+https://stackoverflow.com/a/22148186/1586965
