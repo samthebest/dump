@@ -1,8 +1,16 @@
+## Introduction
+
 Platonic Programming (PP) is the future.
 
 Practically PP is quite simple to apply, but the motivating theory assumes some acedemic background.
 
 Another name for PP could be Extreme Functional Programming, meaning Functional Programming practices taken to the extreme (like XP takes general practices to the extreme).
+
+### Hell Is Other Peoples Code
+
+PP is in stark contrast to SOLID, OOP and Design Patterns, which we will collectively refer to as Anthropocentric Programming.  Anthropocentric Programming is fundementally flawed and is the root of all of the following problems:
+
+1. 
 
 ## Central Tenet of PP
 
@@ -56,9 +64,13 @@ In PP these kinds of tests are forbidden unless the seed of the random generator
 
 Given functionally equivilent programs
 
-1. Triangulation
+### 1. Triangulation Principle
 2. We favour programs with shorter ASTs
 3. We favour programs with fewer non-referentially transparent expressions
+
+### Social principle
+
+
 
 
 Not all are compatible, so those with a higher number are favoured over those with a lower number.
