@@ -43,13 +43,13 @@ There does not exist an objectively perfect (non-trivial) program, but for any p
 
 Therefore an objective of subjects is to refactor programs so that we make objective improvements.
 
-## Definition - Equivilant
+## Definition - Equivalent
 
 We say program `P_1` and `P_2` are equivilant if for any input `I`, `P_1(I) = P_2(I)` when the two programs are run in identical universes (i.e. the computer and external states are identical).
 
-## Examples - Equivilant
+## Examples - Equivalent
 
-Below, `f` and `g` are equivilent.
+Below, `f` and `g` are equivalent.
 
 ```
 def f: Int = 2
@@ -76,15 +76,36 @@ So a **leaf function** is a function that calls no other function.  The **height
 
 **Note:** We do not include functions native to a language in the call graph.  How we consider functions from an external library will be addressed later.
 
+## Definition - Abstract Syntax Tree and Basic Complexity
+
+The AST of a function `f` is the function written in reverse polish notation (or equivalently Lisp form).  The **Basic Complexity** of a function is the length of the AST, where each symbol has length 1 (equivalently the length of the Lisp form not counting the parens).
+
+E.g. the polish notation form of the expression `l.map(f)` is `(map l f)`, so it's Basic Complexity is 3.
+
+## Definition - Kolmogorov Complexity
+
+The Kolmogorov Complexity (KC) of a function `f` is the length of the shortest program (in some chosen language L) that outputs the AST of the function.  In practice Kolmogorov Complexity must be intuited, not computed, since (a) the choice of language L is arbitrary, (b) KC is not itself a computable function.
+
+E.g. We intuitively can imagine that the shortest program that outputs the expression `1 + 2 + 3 + 4 + 5 + 6` is shorter than the shortest program that outputs the expression `1 + 2 - 3 + 4 - 5 - 6`.
+
 ## Definition - Triangulation
 
 For any function with tests `t_1, ..., t_n` and a type signature `(p_1, ...., p_n) -> r` we call the pair `((t_1, ..., t_n), (p_1, ...., p_n) -> r)` the **functions build constraints**.  The collection of all constrains for program is called the **programs build constrains**.
 
-### Ideal Triangulation
+### Finatary Triangulation
 
 For any program with build constrains , when the programs build constrains
 
-Usually, in the real world, the tests plus the type signature will not be sufficient to even acheive finatary triangulation.
+Usually, in the real world, the tests plus the type signature will not be sufficient to even acheive finatary triangulation. So we define the following
+
+### Complexity Augmented Triangulation
+
+A function `f` is **AST Traingulated** or **A-Triangulated** if and only if, for any function `g` if `g` is not equivalent to `f` but does satisfy the build constraints then `g` has strictly greater Basic Complexity than `f`.
+
+A function `f` is **Kolmogorov Traingulated** or **K-Triangulated** if and only if, for any function `g` if `g` is not equivalent to `f` but does satisfy the build constraints then `g` has a longer AST than `f`.
+
+
+In other words, a function is K-Triangulated if all non-equivalent functions that build are more complicated.
 
 ## Definition - Non Deterministic Triangulation
 
