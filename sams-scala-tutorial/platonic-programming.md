@@ -4,8 +4,6 @@ Platonic Programming (PP) is the future.
 
 Practically PP is quite simple to apply, but the motivating theory assumes ~some~ a lot of acedemic background.
 
-Another name for PP could be Extreme Functional Programming, meaning Functional Programming practices taken to the extreme (like XP takes general practices to the extreme).
-
 Scala programmers can feel free to skip to the final section where we give some simple to follow rules that are derived from the theoretical acedemic sections.
 
 ## Hell Is Other Peoples Code
