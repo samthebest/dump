@@ -1,16 +1,32 @@
 Platonic Programming (PP) is the future.
 
-# Central Tenet of PP
+Practically PP is quite simple to apply, but the motivating theory assumes some acedemic background.
+
+Another name for PP could be Extreme Functional Programming, meaning Functional Programming practices taken to the extreme (like XP takes general practices to the extreme).
+
+## Central Tenet of PP
 
 There does not exist an objectively perfect (non-trivial) program, but for any pair of programs we can compare them objectively.
 
 Therefore an objective of subjects is to refactor programs so that we make objective improvements.
 
-# Definition - Triangulation
+## Definition - Triangulation
 
-Tests + type signature constrains Function.
+Tests + type signature constrains Function.  We call the combination of tests and type signature of a function it's *constraints*.  The collection of all
 
-# Objective Comparative Principles of PP
+### Ideal Triangulation
+
+Is where the 
+
+Usually, in the real world, the tests plus the type signature will not be sufficient to even acheive finatary triangulation.
+
+## Definition - Non Deterministic Triangulation
+
+Test cases are generated randomly.
+
+In PP these kinds of tests are forbidden unless the seed of the random generator is fixed.  This essentially collapses a single non-deterministic test into a large collection of ordinary tests.
+
+## Objective Comparative Principles of PP
 
 Given functionally equivilent programs
 
@@ -21,7 +37,7 @@ Given functionally equivilent programs
 
 Not all are compatible, so those with a higher number are favoured over those with a lower number.
 
-# Theorem - State Monism
+## Theorem - State Monism
 
 Given an infinitely fast processor and an infinite amount of memory, every program can be refactored to have at most 1 variable (i.e. `var` in Scala) while remaining functionally equivilant.  By the above principles we should favour these programs.
 
