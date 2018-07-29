@@ -10,13 +10,39 @@ There does not exist an objectively perfect (non-trivial) program, but for any p
 
 Therefore an objective of subjects is to refactor programs so that we make objective improvements.
 
+## Definition - Equivilant
+
+We say program `P_1` and `P_2` are equivilant if for any input `I`, `P_1(I) = P_2(I)` when the two programs are run in identical universes (i.e. the computer and external states are identical).
+
+## Examples - Equivilant
+
+Below, `f` and `g` are equivilent.
+
+```
+def f: Int = 2
+def g: Int = 1 + 1
+```
+
+Furthermore
+
+```
+def f: Int = 2 + readFile("myfile").length
+def g: Int = 1 + 1 + readFile("myfile").length
+```
+
+The following are also equivilent even though they depend on an external state.
+
+## Definition - Call Graph
+
+The
+
 ## Definition - Triangulation
 
-Tests + type signature constrains Function.  We call the combination of tests and type signature of a function it's *constraints*.  The collection of all
+For any function with tests `t_1, ..., t_n` and a type signature `(p_1, ...., p_n) -> r` we call the pair `((t_1, ..., t_n), (p_1, ...., p_n) -> r)` the **functions build constraints**.  The collection of all constrains for program is called the **programs build constrains**.
 
 ### Ideal Triangulation
 
-Is where the 
+For any program with build constrains , when the programs build constrains
 
 Usually, in the real world, the tests plus the type signature will not be sufficient to even acheive finatary triangulation.
 
