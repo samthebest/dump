@@ -2,7 +2,7 @@
 
 Platonic Programming (PP) is the future.
 
-Practically PP is quite simple to apply, but the motivating theory assumes some acedemic background.
+Practically PP is quite simple to apply, but the motivating theory assumes ~some~ a lot of acedemic background.
 
 Another name for PP could be Extreme Functional Programming, meaning Functional Programming practices taken to the extreme (like XP takes general practices to the extreme).
 
