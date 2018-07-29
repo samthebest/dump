@@ -32,9 +32,9 @@ def g: Int = 1 + 1 + readFile("myfile").length
 
 The following are also equivilent even though they depend on an external state.
 
-## Definition - Call Graph
+## Definition - Call Graph
 
-The
+For any program `P` the **call graph** `G_P` is the graph `(V, E)` where for any `v`, `v` is in the vertex set `V` if and only if it is a function in `P`, and for any `e`, `e` is in the edge set `E` if and only if `e = (f, g)` where `f` calls `g` in the program `P`.
 
 ## Definition - Triangulation
 
@@ -62,6 +62,10 @@ Given functionally equivilent programs
 
 
 Not all are compatible, so those with a higher number are favoured over those with a lower number.
+
+## Absalute Principles of PP
+
+The call graph must be fully connected (i.e. every function is transitively called by the entry point).
 
 ## Theorem - State Monism
 
