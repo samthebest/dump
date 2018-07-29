@@ -63,11 +63,18 @@ def f: Int = 2 + readFile("myfile").length
 def g: Int = 1 + 1 + readFile("myfile").length
 ```
 
-The following are also equivilent even though they depend on an external state.
+are also equivilent even though they depend on an external state so may not always produce identical results in practice.
 
 ## Definition - Call Graph
 
 For any program `P` the **call graph** `G_P` is the graph `(V, E)` where for any `v`, `v` is in the vertex set `V` if and only if it is a function in `P`, and for any `e`, `e` is in the edge set `E` if and only if `e = (f, g)` where `f` calls `g` in the program `P`.
+
+So a **leaf function** is a function that calls no other function.  The **height** of a function `f`, written `H(f)`, is defined recursively as follows:
+
+ - For any **leaf functions** `f`, `H(f) = 0`
+ - For any function `f` that calls `g_1, ..., g_n`, then `H(f) = max_i(H(g_i)) + 1`
+
+**Note:** We do not include functions native to a language in the call graph.  How we consider functions from an external library will be addressed later.
 
 ## Definition - Triangulation
 
@@ -85,6 +92,10 @@ Test cases are generated randomly.
 
 In PP these kinds of tests are forbidden unless the seed of the random generator is fixed.  This essentially collapses a single non-deterministic test into a large collection of ordinary tests.
 
+## Definition - Depth Triangulation Number
+
+Is
+
 ## Objective Comparative Principles of PP
 
 Given functionally equivilent programs
@@ -92,10 +103,11 @@ Given functionally equivilent programs
 ### 1. Triangulation Principle
 2. We favour programs with shorter ASTs
 3. We favour programs with fewer non-referentially transparent expressions
+4. We favour programs with 
 
 ### Social principle
 
-
+### Inherited Complexity Principle
 
 
 Not all are compatible, so those with a higher number are favoured over those with a lower number.
@@ -106,7 +118,9 @@ The call graph must be fully connected (i.e. every function is transitively call
 
 ## Theorem - State Monism
 
-Given an infinitely fast processor and an infinite amount of memory, every program can be refactored to have at most 1 variable (i.e. `var` in Scala) while remaining functionally equivilant.  By the above principles we should favour these programs.
+Given an infinitely fast processor and an infinite amount of memory, every program can be refactored to have at most 1 variable (i.e. `var` in Scala) while remaining functionally equivilant, and this `var` need only occur in the entry point of the application.  This means only one function, the entry point, mutates anything, while all other functions are pure.  By the transparency principle we should favour these programs.
+
+**Note:** Most modern functional languages provide many native functions that hide away `var`s and most modern computers are very powerful, therefore most modern programs should respect State Monism.
 
 Theorem - 
 
