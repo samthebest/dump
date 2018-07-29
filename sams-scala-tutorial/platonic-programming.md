@@ -14,7 +14,9 @@ PP is in stark contrast to SOLID, OOP and Design Patterns, which we will collect
 2. Code that is difficult understand, refactor and test
 3. Code that is difficult to add new features to
 4. Verbose code
-5. Unhappy programmers, late delivery and the **end of the world**.  No seriously, due to compounding super-exponential technology advancments human programming incomptentency could be the main reason we don't yet live in a utopia.
+5. Unhappy programmers, late delivery and the **end of the world**.  
+
+No seriously, due to compounding super-exponential technology advancments human programming incomptentency could be the main reason we don't yet live in a utopia.  This is what happens when you optimise according to AP https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition, or this https://www.youtube.com/watch?v=7RJmoCWx4cE.  If this is how insane Fizz Buzz (or Hello World) can get imagine how terrifying it can get for a non-trivial program.  [Soylent Green](https://en.wikipedia.org/wiki/Soylent_Green) is just round the corner unless we stop this!
 
 The justification is as follows:
 
