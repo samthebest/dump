@@ -28,10 +28,11 @@ The irony is that some languages make AP difficult, to nearly impossible.  For e
 
 Some modern attempts have been made to mitigate the hell we find ourselves in.  For example Rust and Go have made attempts to standardise approaches to programming that removes the subjectivity, verbosity and complexity.
 
-The worst languages ever invented and the main source of hell, unfortunately are probably the most popular, namely Java and C#.  The single worst decisions these two languages both made is:
+The worst languages ever invented and the main source of hell, unfortunately are probably the most popular, namely Java and C#.  The worst decisions these two languages both made are:
 
  - Every function has to be arbitrarily tied to a containing scope
  - Class Oriented Programming, by design, forces a complex coupling of many functions
+ - Access level modifiers on functions within types.  This is really dumb since the motivation for access level modifiers is either to protect/encapsulate state (i.e. a mutable field/variable) or to protect/encapsulate an interface (i.e. a package or module), so allowing programmers to protect/encapsulate functions of a type only gets in the way and adds absalutely nothing.
  
 This is perhaps why Ruby, and especially Python, is becoming increasingly popular since they allow writing functions without containing scopes.
 
@@ -225,7 +226,27 @@ When we use a variable to name an expression that is only used once, if we inlin
 
 # Constructing an Objective Set of Programming Principles
 
+We now have a large toolset of definitions and formalisms to work with.  Nevertheless, what do we really mean when we say one program is "better" than another?  Well we can start with this informal definition:
 
+> Programs ought to be correct and simple to change, while being as simple as possible.
+
+To make this formal we can use our formal definition of Triangulation to serve as a proxy for "correct" and our formal definitions of complexity to serve as a proxy for "simple".  The latter may seem controversial - how do we know that humans understand things that are simpler according to these mathematical definitions?  For this I think we can use the following axiom on "understanding":
+
+> If you can't explain it simply, you don't understand it well enough. - Einstein
+
+Now to explain an object is to output a program that would output the object in question.  To do that simply, is to output the shortest program.  This provides a very neat argument for using Kolmogorov Complexity as a definition of simple, and using AST length as a heuristic for Kolmogorov Complexity.
+
+The main catch with Kolmogorov Complexity is that we need a base language (or context) to start with, i.e what language should we write this program in?  For example French and English people will obviously disagree on which texts are easier to understand.  Nevertheless if for any French or English text, we prefixed a translation dictionary, French and English people could start to agree.  This means people will in general only disagree by some constant amount due to their choice of language.  When the problem at hand gets sufficiently large, or as languages overlap/converge, this constant vanishes.
+
+## Context Convergence Hypothesis
+
+Two or more programmers working together and teaching each other their language, colloquialism, etc will converge torwards programs that are mutally "perfect" as time goes to infinity provided they use Kolmogorov Complexity as the foundation of their optimisation.
+
+This may seem like a weak statement, since surely any team working for an infinite amount of time could produce a perfect program?  Wrong!  Suppose a team uses, say OOP & SOLID, and after a million years of refactoring they produce a program `P`.  If this program `P` maximally satisfies OOP & SOLID the team will stop refactoring according to their principles.  Even if there exists a program `P'` that is shorter and simpler than `P` the team will not choose that program if their only set of principles is OOP & SOLID.  Furthermore if `P'` violates OOP & SOLID, which I believe is completely inevitable, then the team would have to reject it.
+
+This is exaclty what we see in industry.  Programmers only exposed to OOP, like Java and C#, take only a year or two to converge upon the same style and happily nod their heads in agreement for the next 20 years.  What is really horrifying is that when these kinds of developers are left to refactor code for long periods of time, they tend to make the programs *longer* and *more complicated* in order to maximise according to their insane principles.
+
+This being the jovial example https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition
 
 # Principles of PP
 
