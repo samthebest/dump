@@ -151,6 +151,8 @@ Observe that only certain kinds of tables are possible thanks to the Triangulati
 
 Furthermore we have an implicit ordering of the strength on tables of the same length, e.g. `((0, 1), (1, A))` is stronger than `((0, N), (1, A))`, and `((0, N), (1, A))` is stronger than `((0, N), (1, No))`.
 
+Note that the 0-height functions are more important for triangulation than the 1-height functions and so on.  This is because we want to triangulate the program in small chunks, and only when all the small chunks have been properly triangulated should we consider triangulated the composition of such chunks.
+
 ## Definition - Referential Transparency
 
 todo
@@ -160,16 +162,6 @@ todo
 Given an infinitely fast processor and an infinite amount of memory, every program can be refactored to have at most 1 variable (i.e. `var` in Scala) while remaining functionally equivilant, and this `var` need only occur in the entry point of the application.  This means only one function, the entry point, mutates anything, while all other functions are pure.
 
 **Note:** Most modern functional languages provide many native functions that hide away `var`s and most modern computers are very powerful, therefore most modern programs should respect State Monism.
-
-Theorem - 
-
-Given two scopes S_1 and S_2 where S_2 is a subscope of S_1, moving a `var` from S_1 into only S_2 cannot increase the number of non-referntially transparent expressions.
-
-
-
-
-2. We favour programs with fewer non-referentially transparent expressions
-3. 
 
 ## Call Complexity
 
@@ -254,11 +246,27 @@ This being the jovial example https://github.com/EnterpriseQualityCoding/FizzBuz
 
 ## Comparative Principles of PP
 
-Given functionally equivilent programs
+Given functionally equivilent programs we ought to use the following principles to choose one over the other, where the principles given earlier take higher priority over those given later
 
 ### 1. Triangulation Principle
 
+The program with the strongest Depth Triangulation Table should be preferred.
 
+This principle has the highest priority since correctness should always take preference over anything else.
+
+### 2. Kolmogorov Complexity Principle
+
+The program (not including it's tests) with the lowest Kolmogorov Complexity should be preferred.
+
+This principle is second, since simplicity in it's most formal definition is second to correctness.
+
+### 3. Basic Complexity Principle
+
+The program (not including it's tests) with the lowest Basic Complexity (AST length) should be preferred.
+
+When comparing Kolmogorov Complexity is hard, we can use this.
+
+### 4. 
 
 2. We favour programs with shorter ASTs
 3. We favour programs with fewer non-referentially transparent expressions
