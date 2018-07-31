@@ -153,16 +153,6 @@ Furthermore we have an implicit ordering of the strength on tables of the same l
 
 Note that the 0-height functions are more important for triangulation than the 1-height functions and so on.  This is because we want to triangulate the program in small chunks, and only when all the small chunks have been properly triangulated should we consider triangulated the composition of such chunks.
 
-## Definition - Referential Transparency
-
-todo
-
-## Theorem - State Monism
-
-Given an infinitely fast processor and an infinite amount of memory, every program can be refactored to have at most 1 variable (i.e. `var` in Scala) while remaining functionally equivilant, and this `var` need only occur in the entry point of the application.  This means only one function, the entry point, mutates anything, while all other functions are pure.
-
-**Note:** Most modern functional languages provide many native functions that hide away `var`s and most modern computers are very powerful, therefore most modern programs should respect State Monism.
-
 ## Call Complexity
 
 If we where to write down every (potentially infinite) call path a program can take by only looking at it's call graph, the **call complexity** is the Kolmogorov Complexity of this sequence.
@@ -217,6 +207,99 @@ Is the Kolmogorov Complexity of the scope tree.
 ## Inlining Expressions Theorem
 
 When we use a variable to name an expression that is only used once, if we inline this expression we reduce the Basic, Kolmogorov and Scope complexity of the program.
+
+## State
+
+### Definition - Referential Transparency
+
+An expression E is referentially transparent if and only if for any program P replacing E with it's value gives an equivalent program.
+
+Note that for this definition to make practical sense, we must ignore the situations when evaluating the expression would run out of memory.
+
+### Theorem - State Monism
+
+Given an infinitely fast processor and an infinite amount of memory, every program can be refactored to have at most 1 variable (i.e. `var` in Scala) while remaining functionally equivilant.  Furthermore this `var` need only occur in the entry point of the application within the lambda of an infinite stream of inputs.  This means only one function, the entry point, mutates anything, while all other functions are pure.
+
+Similarly we could use a single mutable variable instead (something like `val x: Mutable` in Scala).
+
+**Note:** Most modern functional languages provide many native functions that hide away `var`s and most modern computers are very powerful, therefore most modern programs should respect State Monism.
+
+### Examples
+
+```
+def main(args: Array[String]): Unit = {
+  var state: State = State.init
+  
+  readInputContinually().foreach(input =>
+    state = updateState(input, state)
+  )
+}
+
+// A pure function
+def updateState(input: Input, state: State): State = ...
+```
+
+**Note:** Context objects encapsulating external state, for example a database context, should also be considered mutable variables.  So they could be included in this single state variable, although practically this could mean dumping the entire database to memory when we call the lower level pure functions or passing a concurrency locked read only database context.
+
+```
+def main(args: Array[String]): Unit = {
+  val db: Database = Database.init
+  
+  readInputContinually().foreach(input =>
+    db.lock()
+    db.apply(databaseUpdates(input, db.inMemoryReadOnlyCopy()))
+    db.unlock()
+  )
+}
+
+// A pure function
+def databaseUpdates(input: Input, db: ReadOnlyDatabase): DatebaseUpdates = ...
+```
+
+Now this can work for the majority of small scale applications.  But we will face performance issues for larger scale applications/data. In particular because we (a) dump the entire database to memory, (b) lock the entire database.
+
+### Theorem - Interpreted State Monism
+
+Given an reasonably fast processor and amount of memory, every program can be refactored to have at most 1 variable (i.e. `var` in Scala) while remaining functionally equivilant.  Furthermore this `var` need only occur in a "read-write chain" using interpreters, in the entry point of the application within the lambda of an infinite stream of inputs.  
+
+### Definition/Example - Read Write Chain or Idealised Monolith
+
+We will define a read-write chain by example
+
+```
+case class Instructions(lockables: Lockables, 
+                        databaseUpdates: DatabaseUpdates, 
+                        nextThingsToRead: Reads, 
+                        adt: AbstractDataType)
+
+def main(args: Array[String]): Unit = {
+  val db: Database = Database.init
+  
+  readInputContinually().foreach(input =>
+    foldLeftUntil[Instructions](Instructions.empty)(instructions => instructions.isComplete, instructions => {
+      db.lockAndUnlock(instructions.lockables)
+      db.apply(instructions.databaseUpdates)
+      nextInstructions(input, db.read(instructions.nextThingsToRead(input)), instructions)
+    })
+    
+    db.apply(databaseUpdates(input, db.inMemoryReadOnlyCopy()))
+    db.unlock()
+  )
+}
+
+// A pure function
+def nextInstructions(input: Input, relevantDbState: DbSubState, instructions: Instructions): Instructions = ...
+```
+
+Note there will exist many equivilant formulations where the order of reading, writing, producing new instructions and locking is slightly different.  Now since we only lock parts of the database, and we only read parts of it, this model can be scalled to any application.
+
+### Aside on Actor Systems & Message Queues
+
+The above *Idealised Monolith* may become difficult to manage in a large organisation with many teams.  In particular since the function `nextInstructions` is extremely generic and weakly typed, understanding the sequence of locking, reading and writing may become unclear.   Put simply, the application lacks obvious modularity.
+
+The recommended solution to this is refactor the application into N applications that use non-interpreted state monism.
+
+In practice this usually means employing two powerful technologies; low latency databases (e.g. RocksDB, Redis), and messages queues (e.g. Kafka RabbitMQ).  Other technologies that can be useful here are columnar databases where it is assumed we have a near infinite amount of storage space, and so we can essentially just keep appending data and never overwrite/delete it.  If we are only appending data we need not worry so much about locking.
 
 # Constructing an Objective Set of Programming Principles
 
