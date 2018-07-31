@@ -141,7 +141,7 @@ So a **leaf function** is a function that calls no other function.  The **height
 
 The AST of a function `f` is the function written in reverse polish notation (or equivalently Lisp form).  The **Basic Complexity** of a function is the length of the AST, where each symbol has length 1 (equivalently the length of the Lisp form not counting the parens).
 
-E.g. the polish notation form of the expression `l.map(f)` is `(map l f)`, so it's Basic Complexity is 3.
+E.g. the lisp form of the expression `l.map(f)` is `(map l f)`, so it's Basic Complexity is 3.
 
 ## Definition - Kolmogorov Complexity
 
