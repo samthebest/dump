@@ -425,14 +425,23 @@ Programming is in the real world, and every rule that tries to apply to the real
 
 Currently, no two programmers that have an impressive set of diverse experiences will agree on anything, even definitions.  This is the major success of PP, is that it at least adds some formal definitions we can start with.
 
-## Large Jumps in Lower Ranked Principles
+## Large Jumps in Lower Ranked Principles - Do we need weights?
 
 Sometimes we can make a very small gain in, say princple 1, say by adding a call to an external library and removing our own implementation, but this could have catestrophic consequences to principle 6.  I.e. the implementation provided by the external library could itself be terrible.
 
+So in actual fact what we really want is not a rank on the principles but a weight.  Then we can assign a number to each program by summing up all the various forms of complexity.  That said, I've refrained from discussing weights as this will bring PP too far away from practical application.  Perhaps in 1000 years, or some alien race, (or my garage project?!) has developed a compiler that evaluate all of these principles in such a way.  Until then we will still have to use some heuristics.
+
+## Triangulating Library Calls
+
+How much testing should we do when we call libraries? Well the answer is to consider adding the libraries tests to ones own suite.  So you must read the tests for the library and decide if they are good enough, or if they need more.
+
+From my own experience I often do this and have been shocked to find very poor coverage in quite popular libraries.
+
 # Rules of Thumb in Scala
 
+## Recursion
 
-In general what this usually means as that recursively defined types and structures, like graphs and trees, ought to be handled with recursive functions since their stateful counterparts will be too verbose.  Everything else can use mutation.  Moreover, most functional langauges provide many helpful higher order functions to do iteration without recursion and without mutation, e.g. `foldLeft`.
+In general recursively defined types and structures, like graphs and trees, ought to be handled with recursive functions since their stateful counterparts will be too verbose.  Everything else can use mutation.  Moreover, most functional langauges provide many helpful higher order functions to do iteration without recursion and without mutation, e.g. `foldLeft`.
 
 ## Dead code is worse than you think!
 
