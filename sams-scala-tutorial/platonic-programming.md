@@ -18,7 +18,7 @@ PP is in stark contrast to SOLID, OOP and Design Patterns, which we will collect
 4. Verbose code
 5. Unhappy programmers, late delivery and the **end of the world**.  
 
-No seriously, due to compounding super-exponential technology advancments human programming incomptentency could be the main reason we don't yet live in a utopia.  This is what happens when you optimise according to AP https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition, or this https://www.youtube.com/watch?v=7RJmoCWx4cE.  If this is how insane Fizz Buzz (or Hello World) can get imagine how terrifying it can get for a non-trivial program.  [Soylent Green](https://en.wikipedia.org/wiki/Soylent_Green) is just round the corner unless we stop this!
+No seriously, due to compounding super-exponential technology advancements human programming incompetency could be the main reason we don't yet live in a utopia.  This is what happens when you optimise according to AP https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition, or this https://www.youtube.com/watch?v=7RJmoCWx4cE.  If this is how insane Fizz Buzz (or Hello World) can get imagine how terrifying it can get for a non-trivial program.  [Soylent Green](https://en.wikipedia.org/wiki/Soylent_Green) is just round the corner unless we stop this!
 
 The justification is as follows:
 
@@ -40,13 +40,13 @@ The worst languages ever invented and the main source of hell, unfortunately are
  
 This is perhaps why Ruby, and especially Python, is becoming increasingly popular since they allow writing functions without containing scopes.
 
-Observe how these catestrophically stupid language design decisions only occur in basically 2 languages out of dozens of others, yet these two languages are the most popular. Anyway, let's move on.
+Observe how these catastrophically stupid language design decisions only occur in basically two languages out of dozens of others, yet these two languages are the most popular. Anyway, let's move on.
 
 # Principles of PP
 
 We give the principles only as Comparative Principles since in practice refactoring and improving code should happen in a sequence of small iterations (pull requests). 
 
-Given functionally equivilent programs we ought to use the following principles to choose one over the other, where the principles given earlier take higher priority over those given later
+Given functionally equivalent programs we ought to use the following principles to choose one over the other, where the principles given earlier take higher priority over those given later
 
 ## 1. Triangulation Principle
 
@@ -56,33 +56,33 @@ This principle has the highest priority since correctness should always take pre
 
 ## 2. Kolmogorov Complexity Principle
 
-The program (not including it's tests) with the lowest Kolmogorov Complexity should be preferred.
+The program (not including its tests) with the lowest Kolmogorov Complexity should be preferred.
 
-This principle is second, since simplicity in it's most formal definition is second to correctness.
+This principle is second, since simplicity in its most formal definition is second to correctness.
 
 ## 3. Basic Complexity Principle
 
-The program (not including it's tests) with the lowest Basic Complexity (AST length) should be preferred.
+The program (not including its tests) with the lowest Basic Complexity (AST length) should be preferred.
 
 When comparing Kolmogorov Complexity is hard, we can use this.
 
 ## 4. Call Complexity Principle
 
-The program (not including it's tests) with the lowest Call Complexity should be preferred.
+The program (not including its tests) with the lowest Call Complexity should be preferred.
 
-The justification why this sits above state complexity has it's own section in "Long Justifications"
+The justification why this sits above state complexity has its own section in "Long Justifications"
 
 ## 5. State Complexity Principle
 
-The program (not including it's tests) with the lowest State Complexity should be preferred.
+The program (not including its tests) with the lowest State Complexity should be preferred.
 
 ## 6. External Inherited Complexity Principle
 
-The program (not including it's tests) with the lowest External Inherited Complexity should be preferred.
+The program (not including its tests) with the lowest External Inherited Complexity should be preferred.
 
 ## 7. Internal Inherited Complexity Principle
 
-The program (not including it's tests) with the lowest Internal Inherited Complexity should be preferred.
+The program (not including its tests) with the lowest Internal Inherited Complexity should be preferred.
 
 It's more important to avoid using external libraries than native libraries.
 
@@ -92,7 +92,7 @@ Finally, faster programs, or programs that use less memory, should be preferred.
 
 ## 9. Test Complexity Principle
 
-The principles 1 - 8 but applied to the tests.
+Principles 1 to 8 but applied to the tests.
 
 Note that test complexity comes way way after everything else.  Please see Long Justifications.
 
@@ -106,7 +106,7 @@ Therefore an objective of subjects is to refactor programs so that we make objec
 
 ## Definition - Equivalent
 
-We say program `P_1` and `P_2` are equivilant if for any input `I`, `P_1(I) = P_2(I)` when the two programs are run in identical universes (i.e. the computer and external states are identical).
+We say program `P_1` and `P_2` are equivalent if for any input `I`, `P_1(I) = P_2(I)` when the two programs are run in identical universes (i.e. the computer and external states are identical).
 
 ## Examples - Equivalent
 
@@ -124,7 +124,7 @@ def f: Int = 2 + readFile("myfile").length
 def g: Int = 1 + 1 + readFile("myfile").length
 ```
 
-are also equivilent even though they depend on an external state so may not always produce identical results in practice.
+are also equivalent even though they depend on an external state so may not always produce identical results in practice.
 
 ## Definition - Call Graph
 
@@ -151,7 +151,7 @@ E.g. We intuitively can imagine that the shortest program that outputs the expre
 
 ## Definition - Triangulation
 
-For any function with tests `t_1, ..., t_n` and a type signature `(p_1, ...., p_n) -> r` we call the pair `((t_1, ..., t_n), (p_1, ...., p_n) -> r)` the **functions build constraints**.  The collection of all constrains for program is called the **programs build constrains**.
+For any function with tests `t_1, ..., t_n` and a type signature `(p_1, ...., p_n) -> r` we call the pair `((t_1, ..., t_n), (p_1, ...., p_n) -> r)` the **functions build constraints**.  The collection of all constraints for program is called the **programs build constraints**.
 
 ### Finitary Triangulation
 
@@ -286,7 +286,7 @@ We define the **State complexity** of a program as the number of non-referetiall
 
 ### Theorem - State Monism
 
-Given an infinitely fast processor and an infinite amount of memory, every program can be refactored to have at most 1 variable (i.e. `var` in Scala) while remaining functionally equivilant.  Furthermore this `var` need only occur in the entry point of the application within the lambda of an infinite stream of inputs.  This means only one function, the entry point, mutates anything, while all other functions are pure.
+Given an infinitely fast processor and an infinite amount of memory, every program can be refactored to have at most 1 variable (i.e. `var` in Scala) while remaining functionally equivalent.  Furthermore this `var` need only occur in the entry point of the application within the lambda of an infinite stream of inputs.  This means only one function, the entry point, mutates anything, while all other functions are pure.
 
 Similarly we could use a single mutable variable instead (something like `val x: Mutable` in Scala).
 
@@ -328,7 +328,7 @@ Now this can work for the majority of small scale applications.  But we will fac
 
 ### Theorem - Interpreted State Monism
 
-Given an reasonably fast processor and amount of memory, every program can be refactored to have at most 1 variable (i.e. `var` in Scala) while remaining functionally equivilant.  Furthermore this `var` need only occur in a "read-write chain" using interpreters, in the entry point of the application within the lambda of an infinite stream of inputs.  
+Given an reasonably fast processor and amount of memory, every program can be refactored to have at most 1 variable (i.e. `var` in Scala) while remaining functionally equivalent.  Furthermore this `var` need only occur in a "read-write chain" using interpreters, in the entry point of the application within the lambda of an infinite stream of inputs.  
 
 ### Definition/Example - Read Write Chain or Idealised Monolith
 
@@ -359,7 +359,7 @@ def main(args: Array[String]): Unit = {
 def nextInstructions(input: Input, relevantDbState: DbSubState, instructions: Instructions): Instructions = ...
 ```
 
-Note there will exist many equivilant formulations where the order of reading, writing, producing new instructions and locking is slightly different.  Now since we only lock parts of the database, and we only read parts of it, this model can be scalled to any application.
+Note there will exist many equivalent formulations where the order of reading, writing, producing new instructions and locking is slightly different.  Now since we only lock parts of the database, and we only read parts of it, this model can be scaled to any application.
 
 ### Aside on Actor Systems, Message Queues and Microservices
 
@@ -391,7 +391,7 @@ Two or more programmers working together and teaching each other their language,
 
 This may seem like a weak statement, since surely any team working for an infinite amount of time could produce a perfect program?  Wrong!  Suppose a team uses, say OOP & SOLID, and after a million years of refactoring they produce a program `P`.  If this program `P` maximally satisfies OOP & SOLID the team will stop refactoring according to their principles.  Even if there exists a program `P'` that is shorter and simpler than `P` the team will not choose that program if their only set of principles is OOP & SOLID.  Furthermore if `P'` violates OOP & SOLID, which I believe is completely inevitable, then the team would have to reject it.
 
-This is exaclty what we see in industry.  Programmers only exposed to OOP, like Java and C#, take only a year or two to converge upon the same style and happily nod their heads in agreement for the next 20 years.  What is really horrifying is that when these kinds of developers are left to refactor code for long periods of time, they tend to make the programs *longer* and *more complicated* in order to maximise according to their insane principles.
+This is exactly what we see in industry.  Programmers only exposed to OOP, like Java and C#, take only a year or two to converge upon the same style and happily nod their heads in agreement for the next 20 years.  What is really horrifying is that when these kinds of developers are left to refactor code for long periods of time, they tend to make the programs *longer* and *more complicated* in order to maximise according to their insane principles.
 
 This being the jovial example https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition
 
@@ -427,7 +427,7 @@ Currently, no two programmers that have an impressive set of diverse experiences
 
 ## Large Jumps in Lower Ranked Principles - Do we need weights?
 
-Sometimes we can make a very small gain in, say princple 1, say by adding a call to an external library and removing our own implementation, but this could have catestrophic consequences to principle 6.  I.e. the implementation provided by the external library could itself be terrible.
+Sometimes we can make a very small gain in, say principle 1, say by adding a call to an external library and removing our own implementation, but this could have catestrophic consequences to principle 6.  I.e. the implementation provided by the external library could itself be terrible.
 
 So in actual fact what we really want is not a rank on the principles but a weight.  Then we can assign a number to each program by summing up all the various forms of complexity.  That said, I've refrained from discussing weights as this will bring PP too far away from practical application.  Perhaps in 1000 years, or some alien race, (or my garage project?!) has developed a compiler that evaluate all of these principles in such a way.  Until then we will still have to use some heuristics.
 
@@ -454,7 +454,7 @@ def f(x: Any) = ...
 def fLiar(x: Any) = ...
 ```
 
-and a higher level function `g` calls `f`.  Suppose `fLiar` does something very similar to `f` but disagrees for just a few inputs.  This means to trangulate `g` we now need to find test cases that exclude `fLiar`, which could be very hard.
+and a higher level function `g` calls `f`.  Suppose `fLiar` does something very similar to `f` but disagrees for just a few inputs.  This means to triangulate `g` we now need to find test cases that exclude `fLiar`, which could be very hard.
 
 ### Other Links
 
