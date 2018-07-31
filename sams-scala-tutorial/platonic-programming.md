@@ -6,7 +6,7 @@ Practically PP is quite simple to apply, but the motivating theory assumes ~some
 
 Scala programmers can feel free to skip to the final section where we give some simple to follow rules that are derived from the theoretical acedemic sections.
 
-I have placed the "Princples of PP" section above the motivating, theoretical and defining sections.  Therefore it is highly recommended you read this section last (but I put it first for easier reference, once you have read the other sections).
+I have placed the "Princples of PP" section above the motivating, theoretical and defining sections.  Therefore it is highly recommended you read this section last (I put this section early for easier reference for when you have read the other sections).
 
 ## Hell Is Other Peoples Code
 
@@ -41,6 +41,58 @@ The worst languages ever invented and the main source of hell, unfortunately are
 This is perhaps why Ruby, and especially Python, is becoming increasingly popular since they allow writing functions without containing scopes.
 
 Observe how these catestrophically stupid language design decisions only occur in basically 2 languages out of dozens of others, yet these two languages are the most popular. Anyway, let's move on.
+
+# Principles of PP
+
+We give the principles only as Comparative Principles since in practice refactoring and improving code should happen in a sequence of small iterations (pull requests). 
+
+Given functionally equivilent programs we ought to use the following principles to choose one over the other, where the principles given earlier take higher priority over those given later
+
+## 1. Triangulation Principle
+
+The program with the strongest Depth Triangulation Table should be preferred.
+
+This principle has the highest priority since correctness should always take preference over anything else.
+
+## 2. Kolmogorov Complexity Principle
+
+The program (not including it's tests) with the lowest Kolmogorov Complexity should be preferred.
+
+This principle is second, since simplicity in it's most formal definition is second to correctness.
+
+## 3. Basic Complexity Principle
+
+The program (not including it's tests) with the lowest Basic Complexity (AST length) should be preferred.
+
+When comparing Kolmogorov Complexity is hard, we can use this.
+
+## 4. Call Complexity Principle
+
+The program (not including it's tests) with the lowest Call Complexity should be preferred.
+
+The justification why this sits above state complexity has it's own section in "Long Justifications"
+
+## 5. State Complexity Principle
+
+The program (not including it's tests) with the lowest State Complexity should be preferred.
+
+## 6. External Inherited Complexity Principle
+
+The program (not including it's tests) with the lowest External Inherited Complexity should be preferred.
+
+## 7. Internal Inherited Complexity Principle
+
+The program (not including it's tests) with the lowest Internal Inherited Complexity should be preferred.
+
+## 8. Runtime (or Algorthimic) Complexity Principle
+
+Finally, faster programs, or programs that use less memory, should be preferred. Please see Long Justifications.
+
+## 9. Test Complexity Principle
+
+This principles 1 - 7 but applied to the tests.
+
+Note that test complexity comes way way after everything else.  Please see Long Justifications.
 
 # Theory, Definitions and Theorems
 
@@ -341,57 +393,7 @@ This is exaclty what we see in industry.  Programmers only exposed to OOP, like 
 
 This being the jovial example https://github.com/EnterpriseQualityCoding/FizzBuzzEnterpriseEdition
 
-# Principles of PP
-
-We give the principles only as Comparative Principles since in practice refactoring and improving code should happen in a sequence of small iterations (pull requests). 
-
-Given functionally equivilent programs we ought to use the following principles to choose one over the other, where the principles given earlier take higher priority over those given later
-
-## 1. Triangulation Principle
-
-The program with the strongest Depth Triangulation Table should be preferred.
-
-This principle has the highest priority since correctness should always take preference over anything else.
-
-## 2. Kolmogorov Complexity Principle
-
-The program (not including it's tests) with the lowest Kolmogorov Complexity should be preferred.
-
-This principle is second, since simplicity in it's most formal definition is second to correctness.
-
-## 3. Basic Complexity Principle
-
-The program (not including it's tests) with the lowest Basic Complexity (AST length) should be preferred.
-
-When comparing Kolmogorov Complexity is hard, we can use this.
-
-## 4. Call Complexity Principle
-
-The program (not including it's tests) with the lowest Call Complexity should be preferred.
-
-The justification why this sits above state complexity has it's own section in "Long Justifications"
-
-## 5. State Complexity Principle
-
-The program (not including it's tests) with the lowest State Complexity should be preferred.
-
-## 6. External Inherited Complexity Principle
-
-The program (not including it's tests) with the lowest External Inherited Complexity should be preferred.
-
-## 7. Internal Inherited Complexity Principle
-
-The program (not including it's tests) with the lowest Internal Inherited Complexity should be preferred.
-
-## 8. Runtime (or Algorthimic) Complexity Principle
-
-Finally, faster programs, or programs that use less memory, should be preferred. Please see Long Justifications.
-
-## 9. Test Complexity Principle
-
-This principles 1 - 7 but applied to the tests.
-
-Note that test complexity comes way way after everything else.  Please see Long Justifications.
+# Principle of PP Continued
 
 ## Long Justifications
 
