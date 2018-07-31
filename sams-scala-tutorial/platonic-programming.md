@@ -1,10 +1,12 @@
 # Introduction
 
-Platonic Programming (PP) is the future.
+Platonic Programming (PP) is the future.  An alternative name for PP could be "Complexity Minimising Programming".
 
-Practically PP is quite simple to apply, but the motivating theory assumes ~some~ a lot of acedemic background.
+Practically PP is quite simple to apply, but the motivating theory assumes ~some~ a lot of acedemic background particularly within computation, complexity and information theory.
 
 Scala programmers can feel free to skip to the final section where we give some simple to follow rules that are derived from the theoretical acedemic sections.
+
+I have placed the "Princples of PP" section above the motivating, theoretical and defining sections.  Therefore it is highly recommended you read this section last (but I put it first for easier reference, once you have read the other sections).
 
 ## Hell Is Other Peoples Code
 
@@ -208,6 +210,14 @@ Is the Kolmogorov Complexity of the scope tree.
 
 When we use a variable to name an expression that is only used once, if we inline this expression we reduce the Basic, Kolmogorov and Scope complexity of the program.
 
+## Natively Inherited Complexity
+
+Given a program P, we can consider all code transitively used by native library usages in P. This set of *inherited* code can be measured with either Basic or Kolomogorov Complexity, giving a notion of **Inherited Complexity**.
+
+## External Inherited Complexity
+
+Similarly external library usages can be considered in the same way.
+
 ## State
 
 ### Definition - Referential Transparency
@@ -215,6 +225,10 @@ When we use a variable to name an expression that is only used once, if we inlin
 An expression E is referentially transparent if and only if for any program P replacing E with it's value gives an equivalent program.
 
 Note that for this definition to make practical sense, we must ignore the situations when evaluating the expression would run out of memory.
+
+### Definition - State Complexity
+
+We define the **State complexity** of a program as the number of non-referetially transparent expressions.
 
 ### Theorem - State Monism
 
@@ -293,13 +307,15 @@ def nextInstructions(input: Input, relevantDbState: DbSubState, instructions: In
 
 Note there will exist many equivilant formulations where the order of reading, writing, producing new instructions and locking is slightly different.  Now since we only lock parts of the database, and we only read parts of it, this model can be scalled to any application.
 
-### Aside on Actor Systems & Message Queues
+### Aside on Actor Systems, Message Queues and Microservices
 
 The above *Idealised Monolith* may become difficult to manage in a large organisation with many teams.  In particular since the function `nextInstructions` is extremely generic and weakly typed, understanding the sequence of locking, reading and writing may become unclear.   Put simply, the application lacks obvious modularity.
 
 The recommended solution to this is refactor the application into N applications that use non-interpreted state monism.
 
 In practice this usually means employing two powerful technologies; low latency databases (e.g. RocksDB, Redis), and messages queues (e.g. Kafka RabbitMQ).  Other technologies that can be useful here are columnar databases where it is assumed we have a near infinite amount of storage space, and so we can essentially just keep appending data and never overwrite/delete it.  If we are only appending data we need not worry so much about locking.
+
+This said, adding technologies will add some Inherited Complexity and will increase the complexity of the continuous deployment code, which ought to be included as part of the program.
 
 # Constructing an Objective Set of Programming Principles
 
@@ -327,45 +343,105 @@ This being the jovial example https://github.com/EnterpriseQualityCoding/FizzBuz
 
 # Principles of PP
 
-## Comparative Principles of PP
+We give the principles only as Comparative Principles since in practice refactoring and improving code should happen in a sequence of small iterations (pull requests). 
 
 Given functionally equivilent programs we ought to use the following principles to choose one over the other, where the principles given earlier take higher priority over those given later
 
-### 1. Triangulation Principle
+## 1. Triangulation Principle
 
 The program with the strongest Depth Triangulation Table should be preferred.
 
 This principle has the highest priority since correctness should always take preference over anything else.
 
-### 2. Kolmogorov Complexity Principle
+## 2. Kolmogorov Complexity Principle
 
 The program (not including it's tests) with the lowest Kolmogorov Complexity should be preferred.
 
 This principle is second, since simplicity in it's most formal definition is second to correctness.
 
-### 3. Basic Complexity Principle
+## 3. Basic Complexity Principle
 
 The program (not including it's tests) with the lowest Basic Complexity (AST length) should be preferred.
 
 When comparing Kolmogorov Complexity is hard, we can use this.
 
-### 4. 
+## 4. Call Complexity Principle
 
-2. We favour programs with shorter ASTs
-3. We favour programs with fewer non-referentially transparent expressions
-4. We favour programs with 
+The program (not including it's tests) with the lowest Call Complexity should be preferred.
 
-### Social principle
+The justification why this sits above state complexity has it's own section in "Long Justifications"
 
-### Inherited Complexity Principle
+## 5. State Complexity Principle
+
+The program (not including it's tests) with the lowest State Complexity should be preferred.
+
+## 6. External Inherited Complexity Principle
+
+The program (not including it's tests) with the lowest External Inherited Complexity should be preferred.
+
+## 7. Internal Inherited Complexity Principle
+
+The program (not including it's tests) with the lowest Internal Inherited Complexity should be preferred.
+
+## 8. Runtime (or Algorthimic) Complexity Principle
+
+Finally, faster programs, or programs that use less memory, should be preferred. Please see Long Justifications.
+
+## 9. Test Complexity Principle
+
+This principles 1 - 7 but applied to the tests.
+
+Note that test complexity comes way way after everything else.  Please see Long Justifications.
+
+## Long Justifications
+
+### Call vs State Complexity
+
+The call complexity principle is considered more important that the state complexity principle.  This is because objectively speaking calling a function is actually implicitly mutating a hidden variable; the stack.  Reasoning about a stack is itself a difficult thing to do, especially in the case of recursion since this makes our stack unbounded.
+
+In practice this could mean refactoring a recursive function to be an iterative function that mutates a variable (provided principles 1 to 3 are unchanged).  To many functional programmers this seems counter intuitive, but in Platonic Programming we are interested in the mathematical structure of the entire application within all contexts.  Nevertheless principles 1 - 3 still sit higher than Call Complexity, which means when a recursive function is syntactically obviously simpler than it's *only* iterative counterpart, then we should still pick the recursive function.
+
+Please see Rules of Thumb section.
+
+### Test Complexity Comes Last
+
+This means we should not make our program more complicated to make it easier to test, the classical example being adding a lot of dependency and function injection.  This means we need to be more intelligent about how to organise and generate tests.  In particular we ought to consider test generators (i.e. code that generates test cases, rather than listing all the cases out manually).
+
+Also note that the way we have defined triangulation starts from the bottom up.  Combine this with low call complexity and we can hope that an application is defined in terms of a few layers, where the bottom layer is much wider than the others.  The higher layers ought to be simple compositions of lower level functions, and so they don't need much testing in order to become A-triangulated. This is because a higher level function just composing a bunch of lower level functions is already syntactically very simple.
+
+### Runtime Complexity is low rank
+
+Note that we are comparing functionally equivalent programs.  So if one program takes the length of the universe to run, while another runs in 1 second, these are NOT functionally equivalent.
+
+In large enterprise organisations, they have this archiac notion of "non-functional requirements".  This is a massive abuse of language.  If a requirement, say to run in less than 10 minutes, is not a functional requirement then this implies if we dropped this requirement the program would still be "functional".  This is obviously stupid, but unforuntately many very stupid people work in large enterprise organisations as it's the only place they can hide.
+
+# Exceptions and Serious Application of PP
+
+Programming is in the real world, and every rule that tries to apply to the real world will have exceptions.  Therefore we still don't condone PP as an absalute system.  We do consider PP as a huge improvement since it is at least formally defined.  This means when programmers argue about an approach they at least can start from somewhere where they have to agree.
+
+Currently, no two programmers that have an impressive set of diverse experiences will agree on anything, even definitions.  This is the major success of PP, is that it at least adds some formal definitions we can start with.
+
+## Large Jumps in Lower Ranked Principles
+
+Sometimes we can make a very small gain in, say princple 1, say by adding a call to an external library and removing our own implementation, but this could have catestrophic consequences to principle 6.  I.e. the implementation provided by the external library could itself be terrible.
+
+# Rules of Thumb in Scala
 
 
-Not all are compatible, so those with a higher number are favoured over those with a lower number.
+In general what this usually means as that recursively defined types and structures, like graphs and trees, ought to be handled with recursive functions since their stateful counterparts will be too verbose.  Everything else can use mutation.  Moreover, most functional langauges provide many helpful higher order functions to do iteration without recursion and without mutation, e.g. `foldLeft`.
 
-## Absalute Principles of PP
+## Dead code is worse than you think!
 
-The call graph must be fully connected (i.e. every function is transitively called by the entry point).
+Note that adding dead code can have a significant negative impact on triangulation (not just call & syntactic complexity).  Suppose we have two functions
 
+```
+def f(x: Any) = ...
+
+// dead code, not called anywhere
+def fLiar(x: Any) = ...
+```
+
+and a higher level function `g` calls `f`.  Suppose `fLiar` does something very similar to `f` but disagrees for just a few inputs.  This means to trangulate `g` we now need to find test cases that exclude `fLiar`, which could be very hard.
 
 ### Other Links
 
