@@ -84,13 +84,15 @@ The program (not including it's tests) with the lowest External Inherited Comple
 
 The program (not including it's tests) with the lowest Internal Inherited Complexity should be preferred.
 
+It's more important to avoid using external libraries than native libraries.
+
 ## 8. Runtime (or Algorthimic) Complexity Principle
 
 Finally, faster programs, or programs that use less memory, should be preferred. Please see Long Justifications.
 
 ## 9. Test Complexity Principle
 
-This principles 1 - 7 but applied to the tests.
+The principles 1 - 8 but applied to the tests.
 
 Note that test complexity comes way way after everything else.  Please see Long Justifications.
 
