@@ -36,7 +36,7 @@ The worst languages ever invented and the main source of hell, unfortunately are
 
  - Every function has to be arbitrarily tied to a containing scope
  - Class Oriented Programming, by design, forces a complex coupling of many functions
- - Access level modifiers on functions within types.  This is really dumb since the motivation for access level modifiers is either to protect/encapsulate state (i.e. a mutable field/variable) or to protect/encapsulate an interface (i.e. a package or module), so allowing programmers to protect/encapsulate functions of a type only gets in the way and adds absalutely nothing.
+ - Access level modifiers on functions within types.  This is really dumb since the motivation for access level modifiers is either to protect/encapsulate state (i.e. a mutable field/variable) or to protect/encapsulate an interface (i.e. a package or module), so allowing programmers to protect/encapsulate functions of a type only gets in the way and adds absolutely nothing.
  
 This is perhaps why Ruby, and especially Python, is becoming increasingly popular since they allow writing functions without containing scopes.
 
@@ -58,7 +58,7 @@ This principle has the highest priority since correctness should always take pre
 
 The program (not including it's tests) with the lowest Kolmogorov Complexity should be preferred.
 
-This principle is second, since simplicity in it's most formal definition is second to correctness.
+This principle is second, since simplicity in its most formal definition is second to correctness.
 
 ## 3. Basic Complexity Principle
 
@@ -70,7 +70,7 @@ When comparing Kolmogorov Complexity is hard, we can use this.
 
 The program (not including it's tests) with the lowest Call Complexity should be preferred.
 
-The justification why this sits above state complexity has it's own section in "Long Justifications"
+The justification why this sits above state complexity has its own section in "Long Justifications"
 
 ## 5. State Complexity Principle
 
@@ -151,7 +151,7 @@ E.g. We intuitively can imagine that the shortest program that outputs the expre
 
 ## Definition - Triangulation
 
-For any function with tests `t_1, ..., t_n` and a type signature `(p_1, ...., p_n) -> r` we call the pair `((t_1, ..., t_n), (p_1, ...., p_n) -> r)` the **functions build constraints**.  The collection of all constrains for program is called the **programs build constrains**.
+For any function with tests `t_1, ..., t_n` and a type signature `(p_1, ...., p_n) -> r` we call the pair `((t_1, ..., t_n), (p_1, ...., p_n) -> r)` the **functions build constraints**.  The collection of all constraints for program is called the **programs build constraints**.
 
 ### Finitary Triangulation
 
@@ -417,7 +417,7 @@ Also note that the way we have defined triangulation starts from the bottom up. 
 
 Note that we are comparing functionally equivalent programs.  So if one program takes the length of the universe to run, while another runs in 1 second, these are NOT functionally equivalent.
 
-In large enterprise organisations, they have this archiac notion of "non-functional requirements".  This is a massive abuse of language.  If a requirement, say to run in less than 10 minutes, is not a functional requirement then this implies if we dropped this requirement the program would still be "functional".  This is obviously stupid, but unforuntately many very stupid people work in large enterprise organisations as it's the only place they can hide.
+In large enterprise organisations, they have this archiac notion of "non-functional requirements".  This is a massive abuse of language.  If a requirement, say to run in less than 10 minutes, is not a functional requirement then this implies if we dropped this requirement the program would still be "functional".  This is obviously stupid, but unfortunately many very stupid people work in large enterprise organisations as it's the only place they can hide.
 
 # Exceptions and Serious Application of PP
 
