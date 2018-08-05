@@ -36,7 +36,7 @@ The worst languages ever invented and the main source of hell, unfortunately are
 
  - Every function has to be arbitrarily tied to a containing scope
  - Class Oriented Programming, by design, forces a complex coupling of many functions
- - Access level modifiers on functions within types.  This is really dumb since the motivation for access level modifiers is either to protect/encapsulate state (i.e. a mutable field/variable) or to protect/encapsulate an interface (i.e. a package or module), so allowing programmers to protect/encapsulate functions of a type only gets in the way and adds absalutely nothing.
+ - Access level modifiers on functions within types.  This is really dumb since the motivation for access level modifiers is either to protect/encapsulate state (i.e. a mutable field/variable) or to protect/encapsulate an interface (i.e. a package or module), so allowing programmers to protect/encapsulate functions of a type only gets in the way and adds absolutely nothing.
  
 This is perhaps why Ruby, and especially Python, is becoming increasingly popular since they allow writing functions without containing scopes.
 
@@ -417,7 +417,7 @@ Also note that the way we have defined triangulation starts from the bottom up. 
 
 Note that we are comparing functionally equivalent programs.  So if one program takes the length of the universe to run, while another runs in 1 second, these are NOT functionally equivalent.
 
-In large enterprise organisations, they have this archiac notion of "non-functional requirements".  This is a massive abuse of language.  If a requirement, say to run in less than 10 minutes, is not a functional requirement then this implies if we dropped this requirement the program would still be "functional".  This is obviously stupid, but unforuntately many very stupid people work in large enterprise organisations as it's the only place they can hide.
+In large enterprise organisations, they have this archiac notion of "non-functional requirements".  This is a massive abuse of language.  If a requirement, say to run in less than 10 minutes, is not a functional requirement then this implies if we dropped this requirement the program would still be "functional".  This is obviously stupid, but unfortunately many very stupid people work in large enterprise organisations as it's the only place they can hide.
 
 # Exceptions and Serious Application of PP
 
