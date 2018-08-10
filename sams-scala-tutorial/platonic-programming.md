@@ -36,7 +36,7 @@ The worst languages ever invented and the main source of hell, unfortunately are
 
  - Every function has to be arbitrarily tied to a containing scope
  - Class Oriented Programming, by design, forces a complex coupling of many functions
- - Access level modifiers on functions within types.  This is really dumb since the motivation for access level modifiers is either to protect/encapsulate state (i.e. a mutable field/variable) or to protect/encapsulate an interface (i.e. a package or module), so allowing programmers to protect/encapsulate functions of a type only gets in the way and adds absolutely nothing.
+ - Access level modifiers on functions within types, or scope-namespace mangling.  The motivation for access level modifiers is either to protect/encapsulate state (i.e. a mutable field/variable) or to protect/encapsulate an interface (i.e. a package or module), so allowing programmers to protect/encapsulate functions of a type only gets in the way and adds absolutely nothing.
  
 This is perhaps why Ruby, and especially Python, is becoming increasingly popular since they allow writing functions without containing scopes.
 
