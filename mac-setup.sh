@@ -81,10 +81,14 @@ defaults write .GlobalPreferences com.apple.trackpad.scaling -1
 
 mkdir -p ~/src
 
-# Spectacle means you can resize and move windows with shortcuts (requires manual step afterwards)
+# Spectacle means you can resize and move windows with shortcuts
 # After you have done the manual step to start, remember to 
 # change the default shortcuts for snap right half and snap left half as they conflict with Intellij
 brew cask install spectacle
+
+
+
+# EVERYTHING BELOW IS AUTOMATED EXCEPT KEYBASE
 
 # Install sublime (best text editor ever!)
 brew cask install sublime-text
