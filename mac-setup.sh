@@ -1,12 +1,21 @@
 #!/bin/bash
 # MAC SETUP SCRIPT
 
-# Change editor (for next step):
-export EDITOR=nano
-
 # Checking if bash_profile already setup
 grep "bash profile already setup" .bash_profile
 already_setup=$?
+
+
+# Install brew
+brew >/dev/null || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+# Install brew cask (makes it easier to install mac apps)
+brew tap caskroom/cask
+
+brew cask install google-chrome
+
+# Change editor
+export EDITOR=nano
 
 set -e
 
@@ -52,14 +61,6 @@ sudo spctl --master-disable
 # Fix key repeat settings
 defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
-
-# Install brew
-brew >/dev/null || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-# Install brew cask (makes it easier to install mac apps)
-brew tap caskroom/cask
-
-brew cask install google-chrome
 
 # Fix bug with mac mouse & trackpad
 # Stopped working:
