@@ -1,6 +1,8 @@
 #!/bin/bash
 # MAC SETUP SCRIPT
 
+# TODO Make this interactive
+
 # Checking if bash_profile already setup
 grep "bash profile already setup" .bash_profile
 already_setup=$?
@@ -58,10 +60,6 @@ sudo spctl --master-disable
 
 # sudo sh -c 'echo "\nDefaults timestamp_timeout=60">>/etc/sudoers'
 
-# Fix key repeat settings
-defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
-defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
-
 # Fix bug with mac mouse & trackpad
 # Stopped working:
 # brew cask install steelseries-exactmouse-tool
@@ -73,9 +71,6 @@ wget http://downloads.steelseriescdn.com/drivers/tools/steelseries-exactmouse-to
 # https://apple.stackexchange.com/questions/73926/is-there-a-command-to-install-a-dmg
 # This seems best:
 # https://stackoverflow.com/questions/21428208/how-to-silently-install-dmg-file-in-mac-os-x-system-using-shell-script
-
-defaults write .GlobalPreferences com.apple.mouse.scaling -1
-defaults write .GlobalPreferences com.apple.trackpad.scaling -1
 
 # At this point should reboot to ensure the keyboard & mouse settings work
 
