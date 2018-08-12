@@ -2,8 +2,11 @@
 
 set -e
 
-# TODO Clone repos
+# Skip annoying "yes" for cloning git repos
+git config --global http.sslVerify false
+mkdir .ssh && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
+# TODO Clone repos
 
 # APPS
 
@@ -34,16 +37,8 @@ brew install coreutils
 # Hipchat
 brew cask install hipchat
 
-# DEPRECATED use oneflow
-# git-flow
-# brew install git-flow
-
 # git auto completion
 brew install git bash-completion
-
-# Skip annoying "yes" for cloning git repos
-git config --global http.sslVerify false
-mkdir .ssh && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
 # spotify for concentration
 brew cask install spotify
