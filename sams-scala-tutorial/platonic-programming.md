@@ -1,4 +1,4 @@
-# Introduction
+# 1. Introduction
 
 Platonic Programming (PP) is the future.  An alternative name for PP could be "Complexity Minimising Programming".
 
@@ -36,11 +36,9 @@ The worst languages ever invented and the main source of hell, unfortunately are
 
  - Every function has to be arbitrarily tied to a containing scope
  - Class Oriented Programming, by design, forces a complex coupling of many functions
- - Access level modifiers on functions within types, or scope-namespace mangling.  The motivation for access level modifiers is either to protect/encapsulate state (i.e. a mutable field/variable) or to protect/encapsulate an interface (i.e. a package or module), so allowing programmers to protect/encapsulate functions of a type only gets in the way and adds absolutely nothing.
- 
-This is perhaps why Ruby, and especially Python, is becoming increasingly popular since they allow writing functions without containing scopes.
+ - Access level modifiers on functions within types, or scope-namespace mangling.  
 
-Observe how these catastrophically stupid language design decisions only occur in basically two languages out of dozens of others, yet these two languages are the most popular. Anyway, let's move on.
+Observe how these catastrophically bad language design decisions only occur in basically two languages out of dozens of others, yet these two languages are the most popular. Anyway, let's move on.
 
 # Principles of PP
 
@@ -191,7 +189,7 @@ Exercise.
 
 ## Theorem - Triangulation Transitivity
 
-If a function `f` is X-Triangulated, and `f` calls `g`, then `g` is also X-Triangulated.  Note that the converse need not be true.
+If a function `f: A -> B` is X-Triangulated, and `f` calls `g: X -> Y` such that the parameters of `f` are passed through a bijection `p: A -> X` then passed to `g`, then `g` is at least X-Triangulated.  Note that the converse need not be true.
 
 ### Proof
 
@@ -202,8 +200,6 @@ Exercise (observe how lower level functions tend to have better test coverage th
 A programs **depth triangulation table** is the maximum level of triangulation (i.e. `(1, N, A, K, No)`) for functions of each Height.
 
 For example suppose we have a simple program with only 2 functions `f` and `g`, and `f` calls `g`.  Suppose `g` is 1-Triangulated and `f` is A-Triangulated, then we could write the table as follows: `((0, 1), (1, A))`.
-
-Observe that only certain kinds of tables are possible thanks to the Triangulation Transitivity Theorem.  
 
 Furthermore we have an implicit ordering of the strength on tables of the same length, e.g. `((0, 1), (1, A))` is stronger than `((0, N), (1, A))`, and `((0, N), (1, A))` is stronger than `((0, N), (1, No))`.
 
@@ -456,6 +452,13 @@ def fLiar(x: Any) = ...
 
 and a higher level function `g` calls `f`.  Suppose `fLiar` does something very similar to `f` but disagrees for just a few inputs.  This means to triangulate `g` we now need to find test cases that exclude `fLiar`, which could be very hard.
 
-### Other Links
+## Acces Level Modifiers
+
+The motivation for access level modifiers is either to protect/encapsulate state (i.e. a mutable field/variable) or to protect/encapsulate an interface (i.e. a package or module), so allowing programmers to protect/encapsulate functions of a type only gets in the way and adds absolutely nothing.
+ 
+This is perhaps why Ruby, and especially Python, is becoming increasingly popular since they allow writing functions without containing scopes.
+
+
+# Other Links
 
 https://stackoverflow.com/a/22148186/1586965
