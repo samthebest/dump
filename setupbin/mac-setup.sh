@@ -87,6 +87,7 @@ defaults write com.apple.dock tilesize -int 1; killall Dock
 # Track direction, and turning off stupid gestures and stuff is all manual.
 
 curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-fully-automated.sh | sh
+curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-config.sh | sh
 
 # gcloud
 curl https://sdk.cloud.google.com | bash
