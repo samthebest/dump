@@ -181,7 +181,9 @@ In PP these kinds of tests are forbidden unless the seed of the random generator
 
 ## Theorem - Triangulation Strength
 
-1-trangulation is stronger than N-trangulation, which is stronger than K-Triangulation, which is stronger than A-Triangulation, which is stronger than No triangulation
+// FIXME WRONG, N- Triangulation does not imply K or A triangulation, unless we include N-triangulation in their definition, or combine them in some way.
+
+1-trangulation is stronger than N-trangulation, which is stronger than K-Triangulation, which is stronger than A-Triangulation, which is stronger than No triangulation.
 
 ### Proof
 
