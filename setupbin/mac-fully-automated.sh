@@ -40,6 +40,7 @@ brew cask install hipchat
 brew install git bash-completion
 
 # Skip annoying "yes" for cloning git repos
+# FIXME Not idempotent
 git config --global http.sslVerify false
 echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
