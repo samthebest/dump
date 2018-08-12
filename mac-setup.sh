@@ -32,7 +32,7 @@ if [ "$already_setup" != "0" ]; then
     echo "" >> ~/.bash_profile
 
     echo "function json {" >> ~/.bash_profile
-    echo "	python -m json.tool" >> ~/.bash_profile
+    echo "  python -m json.tool" >> ~/.bash_profile
     echo "}" >> ~/.bash_profile
     echo "" >> ~/.bash_profile
     
@@ -66,7 +66,9 @@ defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 # Stopped working:
 # brew cask install steelseries-exactmouse-tool
 
-curl http://downloads.steelseriescdn.com/drivers/tools/steelseries-exactmouse-tool.dmg
+brew install wget
+
+wget http://downloads.steelseriescdn.com/drivers/tools/steelseries-exactmouse-tool.dmg
 # Must then manually install the dmg (need to work out how to automate these steps:
 # https://apple.stackexchange.com/questions/73926/is-there-a-command-to-install-a-dmg
 # This seems best:
