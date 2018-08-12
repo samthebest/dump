@@ -86,7 +86,10 @@ mkdir -p ~/src
 # change the default shortcuts for snap right half and snap left half as they conflict with Intellij
 brew cask install spectacle
 
+# Change dock size to be basically invisible
+defaults write com.apple.dock tilesize -int 1; killall Dock
 
+# Track direction, and turning off stupid gestures and stuff is all manual.
 
 # EVERYTHING BELOW IS AUTOMATED EXCEPT KEYBASE
 
