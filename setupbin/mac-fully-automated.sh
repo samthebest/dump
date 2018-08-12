@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# TODO Clone repos
 
 # Install sublime (best text editor ever!)
 brew cask install sublime-text
