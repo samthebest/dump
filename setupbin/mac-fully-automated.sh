@@ -2,6 +2,15 @@
 
 # TODO Clone repos
 
+# MAC CONFIG
+
+defaults write com.apple.menuextra.battery ShowPercent YES
+killall SystemUIServer
+
+
+
+# APPS
+
 # Install sublime (best text editor ever!)
 brew cask install sublime-text
 
@@ -71,5 +80,6 @@ brew cask install vagrant
 brew cask install vlc
 
 # Virtual box
-brew cask install virtualbox
+# TODO Requires fix for a manual hoop regarding enabling something
+# brew cask install virtualbox
 
