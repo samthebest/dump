@@ -168,6 +168,13 @@ brew cask install virtualbox
 # Manual step - after you need to open docker from spotlight
 brew cask install docker
 
+# TODO clone repos
+
+
+
+
+
+
 # gcloud
 curl https://sdk.cloud.google.com | bash
 # manual: restart shell, run gcloud init
