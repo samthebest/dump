@@ -2,12 +2,6 @@
 
 # TODO Clone repos
 
-# MAC CONFIG
-
-defaults write com.apple.menuextra.battery ShowPercent YES
-killall SystemUIServer
-
-
 
 # APPS
 
