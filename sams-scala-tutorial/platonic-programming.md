@@ -74,25 +74,35 @@ The justification why this sits above state complexity has its own section in "L
 
 The program (not including its tests) with the lowest State Complexity should be preferred.
 
-## 6. External Inherited Complexity Principle
+## 6. Scope Complexity Principle
+
+The program (not including its tests) with the lowest Scope Complexity should be preferred.
+
+## 7. External Inherited Complexity Principle
 
 The program (not including its tests) with the lowest External Inherited Complexity should be preferred.
 
-## 7. Internal Inherited Complexity Principle
+## 8. Internal Inherited Complexity Principle
 
 The program (not including its tests) with the lowest Internal Inherited Complexity should be preferred.
 
 It's more important to avoid using external libraries than native libraries.
 
-## 8. Runtime (or Algorthimic) Complexity Principle
+## 9. Runtime (or Algorthimic) Complexity Principle
 
 Finally, faster programs, or programs that use less memory, should be preferred. Please see Long Justifications.
 
-## 9. Test Complexity Principle
+## 10. Test Complexity Principle
 
 Principles 1 to 8 but applied to the tests.
 
 Note that test complexity comes way way after everything else.  Please see Long Justifications.
+
+## 11. Non Obstructive Programming Principle
+
+If both programs are completely equal in all respects, we should favour the program that is "closer" (in terms of diffing the ASTs) to a better program.
+
+This principle allows us to actively discourage changes that prevent further improvements/changes.
 
 # Theory, Definitions and Theorems
 
@@ -456,24 +466,79 @@ From my own experience I often do this and have been shocked to find very poor c
 
 In general recursively defined types and structures, like graphs and trees, ought to be handled with recursive functions since their stateful counterparts will be too verbose.  Everything else can use mutation.  Moreover, most functional langauges provide many helpful higher order functions to do iteration without recursion and without mutation, e.g. `foldLeft`.
 
-## Dead code is worse than you think!
-
-Note that adding dead code can have a significant negative impact on triangulation (not just call & syntactic complexity).  Suppose we have two functions
-
-```
-def f(x: Any) = ...
-
-// dead code, not called anywhere
-def fLiar(x: Any) = ...
-```
-
-and a higher level function `g` calls `f`.  Suppose `fLiar` does something very similar to `f` but disagrees for just a few inputs.  This means to triangulate `g` we now need to find test cases that exclude `fLiar`, which could be very hard.
-
-## Acces Level Modifiers
+## Access Level Modifiers
 
 The motivation for access level modifiers is either to protect/encapsulate state (i.e. a mutable field/variable) or to protect/encapsulate an interface (i.e. a package or module), so allowing programmers to protect/encapsulate functions of a type only gets in the way and adds absolutely nothing.
- 
-This is perhaps why Ruby, and especially Python, is becoming increasingly popular since they allow writing functions without containing scopes.
+
+In terms of our principles, Access Level Modifiers violate princples 2, 3 and 11.  Principle 11 is especially violated since access level modifiers force even more complicated tests, and prevent refactorings.
+
+## Classes
+
+Classes are scopes that contain functions and data.  These are strongly discouraged.  They violate the principles so badly the feature ought to be removed from all languages.  Some languages (mainly quite advanced, theoretical and functional languages) already do not have such features, like Haskall, Lisp, OCaml, Closure, Agda, Idris.
+
+### Violation of Simplicity
+
+Programs written using classes tend to be more verbose than their functional counterparts.  The syntax for a class is immediately more versbose than the functional counterpart, so we immediately violate 2 and 3.  Furthermore every time we wish to call a function, we have to instantiate a class with the necessary data. This violates principle 2 and 3.  In order to avoid this repetative practice, programmers go to great lengths to reuse class instances, which only makes the situation worse by violating principle 6.
+
+Principle 6 is violated in it's own right since all the functions in the class now unnecessarily sit inside another scope.  Principle 11 is violated greatly since adding tests is harder, now we have to unnecessarily instantiate the class in order to call the functions.
+
+## Concrete Examples
+
+### Classes vs Objects (Static Scopes)
+
+**Class version**
+
+```
+class Printer(mode: String = "Colour") {
+  def print(text: String): Array[Array[Pixel]]
+}
+```
+
+The AST is something like this
+
+```
+cP(m:S=C){dp(t:S):A[A[P]]}
+```
+
+To call it
+
+```
+new Printer("Black And White").print("hello world")
+```
+
+The AST
+
+```
+nP(B)p(H)
+```
+
+**Functional version**
+
+```
+def print(text: String, mode: String = "Colour")
+```
+
+The AST is something like this
+
+```
+dp(t:S,m:S=C)
+```
+
+To call it
+
+```
+print("hello world", "Black And White")
+```
+
+The AST
+
+```
+p(H,B)
+```
+
+#### Comparison
+
+So the AST of the class is nearly twice as long, and the AST of the call is more than twice as long.
 
 # Applications in Advanced Languages
 
