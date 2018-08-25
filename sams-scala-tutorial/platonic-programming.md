@@ -1,3 +1,7 @@
+Quick Links
+
+ * [Class Oriented Programming Sucks](#Class Oriented Programming)
+
 # 1. Introduction
 
 Platonic Programming (PP) is the future.  An alternative name for PP could be "Complexity Minimising Programming".
@@ -488,6 +492,8 @@ Programs written using classes tend to be more verbose than their functional cou
 
 Principle 6 is violated in it's own right since all the functions in the class now unnecessarily sit inside another scope.  Principle 11 is violated greatly since adding tests is harder, now we have to unnecessarily instantiate the class in order to call the functions.
 
+One very frustrating thing about class oriented programming is that we cannot easily move functions, nor their invocations without producing a compile error.
+
 ## Variables Outside Functions
 
 TODO languages that allow variables to exist in an object or namespace are bad.
@@ -549,6 +555,16 @@ p(H,B)
 #### Comparison
 
 So the AST of the class is nearly twice as long, and the AST of the call is more than twice as long.
+
+#### Obstructive
+
+If we want to move the function `print` into a different namespace, perhaps because we wish to decrease the number of import or paths we have to specify (thus decreasing the AST length of the program), we cannot do that with a simple cut and paste operation in the class oriented version.
+
+Furthermore if we want to move the invocation, we also need to move (or often copy) the instantiation of the class.
+
+#### Scope Complexity
+
+TODO
 
 # Applications in Advanced Languages
 
