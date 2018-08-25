@@ -1,6 +1,6 @@
 Quick Links
 
- * [Class Oriented Programming Sucks](## Class Oriented Programming)
+ * [Class Oriented Programming Sucks](#Class-Oriented-Programming)
 
 # 1. Introduction
 
