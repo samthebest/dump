@@ -52,17 +52,17 @@ The program with the strongest Depth Triangulation Table should be preferred.
 
 This principle has the highest priority since correctness should always take preference over anything else.
 
-## 2. Kolmogorov Complexity Principle
-
-The program (not including its tests) with the lowest Kolmogorov Complexity should be preferred.
-
-This principle is second, since simplicity in its most formal definition is second to correctness.
-
-## 3. Basic Complexity Principle
+## 2. Basic Complexity Principle
 
 The program (not including its tests) with the lowest Basic Complexity (AST length) should be preferred.
 
-When comparing Kolmogorov Complexity is hard, we can use this.
+This principle is second, since simplicity with respect to the Programming Language is second to correctness.
+
+## 3. Kolmogorov Complexity Principle
+
+The program (not including its tests) with the lowest Kolmogorov Complexity should be preferred.
+
+This comes after Basic Complexity since simplicity with respect to other Programming Languages is second to the simplicity with respect to the Language being used.
 
 ## 4. Call Complexity Principle
 
@@ -169,9 +169,9 @@ Observe that if a function is N-Triangulated then it is not M-Triangulated when 
 
 ### Complexity Augmented Triangulation
 
-A function `f` is **AST Traingulated** or **A-Triangulated** if and only if, for any function `g` if `g` is not equivalent to `f` but does satisfy the build constraints then `g` has strictly greater Basic Complexity than `f`, and `f` is not N-Triangulated.
+A function `f` is **AST Traingulated** or **A-Triangulated** if and only if, for any function `g` if `g` is not equivalent to `f` but does satisfy the build constraints then `g` has strictly greater Basic Complexity than `f`.
 
-A function `f` is **Kolmogorov Traingulated** or **K-Triangulated** if and only if, for any function `g` if `g` is not equivalent to `f` but does satisfy the build constraints then `g` has strictly greater Kolmogorov Complexity than `f`, and `f` is not A-Triangulated nor N-Triangulated.
+A function `f` is **Kolmogorov Traingulated** or **K-Triangulated** if and only if, for any function `g` if `g` is not equivalent to `f` but does satisfy the build constraints then `g` has strictly greater Kolmogorov Complexity than `f`.
 
 In other words, a function is A or K Triangulated if all non-equivalent functions that build are more complicated.
 
@@ -187,29 +187,19 @@ In PP these kinds of tests are forbidden unless the seed of the random generator
 
 We say a triangulation type, say X-Triangulation is stronger than say Y-Triangulation, where X, Y can be 1, N, A, K, if and only if for every function `f` and a set of build constraints `X_f` that form an X-Triangulation, and there exists a set of build constraints `Y_f` that form a Y-Triangulation, and `Y_f` is a strict subset of `X_f`.
 
+## Ordering A & K Triangulations
+
+Note that since Kolmogorov Complexity assumes a reference language, it's not possible to say if A-Triangulation is stronger or weaker than K-Triangulation.  So we define:
+
+A&K-Triangulation is the conjunction of A-Triangulation and K-Triangulation.  Similarly A|K-Triangulation is the disjunction.
+
 ## Theorem - Triangulation Well Ordering Theorem
 
-Triangulation types under the strength relation form a well ordering.
+Triangulation types (1, N, A&K, A|K) under the strength relation form a well ordering.
 
 ## Proof / Remark
 
 Follows quite naturally from the observation that all triangulation types are mutually exclusive and by understanding Strength like the (non) existence of a path.
-
-For comparing K and A, it comes does to this: Is there a function that is minimally kolmogorov simple but not as short as possible? And visa versa?
-
-I.e. minmally short, implies minimally kolmogorov simple.
-
-Let `f` be a function that is K-Triangulated. We know it is not A-Triangulated, so we know that there exists a function `g` that is shorter than `f` that satisfies the build constraints.  Since `f` is K-Triangulated, `g` must have greater kolmogorov complexity.  We can now add a constrant to exclude `g`. We can continue this until `f` is A-triangulated.
-
-Let `f` be a function and assume it is A-Triangulated. Assume there exists a function `g` that has less Kolmogorov Complexity than `f` that satisfies the build constraints.  Since `f` is A-Triangulated, `g` must be longer.  We can now add a constrant to exclude `g`. We can continue this until `f` is A-triangulated.
-
-## Theorem - Triangulation Strength
-
-1-trangulation is stronger than N-trangulation, which is stronger than N+1-triangulation, which is stronger than K-Triangulation, which is stronger than A-Triangulation, which is stronger than No triangulation.
-
-### Proof
-
-Let `A_f` be an 2-triangulation for `f`
 
 ## Theorem - Triangulation Transitivity
 
@@ -221,13 +211,16 @@ Exercise (observe how lower level functions tend to have better test coverage th
 
 ## Definition - Depth Triangulation Table
 
-A programs **depth triangulation table** is the maximum level of triangulation (i.e. `(1, N, A, K, None)`) for functions of each Height.
+A programs **depth triangulation table** is the maximum level of triangulation (i.e. `(1, N, A&K, A|K, None)`) for functions of each Height.
 
-For example suppose we have a simple program with only 2 functions `f` and `g`, and `f` calls `g`.  Suppose `g` is 1-Triangulated and `f` is A-Triangulated, then we could write the table as follows: `((H = 0, 1), (H = 1, A))`.
+For example suppose we have a simple program with only 2 functions `f` and `g`, and `f` calls `g`.  Suppose `g` is 1-Triangulated and `f` is A|K-Triangulated, then we could write the table as follows: `((H = 0, 1), (H = 1, A|K))`.
 
-Furthermore we have an implicit ordering of the strength on tables of the same length, e.g. `((0, 1), (1, A))` is stronger than `((H = 0, N), (H = 1, A))`, and `((0, N), (1, A))` is stronger than `((0, N), (1, None))`.
+Furthermore we have an implicit ordering of the strength on tables of the same length, e.g. `((H = 0, 1), (H = 1, A|K))` is stronger than `((H = 0, N), (H = 1, A|K))`, and `((H = 0, N), (H = 1, A|K))` is stronger than `((H = 0, N), (H = 1, None))`.  `((H = 0, N), (H = 1, A|K))` is stronger than `((H = 0, 1), (H = 1, None))`
 
-Note that the 0-height functions are more important for triangulation than the 1-height functions and so on.  This is because we want to triangulate the program in small chunks, and only when all the small chunks have been properly triangulated should we consider triangulated the composition of such chunks.
+Note that the 0-height functions are more important for triangulation than the 1-height functions and so on.  This is to resolve the contention when a refactoring will result in an improvement for lower height functions, but a regression for higher height functions.  This justifications are:
+
+ - once lower height function triangulations have been improved, it's easier to triangulate higher height functions be re-using the tests and types through composition (see last section on Applications with Scala for examples)
+ - by the transitivity theorem, if we can triangulate higher height functions without first triangulating the lower height functions, then it must mean that the higher functions are only partially calling the lower functions.  Put another way, we are likely to have redundant complexity in our lower functions, and thus should refactor accordingly.
 
 ## Call Complexity
 
@@ -457,7 +450,7 @@ How much testing should we do when we call libraries? Well the answer is to cons
 
 From my own experience I often do this and have been shocked to find very poor coverage in quite popular libraries.
 
-# Rules of Thumb in Scala
+# Applications in Scala
 
 ## Recursion
 
