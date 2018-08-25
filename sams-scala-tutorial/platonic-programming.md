@@ -4,7 +4,7 @@ Platonic Programming (PP) is the future.  An alternative name for PP could be "C
 
 Practically PP is quite simple to apply, but the motivating theory assumes ~some~ a lot of acedemic background particularly within computation, complexity and information theory.
 
-Scala programmers can feel free to skip to the final section where we give some simple to follow rules that are derived from the theoretical acedemic sections.
+Scala programmers can feel free to skip to the Applications in Scala section where we give some simple to follow rules that are derived from the theoretical acedemic sections.
 
 I have placed the "Princples of PP" section above the motivating, theoretical and defining sections.  Therefore it is highly recommended you read this section last (I put this section early for easier reference for when you have read the other sections).
 
@@ -418,7 +418,7 @@ The call complexity principle is considered more important that the state comple
 
 In practice this could mean refactoring a recursive function to be an iterative function that mutates a variable (provided principles 1 to 3 are unchanged).  To many functional programmers this seems counter intuitive, but in Platonic Programming we are interested in the mathematical structure of the entire application within all contexts.  Nevertheless principles 1 - 3 still sit higher than Call Complexity, which means when a recursive function is syntactically obviously simpler than it's *only* iterative counterpart, then we should still pick the recursive function.
 
-Please see Rules of Thumb section.
+Please see Applications in Scala section.
 
 ### Test Complexity Comes Last
 
@@ -475,6 +475,9 @@ The motivation for access level modifiers is either to protect/encapsulate state
  
 This is perhaps why Ruby, and especially Python, is becoming increasingly popular since they allow writing functions without containing scopes.
 
+# Applications in Advanced Languages
+
+TODO dependent-types, or 
 
 # Other Links
 
