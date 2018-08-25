@@ -472,9 +472,15 @@ The motivation for access level modifiers is either to protect/encapsulate state
 
 In terms of our principles, Access Level Modifiers violate princples 2, 3 and 11.  Principle 11 is especially violated since access level modifiers force even more complicated tests, and prevent refactorings.
 
-## Classes
+## Class Oriented Programming
 
-Classes are scopes that contain functions and data.  These are strongly discouraged.  They violate the principles so badly the feature ought to be removed from all languages.  Some languages (mainly quite advanced, theoretical and functional languages) already do not have such features, like Haskall, Lisp, OCaml, Closure, Agda, Idris.
+Classes are scopes that contain functions and data.  These are strongly discouraged.  They violate the principles so badly the feature ought to be removed from all languages.  Some languages (mainly quite advanced, theoretical and functional languages) already do not have such features, like Haskall, Lisp, OCaml, Closure, Agda, Idris, Erlang, Rust, Go.
+
+Note that Java and C# are the main Class Oriented Languages. Note that they are NOT Object Oriented Languages, this is a very common confusion.  Object Oriented Languages include Smalltalk and Erlang, though some Functional Languages, and even Procedural Languages can be used in a Object Oriented way (e.g. using Akka in Scala, Channels in Rust & Go).
+
+Languages like Python, Ruby, C++, Scala and JavaScript, being the weird monstrosities they are, have features to do just about anything, and so you can do Class Oriented Programming in these languages.
+
+Java and C# allow you to write functions into "static" scopes, but do not allow you to write functions into pure namespaces.
 
 ### Violation of Simplicity
 
@@ -482,9 +488,13 @@ Programs written using classes tend to be more verbose than their functional cou
 
 Principle 6 is violated in it's own right since all the functions in the class now unnecessarily sit inside another scope.  Principle 11 is violated greatly since adding tests is harder, now we have to unnecessarily instantiate the class in order to call the functions.
 
+## Variables Outside Functions
+
+TODO languages that allow variables to exist in an object or namespace are bad.
+
 ## Concrete Examples
 
-### Classes vs Objects (Static Scopes)
+### Classes vs Functions
 
 **Class version**
 
