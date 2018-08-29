@@ -29,6 +29,11 @@ sudo yum -y localinstall atom.x86_64.rpm
 echo "INFO: Installing emacs"
 sudo yum -y install emacs
 
+echo "INFO: git autocomplete"
+sudo yum install bash-completion
+source /etc/bash_completion.d/git
+echo "source /etc/bash_completion.d/git" >> ~/.bashrc
+
 echo "INFO: Installing scala repl"
 wget http://www.scala-lang.org/files/archive/scala-2.11.8.rpm
 sudo yum -y localinstall scala-2.11.8.rpm
