@@ -13,8 +13,10 @@ mkdir .ssh && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/
 # Install sublime (best text editor ever!)
 brew cask install sublime-text
 
-# Install java
-brew cask install java
+# Install java (8 so compatible with Spark)
+brew cask install intellij-idea-ce
+brew tap caskroom/versions
+brew cask install java8
 
 # Install scala
 brew install scala
