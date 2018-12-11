@@ -6,7 +6,21 @@ set -e
 git config --global http.sslVerify false
 mkdir .ssh && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
-# TODO Clone repos
+# git setup
+git config --global user.name "sam"
+git config --global user.email sam@example.com
+
+ssh-keygen -t rsa -b 4096 -C "sams@example.com" -N "" -f ~/.ssh/id_rsa
+
+echo "
+Host *
+ AddKeysToAgent yes
+ UseKeychain yes
+ IdentityFile ~/.ssh/id_rsa
+" >> ~/.ssh/config
+
+eval "$(ssh-agent -s)"
+ssh-add -K ~/.ssh/id_rsa
 
 # APPS
 
