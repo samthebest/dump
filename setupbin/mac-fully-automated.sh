@@ -27,8 +27,11 @@ ssh-add -K ~/.ssh/id_rsa
 # Install sublime (best text editor ever!)
 brew cask install sublime-text
 
-# Install java (8 so compatible with Spark)
+# Download intellij and the solarized dark settings
 brew cask install intellij-idea-ce
+wget -O settings.jar https://github.com/jkaving/intellij-colors-solarized/blob/master/settings.jar?raw=true
+
+# Install java (8 so compatible with Spark)
 brew tap caskroom/versions
 brew cask install java8
 
