@@ -18,7 +18,7 @@ function get-value-from-file {
 function check-git-tag-version-exists {
   git tag | egrep "^v[0-9]+$"
   exists=$?
-  if [ $exists = 0 ]; then
+  if [ "${exists}" = 0 ]; then
     echo true
   fi
     echo false
@@ -33,6 +33,25 @@ function get-version-from-tag {
   fi
 
   git tag | egrep "^v[0-9]+$" | cut -c 2- | sort -rn | head -1
+}
+
+function determine-jar-name {
+  prefix=$1
+  
+  commit_hash=`git rev-parse --short HEAD`
+  branch_name=`git rev-parse --abbrev-ref HEAD`
+  branch_name_prefix=`echo $branch_name | cut -c -8`
+  version=`get-version-from-tag`
+  version_plus_1=`expr "${version}" + 1`
+  
+  if [ "${branch_name}" = master ]; then
+    echo "${prefix}-${version_plus_1}"
+  elif [ "${branch_name_prefix}" = "feature/" ]; then
+    echo "${prefix}-${version_plus_1}-SNAPSHOT-${branch_name}-${commit_hash}"    
+  else
+    echo "ERROR: branch must be master or feature/..."
+    exit 1
+  fi
 }
 
 # function to run a script remotely and not fall over if the pipe breaks and
