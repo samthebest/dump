@@ -15,6 +15,25 @@ function get-value-from-file {
     cat "${file}" | grep "${key}" | cut -c ${key_len}-
 }
 
+function check-git-tag-version-exists {
+  git tag | egrep "^v[0-9]+$"
+  exists=$?
+  if [ $exists = 0 ]; then
+    echo true
+  fi
+    echo false
+  fi
+}
+
+# Assumes tags are of form v123
+function get-version-from-tag {
+  if [ `check-git-tag-version-exists` != true ]; then
+    echo "ERROR: not git version tags exist"
+    exit 1
+  fi
+
+  git tag | egrep "^v[0-9]+$" | cut -c 2- | sort -rn | head -1
+}
 
 # function to run a script remotely and not fall over if the pipe breaks and
 # still recover the log
