@@ -87,6 +87,8 @@ function run-script-remotely {
         esac
     done
 
+    shift $((OPTIND -1))
+
     if [ "$remote_work_dir" = "" ]; then
         remote_work_dir=/home/${user}
     fi
