@@ -119,6 +119,22 @@ Now at this point we have released the hotfix, but have not merged into master, 
 9. Now run the "merge branch" jenkins job as mentioned in "Doing -> Ready to Release" for Features
 10. Move the ticket to Done
 
+# Mono-artefact vs Multi-artefact
+
+It's quite common for software developers to split a build out so that it produces multiple artefacts.  There is almost always no reason to do this.  Below are some of the reasons developers give, but only reason 3. can ever be considered valid.
+
+## 1. Delineation
+
+Using multiple artefacts/builds for delineation is the wrong tool, languages like already have Package/Module Access Modifiers to do this.
+
+## 2. To Have Separate Deployments for Separate Components
+
+Firstly this can be acheived by simply having more than one target path for the artefact.  Secondly if you are scarred to deploy all your components regularly, it implies your tests are crap.  Write better tests.
+
+## 3. To Protect IP
+
+If you have a client side library and want to protect the IP of the code on the server side, then it makes sense to separate out client side from server side so that clients cannot get access to the IP.  Usually this reason does not apply, as usually applications are not deployed on-site.
+
 # Monorepo vs Multirepo
 
 The above flow assumes that for the given git repository there exists a single entry point to all tests, and a single entry point that builds a single artefact.  
@@ -132,6 +148,8 @@ A multirepo, i.e. where each project corresponds to a separate git repo, solves 
 In a monorepo one needs a script that runs all the test suites, and a script that builds all the artefacts then packages them into a single monoartefact.
 
 It may be desirable when releasing to have a means to study which artefacts have actually changed, or even to limit which artefacts are expected to change.  For example suppose a release is expected to only change project A and project B but not project C, then when one performs the release they specify that they expect only A and B to change.  The build checks the hashes of the artefacts to ensure this.  Then the deploy job could lazily only deploy the artefacts that have changed.  For temporary clusters this would be implicit since the artefact it needs would be grabbed from s3 prior to the production run.
+
+See https://github.com/samthebest/dump/blob/master/monorepos.md for more information
 
 # Adversarial Pairing
 
