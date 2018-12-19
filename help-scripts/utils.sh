@@ -1,5 +1,8 @@
 #!/bin/bash
 
+trap "exit 1" TERM
+export TOP_PID=$$
+
 version_key="version := \""
 
 # TODO DRY these two
@@ -29,7 +32,7 @@ function check-git-tag-version-exists {
 function get-version-from-tag {
   if [ `check-git-tag-version-exists` != true ]; then
     echo "ERROR: not git version tags exist"
-    exit 1
+    kill -s TERM $TOP_PID
   fi
 
   git tag | egrep "^v[0-9]+$" | cut -c 2- | sort -rn | head -1
@@ -50,7 +53,7 @@ function determine-jar-name {
     echo "${prefix}-${version_plus_1}-SNAPSHOT-${branch_name}-${commit_hash}"    
   else
     echo "ERROR: branch must be master or feature/..."
-    exit 1
+    kill -s TERM $TOP_PID
   fi
 }
 
@@ -64,6 +67,7 @@ function run-script-remotely {
         case "$opt" in
         h|\?)
             show_help
+            # TODO this exit won't work
             exit 0
             ;;
         s)  script_path=$OPTARG
