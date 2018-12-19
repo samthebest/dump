@@ -39,6 +39,8 @@ Clearly much nicer.
 
 Please refrain from using curly braces wherever one can use round braces.  There is no need to seperate code over multiple lines for trivial one-line lambda expressions. Furthermore it [increases compile checking](http://stackoverflow.com/a/4387118/1586965)
 
+Just as it is desirble to have short methods in procedural code, in functional code it is desirable to have single expressions.  If we avoid introducing local `val`s the overall complexity of the code is lower.  Of course this is not always possible, especially when `val`s are used more than once.
+
 ### Comments
 
 Please only use comments in exceptional circumstance, your code should be self-documenting, which means:
