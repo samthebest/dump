@@ -542,19 +542,66 @@ case class DBWrite(key: String, value: String) extends SideEffect
 
 object Main {
   def someBusinessLogic(config: Config): List[DBWrite] = ???
+  
+  def doUnsafe(sideEffects: List[SideEffect]): Unit = {
+    val logger = new LogServer(address = "blar")
+    sideEffects.foreach {
+      case Log(message) => logger.log(message)
+      case DBWrite(key: String, value: String)
+    }
+  }
 
   def apply(config: Config): Unit = {
-    Log("Application started") +: someBusinessLogic() :+ Log("Some business logic executed")
+    doUnsafe(Log("Application started") +: someBusinessLogic() :+ Log("Some business logic executed"))
   }
 ```
 
-**Caveat**
+**Caveats**
 
-This only guarantees our log messages correctly straddle side effecting events and proceed errors if `someBusinessLogic` is completely deterministic and pure.  But in the real world nothing is perfectly pure provided since we have finite memory.  Furthermore some rather flaky library/framework can unpredictably throw errors (e.g. Spark).
+1. This only guarantees our log messages correctly straddle side effecting events and proceed errors if `someBusinessLogic` is completely deterministic and pure.  But in the real world nothing is perfectly pure provided since we have finite memory.  Furthermore some rather flaky library/framework can unpredictably throw errors (e.g. Spark).
+2. If we need to do a read before write, this will get more complicated, we'll need to call `doUnsafe` multiple times or design a AOP system of chaining functions together.
 
-**Option 2 - Pattern Matching
+**Option 2 - Pattern Matching Contexts
 
-Note that non of our principles deal exclusively with static typing, rather they require "the build" to triangulate the code, which can include both type systems and unit tests.  The fact that the type system of Scala is not smart enough to 
+```
+trait Logger {
+  def log(message: String)(implicit logContext: LogContext): Unit
+}
+
+trait LogContext
+case class ServerLoggerContext(logServer: LogServer)
+
+object ServerLogger extends Logger {
+  def log(message: String)(implicit logContext: LogContext): Unit = toLogServer.log(message)
+  
+  def toLogServer(implicit logContext: LogContext): LogServer = logContext match {
+    case ServerLoggerContext(logServer: LogServer) => logServer
+    case other => throw new RuntimeException("Calling ServerLogger.log with incorrect context: " + other.toString)
+  }
+}
+
+object Main {
+  def someBusinessLogic(config: Config): Unit = ???
+  
+  def apply(config: Config): Unit = {
+    implicit val logContext: LogContext = ServerLoggerContext(new LogServer(address = "blar"))
+
+    ServerLogger.log("Application started")
+    
+    // Writes to a database or filesystem or something
+    someBusinessLogic(config)
+    
+    ServerLogger.log("Some business logic executed")
+    
+    // ...
+  }
+```
+
+**Misconception**
+
+One may be concerned here that we have less compile time checking since the method `log` can now throw an exception if we get the `LogContext` wrong, whereas in the Class Oriented version if we accidentally passed something different to the `ServerLogger` constructor we would get a compile error.
+
+Note that non of our principles deal exclusively with static typing, rather they require "the build" to triangulate the code, which can include both type systems and unit tests.  The fact that the compiler of Scala is not smart enough to tell us that an exception will occur when we pass in the wrong `LogContext` is an issue with the compiler, not the code or the principles.  If the language in question is not powerful enough to give compile errors then we can always resort to integration tests to ensure this code works.
 
 ## Variables Outside Functions
 
