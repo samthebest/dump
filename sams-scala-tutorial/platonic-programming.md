@@ -561,7 +561,7 @@ object Main {
 1. This only guarantees our log messages correctly straddle side effecting events and proceed errors if `someBusinessLogic` is completely deterministic and pure.  But in the real world nothing is perfectly pure since we have finite memory.  Furthermore some rather flaky library/framework can unpredictably throw errors (e.g. Spark).
 2. If we need to do a read before write, this will get more complicated, we'll need to call `doUnsafe` multiple times or design a AOP system of chaining functions together.
 
-**Option 2 - Pattern Matching Contexts**
+**Option 2 - Casting Contexts**
 
 ```
 trait Logger {
@@ -602,6 +602,39 @@ object Main {
 One may be concerned here that we have less compile time checking since the method `log` can now throw an exception if we get the `LogContext` wrong, whereas in the Class Oriented version if we accidentally passed something different to the `ServerLogger` constructor we would get a compile error.
 
 Note that non of our principles deal exclusively with static typing, rather they require "the build" to triangulate the code, which can include both type systems and unit tests.  The fact that the compiler of Scala is not smart enough to tell us that an exception will occur when we pass in the wrong `LogContext` is an issue with the compiler, not the code or the principles.  If the language in question is not powerful enough to give compile errors then we can always resort to integration tests to ensure this code works.
+
+**Option 3 - Pattern Matching Dispatch**
+
+```
+object Logger {
+  def log(message: String)(implicit logContext: LogContext): Unit = logContext match {
+    case ServerLoggerContext(logServer: LogServer) => logServer.log(message, logServer)
+    case other => throw new RuntimeException("Calling Logger.log with incorrect context: " + other.toString)
+}
+
+trait LogContext
+case class ServerLoggerContext(logServer: LogServer) extends LogContext
+
+object Main {
+  def someBusinessLogic(config: Config): Unit = ???
+  
+  def apply(config: Config): Unit = {
+    implicit val logContext: LogContext = ServerLoggerContext(new LogServer(address = "blar"))
+
+    Logger.log("Application started")
+    
+    // Writes to a database or filesystem or something
+    someBusinessLogic(config)
+    
+    ServerLogger.log("Some business logic executed")
+    
+    // ...
+  }
+```
+
+**Caveat**
+
+This is the old school way to do dynamic dispatch, i.e. a simple "switch" statement.  The problem is that we have to modify main code, namely the `Logger.log` method, if we wish to add test implementations of logging.
 
 ## Variables Outside Functions
 
