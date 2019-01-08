@@ -444,7 +444,7 @@ Also note that the way we have defined triangulation starts from the bottom up. 
 
 Note that we are comparing functionally equivalent programs.  So if one program takes the length of the universe to run, while another runs in 1 second, these are NOT functionally equivalent.
 
-In large enterprise organisations, they have this archiac notion of "non-functional requirements".  This is a massive abuse of language.  If a requirement, say to run in less than 10 minutes, is not a functional requirement then this implies if we dropped this requirement the program would still be "functional".  This is obviously stupid, but unfortunately many very stupid people work in large enterprise organisations as it's the only place they can hide.
+In large enterprise organisations, they have this archiac notion of "non-functional requirements".  This is a massive abuse of language.  If a requirement, say to run in less than 10 minutes, is not a functional requirement then this implies if we dropped this requirement the program would still be "functional".
 
 # Exceptions and Serious Application of PP
 
