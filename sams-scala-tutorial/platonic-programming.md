@@ -561,7 +561,7 @@ object Main {
 1. This only guarantees our log messages correctly straddle side effecting events and proceed errors if `someBusinessLogic` is completely deterministic and pure.  But in the real world nothing is perfectly pure provided since we have finite memory.  Furthermore some rather flaky library/framework can unpredictably throw errors (e.g. Spark).
 2. If we need to do a read before write, this will get more complicated, we'll need to call `doUnsafe` multiple times or design a AOP system of chaining functions together.
 
-**Option 2 - Pattern Matching Contexts
+**Option 2 - Pattern Matching Contexts**
 
 ```
 trait Logger {
