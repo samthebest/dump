@@ -175,7 +175,7 @@ This is when a function `f` is `1`-Triangulated.  In other words, every function
 
 Note that for any function that is `N`-Triangulated, it is possible to add only `N - 1` tests to make it ideally triangulated.
 
-Usually, in the real world, the tests plus the type signature will not be sufficient to even achieve finatary triangulation. So we define the following
+Usually, in the real world, the tests plus the type signature will not be sufficient to even achieve finatiry triangulation. So we define the following
 
 ### Mutually Exclusive
 
