@@ -17,7 +17,7 @@ I have placed the "Princples of PP" section above the motivating, theoretical an
 PP is in stark contrast to SOLID, OOP and Design Patterns, which we will collectively refer to as Anthropocentric Principles or Anthropocentric Programming (or just AP). AP currently makes up the vast majority of code, and the vast majority of programmers follow these principles by faith and fashion.  We argue AP is fundementally flawed and is the root of all of the following problems:
 
 1. High bug density
-2. Code that is difficult understand, refactor and test
+2. Code that is difficult to understand, refactor and test
 3. Code that is difficult to add new features to
 4. Verbose code
 5. Unhappy programmers, late delivery and the **end of the world**.  
