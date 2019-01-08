@@ -199,7 +199,7 @@ In PP these kinds of tests are forbidden unless the seed of the random generator
 
 ## Definition - Triangulation Strength
 
-We say a triangulation type, say X-Triangulation is stronger than say Y-Triangulation, where X, Y can be 1, N, A, K, if and only if for every function `f` and a set of build constraints `X_f` that form an X-Triangulation, and there exists a set of build constraints `Y_f` that form a Y-Triangulation, and `Y_f` is a strict subset of `X_f`.
+We say a triangulation type, say X-Triangulation is stronger than say Y-Triangulation, where X, Y can be 1, N, A, K, if and only if, for any function `f`, for any set of build constraints `X_f` that form an X-Triangulation, for any a set of build constraints `Y_f`, if `Y_f` forms a Y-Triangulation then `Y_f` is strictly weaker than `X_f`.
 
 ## Ordering A & K Triangulations
 
