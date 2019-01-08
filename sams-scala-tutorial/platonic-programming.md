@@ -233,7 +233,7 @@ Furthermore we have an implicit ordering of the strength on tables of the same l
 
 Note that the 0-height functions are more important for triangulation than the 1-height functions and so on.  This is to resolve the contention when a refactoring will result in an improvement for lower height functions, but a regression for higher height functions.  This justifications are:
 
- - once lower height function triangulations have been improved, it's easier to triangulate higher height functions be re-using the tests and types through composition (see last section on Applications with Scala for examples)
+ - once lower height function triangulations have been improved, it's easier to triangulate higher height functions by re-using the tests and types through composition (see last section on Applications with Scala for examples)
  - by the transitivity theorem, if we can triangulate higher height functions without first triangulating the lower height functions, then it must mean that the higher functions are only partially calling the lower functions.  Put another way, we are likely to have redundant complexity in our lower functions, and thus should refactor accordingly.
 
 ## Call Complexity
