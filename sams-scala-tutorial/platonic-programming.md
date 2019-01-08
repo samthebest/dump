@@ -569,7 +569,7 @@ trait Logger {
 }
 
 trait LogContext
-case class ServerLoggerContext(logServer: LogServer)
+case class ServerLoggerContext(logServer: LogServer) extends LogContext
 
 object ServerLogger extends Logger {
   def log(message: String)(implicit logContext: LogContext): Unit = toLogServer.log(message)
