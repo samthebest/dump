@@ -464,7 +464,7 @@ How much testing should we do when we call libraries? Well the answer is to cons
 
 From my own experience I often do this and have been shocked to find very poor coverage in quite popular libraries.
 
-# Applications in Scala
+# Applications in Scala (and similar languages)
 
 ## Recursion
 
@@ -493,6 +493,68 @@ Programs written using classes tend to be more verbose than their functional cou
 Principle 6 is violated in it's own right since all the functions in the class now unnecessarily sit inside another scope.  Principle 11 is violated greatly since adding tests is harder, now we have to unnecessarily instantiate the class in order to call the functions.
 
 One very frustrating thing about class oriented programming is that we cannot easily move functions, nor their invocations without producing a compile error.
+
+### Alternatives
+
+The main two problems Class Oriented programming aims (and fails) to solve are
+
+ - Mutable state encapsulation
+ - Dynamic dispatch
+ 
+#### Functional Dynamic Dispatch Example
+
+Suppose we wish to log events to a log server and we want to wrap this in an abstraction so that we can test locally without the log server.  The typical Class Oriented way would be as follows:
+
+```
+trait Logger {
+  def log(message: String): Unit
+}
+
+class ServerLogger(logServer: LogServer) extends Logger {
+  def log(message: String): Unit = logServer.log(message)
+}
+
+object Main {
+  def someBusinessLogic(config: Config): Unit = ???
+  
+  def apply(config: Config): Unit = {
+    val logger = new ServerLogger(new LogServer(address = "blar"))
+    
+    logger.log("Application started")
+    
+    // Writes to a database or filesystem or something
+    someBusinessLogic(config)
+    
+    logger.log("Some business logic executed")
+    
+    // ...
+  }
+```
+
+**Option 1 - Pure Functional - Deferred Side Effects**
+
+We could refactor this to be pure functional and defer all side effects to a big `doUnsafe` like so:
+
+```
+trait SideEffect
+case class Log(message: String) extends SideEffect
+case class DBWrite(key: String, value: String) extends SideEffect
+
+object Main {
+  def someBusinessLogic(config: Config): List[DBWrite] = ???
+
+  def apply(config: Config): Unit = {
+    Log("Application started") +: someBusinessLogic() :+ Log("Some business logic executed")
+  }
+```
+
+**Caveat**
+
+This only guarantees our log messages correctly straddle side effecting events and proceed errors if `someBusinessLogic` is completely deterministic and pure.  But in the real world nothing is perfectly pure provided since we have finite memory.  Furthermore some rather flaky library/framework can unpredictably throw errors (e.g. Spark).
+
+**Option 2 - Pattern Matching
+
+Note that non of our principles deal exclusively with static typing, rather they require "the build" to triangulate the code, which can include both type systems and unit tests.  The fact that the type system of Scala is not smart enough to 
 
 ## Variables Outside Functions
 
