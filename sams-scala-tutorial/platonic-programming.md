@@ -163,7 +163,7 @@ E.g. We intuitively can imagine that the shortest program that outputs the expre
 
 ## Definition - Triangulation
 
-For any function with tests `t_1, ..., t_n` and a type signature `(p_1, ...., p_n) -> r` we call the pair `((t_1, ..., t_n), (p_1, ...., p_n) -> r)` the **functions build constraints**.  The collection of all constraints for program is called the **programs build constraints**.
+For any function with tests `t_1, ..., t_n` and a type signature `(p_1, ...., p_n) -> r` we call the pair `((t_1, ..., t_n), (p_1, ...., p_n) -> r)` the **functions build constraints**.  The collection of all constraints for a program is called the **programs build constraints**.
 
 ### Finitary Triangulation
 
