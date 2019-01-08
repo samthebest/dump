@@ -42,7 +42,7 @@ The worst languages ever invented and the main source of hell, unfortunately are
  - Class Oriented Programming, by design, forces a complex coupling of many functions
  - Access level modifiers on functions within types, or scope-namespace mangling.  
 
-Observe how these catastrophically bad language design decisions only occur in basically two languages out of dozens of others, yet these two languages are the most popular. Anyway, let's move on.
+Observe how these catastrophically bad language design decisions only occur in basically two languages out of dozens of others, yet these two languages are the most popular.  The popularity is probably due to the necessity of vast numbers of developers in order to get anything done, just like we need hundreds of people with a spade to dig a hole when compared to one person with a digger. Anyway, let's move on.
 
 # Principles of PP
 
