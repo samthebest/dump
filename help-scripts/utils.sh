@@ -41,7 +41,8 @@ function get-version-from-tag {
 function determine-jar-name {
   prefix=$1
   
-  commit_hash=`git rev-parse --short HEAD`
+  short_commit_hash=`git rev-parse --short HEAD`
+  full_commit_hash=`git rev-parse HEAD`
   branch_name=`git rev-parse --abbrev-ref HEAD`
   branch_name_prefix=`echo $branch_name | cut -c -8`
   version=`get-version-from-tag`
@@ -50,7 +51,7 @@ function determine-jar-name {
   if [ "${branch_name}" = master ]; then
     echo "${prefix}-${version_plus_1}"
   elif [ "${branch_name_prefix}" = "feature/" ]; then
-    echo "${prefix}-${version_plus_1}-SNAPSHOT-${branch_name}-${commit_hash}"    
+    echo "${prefix}-${version_plus_1}-SNAPSHOT-${branch_name}-${short_commit_hash}"    
   else
     echo "ERROR: branch must be master or feature/..."
     kill -s TERM $TOP_PID
