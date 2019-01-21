@@ -636,6 +636,8 @@ object Main {
 
 This is the old school way to do dynamic dispatch, i.e. a simple "switch" statement.  The problem is that we have to modify main code, namely the `Logger.log` method, if we wish to add test implementations of logging.
 
+One way to avoid this is to add another context to `Logger.log` being `possibleContexts: List[LogContext]`; a list of possible `LogContext`s.
+
 ## Variables Outside Functions
 
 TODO languages that allow variables to exist in an object or namespace are bad.
