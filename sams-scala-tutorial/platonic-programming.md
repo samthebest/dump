@@ -640,7 +640,7 @@ One way to avoid this is to add another context to `Logger.log` being `possibleC
 
 ## Variables Outside Functions
 
-TODO languages that allow variables to exist in an object or namespace are bad.
+TODO examples - languages that allow variables to exist in an object or namespace are bad.
 
 ## Concrete Examples
 
@@ -654,11 +654,13 @@ class Printer(mode: String = "Colour") {
 }
 ```
 
-The AST is something like this
+Written in a lisp like way
 
 ```
-cP(m:S=C){dp(t:S):A[A[P]]}
+(class Printer (mode String = "Colour") (def print (text String) Array [ Array [ Pixel ] ]))
 ```
+
+We can now simply count the symbols to get an AST length of 17
 
 To call it
 
@@ -666,11 +668,13 @@ To call it
 new Printer("Black And White").print("hello world")
 ```
 
-The AST
+Lisp form
 
 ```
-nP(B)p(H)
+(print (new Printer ("Black And White")) "hello world")
 ```
+
+which has AST length 5
 
 **Functional version**
 
@@ -678,27 +682,25 @@ nP(B)p(H)
 def print(text: String, mode: String = "Colour")
 ```
 
-The AST is something like this
+Lisp form:
 
 ```
-dp(t:S,m:S=C)
+(def print (text String , mode String = "Colour"))
 ```
+
+AST Length = 9
 
 To call it
 
 ```
-print("hello world", "Black And White")
+(print "hello world" "Black And White")
 ```
 
-The AST
-
-```
-p(H,B)
-```
+AST length = 3
 
 #### Comparison
 
-So the AST of the class is nearly twice as long, and the AST of the call is more than twice as long.
+So the AST of the class very are generally twice as long.
 
 #### Obstructive
 
@@ -708,7 +710,7 @@ Furthermore if we want to move the invocation, we also need to move (or often co
 
 #### Scope Complexity
 
-TODO
+TODO examples
 
 # Applications in Advanced Languages
 
