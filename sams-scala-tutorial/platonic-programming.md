@@ -531,6 +531,8 @@ object Main {
   }
 ```
 
+Below we present 4 options, options 1 - 3 have some issues, which help us learn what the source of the confusion/complexity is.  Once we have revealed this complexity, we can finally come upon a perfect solution in option 4.
+
 **Option 1 - Pure Functional - Deferred Side Effects**
 
 We could refactor this to be pure functional and defer all side effects to a big `doUnsafe` like so:
@@ -636,7 +638,50 @@ object Main {
 
 This is the old school way to do dynamic dispatch, i.e. a simple "switch" statement.  The problem is that we have to modify main code, namely the `Logger.log` method, if we wish to add test implementations of logging.
 
-One way to avoid this is to add another context to `Logger.log` being `possibleContexts: List[LogContext]`; a list of possible `LogContext`s.
+One way to avoid this is to add another context, the `dispatchMap: Map[LogContext, (String, LogContext) => Unit]`
+
+**Option 4 - BEST Pattern Matching Dispatch With Explicit Dispatch Injection**
+
+Observing the problems with the above, we see that the issue with trying to do dependency injection is that we have to use complex language features. The root cause of this problem is that we are avoiding making the dynamic dispatch and explicit part of the application, as if for some reason being clear and explicit is too simple for most developers.
+
+So here we make the dynamic dispatch an explicit part of the application
+
+```
+object Logger {
+  def log(message: String)
+         (implicit logContext: LogContext,
+          dispatcher: (String, LogContext) => Unit]): Unit = dispatcher(message, logContext)
+}
+
+trait LogContext
+case class ServerLoggerContext(logServer: LogServer) extends LogContext
+
+object Main {
+  def someBusinessLogic(config: Config): Unit = ???
+  
+  def apply(config: Config): Unit = {
+    implicit val logContext: LogContext = ServerLoggerContext(new LogServer(address = "blar"))
+
+    implicit val dispatcher: (message: String, logContext: LogContext) => Unit = logContext match {
+      case ServerLoggerContext(logServer: LogServer) => logServer.log(message, logServer)
+      case other => throw new RuntimeException("Calling dispatcher with incorrect context: " + other.toString)
+    }
+
+    Logger.log("Application started")
+    
+    // Writes to a database or filesystem or something
+    someBusinessLogic(config)
+    
+    ServerLogger.log("Some business logic executed")
+    
+    // ...
+  }
+```
+
+Notes:
+
+ - When we wish to test, we can inject a different dispatchers that can call out to test implementations of log
+ - We are welcome to wrap the body of each `case` statement in another method in another object if it gets too verbose, but note there is no need to enforce a common supertype on this collection of objects since we won't be passing them around.
 
 ## Variables Outside Functions
 
