@@ -650,17 +650,17 @@ TODO examples - languages that allow variables to exist in an object or namespac
 
 ```
 class Printer(mode: String = "Colour") {
-  def print(text: String): Array[Array[Pixel]]
+  def print(text: String): Unit
 }
 ```
 
 Written in a lisp like way
 
 ```
-(class Printer (mode String = "Colour") (def print (text String) Array [ Array [ Pixel ] ]))
+(class Printer (fields (mode String = "Colour")) (methods (def print (args (text String)) Unit)))
 ```
 
-We can now simply count the symbols to get an AST length of 17
+We can now simply count the symbols to get an AST length of 13, and an AST depth of 4.
 
 To call it
 
@@ -674,21 +674,21 @@ Lisp form
 (print (new Printer ("Black And White")) "hello world")
 ```
 
-which has AST length 5
+which has AST length 5, and an AST depth of 3
 
 **Functional version**
 
 ```
-def print(text: String, mode: String = "Colour")
+def print(text: String, mode: String = "Colour"): Unit
 ```
 
 Lisp form:
 
 ```
-(def print (text String , mode String = "Colour"))
+(def print (args (text String) (mode String = "Colour")) Unit)
 ```
 
-AST Length = 9
+AST Length = 10, AST depth = 3
 
 To call it
 
@@ -696,11 +696,11 @@ To call it
 (print "hello world" "Black And White")
 ```
 
-AST length = 3
+AST length = 3, AST depth = 1
 
 #### Comparison
 
-So the AST of the class very are generally twice as long.
+So the ASTs of the class version are longer and deeper, therefore they are more complicated.
 
 #### Obstructive
 
