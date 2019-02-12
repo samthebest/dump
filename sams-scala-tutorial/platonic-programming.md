@@ -757,6 +757,12 @@ Furthermore if we want to move the invocation, we also need to move (or often co
 
 TODO examples
 
+## Single Responsability Principle
+
+This is what happens when you take SRP to the extreme
+
+https://www.youtube.com/watch?v=7RJmoCWx4cE
+
 # Applications in Advanced Languages
 
 TODO dependent-types, or 
