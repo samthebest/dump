@@ -549,7 +549,7 @@ object Main {
     val logger = new LogServer(address = "blar")
     sideEffects.foreach {
       case Log(message) => logger.log(message)
-      case DBWrite(key: String, value: String)
+      case DBWrite(key: String, value: String) => database.write(key, value)
     }
   }
 
