@@ -231,6 +231,32 @@ Basically if you never use variables (in Scala `var`), and never use any code th
 
 .
 
+### Pure Functions Are Important
+
+The most important part of Functional Programming is purity, not syntax.  So points 1 & 2 are less important than purity.
+
+This principle is so important because it eliminates the vast majority of bugs.
+
+A system's complexity is determined by the number of moving parts, the more complex a system the harder it is to understand and consequently the more mistakes will be made.  Therefore having a system with no moving parts eliminates almost all complexity and thus almost all mistakes.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
 ### Key Design Differences to Procedural
 
  - Passing functions around as things
