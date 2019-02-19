@@ -26,11 +26,11 @@ This talk will **not** cover stuff like Monoids, Monads, Functors, Categories, e
 
 .
 
-# What is Functional Programming?
+# What is FP?
 
-1. Things are functions
-2. Functions are things
-3. Functions are functions (huh?)
+1. Things are functions    <--- Mainly syntactic sugar
+2. Functions are things    <--- Mainly syntactic sugar
+3. Functions are functions (huh?)  <--- MOST IMPORTANT!!
 
 .
 
@@ -239,6 +239,10 @@ This principle is so important because it eliminates the vast majority of bugs.
 
 A system's complexity is determined by the number of moving parts, the more complex a system the harder it is to understand and consequently the more mistakes will be made.  Therefore having a system with no moving parts eliminates almost all complexity and thus almost all mistakes.
 
+Furthermore it takes less time to modify or add to such a system because it is so simple.
+
+NOTE: You can do functional programming in any language even if it doesn't support the usual syntactic sugar.
+
 .
 
 .
@@ -297,7 +301,7 @@ A system's complexity is determined by the number of moving parts, the more comp
  - FP: immutability. (no code hiding is necessary, because there is no state to break)
  - FP + Static Typing: The compiler checks your work for you!
 
-So it's much harder to leap from OOP to FP, than Procedural to FP. The switch from OOP requires unlearning, which is harder than learning.
+So it's much harder to leap from OOP to FP, than Procedural to FP. **The switch from OOP requires unlearning, which is harder than learning.**
 
 .
 
@@ -321,7 +325,7 @@ So it's much harder to leap from OOP to FP, than Procedural to FP. The switch fr
 
  - Higher Ordered Functions (like map) remove endless repitition of idioms & control structures (like `for`, `while` loops)
  - Very easy to reason about as there are no hidden dependencies, nor effects
- - Very easy to change FP code. E.g. no matter where you put a line of code, it will always do the same thing!
+ - Very easy to change FP code. E.g. **no matter where you put a line of code, it will always do the same thing!**
  - Very easy to get code to run in parallel
 
 .
@@ -342,11 +346,11 @@ So it's much harder to leap from OOP to FP, than Procedural to FP. The switch fr
 
 ## VS OOP
 
- - OOP has 100s of principles, rules, practices and design patterns, without them code becomes unmaintainable
+ - OOP has 100s of principles, rules, practices and design patterns, without them code becomes unmaintainable (and with them even)
  - FP has only one rule: DRY (Don't repeat yourself), all other issues are addressed just by being Functional
  - OOP ends up resulting in long strange names for things because all functions have to be wrapped into classes, e.g. `SimpleBeanFactoryAwareAspectInstanceFactory`, `AbstractSingletonProxyFactoryBean`, `BeanContextServiceProviderBeanInfo`, `AbstractAnnotationValueVisitor6`, `AbstractAnnotationConfigDispatcherServletInitializer`
  - FP doesn't require functions to be in classes, nor even have a name (c.f. anonymous functions). 
- - Furthermore abstract concepts are handled by the right tool - mathematics, so you will see things like `Monad`, `BifunctorOps`, `SemiGroup`, `Monoid`, which have established meanings you can Google and understand.
+ - Furthermore abstract concepts are handled by the right tool - mathematics, so you will see things like `Monad`, `BifunctorOps`, `SemiGroup`, `Monoid`, which have objective meanings you can Google and understand.
 
 .
 
