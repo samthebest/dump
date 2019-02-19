@@ -531,7 +531,7 @@ object Main {
   }
 ```
 
-Below we present 4 options, options 1 - 3 have some issues, which help us learn what the source of the confusion/complexity is.  Once we have revealed this complexity, we can finally come upon a perfect solution in option 4.
+Below we present 4 options, options 1 - 3 have some issues, which help us learn what the source of the confusion/complexity is.  Option 1 is preferable but not always applicable.  When we cannot use Option 1 we should opt for Option 4.
 
 **Option 1 - Pure Functional - Deferred Side Effects**
 
@@ -583,7 +583,7 @@ object ServerLogger extends Logger {
 }
 
 object Main {
-  def someBusinessLogic(config: Config): Unit = ???
+  def someBusinessLogic(config: Config)(implicit logger: Logger, logContext: LogContext): Unit = ???
   
   def apply(config: Config): Unit = {
     implicit val logContext: LogContext = ServerLoggerContext(new LogServer(address = "blar"))
@@ -618,7 +618,7 @@ trait LogContext
 case class ServerLoggerContext(logServer: LogServer) extends LogContext
 
 object Main {
-  def someBusinessLogic(config: Config): Unit = ???
+  def someBusinessLogic(config: Config)(implicit logger: Logger, logContext: LogContext): Unit = ???
   
   def apply(config: Config): Unit = {
     implicit val logContext: LogContext = ServerLoggerContext(new LogServer(address = "blar"))
@@ -628,7 +628,7 @@ object Main {
     // Writes to a database or filesystem or something
     someBusinessLogic(config)
     
-    ServerLogger.log("Some business logic executed")
+    Logger.log("Some business logic executed")
     
     // ...
   }
@@ -642,27 +642,29 @@ One way to avoid this is to add another context, the `dispatchMap: Map[LogContex
 
 **Option 4 - BEST Pattern Matching Dispatch With Explicit Dispatch Injection**
 
-Observing the problems with the above, we see that the issue with trying to do dependency injection is that we have to use complex language features. The root cause of this problem is that we are avoiding making the dynamic dispatch and explicit part of the application, as if for some reason being clear and explicit is too simple for most developers.
+Observing the problems with the above, we see that the issue with trying to do dependency injection is that we have to use complex language features. The root cause of this problem is that we are avoiding making the dynamic dispatch an explicit part of the application, as if for some reason being clear and explicit is too simple for most developers.
 
 So here we make the dynamic dispatch an explicit part of the application
 
 ```
 object Logger {
+  type Dispatcher = (String, LogContext) => Unit
+
   def log(message: String)
          (implicit logContext: LogContext,
-          dispatcher: (String, LogContext) => Unit]): Unit = dispatcher(message, logContext)
+          dispatcher: Dispatcher): Unit = dispatcher(message, logContext)
 }
 
 trait LogContext
 case class ServerLoggerContext(logServer: LogServer) extends LogContext
 
 object Main {
-  def someBusinessLogic(config: Config): Unit = ???
+  def someBusinessLogic(config: Config)(implicit dispatcher: Dispatcher, logContext: LogContext): Unit = ???
   
   def apply(config: Config): Unit = {
     implicit val logContext: LogContext = ServerLoggerContext(new LogServer(address = "blar"))
 
-    implicit val dispatcher: (message: String, logContext: LogContext) => Unit = logContext match {
+    implicit val dispatcher = (message: String, logContext: LogContext) => logContext match {
       case ServerLoggerContext(logServer: LogServer) => logServer.log(message, logServer)
       case other => throw new RuntimeException("Calling dispatcher with incorrect context: " + other.toString)
     }
@@ -672,7 +674,7 @@ object Main {
     // Writes to a database or filesystem or something
     someBusinessLogic(config)
     
-    ServerLogger.log("Some business logic executed")
+    Logger.log("Some business logic executed")
     
     // ...
   }
@@ -680,7 +682,7 @@ object Main {
 
 Notes:
 
- - When we wish to test, we can inject a different dispatchers that can call out to test implementations of log
+ - When we wish to test, we can inject different dispatchers that can call out to test implementations of log
  - We are welcome to wrap the body of each `case` statement in another method in another object if it gets too verbose, but note there is no need to enforce a common supertype on this collection of objects since we won't be passing them around.
 
 ## Variables Outside Functions
