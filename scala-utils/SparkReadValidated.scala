@@ -1,4 +1,5 @@
 
+
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql._
 import org.apache.spark.sql.types._
@@ -50,12 +51,11 @@ object ReadValidated {
 
   def validateAndConvertDates(line: String, jsObject: JsObject,
                               expectedSchema: StructType): Either[NotProcessableRecord, JsObject] = {
-
     val validatedFields: Map[String, Either[NotProcessableRecord, JsObject]] =
       expectedSchema.fields.flatMap {
         case StructField(name, StringType, nullable, metadata) =>
           val valueOption: Option[JsObject] = jsObject.fields.get(name).map(_.asJsObject)
-          
+
           if (nullable)
             if (valueOption.isDefined)
               Some(name -> Right[NotProcessableRecord, JsObject](valueOption.get))
@@ -69,7 +69,12 @@ object ReadValidated {
               None
             )))
 
-        case StructField(name, TimestampType, nullable, metadata) => ??? // TODO
+        case StructField(name, TimestampType, nullable, metadata) =>
+
+          // WHAT TO DO HERE?!?!?!?!?  I don't think Spray will like spark.sql.Timestamp
+
+
+          ??? // TODO
         case StructField(name, IntegerType, nullable, metadata) => ???
         case StructField(name, LongType, nullable, metadata) => ???
         case StructField(name, DoubleType, nullable, metadata) => ???
