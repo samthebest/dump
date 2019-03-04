@@ -1,98 +1,73 @@
-package com.asos.datalake.staging
+package foo
 
-import com.asos.datalake.staging.IO.READING_OPTION_MULTILINE
 import org.apache.spark.sql._
-import org.apache.spark.sql.types.StructType
+import org.apache.spark.sql.types._
 import spray.json._
 
-import scala.reflect._
-import scala.reflect.ClassTag
-import scala.reflect.runtime.universe
 import scala.reflect.runtime.universe._
 
 sealed trait Format
-case object JSON extends Format
-case object CSV extends Format
+case class JSON(ignoreAdditional: Boolean, dateFormat: Option[String]) extends Format
+case class CSV(hasHeader: Boolean,
+               quotedStrings: Boolean,
+               ignoreAdditional: Boolean,
+               dateFormat: Option[String]) extends Format
 
-case class ReadConfig(path: String, format: Format, hasHeader: Boolean, dateFormat: Option[String])
-
-case class NotProcessableRecord(recordLine: String, notProcessableReason: String, stackTrace: Option[String])
+case class NotProcessableRecord(recordLine: String,
+                                notProcessableReasonType: String,
+                                notProcessableReasonMessage: String,
+                                stackTrace: Option[String])
 
 object ReadValidated {
-  def apply[T <: Product : TypeTag](session: SparkSession,
-                                    readConfig: ReadConfig,
-                                    expectedSchema: StructType): (Dataset[T], Dataset[NotProcessableRecord]) = {
-    session.sparkContext.textFile(readConfig.path)
-    .mapPartitions(parsePartitionToFieldValueMaps(_, readConfig))
+  def apply[T <: Product : TypeTag : JsonReader](session: SparkSession,
+                                                 path: String,
+                                                 format: Format,
+                                                 expectedSchema: StructType): (Dataset[T], Dataset[NotProcessableRecord]) = {
 
+    val processingAttempted =
+      session.sparkContext.textFile(path)
+      .mapPartitions(parsePartitionToFieldValueMaps(_, format))
+      .map(jsObjectToCaseClass(_, expectedSchema))
 
-    session.read
-    .option(READING_OPTION_MULTILINE, value = true)
-    .schema(expectedSchema)
-    .json(landingPath)
-    .as[T](Encoders.product[T])
+    (session.createDataset(processingAttempted.flatMap(_.right.toOption))(Encoders.product[T]),
+      session.createDataset(processingAttempted.flatMap(_.left.toOption))(Encoders.product[NotProcessableRecord]))
   }
 
-  def fromMap[T: TypeTag : ClassTag](m: Map[String, _]) = {
-    val rm: universe.Mirror = runtimeMirror(classTag[T].runtimeClass.getClassLoader)
-    val classTest: universe.ClassSymbol = typeOf[T].typeSymbol.asClass
-    val classMirror = rm.reflectClass(classTest)
-    val constructor = typeOf[T].decl(termNames.CONSTRUCTOR).asMethod
-    val constructorMirror: universe.MethodMirror = classMirror.reflectConstructor(constructor)
+  def jsObjectToCaseClass[T: JsonReader](jsObject: JsObject,
+                                         expectedSchema: StructType): Either[NotProcessableRecord, T] = {
+    JsObject()
 
-    typeOf[T]
-      .members
-      .collect {
-        case m: MethodSymbol if m.isCaseAccessor => m
-      }
-      .toList.map(ms => ms.name.toString -> ms.typeSignature.typeSymbol).toMap
+    // Dates need to be converted to spark.sql.Timestamp
+    // Numbers need to be convereted to Double, Long, Int
+    val jsObjectWithDates: JsObject = ???
 
-    val constructorArgs = constructor.paramLists.flatten.map((param: Symbol) => {
-      val paramName = param.name.toString
-      if (param.typeSignature <:< typeOf[Option[Any]])
-        m.get(paramName)
-      else
-        m.get(paramName).getOrElse(throw new IllegalArgumentException("Map is missing required parameter named " + paramName))
+    Right[NotProcessableRecord, T](jsObjectWithDates.convertTo[T])
+  }
+
+  def validateAndConvertDates(jsObject: JsObject, expectedSchema: StructType): Either[NotProcessableRecord, JsObject] = {
+
+    val validatedFields: Map[String, Either[NotProcessableRecord, JsObject]]
+    expectedSchema.fields.map {
+      case StructField(name, StringType, nullable, metadata) => jsObject.fields
+      case StructField(name, TimestampType, nullable, metadata) => ??? // TODO
+      case StructField(name, IntegerType, nullable, metadata) => jsObject.fields
+      case StructField(name, LongType, nullable, metadata) => jsObject.fields
+      case StructField(name, DoubleType, nullable, metadata) => jsObject.fields
+    }
+
+    JsObject(expectedSchema.fields.map {
+      case StructField(name, dataType, nullable, metadata) => jsObject.fields
     })
-
-    constructorMirror(constructorArgs: _*).asInstanceOf[T]
   }
 
-  def constructorMirrorFromTypeSymbol(symbol: Symbol): MethodMirror = {
-    val classTest: universe.ClassSymbol = symbol.asClass
-    val classMirror = rm.reflectClass(classTest)
-    val constructor = typeOf[T].decl(termNames.CONSTRUCTOR).asMethod
-    val constructorMirror: universe.MethodMirror = classMirror.reflectConstructor(constructor)
-  }
+  // Dates will be left as strings, and converted by jsObjectToCaseClass
+  def parsePartitionToFieldValueMaps(partition: Iterator[String], format: Format): Iterator[JsObject] = {
+    format match {
+      case JSON(_, _) => partition.map(_.parseJson.asJsObject)
+      case CSV(hasHeader, quotedStrings, _, _) =>
+        // Should use apache commons CSV parser
 
-  def fieldValueMapToCaseClass[T](fieldValueMap: Map[String, Any],
-                                  expectedSchema: StructType): Either[T, NotProcessableRecord] = {
-
-  }
-
-  def parsePartitionToFieldValueMaps(partition: Iterator[String], readConfig: ReadConfig): Iterator[Map[String, Any]] = {
-    readConfig.format match {
-      case JSON => partition.map(_.parseJson.asJsObject).map(jsObjectToMap)
+        ???
     }
   }
-
-  def fieldToTypeMap[T: TypeTag]: Map[String, String] =
-    typeOf[T]
-      .members
-      .collect {
-        case m: MethodSymbol if m.isCaseAccessor => m
-      }
-      .toList.map(ms => ms.name.toString -> ms.typeSignature.typeSymbol.name.toString).toMap
-
-
-  def jsObjectToMap(jsObject: JsObject): Map[String, Any] = {
-    jsObject.fields.mapValues {
-      case JsNumber(n) => n
-      case JsString(s) => s
-      case JsTrue => true
-      case JsFalse => false
-      case jsObject: JsObject => jsObjectToMap(jsObject)
-    }
-  }
-
 }
