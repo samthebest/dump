@@ -531,7 +531,7 @@ object Main {
   }
 ```
 
-Below we present 4 options, options 1 - 3 have some issues, which help us learn what the source of the confusion/complexity is.  Option 1 is preferable but not always applicable.  When we cannot use Option 1 we should opt for Option 4.
+Below we present 5 options, options 1 - 3 have some issues, which help us learn what the source of the confusion/complexity is.  Option 1 is preferable but not always applicable.  When we cannot use Option 1 we should opt for Option 5.
 
 **Option 1 - Pure Functional - Deferred Side Effects**
 
@@ -640,7 +640,53 @@ This is the old school way to do dynamic dispatch, i.e. a simple "switch" statem
 
 One way to avoid this is to add another context, the `dispatchMap: Map[LogContext, (String, LogContext) => Unit]`
 
-**Option 4 - BEST Pattern Matching Dispatch With Explicit Dispatch Injection**
+**Option 4 - Type Classes**
+
+```
+
+class LogServer(address: String) {
+  def log(message: String): Unit = ???
+}
+
+
+trait Logger2[Ctx] {
+  def log(message: String)(implicit ctx: Ctx): Unit
+}
+
+object ServerLogger extends Logger2[LogServer] {
+  def log(message: String)(implicit logServer: LogServer): Unit = logServer.log(message)
+}
+
+object TestLogger extends Logger2[Unit] {
+  def log(message: String)(implicit ctx: Unit): Unit = ???
+}
+
+object Main {
+  def someBusinessLogic[LoggerCtx](config: Config)
+                                  (implicit logger2: Logger2[LoggerCtx],
+                                   ctx: LoggerCtx): Unit = ???
+
+  def apply(config: Config): Unit = {
+    implicit val l = new LogServer(address = "blar")
+    implicit val logger = ServerLogger
+
+    ServerLogger.log("Application started")
+
+    // Writes to a database or filesystem or something
+    someBusinessLogic(config)
+
+    ServerLogger.log("Some business logic executed")
+
+    // ...
+  }
+
+}
+```
+
+Caveat: We now have a type parameter, namely `LoggerCtx` that now has to be propogated everywhere along with the implicit.  This is quite unpleasant when compared to the OOP example because the type parameter has nothing to do with `someBusinessLogic`.  If we continued in this style for every dynamic dispatch, the number of type params will grow and grow.
+
+
+**Option 5 - BEST Pattern Matching Dispatch With Explicit Dispatch Injection**
 
 Observing the problems with the above, we see that the issue with trying to do dependency injection is that we have to use complex language features. The root cause of this problem is that we are avoiding making the dynamic dispatch an explicit part of the application, as if for some reason being clear and explicit is too simple for most developers.
 
