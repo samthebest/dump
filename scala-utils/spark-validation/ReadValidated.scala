@@ -1,16 +1,24 @@
 
-import java.io.StringWriter
 
+import java.io.PrintWriter
+import java.io.StringWriter
+import java.sql.Timestamp
+import java.time.{LocalDateTime, ZoneOffset}
+import java.time.format.DateTimeFormatter
+import JsonUtils._
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql._
 import org.apache.spark.sql.catalyst.ScalaReflection._
 import org.apache.spark.sql.types._
+import spray.json.JsonParser.ParsingException
 import spray.json._
 
 import scala.reflect.ClassTag
 import scala.reflect.runtime.universe._
 
-sealed trait Format
+sealed trait Format {
+  val dateFormat: Option[String]
+}
 case class JSON(dateFormat: Option[String] = None) extends Format
 case class CSV(hasHeader: Boolean,
                quotedStrings: Boolean,
@@ -19,30 +27,55 @@ case class CSV(hasHeader: Boolean,
 
 // I hate Either, want to use Xor from cats, or \/ from Scalaz instead
 
+sealed trait NotProcessableReasonType
+
+case object IncorrectType extends NotProcessableReasonType
+case object MissingField extends NotProcessableReasonType
+case object InvalidTimestamp extends NotProcessableReasonType
+case object InvalidJSON extends NotProcessableReasonType
 
 // Could have a second case class without recordLine and populate it later, would mean we don't have to keep passing it down
+case class NotProcessableRecordTyped(recordLine: String,
+                                     notProcessableReasonType: NotProcessableReasonType,
+                                     notProcessableReasonMessage: String,
+                                     stackTrace: Option[String])
+
 case class NotProcessableRecord(recordLine: String,
                                 notProcessableReasonType: String,
                                 notProcessableReasonMessage: String,
                                 stackTrace: Option[String])
 
 object ReadValidated {
+  // TODO Move logging & counting here with a version that only returns the Dataset[T], and returns it cached
+  def readLogAndCache() = ???
+
+  val leftAny: NotProcessableRecordTyped => Left[NotProcessableRecordTyped, Any] = Left[NotProcessableRecordTyped, Any]
+  val rightAny: Any => Right[NotProcessableRecordTyped, Any] = Right[NotProcessableRecordTyped, Any]
+
+
+  implicit class PimpedNotProcessableRecordTyped(r: NotProcessableRecordTyped) {
+    def toNotProcessableRecord: NotProcessableRecord = NotProcessableRecord(
+      recordLine = r.recordLine,
+      notProcessableReasonType = r.notProcessableReasonType.toString,
+      notProcessableReasonMessage = r.notProcessableReasonMessage,
+      stackTrace = r.stackTrace
+    )
+  }
+
   def apply[T <: Product : TypeTag : ClassTag : CaseClassFromMap](session: SparkSession,
                                                                   path: String,
-                                                                  format: Format,
-                                                                  expectedSchema: StructType = structFor[T]): (Dataset[T], Dataset[NotProcessableRecord]) = {
-    // TODO Move logging & counting here
+                                                                  format: Format): (Dataset[T], Dataset[NotProcessableRecord]) = {
     val processingAttempted: RDD[Either[NotProcessableRecord, T]] =
       session.sparkContext.textFile(path)
       .mapPartitions(parsePartitionToFieldValueMaps(_, format))
       .map {
         case Right((line: String, fieldsToValues)) =>
           implicit val l = line
-          validateAndConvertTypes(fieldsToValues, expectedSchema, format) match {
-            case Left(fail) => Left[NotProcessableRecord, T](fail)
+          validateAndConvertTypes(fieldsToValues, structFor[T], format) match {
+            case Left(fail) => Left[NotProcessableRecord, T](fail.toNotProcessableRecord)
             case Right(map) => Right[NotProcessableRecord, T](CaseClassFromMap[T](map))
           }
-        case Left(parseFail) => Left[NotProcessableRecord, T](parseFail)
+        case Left(parseFail) => Left[NotProcessableRecord, T](parseFail.toNotProcessableRecord)
       }
 
     (session.createDataset(processingAttempted.flatMap(_.right.toOption))(Encoders.product[T]),
@@ -52,85 +85,186 @@ object ReadValidated {
   def validateAndConvertTypes(fieldsToValues: Map[String, Any],
                               expectedSchema: StructType,
                               format: Format)
-                             (implicit line: String): Either[NotProcessableRecord, Map[String, Any]] = {
-    val validatedFields: Map[String, Either[NotProcessableRecord, Any]] =
-      expectedSchema.fields.flatMap {
-        case StructField(name, StringType, nullable, metadata) =>
-          getField(name, fieldsToValues, nullable)
-
-        // Need to convert strings to timestamps
-        case StructField(name, TimestampType, nullable, metadata) =>
-          getField(name, fieldsToValues, nullable).map {
-            case (name, nullFail: Left[_, _]) => (name, nullFail)
-            case (name, Right(field)) => ???
-          }
-        // need to convert BigDecimal to one of these
-        case StructField(name, IntegerType, nullable, metadata) => ???
-        case StructField(name, LongType, nullable, metadata) => ???
-        case StructField(name, DoubleType, nullable, metadata) => ???
-        case StructField(name, structType: StructType, nullable, metadata) =>
-          getField(name, fieldsToValues, nullable).map {
-            case (name, Right(struct: Map[_, _])) if struct.keySet.forall(_.isInstanceOf[String]) && struct.nonEmpty =>
-              name -> validateAndConvertTypes(struct.asInstanceOf[Map[String, Any]], structType, format)
-            case (name, Right(value)) =>
-              // Error expected struct field but got something else
-              ???
-            case (name, Left(error)) => ???
+                             (implicit line: String): Either[NotProcessableRecordTyped, Map[String, Any]] = {
+    val validatedFields: Map[String, Either[NotProcessableRecordTyped, Any]] =
+      expectedSchema.fields.map {
+        case StructField(name, StringType, nullable, _) =>
+          getField(name, fieldsToValues, nullable) match {
+            case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
+            case correctType@(Right(None) | Right(Some(_: String))) if nullable => correctType
+            case correctType@Right(_: String) if !nullable => correctType
+            case Right(wrongTypeField) =>
+              leftAny(NotProcessableRecordTyped(
+                recordLine = line,
+                notProcessableReasonType = IncorrectType,
+                notProcessableReasonMessage = "Expected String but found field: " + wrongTypeField,
+                stackTrace = None
+              ))
           }
 
-          ???
+        case StructField(name, TimestampType, nullable, _) =>
+          def parseTimeStampString(field: String): Either[NotProcessableRecordTyped, Any] = try {
+            if (nullable) rightAny(Some(dateTimeStringToTimestamp(field, format.dateFormat.get)))
+            else rightAny(dateTimeStringToTimestamp(field, format.dateFormat.get))
+          } catch {
+            case e: Throwable =>
+              leftAny(NotProcessableRecordTyped(
+                recordLine = line,
+                notProcessableReasonType = InvalidTimestamp,
+                notProcessableReasonMessage = "Could not parse timestamp see stack trace",
+                stackTrace = Some(stackTraceToString(e))
+              ))
+          }
+
+          getField(name, fieldsToValues, nullable) match {
+            case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
+            case Right(field: String) if !nullable => parseTimeStampString(field)
+            case Right(Some(field: String)) if nullable => parseTimeStampString(field)
+            case correctType@Right(None) if nullable => correctType
+            case Right(wrongTypeField) =>
+              leftAny(NotProcessableRecordTyped(
+                recordLine = line,
+                notProcessableReasonType = IncorrectType,
+                notProcessableReasonMessage = "Expected Timestamp String but found field: " + wrongTypeField,
+                stackTrace = None
+              ))
+          }
+
+        case StructField(name, IntegerType, nullable, _) =>
+          getField(name, fieldsToValues, nullable) match {
+            case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
+            case correctType@(Right(None) | Right(Some(_: Int))) if nullable => correctType
+            case correctType@Right(_: Int) => correctType
+            case Right(wrongTypeField) =>
+              leftAny(NotProcessableRecordTyped(
+                recordLine = line,
+                notProcessableReasonType = IncorrectType,
+                notProcessableReasonMessage = "Expected Int but found field: " + wrongTypeField,
+                stackTrace = None
+              ))
+          }
+
+        case StructField(name, LongType, nullable, _) =>
+          getField(name, fieldsToValues, nullable) match {
+            case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
+            case correctType@(Right(None) | Right(Some(_: Long))) if nullable => correctType
+            case correctType@Right(_: Long) => correctType
+            case Right(wrongTypeField) =>
+              leftAny(NotProcessableRecordTyped(
+                recordLine = line,
+                notProcessableReasonType = IncorrectType,
+                notProcessableReasonMessage = "Expected Long but found field: " + wrongTypeField,
+                stackTrace = None
+              ))
+          }
+
+        case StructField(name, DoubleType, nullable, _) =>
+          getField(name, fieldsToValues, nullable) match {
+            case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
+            case correctType@(Right(None) | Right(Some(_: Double))) if nullable => correctType
+            case correctType@Right(_: Double) if !nullable => correctType
+            case Right(wrongTypeField) =>
+              leftAny(NotProcessableRecordTyped(
+                recordLine = line,
+                notProcessableReasonType = IncorrectType,
+                notProcessableReasonMessage = "Expected Double but found field: " + wrongTypeField,
+                stackTrace = None
+              ))
+          }
+
+        case StructField(name, ArrayType(dataType, containsNull), nullable, _) =>
+          require(containsNull, "We do not currently support arrays that are not allowed to contain null as one would" +
+            " have to explicitly create a StructType rather than using schemaFor")
+
+          def recurse(array: List[Any]): Either[NotProcessableRecordTyped, Any] = {
+            val indexed: Map[String, Any] = array.zipWithIndex.toMap.mapValues(_.toString).map(_.swap)
+
+            validateAndConvertTypes(indexed, StructType(indexed.map {
+              case (index, _) => StructField(index, dataType, containsNull)
+            }.toSeq), format) match {
+              case Right(map: Map[String, Any]) =>
+                rightAny(map.map(_.swap).mapValues(_.toInt).toList.sortBy(_._2).map {
+                  case (Some(thing), _) => thing
+                  case (None, _) => null
+                })
+              case Left(fail) => leftAny(fail)
+            }
+          }
+
+          getField(name, fieldsToValues, nullable) match {
+            case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
+            case Right(array: List[_]) if containsNull && !nullable => recurse(array)
+            case Right(Some(array: List[_])) if containsNull && nullable => recurse(array) match {
+              case Right(map) => rightAny(Some(map))
+              case Left(fail) => leftAny(fail)
+            }
+            case correctType@Right(None) if containsNull && nullable => correctType
+            case Right(wrongTypeField) =>
+              leftAny(NotProcessableRecordTyped(
+                recordLine = line,
+                notProcessableReasonType = IncorrectType,
+                notProcessableReasonMessage = "Expected Array but found field: " + wrongTypeField,
+                stackTrace = None
+              ))
+          }
+
+        case StructField(name, structType: StructType, nullable, _) =>
+          getField(name, fieldsToValues, nullable) match {
+            case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
+            case Right(struct: Map[_, _]) if struct.keySet.forall(_.isInstanceOf[String]) && struct.nonEmpty && !nullable =>
+              validateAndConvertTypes(struct.asInstanceOf[Map[String, Any]], structType, format)
+            case Right(Some(struct: Map[_, _])) if struct.keySet.forall(_.isInstanceOf[String]) && struct.nonEmpty && nullable =>
+              validateAndConvertTypes(struct.asInstanceOf[Map[String, Any]], structType, format) match {
+                case Left(fail) => leftAny(fail)
+                case Right(map) => rightAny(Some(map))
+              }
+            case Right(None) if nullable => rightAny(None)
+            case Right(wrongTypeField) =>
+              leftAny(NotProcessableRecordTyped(
+                recordLine = line,
+                notProcessableReasonType = IncorrectType,
+                notProcessableReasonMessage = "Expected Struct but found field: " + wrongTypeField,
+                stackTrace = None
+              ))
+          }
       }
+      .zip(expectedSchema.fields.map(_.name)).map(_.swap)
       .toMap
 
-    // Should we aggregate all errors into a List? Or is taking the first error enough?
-
-    validatedFields.find(_._2.isLeft).map(_._2.left.get).map(Left[NotProcessableRecord, Map[String, Any]])
-    .getOrElse(Right[NotProcessableRecord, Map[String, Any]](validatedFields.mapValues(_.right.get)))
+    validatedFields.find(_._2.isLeft).map(_._2.left.get).map(Left[NotProcessableRecordTyped, Map[String, Any]])
+    .getOrElse(Right[NotProcessableRecordTyped, Map[String, Any]](validatedFields.mapValues(_.right.get)))
   }
 
-  // Unit tests to handle:
-  //
-  // nullable and exists
-  // nullable and not exist
-  // nullable and exists as null
-  // not nullable and exists
-  // not nullable and not exist
-  // not nullable and exists as null
   def getField(name: String,
                fieldsToValues: Map[String, Any],
                nullable: Boolean)
-              (implicit line: String): Option[(String, Either[NotProcessableRecord, Any])] = {
+              (implicit line: String): Either[NotProcessableRecordTyped, Any] = {
     val valueOption: Option[Any] = fieldsToValues.get(name).flatMap(Option(_))
 
+    //    println(s"getField:  name = $name, fieldsToValues = $fieldsToValues, nullable = $nullable")
+
     if (nullable)
-      if (valueOption.isDefined)
-        if (valueOption.get == null)
-          None
-        else
-          Some(name -> Right[NotProcessableRecord, Any](valueOption.get))
-      else
-        None
+      Right[NotProcessableRecordTyped, Any](valueOption)
     else
-      Some(name -> valueOption.toRight[NotProcessableRecord](NotProcessableRecord(
+      valueOption.toRight[NotProcessableRecordTyped](NotProcessableRecordTyped(
         recordLine = line,
-        notProcessableReasonType = "MissingField",
+        notProcessableReasonType = MissingField,
         notProcessableReasonMessage = "Missing non nullable field: " + name,
         None
-      )))
+      ))
   }
 
-  // Dates will be left as strings, and converted by validateAndConvertTypes
-  def parsePartitionToFieldValueMaps(partition: Iterator[String], format: Format): Iterator[Either[NotProcessableRecord, (String, Map[String, Any])]] = {
+  def parsePartitionToFieldValueMaps(partition: Iterator[String], format: Format): Iterator[Either[NotProcessableRecordTyped, (String, Map[String, Any])]] = {
     format match {
       case JSON(_) => partition.map(line =>
         try {
-          Right[NotProcessableRecord, (String, Map[String, Any])](line -> jsObjectToMap(line.parseJson.asJsObject))
+          Right[NotProcessableRecordTyped, (String, Map[String, Any])](line -> jsObjectToMap(line.parseJson.asJsObject))
         } catch {
-          case e: DeserializationException =>
-            Left[NotProcessableRecord, (String, Map[String, Any])](NotProcessableRecord(
+          case e@(_: DeserializationException | _: ParsingException) =>
+            Left[NotProcessableRecordTyped, (String, Map[String, Any])](NotProcessableRecordTyped(
               recordLine = line,
-              notProcessableReasonType = "InvalidJSON",
-              notProcessableReasonMessage = "Invalid JSON see stack trace",
+              notProcessableReasonType = InvalidJSON,
+              notProcessableReasonMessage = "Could not parse json see stack trace",
               stackTrace = Some(stackTraceToString(e))
             ))
         })
@@ -138,16 +272,6 @@ object ReadValidated {
         // Should use apache commons CSV parser
 
         ???
-    }
-  }
-
-  def jsObjectToMap(jsObject: JsObject): Map[String, Any] = {
-    jsObject.fields.mapValues {
-      case JsNumber(n) => n
-      case JsString(s) => s
-      case JsTrue => true
-      case JsFalse => false
-      case jsObject: JsObject => jsObjectToMap(jsObject)
     }
   }
 
@@ -218,19 +342,22 @@ object ReadValidated {
       case t if definedByConstructorParams(t) =>
         val params = getConstructorParameters(t)
         Schema(StructType(
-          params.map { case (fieldName, fieldType) =>
-            val Schema(dataType, nullable) = schemaFor(fieldType)
-            StructField(fieldName, dataType, nullable)
+          params.map {
+            case (fieldName, fieldType) =>
+              val Schema(dataType, nullable) = schemaFor(fieldType)
+              StructField(fieldName, dataType, nullable)
           }), nullable = false)
       case other =>
         throw new UnsupportedOperationException(s"Schema for type $other is not supported")
     }
   }
 
-  def stackTraceToString(e: Exception): String = {
-    import java.io.PrintWriter
+  def stackTraceToString(e: Throwable): String = {
     val sw = new StringWriter()
     e.printStackTrace(new PrintWriter(sw))
     sw.toString
   }
+
+  def dateTimeStringToTimestamp(s: String, pattern: String): Timestamp =
+    new Timestamp(LocalDateTime.parse(s, DateTimeFormatter.ofPattern(pattern)).toEpochSecond(ZoneOffset.UTC) * 1000)
 }
