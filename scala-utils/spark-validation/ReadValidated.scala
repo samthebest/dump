@@ -1,5 +1,4 @@
 
-
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.sql.Timestamp
@@ -102,6 +101,20 @@ object ReadValidated {
               ))
           }
 
+        case StructField(name, BooleanType, nullable, _) =>
+          getField(name, fieldsToValues, nullable) match {
+            case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
+            case correctType@(Right(None) | Right(Some(_: Boolean))) if nullable => correctType
+            case correctType@Right(_: Boolean) if !nullable => correctType
+            case Right(wrongTypeField) =>
+              leftAny(NotProcessableRecordTyped(
+                recordLine = line,
+                notProcessableReasonType = IncorrectType,
+                notProcessableReasonMessage = "Expected Boolean but found field: " + wrongTypeField,
+                stackTrace = None
+              ))
+          }
+
         case StructField(name, TimestampType, nullable, _) =>
           def parseTimeStampString(field: String): Either[NotProcessableRecordTyped, Any] = try {
             if (nullable) rightAny(Some(dateTimeStringToTimestamp(field, format.dateFormat.get)))
@@ -173,8 +186,11 @@ object ReadValidated {
           }
 
         case StructField(name, ArrayType(dataType, containsNull), nullable, _) =>
-          require(containsNull, "We do not currently support arrays that are not allowed to contain null as one would" +
-            " have to explicitly create a StructType rather than using schemaFor")
+          // For some reason even though the default for ArrayType is true, using schemaFor it gives false
+          val containsNull = true
+
+//          require(containsNull, "We do not currently support arrays that are not allowed to contain null as one would" +
+//            " have to explicitly create a StructType rather than using schemaFor")
 
           def recurse(array: List[Any]): Either[NotProcessableRecordTyped, Any] = {
             val indexed: Map[String, Any] = array.zipWithIndex.toMap.mapValues(_.toString).map(_.swap)
