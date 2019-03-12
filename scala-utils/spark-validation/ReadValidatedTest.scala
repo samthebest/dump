@@ -6,36 +6,20 @@ import org.apache.spark.sql.catalyst.ScalaReflection
 import org.apache.spark.sql.types._
 import ReadValidated._
 
+case class ExampleStruct(foo: Int)
+
+case class Example(nullable1: Option[String],
+                   notNullable1: String,
+                   notNullable2: Int,
+                   nullable2: Option[Int],
+                   nullable3: Option[Timestamp],
+                   notNullable3: Timestamp,
+                   notNullable4: ExampleStruct,
+                   nullable4: Option[ExampleStruct])
+
 class ReadValidatedTest extends Specification {
-  "ReadValidated.schemaFor" should {
-    "Produce StructType with correct nullability" in {
-      ReadValidated.structFor[Example] must_=== StructType(Seq(
-        StructField("nullable1", StringType, nullable = true),
-        StructField("notNullable1", StringType, nullable = false),
-        StructField("notNullable2", IntegerType, nullable = false),
-        StructField("nullable2", IntegerType, nullable = true),
-        StructField("nullable3", TimestampType, nullable = true),
-        StructField("notNullable3", TimestampType, nullable = false),
-        StructField("notNullable4", StructType(Seq(StructField("foo", IntegerType, nullable = false))), nullable = false),
-        StructField("nullable4", StructType(Seq(StructField("foo", IntegerType, nullable = false))), nullable = true)
-      ))
-    }
-
-    "Spark should produce StructType with incorrect nullability" in {
-      ScalaReflection.schemaFor[Example].dataType.asInstanceOf[StructType] must_=== StructType(Seq(
-        StructField("nullable1", StringType, nullable = true),
-        StructField("notNullable1", StringType, nullable = true),
-        StructField("notNullable2", IntegerType, nullable = false),
-        StructField("nullable2", IntegerType, nullable = true),
-        StructField("nullable3", TimestampType, nullable = true),
-        StructField("notNullable3", TimestampType, nullable = true),
-        StructField("notNullable4", StructType(Seq(StructField("foo", IntegerType, nullable = false))), nullable = true),
-        StructField("nullable4", StructType(Seq(StructField("foo", IntegerType, nullable = false))), nullable = true)
-      ))
-    }
-  }
-
   implicit val line = ""
+  val jsonFormat = JSON(Some("yyyy-MM-dd'T'HH:mm:ssX"))
 
   // Epic copy and pasting in this file, but drying it could make the tests harder to follow
 
@@ -44,7 +28,7 @@ class ReadValidatedTest extends Specification {
       validateAndConvertTypes(
         fieldsToValues = Map("fieldWrong" -> "foo"),
         expectedSchema = StructType(Seq(StructField("field", dataType, nullable = false))),
-        format = JSON()
+        format = jsonFormat
       ) must_=== Left(NotProcessableRecordTyped(
         recordLine = line,
         notProcessableReasonType = MissingField,
@@ -94,7 +78,7 @@ class ReadValidatedTest extends Specification {
         ) must_=== Left(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
-          notProcessableReasonMessage = "Expected String but found field: 1234",
+          notProcessableReasonMessage = "Field field. Expected String but found field: 1234",
           stackTrace = None
         ))
       }
@@ -145,7 +129,7 @@ class ReadValidatedTest extends Specification {
         ) must_=== Left(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
-          notProcessableReasonMessage = "Expected Boolean but found field: 1234",
+          notProcessableReasonMessage = "Field field. Expected Boolean but found field: 1234",
           stackTrace = None
         ))
       }
@@ -160,9 +144,9 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> "2018-09-25T00:00:00Z"),
           expectedSchema = StructType(Seq(StructField("field", TimestampType, nullable = false))),
-          format = JSON(Some("yyyy-MM-dd'T'HH:mm:ssX"))
+          format = jsonFormat
         ) match {
-          case Right(map) if map == Map("field" -> new Timestamp(1537833600000L)) => success
+          case Right(map) if map == Map("field" -> 1537833600000L) => success
           case left@Left(_) => failure("Conversion error: " + left)
           case Right(map) => failure("Wrong result: " + map)
         }
@@ -172,9 +156,9 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> "2018-09-25T00:00:00Z"),
           expectedSchema = StructType(Seq(StructField("field", TimestampType, nullable = true))),
-          format = JSON(Some("yyyy-MM-dd'T'HH:mm:ssX"))
+          format = jsonFormat
         ) match {
-          case Right(map) if map == Map("field" -> Some(new Timestamp(1537833600000L))) => success
+          case Right(map) if map == Map("field" -> Some(1537833600000L)) => success
           case left@Left(_) => failure("Conversion error: " + left)
           case Right(map) => failure("Wrong result: " + map)
         }
@@ -184,7 +168,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map(),
           expectedSchema = StructType(Seq(StructField("field", TimestampType, nullable = true))),
-          format = JSON(Some("yyyy-MM-dd'T'HH:mm:ssX"))
+          format = jsonFormat
         ) match {
           case Right(map) if map == Map("field" -> None) => success
           case left@Left(_) => failure("Conversion error: " + left)
@@ -196,17 +180,25 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> 1234),
           expectedSchema = StructType(Seq(StructField("field", TimestampType, nullable = false))),
-          format = JSON()
+          format = jsonFormat
         ) must_=== Left(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
-          notProcessableReasonMessage = "Expected Timestamp String but found field: 1234",
+          notProcessableReasonMessage = "Field field. Expected Timestamp String but found field: 1234",
           stackTrace = None
         ))
       }
 
       "Return NotProcessableRecord when given a map with missing field" in {
         testMissingField(TimestampType)
+      }
+
+      "Throw exception if parsing timestamp with a JSON with no dateformat" in {
+        validateAndConvertTypes(
+          fieldsToValues = Map("field" -> 1234),
+          expectedSchema = StructType(Seq(StructField("field", TimestampType, nullable = false))),
+          format = JSON()
+        ) must throwAn[IllegalArgumentException]
       }
     }
 
@@ -267,7 +259,7 @@ class ReadValidatedTest extends Specification {
         ) must_=== Left(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
-          notProcessableReasonMessage = "Expected Long but found field: 1234.1234",
+          notProcessableReasonMessage = "Field field. Expected Long but found field: 1234.1234",
           stackTrace = None
         ))
       }
@@ -334,7 +326,7 @@ class ReadValidatedTest extends Specification {
         ) must_=== Left(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
-          notProcessableReasonMessage = "Expected Int but found field: 1234.1234",
+          notProcessableReasonMessage = "Field field. Expected Int but found field: 1234.1234",
           stackTrace = None
         ))
       }
@@ -401,7 +393,7 @@ class ReadValidatedTest extends Specification {
         ) must_=== Left(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
-          notProcessableReasonMessage = "Expected Double but found field: 1234 1234",
+          notProcessableReasonMessage = "Field field. Expected Double but found field: 1234 1234",
           stackTrace = None
         ))
       }
@@ -414,20 +406,20 @@ class ReadValidatedTest extends Specification {
     "Array conversions" should {
       "Convert a map with array double in it" in {
         validateAndConvertTypes(
-          fieldsToValues = Map("field" -> List(1.2, 1.3)),
+          fieldsToValues = Map("field" -> Vector(1.2, 1.3)),
           expectedSchema = StructType(Seq(StructField("field",
             ArrayType(DoubleType), nullable = false))),
           format = JSON()
-        ) must_=== Right(Map("field" -> List(1.2, 1.3)))
+        ) must_=== Right(Map("field" -> Vector(1.2, 1.3)))
       }
 
       "Return a map with Some when the field exists and is nullable" in {
         validateAndConvertTypes(
-          fieldsToValues = Map("field" -> List(1.2, 1.3)),
+          fieldsToValues = Map("field" -> Vector(1.2, 1.3)),
           expectedSchema = StructType(Seq(StructField("field",
             ArrayType(DoubleType), nullable = true))),
           format = JSON()
-        ) must_=== Right(Map("field" -> Some(List(1.2, 1.3))))
+        ) must_=== Right(Map("field" -> Some(Vector(1.2, 1.3))))
       }
 
       "Return a map with None when the field does not exist but it is nullable" in {
@@ -450,20 +442,20 @@ class ReadValidatedTest extends Specification {
 
       "Convert a map with arrays of structs (of strings)" in {
         validateAndConvertTypes(
-          fieldsToValues = Map("field" -> List(Map("fieldInner" -> "foo"), Map("fieldInner" -> "bar"))),
+          fieldsToValues = Map("field" -> Vector(Map("fieldInner" -> "foo"), Map("fieldInner" -> "bar"))),
           expectedSchema = StructType(Seq(StructField("field",
             ArrayType(StructType(Seq(StructField("fieldInner", StringType, nullable = false)))), nullable = false))),
           format = JSON()
-        ) must_=== Right(Map("field" -> List(Map("fieldInner" -> "foo"), Map("fieldInner" -> "bar"))))
+        ) must_=== Right(Map("field" -> Vector(Map("fieldInner" -> "foo"), Map("fieldInner" -> "bar"))))
       }
 
       "Convert a map with arrays of arrays (of ints)" in {
         validateAndConvertTypes(
-          fieldsToValues = Map("field" -> List(List(5, 3, 1, 7), List())),
+          fieldsToValues = Map("field" -> Vector(Vector(5, 3, 1, 7), Vector())),
           expectedSchema = StructType(Seq(StructField("field",
             ArrayType(ArrayType(IntegerType)), nullable = false))),
           format = JSON()
-        ) must_=== Right(Map("field" -> List(List(5, 3, 1, 7), List())))
+        ) must_=== Right(Map("field" -> Vector(Vector(5, 3, 1, 7), Vector())))
       }
 
       "Return NotProcessableRecord when given a map with string field instead of an array" in {
@@ -474,7 +466,7 @@ class ReadValidatedTest extends Specification {
         ) must_=== Left(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
-          notProcessableReasonMessage = "Expected Array but found field: 1234 1234",
+          notProcessableReasonMessage = "Field field. Expected Array but found field: 1234 1234",
           stackTrace = None
         ))
       }
@@ -530,7 +522,7 @@ class ReadValidatedTest extends Specification {
         ) must_=== Left(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
-          notProcessableReasonMessage = "Expected Struct but found field: foo",
+          notProcessableReasonMessage = "Field field. Expected Struct but found field: foo",
           stackTrace = None
         ))
       }
@@ -539,23 +531,38 @@ class ReadValidatedTest extends Specification {
         testMissingField(StructType(Seq()))
       }
     }
+
   }
 
   "ReadValidated.getField" should {
+    "Return Some thing if nullable and exists" in {
+      getField("field", Map("field" -> "foo"), nullable = true) must_=== rightAny(Some("foo"))
+    }
+    "Return None thing if nullable and not exist" in {
+      getField("field", Map(), nullable = true) must_=== rightAny(None)
+    }
+    "Return None thing if nullable and exists as null" in {
+      getField("field", Map("field" -> null), nullable = true) must_=== rightAny(None)
+    }
 
-    // Unit tests to handle:
-    //
-    // nullable and exists
-    // nullable and not exist
-    // nullable and exists as null
-    // not nullable and exists
-    // not nullable and not exist
-    // not nullable and exists as null
-
-    "Return "
-
-    "tests" in {
-      failure("write me")
+    "Return thing if not nullable and exists" in {
+      getField("field", Map("field" -> "foo"), nullable = false) must_=== rightAny("foo")
+    }
+    "Return NotProcessableRecord if not nullable and not exist" in {
+      getField("field", Map(), nullable = false) must_=== leftAny(NotProcessableRecordTyped(
+        recordLine = line,
+        notProcessableReasonType = MissingField,
+        notProcessableReasonMessage = "Missing non nullable field: field",
+        None
+      ))
+    }
+    "Return NotProcessableRecord if not nullable and exists as null" in {
+      getField("field", Map("field" -> null), nullable = false) must_=== leftAny(NotProcessableRecordTyped(
+        recordLine = line,
+        notProcessableReasonType = MissingField,
+        notProcessableReasonMessage = "Missing non nullable field: field",
+        None
+      ))
     }
   }
 
@@ -580,7 +587,7 @@ class ReadValidatedTest extends Specification {
       ), JSON()).toList must_===
         List(
           """{"structure":{"array":[1,2,3],"nullField":null}}""" -> Map("structure" -> Map(
-            "array" -> List(1, 2, 3),
+            "array" -> Vector(1, 2, 3),
             "nullField" -> null
           ))
         )
@@ -601,21 +608,10 @@ class ReadValidatedTest extends Specification {
         case Left(fail) if
         fail.recordLine == """{"field":1234.1234 BAD JSON!!!}""" &&
           fail.notProcessableReasonType == InvalidJSON &&
-          fail.notProcessableReasonMessage == "Could not parse json see stack trace" &&
+          fail.notProcessableReasonMessage == "Could not parse json: expected } or , got B (line 1, column 20)" &&
           fail.stackTrace.nonEmpty => success
         case other => failure("Incorrect result: " + other)
       }
     }
   }
 }
-
-case class ExampleStruct(foo: Int)
-
-case class Example(nullable1: Option[String],
-                   notNullable1: String,
-                   notNullable2: Int,
-                   nullable2: Option[Int],
-                   nullable3: Option[Timestamp],
-                   notNullable3: Timestamp,
-                   notNullable4: ExampleStruct,
-                   nullable4: Option[ExampleStruct])
