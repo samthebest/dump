@@ -75,7 +75,6 @@ object ReadValidated {
 
   // Will return None for nulls/missing fields if and only if the field is nullable
   // This will never return an actual null in the map since nullability is determined by Optionality
-  // TODO Full path to field in error message
   def validateAndConvertTypes(fieldsToValues: Map[String, Any],
                               expectedSchema: StructType,
                               format: Format,
