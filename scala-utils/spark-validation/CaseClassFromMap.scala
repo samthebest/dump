@@ -1,6 +1,6 @@
 import shapeless._, labelled.{FieldType, field}
 
-trait FromMap[L <: HList] {
+trait FromMap[L <: HList] extends Serializable {
   def apply(m: Map[String, Any]): Option[L]
 }
 
@@ -37,9 +37,32 @@ object FromMap extends LowPriorityFromMap {
         t <- fromMapT(m)
       } yield field[K](gen.from(h)) :: t
     }
+
+  implicit def hconsFromMap0opt[K <: Symbol, V, R <: HList, T <: HList](implicit
+                                                                        witness: Witness.Aux[K],
+                                                                        gen: LabelledGeneric.Aux[V, R],
+                                                                        fromMapH: FromMap[R],
+                                                                        fromMapT: FromMap[T]
+                                                                       ): FromMap[FieldType[K, Option[V]] :: T] =
+    new FromMap[FieldType[K, Option[V]] :: T] {
+      def apply(m: Map[String, Any]): Option[FieldType[K, Option[V]] :: T] = (for {
+        v <- m.get(witness.value.name)
+        r <- Typeable[Map[String, Any]].cast(v)
+        h <- fromMapH(r)
+        t <- fromMapT(m)
+      } yield field[K](Some(gen.from(h))) :: t).orElse(for {
+        v <- m.get(witness.value.name)
+        r1 <- Typeable[Option[Map[String, Any]]].cast(v)
+        opt = for {
+          r <- r1
+          h <- fromMapH(r)
+        } yield gen.from(h)
+        t <- fromMapT(m)
+      } yield field[K](opt) :: t)
+    }
 }
 
-trait CaseClassFromMap[P <: Product] {
+trait CaseClassFromMap[P <: Product] extends Serializable {
   def apply(m: Map[String, Any]): Option[P]
 }
 
