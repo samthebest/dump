@@ -13,6 +13,9 @@ case class Person(name: String, address: Address)
 case class WithList(names: List[String])
 case class PersonOptionalAddress(name: String, address: Option[Address])
 
+case class NestedFoo(foos: Option[List[Foo]])
+case class Foo(foo: String)
+
 
 object CaseClassFromMapTest extends Specification {
   "CaseClassFromMap.apply" should {
@@ -59,6 +62,7 @@ object CaseClassFromMapTest extends Specification {
       )
     }
 
+    // FAILS!
     "NestedPA" in {
       val map = Map[String, Any]("foos" -> Some(List(Map("foo" -> "value"))))
 
@@ -69,6 +73,3 @@ object CaseClassFromMapTest extends Specification {
   }
 }
 
-case class NestedFoo(foos: Option[List[Foo]])
-
-case class Foo(foo: String)
