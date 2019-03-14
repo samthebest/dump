@@ -1,13 +1,26 @@
 
- - Show of hands
+ - Show of hands of knowledge
  - Intro to FP (take from other slides)
  - FP is to programming as XP/agile is to process, OOP is to programming as BUFD/waterfall is to process
  - Historical root of OOP 
    - encapsulating state
-   - no longer necessary (memory & cpu is cheap)
+     - no longer necessary (memory & cpu is cheap)
+   - Dynamic dispatch via inheritance polymorphism
+     - Still useful in some situations to avoid type-param bloat caused by only using type-classes
+     - particularly true when dealing with AOP type problems (e.g. logging).  THe FP way to solve this is to wrap all business logic in Monads & ADTs and defer side effects to a single ADT interpreter.
+ - Design patterns exist to cope with the OOP being so bad, but fail. E.g.
+   - Factory patterns -> currying and returning functions
+   - Decorators on streams -> lazily evaluated iterators
+   - Visitor pattern -> pattern matching
+   - Various ways to do dynamic dispatch -> pattern matching
+   - command pattern -> functions as first class
+   - https://blog.jooq.org/2016/07/04/how-functional-programming-will-finally-do-away-with-the-gof-patterns/
+   - https://stackoverflow.com/questions/327955/does-functional-programming-replace-gof-design-patterns
    
 
 SOLID Subjectivity
+
+Only LS is objective
 
 SRP is obviously subjective
 
