@@ -23,6 +23,8 @@
  - "FP is the paradigm of the data" - Franco Bullgarelli
  
  - Enterprise FizzBuzz & Refuctoring
+ 
+ - OOP Nounifies verbs (pun intented (verbified a noun!)), this is a horrible abuse of language http://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html
 
 SOLID Subjectivity
 
