@@ -25,6 +25,8 @@
  - Enterprise FizzBuzz & Refuctoring
  
  - OOP Nounifies verbs (pun intented (verbified a noun!)), this is a horrible abuse of language http://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html
+ 
+ - In many ways Microservices are like functions, hence Lamda and Azure Functions.  FP got there 50 years earlier.
 
 SOLID Subjectivity
 
