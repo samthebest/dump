@@ -19,6 +19,8 @@
    
  - SOLID subjevtivity
  - SOLID is a lot about decoupling, in FP you decouple via messages/case-classes/structs, in OOP you decouple via interfaces
+ 
+ - "FP is the paradigm of the data" - Franco Bullgarelli
 
 SOLID Subjectivity
 
