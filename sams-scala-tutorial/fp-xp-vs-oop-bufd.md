@@ -17,6 +17,8 @@
    - https://blog.jooq.org/2016/07/04/how-functional-programming-will-finally-do-away-with-the-gof-patterns/
    - https://stackoverflow.com/questions/327955/does-functional-programming-replace-gof-design-patterns
    
+ - SOLID subjevtivity
+ - SOLID is a lot about decoupling, in FP you decouple via messages/case-classes/structs, in OOP you decouple via interfaces
 
 SOLID Subjectivity
 
