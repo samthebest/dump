@@ -456,4 +456,64 @@ Little left to say, to reiterate:
  - Makes reasoning about multi-threaded applications easy
  - Moore's law has run out, if our applications need to be fast, we need to use multiple CPUs
 
+.
+
+.
+
+.
+
+.
+
+.
+
+
+
+
+
+
+
+OOP
+
+```
+class Salad(
+  val leaves: String,
+  val cheese: String
+) {
+  def eat(human: Human): Unit = {
+    human.put(leaves)
+    human.put(cheese)
+    human.chew()
+  }
+  
+  def bin(bin: Bin): Unit = {
+    bin.open()
+    bin.put(leaves)
+    bin.put(cheese)
+    bin.close()
+  }
+}
+```
+
+FP
+
+```
+case class Salad(
+  val leaves: String,
+  val cheese: String
+)
+
+object Salad{
+  def eat(human: Human, salad: Salad): Human = {
+    // put is defined in an implicit class
+    // Worth writing it out like in Lisp
+    human.put(salad.leaves).put(salad.cheese).chew
+  }
+  
+}
+```
+
+Now we can move the `eat` method around, `human` is no longer mutable.
+
+
+
 
