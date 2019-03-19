@@ -504,9 +504,16 @@ case class Salad(
 
 object Salad{
   def eat(human: Human, salad: Salad): Human = {
-    // put is defined in an implicit class
-    // Worth writing it out like in Lisp
+    // Scala style using implicit classes in HumanOps
     human.put(salad.leaves).put(salad.cheese).chew
+    
+    // Lisp style
+    HumanOps.chew(
+      HumanOps.put(
+        HumanOps.put(human, salad.leaves), 
+        salad.cheese
+      )
+    )
   }
   
 }
