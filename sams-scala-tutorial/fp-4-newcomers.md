@@ -477,7 +477,8 @@ OOP
 ```
 class Salad(
   val leaves: String,
-  val cheese: String
+  val cheese: String,
+  val somethingElse: String
 ) {
   def eat(human: Human): Unit = {
     human.put(leaves)
