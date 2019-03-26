@@ -1,3 +1,7 @@
+
+import java.sql.Timestamp
+
+import utils.{CirceJsonUtils, DateTimeStringUtils, StackTraceToString}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql._
 import org.apache.spark.sql.catalyst.ScalaReflection._
@@ -9,16 +13,16 @@ import scala.reflect.ClassTag
 import scala.reflect.runtime.universe._
 import io.circe._
 import io.circe.parser._
+import CorrectSchemaFor._
 
-
-sealed trait Format {
+sealed trait Contract {
   val dateFormat: Option[String]
 }
-case class JSON(dateFormat: Option[String] = None) extends Format
+case class JSON(dateFormat: Option[String] = None) extends Contract
 case class CSV(hasHeader: Boolean,
                quotedStrings: Boolean,
                ignoreAdditional: Boolean = true,
-               dateFormat: Option[String] = None) extends Format
+               dateFormat: Option[String] = None) extends Contract
 
 // I hate Either, want to use Xor from cats, or \/ from Scalaz instead
 
@@ -53,31 +57,37 @@ object ReadValidated {
     )
   }
 
-  def apply[LT <: Product : TypeTag : ClassTag : Decoder, T: TypeTag](session: SparkSession,
-                                                                      path: String,
-                                                                      format: Format): (Dataset[LT], Dataset[NotProcessableRecord]) = {
-    val processingAttempted: RDD[Either[NotProcessableRecord, LT]] =
-      session.sparkContext.textFile(path)
-      .mapPartitions(parsePartitionToFieldValueMaps(_, format))
-      .map {
-        case Right((line: String, fieldsToValues)) =>
-          implicit val l = line
-          validateAndConvertTypes(fieldsToValues, structFor[T], format) match {
-            case Left(fail) => Left[NotProcessableRecord, LT](fail.toNotProcessableRecord)
-            case Right(map) => Right[NotProcessableRecord, LT](CirceJsonUtils.mapToCaseClass[LT](map))
-          }
-        case Left(parseFail) => Left[NotProcessableRecord, LT](parseFail.toNotProcessableRecord)
-      }
+  def attemptProcessing[T <: Product : TypeTag : ClassTag : Decoder](sparkSession: SparkSession,
+                                                                     path: String,
+                                                                     contract: Contract): RDD[Either[NotProcessableRecord, T]] = {
+    sparkSession.sparkContext.textFile(path)
+    .mapPartitions(parsePartitionToFieldValueMaps(_, contract))
+    .map {
+      case Right((line: String, fieldsToValues)) =>
+        implicit val l = line
+        validateAndConvertTypes(fieldsToValues, structFor[T], contract) match {
+          case Left(fail) => Left[NotProcessableRecord, T](fail.toNotProcessableRecord)
+          case Right(map) => Right[NotProcessableRecord, T](CirceJsonUtils.mapToCaseClass[T](map))
+        }
+      case Left(parseFail) => Left[NotProcessableRecord, T](parseFail.toNotProcessableRecord)
+    }
+  }
 
-    (session.createDataset(processingAttempted.flatMap(_.right.toOption))(Encoders.product[LT]),
+  def apply[T <: Product : TypeTag : ClassTag : Decoder](session: SparkSession,
+                                                         path: String,
+                                                         contract: Contract): (Dataset[T], Dataset[NotProcessableRecord]) = {
+    val processingAttempted: RDD[Either[NotProcessableRecord, T]] = attemptProcessing[T](session, path, contract)
+
+    (session.createDataset(processingAttempted.flatMap(_.right.toOption))(Encoders.product[T]),
       session.createDataset(processingAttempted.flatMap(_.left.toOption))(Encoders.product[NotProcessableRecord]))
   }
 
   // Will return None for nulls/missing fields if and only if the field is nullable
   // This will never return an actual null in the map since nullability is determined by Optionality
+  // TODO Full path to field in error message
   def validateAndConvertTypes(fieldsToValues: Map[String, Any],
                               expectedSchema: StructType,
-                              format: Format,
+                              contract: Contract,
                               fieldPrefix: String = "")
                              (implicit line: String): Either[NotProcessableRecordTyped, Map[String, Any]] = {
     val validatedFields: Map[String, Either[NotProcessableRecordTyped, Any]] =
@@ -113,22 +123,18 @@ object ReadValidated {
           }
 
         case StructField(name, TimestampType, nullable, _) =>
-          require(format.dateFormat.isDefined)
+          require(contract.dateFormat.isDefined)
 
           def parseTimeStampString(field: String): Either[NotProcessableRecordTyped, Any] = try {
-            if (nullable) rightAny(Some(DateTimeStringToLong(field, format.dateFormat.get)))
-            else rightAny(DateTimeStringToLong(field, format.dateFormat.get))
-
-
-            //            if (nullable) rightAny(Some(dateTimeStringToLong(field, format.dateFormat.get)))
-            //            else rightAny(dateTimeStringToLong(field, format.dateFormat.get))
+            if (nullable) rightAny(Some(DateTimeStringUtils.stringToTimestamp(field, contract.dateFormat.get)))
+            else rightAny(DateTimeStringUtils.stringToTimestamp(field, contract.dateFormat.get))
           } catch {
             case e: Throwable =>
               leftAny(NotProcessableRecordTyped(
                 recordLine = line,
                 notProcessableReasonType = InvalidTimestamp,
                 notProcessableReasonMessage =
-                  s"Field ${fieldPath(fieldPrefix, name)}. Could not parse timestamp see stack trace",
+                  s"Field ${fieldPath(fieldPrefix, name)}. Could not parse timestamp see stack trace: " + field,
                 stackTrace = Some(StackTraceToString(e))
               ))
           }
@@ -210,12 +216,9 @@ object ReadValidated {
 
             validateAndConvertTypes(indexed, StructType(indexed.map {
               case (index, _) => StructField(index, dataType, containsNull)
-            }.toSeq), format, fieldPath(fieldPrefix, name)) match {
+            }.toSeq), contract, fieldPath(fieldPrefix, name)) match {
               case Right(map: Map[String, Any]) =>
-                // Circe version
-                //                rightAny(map.map(_.swap).mapValues(_.toInt).toVector.sortBy(_._2).map {
-                // Spray version
-                rightAny(map.map(_.swap).mapValues(_.toInt).toList.sortBy(_._2).map {
+                rightAny(map.map(_.swap).mapValues(_.toInt).toVector.sortBy(_._2).map {
                   case (Some(thing), _) => thing
                   case (None, _) => null
                 })
@@ -225,22 +228,11 @@ object ReadValidated {
 
           getField(name, fieldsToValues, nullable) match {
             case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
-
-            // For Spray version
-            //            case Right(array: List[_]) if containsNull && !nullable => recurse(array.toVector)
-            //            case Right(Some(array: List[_])) if containsNull && nullable => recurse(array.toVector) match {
-            //              case Right(map) => rightAny(Some(map))
-            //              case Left(fail) => leftAny(fail)
-            //            }
-
-            // For Circe version
             case Right(array: Vector[_]) if containsNull && !nullable => recurse(array)
             case Right(Some(array: Vector[_])) if containsNull && nullable => recurse(array) match {
               case Right(map) => rightAny(Some(map))
               case Left(fail) => leftAny(fail)
             }
-
-
             case correctType@Right(None) if containsNull && nullable => correctType
             case Right(wrongTypeField) =>
               leftAny(NotProcessableRecordTyped(
@@ -256,9 +248,9 @@ object ReadValidated {
           getField(name, fieldsToValues, nullable) match {
             case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
             case Right(struct: Map[_, _]) if struct.keySet.forall(_.isInstanceOf[String]) && struct.nonEmpty && !nullable =>
-              validateAndConvertTypes(struct.asInstanceOf[Map[String, Any]], structType, format, fieldPath(fieldPrefix, name))
+              validateAndConvertTypes(struct.asInstanceOf[Map[String, Any]], structType, contract, fieldPath(fieldPrefix, name))
             case Right(Some(struct: Map[_, _])) if struct.keySet.forall(_.isInstanceOf[String]) && struct.nonEmpty && nullable =>
-              validateAndConvertTypes(struct.asInstanceOf[Map[String, Any]], structType, format, fieldPath(fieldPrefix, name)) match {
+              validateAndConvertTypes(struct.asInstanceOf[Map[String, Any]], structType, contract, fieldPath(fieldPrefix, name)) match {
                 case Left(fail) => leftAny(fail)
                 case Right(map) => rightAny(Some(map))
               }
@@ -267,7 +259,7 @@ object ReadValidated {
               leftAny(NotProcessableRecordTyped(
                 recordLine = line,
                 notProcessableReasonType = IncorrectType,
-                notProcessableReasonMessage = "Expected Struct but found field: " + wrongTypeField,
+                notProcessableReasonMessage = s"Field ${fieldPath(fieldPrefix, name)}. Expected Struct but found field: " + wrongTypeField,
                 stackTrace = None
               ))
           }
@@ -304,12 +296,12 @@ object ReadValidated {
   // (c) intend to use it instead of spray
   // TODO We should replace all other occurances of spray with Circe
   def parsePartitionToFieldValueMaps(partition: Iterator[String],
-                                     format: Format): Iterator[Either[NotProcessableRecordTyped, (String, Map[String, Any])]] = {
-    format match {
+                                     contract: Contract): Iterator[Either[NotProcessableRecordTyped, (String, Map[String, Any])]] = {
+    contract match {
       case JSON(_) =>
-
         partition.map(line => parse(line) match {
-          case Right(json) => Right[NotProcessableRecordTyped, (String, Map[String, Any])](line -> CirceJsonUtils.jsonToMap(json))
+          case Right(json) =>
+            Right[NotProcessableRecordTyped, (String, Map[String, Any])](line -> CirceJsonUtils.jsonToMap(json))
           case Left(parsingFailure) => Left[NotProcessableRecordTyped, (String, Map[String, Any])](NotProcessableRecordTyped(
             recordLine = line,
             notProcessableReasonType = InvalidJSON,
