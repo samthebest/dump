@@ -28,7 +28,7 @@ class ReadValidatedTest extends Specification {
       validateAndConvertTypes(
         fieldsToValues = Map("fieldWrong" -> "foo"),
         expectedSchema = StructType(Seq(StructField("field", dataType, nullable = false))),
-        format = jsonFormat
+        contract = jsonFormat
       ) must_=== Left(NotProcessableRecordTyped(
         recordLine = line,
         notProcessableReasonType = MissingField,
@@ -42,7 +42,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> "foo"),
           expectedSchema = StructType(Seq(StructField("field", StringType, nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> "foo"))
       }
 
@@ -50,7 +50,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> "foo"),
           expectedSchema = StructType(Seq(StructField("field", StringType, nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> Some("foo")))
       }
 
@@ -58,7 +58,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map(),
           expectedSchema = StructType(Seq(StructField("field", StringType, nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> None))
       }
 
@@ -66,7 +66,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> null),
           expectedSchema = StructType(Seq(StructField("field", StringType, nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> None))
       }
 
@@ -74,7 +74,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> 1234),
           expectedSchema = StructType(Seq(StructField("field", StringType, nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Left(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
@@ -93,7 +93,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> true),
           expectedSchema = StructType(Seq(StructField("field", BooleanType, nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> true))
       }
 
@@ -101,7 +101,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> true),
           expectedSchema = StructType(Seq(StructField("field", BooleanType, nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> Some(true)))
       }
 
@@ -109,7 +109,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map(),
           expectedSchema = StructType(Seq(StructField("field", BooleanType, nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> None))
       }
 
@@ -117,7 +117,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> null),
           expectedSchema = StructType(Seq(StructField("field", BooleanType, nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> None))
       }
 
@@ -125,8 +125,8 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> 1234),
           expectedSchema = StructType(Seq(StructField("field", BooleanType, nullable = false))),
-          format = JSON()
-        ) must_=== Left(NotProcessableRecordTyped(
+          contract = JSON()
+        ) must beLeft(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
           notProcessableReasonMessage = "Field field. Expected Boolean but found field: 1234",
@@ -144,9 +144,9 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> "2018-09-25T00:00:00Z"),
           expectedSchema = StructType(Seq(StructField("field", TimestampType, nullable = false))),
-          format = jsonFormat
+          contract = jsonFormat
         ) match {
-          case Right(map) if map == Map("field" -> 1537833600000L) => success
+          case Right(map) if map == Map("field" -> new Timestamp(1537833600000L)) => success
           case left@Left(_) => failure("Conversion error: " + left)
           case Right(map) => failure("Wrong result: " + map)
         }
@@ -156,9 +156,9 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> "2018-09-25T00:00:00Z"),
           expectedSchema = StructType(Seq(StructField("field", TimestampType, nullable = true))),
-          format = jsonFormat
+          contract = jsonFormat
         ) match {
-          case Right(map) if map == Map("field" -> Some(1537833600000L)) => success
+          case Right(map) if map == Map("field" -> Some(new Timestamp(1537833600000L))) => success
           case left@Left(_) => failure("Conversion error: " + left)
           case Right(map) => failure("Wrong result: " + map)
         }
@@ -168,7 +168,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map(),
           expectedSchema = StructType(Seq(StructField("field", TimestampType, nullable = true))),
-          format = jsonFormat
+          contract = jsonFormat
         ) match {
           case Right(map) if map == Map("field" -> None) => success
           case left@Left(_) => failure("Conversion error: " + left)
@@ -180,8 +180,8 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> 1234),
           expectedSchema = StructType(Seq(StructField("field", TimestampType, nullable = false))),
-          format = jsonFormat
-        ) must_=== Left(NotProcessableRecordTyped(
+          contract = jsonFormat
+        ) must beLeft(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
           notProcessableReasonMessage = "Field field. Expected Timestamp String but found field: 1234",
@@ -193,11 +193,24 @@ class ReadValidatedTest extends Specification {
         testMissingField(TimestampType)
       }
 
-      "Throw exception if parsing timestamp with a JSON with no dateformat" in {
+      "Return NotProcessableRecord when given a map with invalid date in it" in {
+        validateAndConvertTypes(
+          fieldsToValues = Map("field" -> "2018-09-25 WRONG T00:00:00Z"),
+          expectedSchema = StructType(Seq(StructField("field", TimestampType, nullable = false))),
+          contract = jsonFormat
+        ).left.toOption.map(r => r.copy(stackTrace = None)) must beSome(NotProcessableRecordTyped(
+          recordLine = line,
+          notProcessableReasonType = InvalidTimestamp,
+          notProcessableReasonMessage = "Field field. Could not parse timestamp see stack trace: 2018-09-25 WRONG T00:00:00Z",
+          stackTrace = None
+        ))
+      }
+
+      "Throw exception if parsing timestamp with a JSON with no datecontract" in {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> 1234),
           expectedSchema = StructType(Seq(StructField("field", TimestampType, nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) must throwAn[IllegalArgumentException]
       }
     }
@@ -207,7 +220,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> 1234L),
           expectedSchema = StructType(Seq(StructField("field", LongType, nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) match {
           case Right(map) if map == Map("field" -> 1234L) && map.head._2.isInstanceOf[Long] => success
           case left@Left(_) => failure("Conversion error: " + left)
@@ -219,7 +232,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> 1234L),
           expectedSchema = StructType(Seq(StructField("field", LongType, nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) match {
           case Right(map) if map == Map("field" -> Some(1234L)) => success
           case left@Left(_) => failure("Conversion error: " + left)
@@ -231,7 +244,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map(),
           expectedSchema = StructType(Seq(StructField("field", LongType, nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) match {
           case Right(map) if map == Map("field" -> None) => success
           case left@Left(_) => failure("Conversion error: " + left)
@@ -243,7 +256,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> null),
           expectedSchema = StructType(Seq(StructField("field", LongType, nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) match {
           case Right(map) if map == Map("field" -> None) => success
           case left@Left(_) => failure("Conversion error: " + left)
@@ -255,7 +268,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> 1234.1234),
           expectedSchema = StructType(Seq(StructField("field", LongType, nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Left(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
@@ -274,7 +287,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> 1234),
           expectedSchema = StructType(Seq(StructField("field", IntegerType, nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) match {
           case Right(map) if map == Map("field" -> 1234) && map.head._2.isInstanceOf[Int] => success
           case left@Left(_) => failure("Conversion error: " + left)
@@ -286,7 +299,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> 1234),
           expectedSchema = StructType(Seq(StructField("field", IntegerType, nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) match {
           case Right(map) if map == Map("field" -> Some(1234)) => success
           case left@Left(_) => failure("Conversion error: " + left)
@@ -298,7 +311,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map(),
           expectedSchema = StructType(Seq(StructField("field", IntegerType, nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) match {
           case Right(map) if map == Map("field" -> None) => success
           case left@Left(_) => failure("Conversion error: " + left)
@@ -310,7 +323,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> null),
           expectedSchema = StructType(Seq(StructField("field", IntegerType, nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) match {
           case Right(map) if map == Map("field" -> None) => success
           case left@Left(_) => failure("Conversion error: " + left)
@@ -322,7 +335,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> 1234.1234),
           expectedSchema = StructType(Seq(StructField("field", IntegerType, nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Left(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
@@ -341,7 +354,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> 1234.1234),
           expectedSchema = StructType(Seq(StructField("field", DoubleType, nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) match {
           case Right(map) if map == Map("field" -> 1234.1234) && map.head._2.isInstanceOf[Double] => success
           case left@Left(_) => failure("Conversion error: " + left)
@@ -353,7 +366,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> 1234.1234),
           expectedSchema = StructType(Seq(StructField("field", DoubleType, nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) match {
           case Right(map) if map == Map("field" -> Some(1234.1234)) => success
           case left@Left(_) => failure("Conversion error: " + left)
@@ -365,7 +378,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map(),
           expectedSchema = StructType(Seq(StructField("field", DoubleType, nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) match {
           case Right(map) if map == Map("field" -> None) => success
           case left@Left(_) => failure("Conversion error: " + left)
@@ -377,7 +390,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> null),
           expectedSchema = StructType(Seq(StructField("field", DoubleType, nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) match {
           case Right(map) if map == Map("field" -> None) => success
           case left@Left(_) => failure("Conversion error: " + left)
@@ -389,7 +402,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> "1234 1234"),
           expectedSchema = StructType(Seq(StructField("field", DoubleType, nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Left(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
@@ -409,7 +422,7 @@ class ReadValidatedTest extends Specification {
           fieldsToValues = Map("field" -> Vector(1.2, 1.3)),
           expectedSchema = StructType(Seq(StructField("field",
             ArrayType(DoubleType), nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> Vector(1.2, 1.3)))
       }
 
@@ -418,7 +431,7 @@ class ReadValidatedTest extends Specification {
           fieldsToValues = Map("field" -> Vector(1.2, 1.3)),
           expectedSchema = StructType(Seq(StructField("field",
             ArrayType(DoubleType), nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> Some(Vector(1.2, 1.3))))
       }
 
@@ -427,7 +440,7 @@ class ReadValidatedTest extends Specification {
           fieldsToValues = Map(),
           expectedSchema = StructType(Seq(StructField("field",
             ArrayType(DoubleType), nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> None))
       }
 
@@ -436,7 +449,7 @@ class ReadValidatedTest extends Specification {
           fieldsToValues = Map("field" -> null),
           expectedSchema = StructType(Seq(StructField("field",
             ArrayType(DoubleType), nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> None))
       }
 
@@ -445,7 +458,7 @@ class ReadValidatedTest extends Specification {
           fieldsToValues = Map("field" -> Vector(Map("fieldInner" -> "foo"), Map("fieldInner" -> "bar"))),
           expectedSchema = StructType(Seq(StructField("field",
             ArrayType(StructType(Seq(StructField("fieldInner", StringType, nullable = false)))), nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> Vector(Map("fieldInner" -> "foo"), Map("fieldInner" -> "bar"))))
       }
 
@@ -454,7 +467,7 @@ class ReadValidatedTest extends Specification {
           fieldsToValues = Map("field" -> Vector(Vector(5, 3, 1, 7), Vector())),
           expectedSchema = StructType(Seq(StructField("field",
             ArrayType(ArrayType(IntegerType)), nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> Vector(Vector(5, 3, 1, 7), Vector())))
       }
 
@@ -462,7 +475,7 @@ class ReadValidatedTest extends Specification {
         validateAndConvertTypes(
           fieldsToValues = Map("field" -> "1234 1234"),
           expectedSchema = StructType(Seq(StructField("field", ArrayType(StringType), nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Left(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
@@ -482,7 +495,7 @@ class ReadValidatedTest extends Specification {
           fieldsToValues = Map("field" -> Map("fieldInner" -> "foo")),
           expectedSchema = StructType(Seq(StructField("field",
             StructType(Seq(StructField("fieldInner", StringType, nullable = false))), nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> Map("fieldInner" -> "foo")))
       }
 
@@ -491,7 +504,7 @@ class ReadValidatedTest extends Specification {
           fieldsToValues = Map("field" -> Map("fieldInner" -> "foo")),
           expectedSchema = StructType(Seq(StructField("field",
             StructType(Seq(StructField("fieldInner", StringType, nullable = false))), nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> Some(Map("fieldInner" -> "foo"))))
       }
 
@@ -500,7 +513,7 @@ class ReadValidatedTest extends Specification {
           fieldsToValues = Map(),
           expectedSchema = StructType(Seq(StructField("field",
             StructType(Seq(StructField("fieldInner", StringType, nullable = false))), nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> None))
       }
 
@@ -509,7 +522,7 @@ class ReadValidatedTest extends Specification {
           fieldsToValues = Map("field" -> null),
           expectedSchema = StructType(Seq(StructField("field",
             StructType(Seq(StructField("fieldInner", StringType, nullable = false))), nullable = true))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Right(Map("field" -> None))
       }
 
@@ -518,7 +531,7 @@ class ReadValidatedTest extends Specification {
           fieldsToValues = Map("field" -> "foo"),
           expectedSchema = StructType(Seq(StructField("field",
             StructType(Seq(StructField("fieldInner", StringType, nullable = false))), nullable = false))),
-          format = JSON()
+          contract = JSON()
         ) must_=== Left(NotProcessableRecordTyped(
           recordLine = line,
           notProcessableReasonType = IncorrectType,
