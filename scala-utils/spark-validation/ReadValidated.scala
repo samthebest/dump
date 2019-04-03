@@ -1,36 +1,36 @@
-
-import java.sql.Timestamp
-
-import utils.{CirceJsonUtils, DateTimeStringUtils, StackTraceToString}
+import io.circe._
+import io.circe.parser._
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql._
-import org.apache.spark.sql.catalyst.ScalaReflection._
 import org.apache.spark.sql.types._
-import spray.json.JsonParser.ParsingException
-import spray.json._
 
 import scala.reflect.ClassTag
 import scala.reflect.runtime.universe._
-import io.circe._
-import io.circe.parser._
-import CorrectSchemaFor._
 
 sealed trait Contract {
   val dateFormat: Option[String]
+  val keyConverter: Option[KeyConverter]
 }
-case class JSON(dateFormat: Option[String] = None) extends Contract
+
+case class JSON(dateFormat: Option[String] = None,
+                keyConverter: Option[KeyConverter] = None) extends Contract
+
 case class CSV(hasHeader: Boolean,
                quotedStrings: Boolean,
                ignoreAdditional: Boolean = true,
-               dateFormat: Option[String] = None) extends Contract
+               dateFormat: Option[String] = None,
+               keyConverter: Option[KeyConverter] = None) extends Contract
 
 // I hate Either, want to use Xor from cats, or \/ from Scalaz instead
 
 sealed trait NotProcessableReasonType
 
 case object IncorrectType extends NotProcessableReasonType
+
 case object MissingField extends NotProcessableReasonType
+
 case object InvalidTimestamp extends NotProcessableReasonType
+
 case object InvalidJSON extends NotProcessableReasonType
 
 // Could have a second case class without recordLine and populate it later, would mean we don't have to keep passing it down
@@ -43,6 +43,11 @@ case class NotProcessableRecord(recordLine: String,
                                 notProcessableReasonType: String,
                                 notProcessableReasonMessage: String,
                                 stackTrace: Option[String] = None)
+
+// TODO Refacotr sig of validateAndConvertTypes, so that have following as In / Out respectively
+case class ParsedRecord(map: Map[String, Any]) extends AnyVal
+
+case class TypedTree(tree: Map[String, Any]) extends AnyVal
 
 object ReadValidated {
   val leftAny: NotProcessableRecordTyped => Left[NotProcessableRecordTyped, Any] = Left[NotProcessableRecordTyped, Any]
@@ -65,9 +70,16 @@ object ReadValidated {
     .map {
       case Right((line: String, fieldsToValues)) =>
         implicit val l = line
-        validateAndConvertTypes(fieldsToValues, structFor[T], contract) match {
+        validateAndConvertTypes(
+          parsedRecord = fieldsToValues,
+          expectedSchema =
+            contract.keyConverter.map(_.outToIn).map(KeyConverter.convertKeys(structFor[T], _)).getOrElse(structFor[T]),
+          contract = contract
+        ) match {
           case Left(fail) => Left[NotProcessableRecord, T](fail.toNotProcessableRecord)
-          case Right(map) => Right[NotProcessableRecord, T](CirceJsonUtils.mapToCaseClass[T](map))
+          case Right(map) => Right[NotProcessableRecord, T](
+            CirceJsonUtils.mapToCaseClass[T](map, contract.keyConverter.map(_.inToOut))
+          )
         }
       case Left(parseFail) => Left[NotProcessableRecord, T](parseFail.toNotProcessableRecord)
     }
@@ -84,8 +96,9 @@ object ReadValidated {
 
   // Will return None for nulls/missing fields if and only if the field is nullable
   // This will never return an actual null in the map since nullability is determined by Optionality
+  // Technically we don't need to use StructType, we could introduce our own recursive container for the structure
   // TODO Full path to field in error message
-  def validateAndConvertTypes(fieldsToValues: Map[String, Any],
+  def validateAndConvertTypes(parsedRecord: Map[String, Any],
                               expectedSchema: StructType,
                               contract: Contract,
                               fieldPrefix: String = "")
@@ -93,7 +106,7 @@ object ReadValidated {
     val validatedFields: Map[String, Either[NotProcessableRecordTyped, Any]] =
       expectedSchema.fields.map {
         case StructField(name, StringType, nullable, _) =>
-          getField(name, fieldsToValues, nullable) match {
+          getField(name, parsedRecord, nullable) match {
             case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
             case correctType@(Right(None) | Right(Some(_: String))) if nullable => correctType
             case correctType@Right(_: String) if !nullable => correctType
@@ -108,10 +121,10 @@ object ReadValidated {
           }
 
         case StructField(name, BooleanType, nullable, _) =>
-          getField(name, fieldsToValues, nullable) match {
+          getField(name, parsedRecord, nullable) match {
             case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
             case correctType@(Right(None) | Right(Some(_: Boolean))) if nullable => correctType
-            case correctType@Right(_: Boolean) if !nullable => correctType
+            case correctType@Right(_: Boolean) => correctType
             case Right(wrongTypeField) =>
               leftAny(NotProcessableRecordTyped(
                 recordLine = line,
@@ -139,7 +152,7 @@ object ReadValidated {
               ))
           }
 
-          getField(name, fieldsToValues, nullable) match {
+          getField(name, parsedRecord, nullable) match {
             case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
             case Right(field: String) if !nullable => parseTimeStampString(field)
             case Right(Some(field: String)) if nullable => parseTimeStampString(field)
@@ -155,7 +168,7 @@ object ReadValidated {
           }
 
         case StructField(name, IntegerType, nullable, _) =>
-          getField(name, fieldsToValues, nullable) match {
+          getField(name, parsedRecord, nullable) match {
             case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
             case correctType@(Right(None) | Right(Some(_: Int))) if nullable => correctType
             case correctType@Right(_: Int) => correctType
@@ -171,7 +184,7 @@ object ReadValidated {
           }
 
         case StructField(name, LongType, nullable, _) =>
-          getField(name, fieldsToValues, nullable) match {
+          getField(name, parsedRecord, nullable) match {
             case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
             case correctType@(Right(None) | Right(Some(_: Long))) if nullable => correctType
             case correctType@Right(_: Long) => correctType
@@ -193,10 +206,10 @@ object ReadValidated {
           }
 
         case StructField(name, DoubleType, nullable, _) =>
-          getField(name, fieldsToValues, nullable) match {
+          getField(name, parsedRecord, nullable) match {
             case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
             case correctType@(Right(None) | Right(Some(_: Double))) if nullable => correctType
-            case correctType@Right(_: Double) if !nullable => correctType
+            case correctType@Right(_: Double) => correctType
             case Right(wrongTypeField) =>
               leftAny(NotProcessableRecordTyped(
                 recordLine = line,
@@ -226,7 +239,7 @@ object ReadValidated {
             }
           }
 
-          getField(name, fieldsToValues, nullable) match {
+          getField(name, parsedRecord, nullable) match {
             case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
             case Right(array: Vector[_]) if containsNull && !nullable => recurse(array)
             case Right(Some(array: Vector[_])) if containsNull && nullable => recurse(array) match {
@@ -245,7 +258,7 @@ object ReadValidated {
           }
 
         case StructField(name, structType: StructType, nullable, _) =>
-          getField(name, fieldsToValues, nullable) match {
+          getField(name, parsedRecord, nullable) match {
             case nullFail: Left[NotProcessableRecordTyped, Any] => nullFail
             case Right(struct: Map[_, _]) if struct.keySet.forall(_.isInstanceOf[String]) && struct.nonEmpty && !nullable =>
               validateAndConvertTypes(struct.asInstanceOf[Map[String, Any]], structType, contract, fieldPath(fieldPrefix, name))
@@ -264,7 +277,9 @@ object ReadValidated {
               ))
           }
       }
-      .zip(expectedSchema.fields.map(_.name)).map(_.swap)
+      .zip(expectedSchema.fields.map(
+        field => contract.keyConverter.map(_.inToOut).map(_ (field.name)).getOrElse(field.name)))
+      .map(_.swap)
       .toMap
 
     validatedFields.find(_._2.isLeft).map(_._2.left.get).map(Left[NotProcessableRecordTyped, Map[String, Any]])
@@ -290,6 +305,7 @@ object ReadValidated {
         None
       ))
   }
+
   // Using Circe because
   // (a) it returns Either,
   // (b) the error message is concise, so can be included in the notProcessableReasonMessage
@@ -298,7 +314,7 @@ object ReadValidated {
   def parsePartitionToFieldValueMaps(partition: Iterator[String],
                                      contract: Contract): Iterator[Either[NotProcessableRecordTyped, (String, Map[String, Any])]] = {
     contract match {
-      case JSON(_) =>
+      case JSON(_, _) =>
         partition.map(line => parse(line) match {
           case Right(json) =>
             Right[NotProcessableRecordTyped, (String, Map[String, Any])](line -> CirceJsonUtils.jsonToMap(json))
@@ -310,7 +326,7 @@ object ReadValidated {
           ))
         })
 
-      case CSV(hasHeader, quotedStrings, _, _) =>
+      case CSV(hasHeader, quotedStrings, _, _, _) =>
         // Should use apache commons CSV parser
 
         ???
