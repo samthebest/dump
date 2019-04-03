@@ -45,6 +45,14 @@ class ReadValidatedTest extends Specification {
           contract = JSON()
         ) must_=== Right(Map("field" -> "foo"))
       }
+      
+      "Convert a map with Strings in it and convert the keys" in {
+        validateAndConvertTypes(
+          parsedRecord = Map("field" -> "foo"),
+          expectedSchema = StructType(Seq(StructField("field", StringType, nullable = false))),
+          contract = JSON(keyConverter = Some(KeyConverter(inToOut = key => key.toUpperCase, outToIn = identity)))
+        ) must_=== Right(Map("FIELD" -> "foo"))
+      }
 
       "Return a map with Some when the field exists and is nullable" in {
         validateAndConvertTypes(
