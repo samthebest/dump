@@ -84,6 +84,24 @@ object ReadValidated {
       case Left(parseFail) => Left[NotProcessableRecord, T](parseFail.toNotProcessableRecord)
     }
   }
+  
+  def attemptProcessingAsMap(sparkSession: SparkSession,
+                             path: String,
+                             contract: Contract,
+                             schema: StructType): RDD[Either[NotProcessableRecord, Map[String, Any]]] = {
+    sparkSession.sparkContext.textFile(path)
+    .mapPartitions(parsePartitionToFieldValueMaps(_, contract))
+    .map {
+      case Right((line: String, fieldsToValues)) =>
+        implicit val l = line
+        validateAndConvertTypes(fieldsToValues, schema, contract) match {
+          case Left(fail) => Left[NotProcessableRecord, Map[String, Any]](fail.toNotProcessableRecord)
+          case Right(map) => Right[NotProcessableRecord, Map[String, Any]](map)
+        }
+      case Left(parseFail) => Left[NotProcessableRecord, Map[String, Any]](parseFail.toNotProcessableRecord)
+    }
+  }
+
 
   def apply[T <: Product : TypeTag : ClassTag : Decoder](session: SparkSession,
                                                          path: String,
