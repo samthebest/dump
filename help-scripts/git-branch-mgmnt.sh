@@ -10,6 +10,7 @@ function delete-untracked-files {
   git clean -f -d
 }
 
+# NOT WORK
 function clean-merged-branches {
   for branch in `git branch --merged master | grep -v master`; do
     echo "Deleting local branch: $branch"
