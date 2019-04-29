@@ -12,12 +12,7 @@ function delete-untracked-files {
 
 # NOT WORK
 function clean-merged-branches {
-  for branch in `git branch --merged master | grep -v master`; do
-    echo "Deleting local branch: $branch"
-    git branch -d $branch || break
-    echo "Deleting remote branch: $branch"
-    git push --delete origin $branch || break
-  done
+  # USE OTHER SCRIPT in help-scripts
 }
 
 
