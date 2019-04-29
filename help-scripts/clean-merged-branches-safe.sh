@@ -23,7 +23,6 @@ for branch in `git branch --merged master | grep -v master`; do
     echo "Deleting local branch: $branch"
     git branch -d $branch || break
     echo "Deleting remote branch: $branch"
-    echo "DRY RUN"
     git push --delete origin $branch || break
   else
     echo "Unmerged changes in branch: $branch"
