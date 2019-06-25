@@ -2,6 +2,8 @@ In rough order of awesomeness
 
 Obviously: http://agilemanifesto.org/
 
+https://www.youtube.com/watch?v=hG4LH6P8Syk
+
 http://martinfowler.com/articles/designDead.html
 
 http://www.jamesshore.com/Agile-Book/simple_design.html
