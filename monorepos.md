@@ -20,3 +20,4 @@ https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/
  - Every project will use same workflow (can't having diverging branching models across projects)
  - Have to setup IDEs less often (no need to setup Intellij 10x for 10 different repos for example)
  - Code sharing/reuse is discouraged in multi-repo due to the overhead.  Suppose module A and B would naturally both depend on C, but instead they each have their own implementation, say C_A and C_B.  Now if a fix/feature is applied to one, say C_A, it won't get propogated to C_B, or we have to fix the bug twice.  In large projects this gets much worse.
+ - Multirepo is an almost irreversible decision, it's hard to go from a multi to a mono, but it's easy to go from a mono to a multi.
