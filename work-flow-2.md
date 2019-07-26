@@ -28,7 +28,7 @@ The board should have the following columns/sections:
 
 ## Feature Process Step by Step with Git and CI
 
-### Backlog -> TODO
+### Backlog -> TODO
 
 How tickets move from the Backlog to TODO is not particularly important from a development point of view, so will not be documented in detail.  This could be via Sprint plannings (Scrum), or via a Kanban approach, whatever, such details are largely irrelevant to the core Agile methodology.
 
