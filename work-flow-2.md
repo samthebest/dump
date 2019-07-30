@@ -62,7 +62,7 @@ If you already have a ticket in Doing, but for whatever reason that ticket is pe
     - Pull master, and merge in the branch
     - (optional) does a commit with messsage "Closes #<PR-number>." (might need to be jenkins param for now)
     - Run the test suite, this may include a suite that spins up temporary staging clusters (this step ensures that the build still passes after merge, hypothetically if the branch was up to date with master then this step would be unnecessary, but getting the PR system to dissallow merges unless the branch is up to date with master is tricky).
-    - If and only if the test suite passes, it pushes master.
+    - If and only if the test suite passes (and maybe sonarcube), it pushes master.
     - *(Desirable, but hard)* automatically do step 2
 2. Move the ticket to "Ready to Release"
 
