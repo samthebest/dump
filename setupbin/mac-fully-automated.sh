@@ -86,6 +86,10 @@ pip install awscli
 # vagrant - a orchestration for virtual box
 brew cask install vagrant
 
+# Zeppelin:
+brew install apache-spark
+brew install apache-zeppelin
+
 # VLC
 brew cask install vlc
 
