@@ -32,8 +32,10 @@ brew cask install intellij-idea-ce
 wget -O settings.jar https://github.com/jkaving/intellij-colors-solarized/blob/master/settings.jar?raw=true
 
 # Install java (8 so compatible with Spark)
-brew tap caskroom/versions
-brew cask install java8
+# brew tap caskroom/versions
+# brew install java8
+
+brew cask install adoptopenjdk/openjdk/adoptopenjdk8
 
 # Install scala
 brew install scala
