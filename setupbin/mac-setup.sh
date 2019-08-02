@@ -81,8 +81,8 @@ mkdir -p ~/src
 # change the default shortcuts for snap right half and snap left half as they conflict with Intellij
 brew cask install spectacle
 
-curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-fully-automated.sh | sh
-curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-config.sh | sh
+curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-fully-automated.sh | bash
+curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-config.sh | bash
 
 # gcloud
 curl https://sdk.cloud.google.com | bash
