@@ -16,6 +16,11 @@ brew tap caskroom/cask
 
 brew cask install google-chrome
 
+# Change screenshot location to something more appropriate than desktop
+mkdir ~/Documents/Screenshots
+
+defaults write com.apple.screencapture location ~/Documents/Screenshots
+
 # Change editor
 export EDITOR=nano
 
