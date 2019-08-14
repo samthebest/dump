@@ -82,8 +82,8 @@ brew install jq
 # install pip
 brew install python
 
-# install aws cli
-pip install awscli
+# install aws cli (not work anymore)
+# pip install awscli
 
 # vagrant - a orchestration for virtual box
 brew cask install vagrant
