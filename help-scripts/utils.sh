@@ -30,7 +30,7 @@ function check-git-tag-version-exists {
   fi
 }
 
-# Assumes tags are of form v123
+# Assumes tags are of form ${tag_prefix}123
 function get-version-from-tag {
   if [ `check-git-tag-version-exists` != true ]; then
     echo "ERROR: not git version tags exist"
