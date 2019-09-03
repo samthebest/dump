@@ -42,6 +42,12 @@ function get-version-from-tag {
   git tag | egrep "^${tag_prefix}[0-9]+$" | cut -c ${version_offset}`- | sort -rn | head -1
 }
 
+function bump-tag-version {
+  current_version=`get-version-from-tag`
+  git tag ${tag_prefix}`expr $current_version + 1`
+  git push --tags
+}
+
 function determine-jar-name {
   prefix=$1
   
