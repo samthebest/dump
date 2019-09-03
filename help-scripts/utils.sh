@@ -18,8 +18,10 @@ function get-value-from-file {
     cat "${file}" | grep "${key}" | cut -c ${key_len}-
 }
 
+tag_prefix="v"
+
 function check-git-tag-version-exists {
-  git tag | egrep "^v[0-9]+$"
+  git tag | egrep "^${tag_prefix}[0-9]+$"
   exists=$?
   if [ "${exists}" = 0 ]; then
     echo true
@@ -35,7 +37,7 @@ function get-version-from-tag {
     kill -s TERM $TOP_PID
   fi
 
-  git tag | egrep "^v[0-9]+$" | cut -c 2- | sort -rn | head -1
+  git tag | egrep "^${tag_prefix}[0-9]+$" | cut -c 2- | sort -rn | head -1
 }
 
 function determine-jar-name {
