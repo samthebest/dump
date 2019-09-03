@@ -36,8 +36,10 @@ function get-version-from-tag {
     echo "ERROR: not git version tags exist"
     kill -s TERM $TOP_PID
   fi
+  
+  version_offset=`echo $tag_prefix | wc -c`
 
-  git tag | egrep "^${tag_prefix}[0-9]+$" | cut -c 2- | sort -rn | head -1
+  git tag | egrep "^${tag_prefix}[0-9]+$" | cut -c ${version_offset}`- | sort -rn | head -1
 }
 
 function determine-jar-name {
