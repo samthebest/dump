@@ -10,6 +10,8 @@ mkdir .ssh && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/
 git config --global user.name "sam"
 git config --global user.email sam@example.com
 
+git config --global alias.co checkout
+
 ssh-keygen -t rsa -b 4096 -C "sams@example.com" -N "" -f ~/.ssh/id_rsa
 
 echo "
@@ -83,7 +85,14 @@ brew install jq
 brew install python
 
 # install aws cli (not work anymore)
-# pip install awscli
+curl -O https://bootstrap.pypa.io/get-pip.py
+python3 get-pip.py --user
+pip3 install awscli --upgrade --user
+pip3 install awscli --upgrade --user
+export PATH=~/Library/Python/3.7/bin:$PATH
+echo "export PATH=~/Library/Python/3.7/bin:$PATH" >> ~/.bash_profile
+
+# Manual step: `aws configure`
 
 # vagrant - a orchestration for virtual box
 brew cask install vagrant
