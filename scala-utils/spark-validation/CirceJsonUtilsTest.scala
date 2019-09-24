@@ -20,8 +20,6 @@ case class WithTimestamp(timestamp: Timestamp, foo: String)
 case class WithTimestampOptional(timestamp: Option[Timestamp], foo: String)
 
 object CirceJsonUtilsTest extends Specification {
-  val defaultSellingTag = SellingTagStringTimes(1234, "foo", "foo", None)
-
   val withTimestampMap = Map(
     "timestamp" -> 1234L,
     "foo" -> "value"
@@ -75,16 +73,6 @@ object CirceJsonUtilsTest extends Specification {
   val personOptionalAddress = PersonOptionalAddress("Tom", Some(Address("Jefferson st", 10000)))
   val personOptionalAddressNone = PersonOptionalAddress("Tom", None)
 
-  "syntax.asJson" should {
-    "Handle simple case class" in {
-      decode[SellingTagStringTimes](defaultSellingTag.asJson.noSpaces).right.get must_=== defaultSellingTag
-    }
-
-    "Handle ???, which has over 22 fields" in {
-// TODO
-    }
-  }
-
   "CirceJsonUtils.mapToJson" should {
     "Convert Person example map to Person JSON" in {
       CirceJsonUtils.mapToJson(personMap) must_=== person.asJson
@@ -92,11 +80,6 @@ object CirceJsonUtilsTest extends Specification {
 
     "Convert withListMap to WithList JSON" in {
       CirceJsonUtils.mapToJson(withListMap) must_=== withList.asJson
-    }
-
-    "Can convert EnrichedProductStringTimes" in {
-      CirceJsonUtils.mapToJson(CirceJsonUtils.jsonToMap(defaultEnrichedProductStringTimes.asJson)) must_===
-        defaultEnrichedProductStringTimes.asJson
     }
   }
 
@@ -210,11 +193,6 @@ object CirceJsonUtilsTest extends Specification {
 
     "Convert PersonOptionalAddress with None example map to Person case class" in {
       CirceJsonUtils.mapToCaseClass[PersonOptionalAddress](personOptionalAddressMapNone) must_=== personOptionalAddressNone
-    }
-
-    "Convert enrichedProduct" in {
-      CirceJsonUtils.mapToCaseClass[EnrichedProductStringTimes](
-        CirceJsonUtils.jsonToMap(defaultEnrichedProductStringTimes.asJson)) must_=== defaultEnrichedProductStringTimes
     }
 
     "Convert withTimestamp" in {
