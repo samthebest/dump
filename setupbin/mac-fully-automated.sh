@@ -84,13 +84,17 @@ brew install jq
 # install pip
 brew install python
 
-# install aws cli (not sure the export PATH is necessary?)
-curl -O https://bootstrap.pypa.io/get-pip.py
-python3 get-pip.py --user
-pip3 install awscli --upgrade --user
-pip3 install awscli --upgrade --user
+# # install aws cli (not sure the export PATH is necessary?)
+# curl -O https://bootstrap.pypa.io/get-pip.py
+# python3 get-pip.py --user
+# pip3 install awscli --upgrade --user
+# pip3 install awscli --upgrade --user
 #export PATH=~/Library/Python/3.7/bin:$PATH
 #echo "export PATH=~/Library/Python/3.7/bin:$PATH" >> ~/.bash_profile
+
+# New brew command aws cli, not sure works
+brew install awscli
+
 
 # Manual step: `aws configure`
 
