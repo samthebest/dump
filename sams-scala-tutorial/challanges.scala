@@ -11,7 +11,7 @@ Please complete the following take home coding test. You can use any language yo
 The solution must be a link to a self contained repo, that means:
 
  - Provide a link to a public repository version controlled in git (E.g. Github)
- - Include a README.md file detailing how to compile & run the some tests.  An entry point / command line interface is NOT necessary.
+ - Include a README.md file detailing how to compile & run some tests.  An entry point / command line interface is NOT necessary.
  - Include in the README.md exact commands (brew/apt/yum/etc) to install any tools or dependencies, E.g. if you use python or docker say.  (Optional Bonus: write a non-interactive bash script that will work on any unix based operating system)
  - We value applying the Scientific Process to writing code, please think carefully about what this means. Is your code scientifically written? You will be asked about this in the interview.
 
