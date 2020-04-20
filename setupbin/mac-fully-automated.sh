@@ -43,7 +43,9 @@ brew cask install adoptopenjdk/openjdk/adoptopenjdk8
 brew install scala
 
 # Install sbt
-brew install sbt
+# No longer works
+#https://stackoverflow.com/questions/61067260/how-can-i-install-openjdk-8-and-sbt-on-mac-and-have-openjdk-8-not-13-the-defau
+#brew install sbt
 
 # Install Intellij (Community edition) (doesn't seem to work anymore)
 # brew cask install intellij-idea-ce
