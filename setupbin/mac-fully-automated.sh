@@ -2,17 +2,19 @@
 
 set -e
 
+ssh-keygen -t rsa -b 4096 -C "sams@example.com" -N "" -f ~/.ssh/id_rsa
+
 # Skip annoying "yes" for cloning git repos
 git config --global http.sslVerify false
 mkdir .ssh && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+
+chmod 600 .ssh
 
 # git setup
 git config --global user.name "sam"
 git config --global user.email sam@example.com
 
 git config --global alias.co checkout
-
-ssh-keygen -t rsa -b 4096 -C "sams@example.com" -N "" -f ~/.ssh/id_rsa
 
 echo "
 Host *
