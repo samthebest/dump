@@ -25,3 +25,4 @@ object Utils {
 }
 ```
 
+Almost all tail-recursive functions can be refactored to use the above, and has the advantage of not needing to fiddle around with the logic of the code so that it's properly tailrec.
