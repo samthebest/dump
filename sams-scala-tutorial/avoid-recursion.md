@@ -1,4 +1,4 @@
-Avoid recursion for anything that is not recursive :)
+Avoid recursion for anything that is not recursive :). Strictly speaking only things like the Ackermann function are non-primitive recursive and really need to use recursion.
 
 Sometimes recursive code is much easier to read for recursively defined structures (like Graphs, Trees, etc). This is the main exception.
 
