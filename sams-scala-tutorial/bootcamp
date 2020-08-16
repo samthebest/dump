@@ -1,0 +1,82 @@
+DU Scala Bootcamp
+Introduction
+1. Basic Scala Feature Set
+2. Add a unit test to the existing codebase
+3. Do a TODO in the existing codebase
+4. Consciousness Shifting - Static Typing & Functional Programming - It Typechecks! Ship it!
+Programming was and still is a Mathematical discipline
+Curry-Howard Isomorphism
+It Compile It Work
+5. Domain Driven Design - Holy Grail
+Aha Moment - Writing code is fun and easy - XP Perfection
+Bootcamp Completion
+Introduction
+As per the Ways of Working Project Reflection, the idea of “bootcamps”, that is some mandatory training/learnings will likely be rolled out across
+Convex. The goal of which is for new joiners to “shed baggage” and reduce the impact of Gravity (non-convexian principles arising from new
+joiners diluting convexian principles).
+Ahead of this initiative I have created a Scala Bootcamp for the DU team below.
+The links to tutorials will grow over time.
+The first 3 sections should be completed soon after joining. The final 2 sections will take much longer, but should at least be read promptly after
+joining.
+1. Basic Scala Feature Set
+Please see the Scala feature grading system here: https://www.scala-lang.org/old/node/8610
+New joiners should complete tutorials sufficient for “Level A1: Beginning application programmer”, furthermore joiners do some tutorials on:
+Pattern matching
+Options
+case classes (and Product)
+Intro to static typing: i.e. read https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/introduction-to-typing.md
+Understand basic types: i.e. read: https://github.com/samthebest/dump/blob/master/sams-scala-tutorial/basic-types.md
+2. Add a unit test to the existing codebase
+By exploring the existing unit tests it should be possible to extrapolate the common structure & specs2 DSL meaning.
+Find method(s) (ideally the simplest possible for this task) that have a TODO above them regarding unit tests, and try to add some more unit
+tests for such a method.
+3. Do a TODO in the existing codebase
+Find the easiest TODO in the codebase and complete this.
+4. Consciousness Shifting - Static Typing & Functional Programming - It Typechecks! Ship it!
+(SAM TODO add more)
+Need to find some good resources here.
+This is the most critical stage to baggage shedding and avoidance of gravity.
+Programming was and still is a Mathematical discipline
+See https://www.youtube.com/watch?v=ecIWPzGEbFc particularly like Alan Turing quotes about 20 minutes in.
+Curry-Howard Isomorphism
+Writing mathematical proofs is like writing programs that compile
+https://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence
+Understanding this is key to understanding the next
+It Compile It Work
+When using feature-rich statically typed functional programming languages it’s possible to write code is such a way that if it compiles it
+probably works. In Agda there is a joke, that no one ever bothers to run Agda programs, because if it compiles we already know the output.
+Another motto is “It typechecks! Ship it!”
+This concept takes the longest to learn and will not happen in the first few weeks, or even months of using Scala (the learning would be faster
+with Haskell, Agda, Idris (or coq or hol etc)).
+Some huge consequences of this paradigm shift:
+Massively reduced need to write unit tests, 100s of cases (particularly edge cases) which would often be checked for by unit tests, are
+automatically checked by the compiler
+Rare to zero use of debuggers to understand (or debug) existing code. Instead we use types and function signatures to guide us through
+the logic.
+Type Driven Development - https://www.youtube.com/watch?v=X36ye-1x_HQ
+5. Domain Driven Design - Holy Grail
+Ultimately programming is to solve a problem, and DDD is the practice of putting the problems coming from the Domain at the center of the
+architecture & design.
+Doing DDD in FP & statically typed languages is extremely powerful. Arguably it’s not possible dynamically typed languages.
+Doing DDD in Scala amounts to:
+Creating (or modifying) a case class
+Creating (or modifying) functions with signatures using said case classes
+Using the compiler to tell you what code to write often using ALT + ENTER to automatically generate code.
+Function signatures & case classes are incredibly succinct ways to communicate the design of a system. What is beautiful about FP & static
+typing, is that once this succinct design/design-change is done, the compiler do the rest of the work - filling out details and pointing out where
+business logic must be inserted.
+Links:
+https://fsharpforfunandprofit.com/ddd/
+Interesting discussion: https://news.ycombinator.com/item?id=12706727
+(optional not read myself) https://www.manning.com/books/functional-and-reactive-domain-modeling
+Aha Moment - Writing code is fun and easy - XP Perfection
+At some point in this bootcamp (or any good statically typed FP bootcamp/learnings) there comes an “aha moment”, this is the realisation that writ
+ing code is actually very fun and very easy, and even modifying code, even other peoples code, is still fun and easy.
+Most developers have strong aversions to writing code, so much so, they go to great lengths to use frameworks and join cargo cults. Non FP
+developers are often terrified of creativity, being different, novel ideas, etc. That fear seems to be a PTSD like irrationality, the trauma being years
+of debugging code and writing code in a dynamic programming language - where you need to run your code to find out if it works, and you can’t
+do DDD as effectively.
+When writing code becomes really easy, and really fun, it transforms the way you tackle problems.
+Profoundly - it changes your psychological & cognitive state during your work.
+Consequently when you solve a problem in FP you are tempted to solve it truly as simply as possible according to XP principles of DRY and
+refactoring, KISS, YAGNI.
