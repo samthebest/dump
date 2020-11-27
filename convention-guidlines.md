@@ -47,7 +47,51 @@ or this
     }
 ```
 
-#### Braces
+#### Multi-line Function Calling
+
+When calling a function extends over multiple lines, use 'named arguments', e.g.
+
+```
+val x = Person(
+  age = 10,
+  name = "fred"
+)
+```
+
+Never this (except when the params is varargs):
+
+
+```
+val x = Person(
+  10,
+  "fred"
+)
+```
+
+#### Brace Position
+
+The number of curly braces on any line must not exceed 1.
+
+The number of opening parens on a line should be consistent with the number of closing parens on the corresponding closing line.  For example do NOT do this:
+
+```
+val maybePerson = Some(Person(
+  age = 10,
+  name = identity)
+)
+```
+
+Do this instead:
+
+
+```
+val maybePerson = Some(Person(
+  age = 10,
+  name = identity
+))
+```
+
+#### Curly Braces
 
 Please refrain from using curly braces wherever one can use parens.  There is no need to seperate code over multiple lines for trivial one-line lambda expressions. Furthermore it [increases compile checking](http://stackoverflow.com/a/4387118/1586965)
 
