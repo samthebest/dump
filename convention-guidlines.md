@@ -97,6 +97,18 @@ Please refrain from using curly braces wherever one can use parens.  There is no
 
 Just as it is desirble to have short methods in procedural code, in functional code it is desirable to have single expressions.  If we avoid introducing local `val`s the overall complexity of the code is lower.  Of course this is not always possible, especially when `val`s are used more than once.
 
+#### Breaking Long Lines
+
+This can often be a matter of taste and is yet to be formally defined. For method defs we should do this (for long lines):
+
+```
+def foo(
+  x: Int
+)
+```
+
+for short defs it's ok to keep all on one line.
+
 ### Comments
 
 Please only use comments in exceptional circumstance, your code should be self-documenting, which means:
