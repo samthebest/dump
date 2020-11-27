@@ -8,7 +8,20 @@ Please use an auto-reformatter, the out-of-box Intellij one is very good.  We ha
 
 1. minimum blank lines should be 1 for 'after package', all other minimum blank line values should be 0,
 2. All the fields under 'maximum blank lines' should be 1, 
-3. due to an ancient and still [unfixed bug in Intellij](https://youtrack.jetbrains.com/oauth?state=%2Fissue%2FSCL-5376) please check "Align when multiline" for "Chained method calls" and put chains on a new line. This is how code looks before this rule:
+3. Ensure chained multiline method calls look like this:
+
+```
+  val myList =
+    List(1, 2, 3)
+      .map {
+        case x => x
+      }
+      .map {
+        case x => x
+      }
+```
+
+And certainly not this
 
 ```
   val myList = List(1, 2, 3)
@@ -20,7 +33,8 @@ Please use an auto-reformatter, the out-of-box Intellij one is very good.  We ha
   }
 ```
 
-and this is how it looks afterwards:
+or this
+
 
 ```
   val myList =
@@ -33,11 +47,9 @@ and this is how it looks afterwards:
     }
 ```
 
-Clearly much nicer.
-
 #### Braces
 
-Please refrain from using curly braces wherever one can use round braces.  There is no need to seperate code over multiple lines for trivial one-line lambda expressions. Furthermore it [increases compile checking](http://stackoverflow.com/a/4387118/1586965)
+Please refrain from using curly braces wherever one can use parens.  There is no need to seperate code over multiple lines for trivial one-line lambda expressions. Furthermore it [increases compile checking](http://stackoverflow.com/a/4387118/1586965)
 
 Just as it is desirble to have short methods in procedural code, in functional code it is desirable to have single expressions.  If we avoid introducing local `val`s the overall complexity of the code is lower.  Of course this is not always possible, especially when `val`s are used more than once.
 
