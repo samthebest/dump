@@ -8,7 +8,7 @@ killall SystemUIServer
 defaults write .GlobalPreferences com.apple.mouse.scaling -1
 defaults write .GlobalPreferences com.apple.trackpad.scaling -1
 
-# Fix key repeat settings
+# Fix key repeat settings (might need a reboot, seems a little flakey sometimes)
 defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 
