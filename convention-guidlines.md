@@ -133,3 +133,7 @@ Only abstract when you have two or more concrete instances that justify the abst
 #### Type Annotation
 
 Annotate type on everything except for literals, obvious types in local scope, and where a large group of methods all next to each other return the same type.  Check "No tail recursion annotation" under "Inspections" in Intellij in order to avoid accidental infinite loops (set severity to error).
+
+#### Comments
+
+Please use `//` not `/*`
