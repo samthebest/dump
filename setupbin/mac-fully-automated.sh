@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Change terminal to bash
+chsh -s /bin/bash
+
+
 set -e
 
 ssh-keygen -t rsa -b 4096 -C "sams@example.com" -N "" -f ~/.ssh/id_rsa
