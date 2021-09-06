@@ -11,10 +11,7 @@ already_setup=$?
 # Install brew
 brew >/dev/null || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-# Install brew cask (makes it easier to install mac apps)
-brew tap caskroom/cask
-
-brew cask install google-chrome
+brew install google-chrome
 
 # Change screenshot location to something more appropriate than desktop
 mkdir ~/Documents/Screenshots
@@ -75,7 +72,7 @@ sudo spctl --master-disable
 
 # Fix bug with mac mouse & trackpad
 # Stopped working:
-# brew cask install steelseries-exactmouse-tool
+# brew install steelseries-exactmouse-tool
 
 brew install wget
 
@@ -92,7 +89,7 @@ mkdir -p ~/src
 # Spectacle means you can resize and move windows with shortcuts
 # After you have done the manual step to start, remember to 
 # change the default shortcuts for snap right half and snap left half as they conflict with Intellij
-brew cask install spectacle
+brew install spectacle
 
 curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-fully-automated.sh | bash
 curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-config.sh | bash
@@ -103,7 +100,7 @@ curl https://sdk.cloud.google.com | bash
 
 # Keybase https://keybase.io/
 # manual: open and sign in (and add device)
-brew cask install keybase
+brew install keybase
 
 # start git auto completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then

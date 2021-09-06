@@ -33,17 +33,17 @@ ssh-add -K ~/.ssh/id_rsa
 # APPS
 
 # Install sublime (best text editor ever!)
-brew cask install sublime-text
+brew install sublime-text
 
 # Download intellij and the solarized dark settings
-brew cask install intellij-idea-ce
+brew install intellij-idea-ce
 wget -O settings.jar https://github.com/jkaving/intellij-colors-solarized/blob/master/settings.jar?raw=true
 
 # Install java (8 so compatible with Spark)
 # brew tap caskroom/versions
 # brew install java8
 
-brew cask install adoptopenjdk/openjdk/adoptopenjdk8
+brew install adoptopenjdk/openjdk/adoptopenjdk8
 
 # Install scala
 brew install scala
@@ -54,28 +54,28 @@ brew install scala
 #brew install sbt
 
 # Install Intellij (Community edition) (doesn't seem to work anymore)
-# brew cask install intellij-idea-ce
+# brew install intellij-idea-ce
 
 # ifstat
 brew install ifstat
 
 # firefox
-brew cask install firefox
+brew install firefox
 
 # Install GNU style bash commands (gives gdate and such and such)
 brew install coreutils
 
 # Hipchat
-brew cask install hipchat
+brew install hipchat
 
 # git auto completion
 brew install git bash-completion
 
 # spotify for concentration
-brew cask install spotify
+brew install spotify
 
 # open office
-brew cask install openoffice
+brew install openoffice
 
 # wget
 brew install wget
@@ -84,7 +84,7 @@ brew install wget
 brew install s3cmd
 
 # Source tree
-brew cask install sourcetree
+brew install sourcetree
 
 # really cool json tool
 brew install jq
@@ -107,16 +107,16 @@ brew install awscli
 # Manual step: `aws configure`
 
 # vagrant - a orchestration for virtual box
-brew cask install vagrant
+brew install vagrant
 
 # Zeppelin:
 brew install apache-spark
 brew install apache-zeppelin
 
 # VLC
-brew cask install vlc
+brew install vlc
 
 # Virtual box
 # TODO Requires fix for a manual hoop regarding enabling something
-# brew cask install virtualbox
+# brew install virtualbox
 
