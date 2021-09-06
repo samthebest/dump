@@ -32,6 +32,14 @@ if [ "$already_setup" != "0" ]; then
 
     # Increase bash history to a million commands (should be enough)
     echo "HISTFILESIZE=10000000" >> ~/.bash_profile
+    
+    
+    echo "shopt -s histappend" >> ~/.bash_profile
+    echo "PROMPT_COMMAND=\"history -a; \"" >> ~/.bash_profile
+    # Override in memory hist size
+    echo "HISTSIZE=1000000" >> ~/.bash_profile
+    # Override file hist size
+    echo "HISTFILESIZE=2000000" >> ~/.bash_profile
 
     # Change prompt to linux default
     echo "export PS1='\$(whoami)@\$(hostname):\$(pwd) '" >> ~/.bash_profile
