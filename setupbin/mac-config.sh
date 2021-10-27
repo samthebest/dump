@@ -12,12 +12,12 @@ defaults write .GlobalPreferences com.apple.trackpad.scaling -1
 defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 
+# Have to enable dock zoom manually
 # Change dock size to be basically invisible
 defaults write com.apple.dock tilesize -int 1
 defaults write com.apple.dock largesize -float 512
 killall Dock
 
-# Have to enable dock zoom manually
 
 # Track direction, and turning off stupid gestures and stuff is all manual.
 
