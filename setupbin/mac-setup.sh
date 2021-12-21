@@ -56,8 +56,10 @@ if [ "$already_setup" != "0" ]; then
     echo ""  >> ~/.bash_profile
     
     # add bash-completion to ~/.bash_profile
-    echo "if [ -f \$(brew --prefix)/etc/bash_completion ]; then" >> ~/.bash_profile
-    echo "    . \$(brew --prefix)/etc/bash_completion" >> ~/.bash_profile
+    curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+    
+    echo "if [ -f ~/.git-completion.bash ]; then" >> ~/.bash_profile
+    echo "  . ~/.git-completion.bash" >> ~/.bash_profile
     echo "fi"  >> ~/.bash_profile
 fi
 
@@ -103,9 +105,7 @@ curl https://sdk.cloud.google.com | bash
 brew install keybase
 
 # start git auto completion
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
-fi
+source ~/.bash_profile
 
 # Remove DS_Store abomination for ever and ever
 # echo "while true; do find / -name .DS_Store -exec rm -f \"{}\" \; ; sleep 2; done" > ~/.rm-DS_Store-abomination.sh && chmod +x ~/.rm-DS_Store-abomination.sh && echo "screen -ls | grep rm-DS_Store-abomination >/dev/null || screen -S rm-DS_Store-abomination -d -m ~/.rm-DS_Store-abomination.sh" >> ~/.bash_profile && screen -ls | grep rm-DS_Store-abomination >/dev/null || screen -S rm-DS_Store-abomination -d -m ~/.rm-DS_Store-abomination.sh
