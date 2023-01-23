@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BackgroundBlur</key>
+	<real>0.0</real>
+	<key>BackgroundColor</key>
+	<data>
+	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
+	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGjCwwTVSRudWxs0w0ODxAREldO
+	U1doaXRlXE5TQ29sb3JTcGFjZVYkY2xhc3NHMCAwLjc1ABADgALSFBUWF1okY2xhc3Nu
+	YW1lWCRjbGFzc2VzV05TQ29sb3KiFhhYTlNPYmplY3QIERokKTI3SUxRU1ddZGx5gIiK
+	jJGcpa2wAAAAAAAAAQEAAAAAAAAAGQAAAAAAAAAAAAAAAAAAALk=
+	</data>
+	<key>CursorColor</key>
+	<data>
+	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
+	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGjCwwTVSRudWxs0w0ODxAREldO
+	U1doaXRlXE5TQ29sb3JTcGFjZVYkY2xhc3NLMC4zMDI0MTkzNgAQA4AC0hQVFhdaJGNs
+	YXNzbmFtZVgkY2xhc3Nlc1dOU0NvbG9yohYYWE5TT2JqZWN0CBEaJCkyN0lMUVNXXWRs
+	eYCMjpCVoKmxtAAAAAAAAAEBAAAAAAAAABkAAAAAAAAAAAAAAAAAAAC9
+	</data>
+	<key>Font</key>
+	<data>
+	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
+	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGkCwwVFlUkbnVsbNQNDg8QERIT
+	FFZOU1NpemVYTlNmRmxhZ3NWTlNOYW1lViRjbGFzcyNALAAAAAAAABAQgAKAA1ZNb25h
+	Y2/SFxgZGlokY2xhc3NuYW1lWCRjbGFzc2VzVk5TRm9udKIZG1hOU09iamVjdAgRGiQp
+	MjdJTFFTWF5nbnd+hY6QkpSboKu0u74AAAAAAAABAQAAAAAAAAAcAAAAAAAAAAAAAAAA
+	AAAAxw==
+	</data>
+	<key>FontAntialias</key>
+	<false/>
+	<key>FontWidthSpacing</key>
+	<real>0.99596774193548387</real>
+	<key>ProfileCurrentVersion</key>
+	<real>2.0699999999999998</real>
+	<key>SelectionColor</key>
+	<data>
+	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
+	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGjCwwTVSRudWxs0w0ODxAREldO
+	U1doaXRlXE5TQ29sb3JTcGFjZVYkY2xhc3NLMC4yNTQwMzIyNQAQA4AC0hQVFhdaJGNs
+	YXNzbmFtZVgkY2xhc3Nlc1dOU0NvbG9yohYYWE5TT2JqZWN0CBEaJCkyN0lMUVNXXWRs
+	eYCMjpCVoKmxtAAAAAAAAAEBAAAAAAAAABkAAAAAAAAAAAAAAAAAAAC9
+	</data>
+	<key>ShowWindowSettingsNameInTitle</key>
+	<false/>
+	<key>TextBoldColor</key>
+	<data>
+	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
+	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGjCwwTVSRudWxs0w0ODxAREldO
+	U1doaXRlXE5TQ29sb3JTcGFjZVYkY2xhc3NCMQAQA4AC0hQVFhdaJGNsYXNzbmFtZVgk
+	Y2xhc3Nlc1dOU0NvbG9yohYYWE5TT2JqZWN0CBEaJCkyN0lMUVNXXWRseYCDhYeMl6Co
+	qwAAAAAAAAEBAAAAAAAAABkAAAAAAAAAAAAAAAAAAAC0
+	</data>
+	<key>TextColor</key>
+	<data>
+	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
+	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGjCwwTVSRudWxs0w0ODxAREldO
+	U1doaXRlXE5TQ29sb3JTcGFjZVYkY2xhc3NLMC45NDc1ODA2NAAQA4AC0hQVFhdaJGNs
+	YXNzbmFtZVgkY2xhc3Nlc1dOU0NvbG9yohYYWE5TT2JqZWN0CBEaJCkyN0lMUVNXXWRs
+	eYCMjpCVoKmxtAAAAAAAAAEBAAAAAAAAABkAAAAAAAAAAAAAAAAAAAC9
+	</data>
+	<key>WindowTitle</key>
+	<string>Terminal</string>
+	<key>columnCount</key>
+	<integer>198</integer>
+	<key>name</key>
+	<string>Pro</string>
+	<key>rowCount</key>
+	<integer>54</integer>
+	<key>shellExitAction</key>
+	<integer>2</integer>
+	<key>type</key>
+	<string>Window Settings</string>
+</dict>
+</plist>
