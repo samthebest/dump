@@ -3,6 +3,12 @@
 # Change terminal to bash
 chsh -s /bin/bash
 
+wget -O pro.terminal https://raw.githubusercontent.com/samthebest/dump/master/setupbin/pro.terminal
+
+# Add alias to open pro terminal:
+alias pt='open ~/pro.terminal'
+
+echo "alias pt='open ~/pro.terminal'" > ~/.bash_profile
 
 set -e
 
@@ -37,7 +43,8 @@ brew install sublime-text
 
 # Download intellij and the solarized dark settings
 brew install intellij-idea-ce
-wget -O settings.jar https://github.com/jkaving/intellij-colors-solarized/blob/master/settings.jar?raw=true
+# Deprecated, have to use a plugin now
+# wget -O settings.jar https://github.com/jkaving/intellij-colors-solarized/blob/master/settings.jar?raw=true
 
 # Install java (8 so compatible with Spark)
 # brew tap caskroom/versions
@@ -60,13 +67,13 @@ brew install scala
 brew install ifstat
 
 # firefox
-brew install firefox
+#brew install firefox
 
 # Install GNU style bash commands (gives gdate and such and such)
 brew install coreutils
 
 # Hipchat
-brew install hipchat
+#brew install hipchat
 
 # git auto completion
 brew install git bash-completion
@@ -81,10 +88,10 @@ brew install openoffice
 brew install wget
 
 # s3cmd
-brew install s3cmd
+#brew install s3cmd
 
 # Source tree
-brew install sourcetree
+#brew install sourcetree
 
 # really cool json tool
 brew install jq
@@ -107,14 +114,14 @@ brew install awscli
 # Manual step: `aws configure`
 
 # vagrant - a orchestration for virtual box
-brew install vagrant
+#brew install vagrant
 
 # Zeppelin:
-brew install apache-spark
-brew install apache-zeppelin
+#brew install apache-spark
+#brew install apache-zeppelin
 
 # VLC
-brew install vlc
+#brew install vlc
 
 # Virtual box
 # TODO Requires fix for a manual hoop regarding enabling something
