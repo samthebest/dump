@@ -97,12 +97,12 @@ curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-fully
 curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-config.sh | bash
 
 # gcloud
-curl https://sdk.cloud.google.com | bash
+# curl https://sdk.cloud.google.com | bash
 # manual: restart shell, run gcloud init
 
 # Keybase https://keybase.io/
 # manual: open and sign in (and add device)
-brew install keybase
+# brew install keybase
 
 # start git auto completion
 source ~/.bash_profile
