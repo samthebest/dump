@@ -3,6 +3,7 @@
 # Change terminal to bash
 chsh -s /bin/bash
 
+# Need wget first
 wget -O pro.terminal https://raw.githubusercontent.com/samthebest/dump/master/setupbin/pro.terminal
 
 # Add alias to open pro terminal:
