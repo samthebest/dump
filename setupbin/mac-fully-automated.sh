@@ -110,10 +110,11 @@ brew install python
 
 # New brew command aws cli, not sure works
 brew install awscli
+# Manual step: `aws configure`
 
 brew install --cask flux
 
-# Manual step: `aws configure`
+brew install steam
 
 # vagrant - a orchestration for virtual box
 #brew install vagrant
