@@ -9,7 +9,7 @@ wget -O pro.terminal https://raw.githubusercontent.com/samthebest/dump/master/se
 # Add alias to open pro terminal:
 alias pt='open ~/pro.terminal'
 
-echo "alias pt='open ~/pro.terminal'" > ~/.bash_profile
+echo "alias pt='open ~/pro.terminal'" >> ~/.bash_profile
 
 set -e
 
