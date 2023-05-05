@@ -21,3 +21,8 @@ killall Dock
 
 # Track direction, and turning off stupid gestures and stuff is all manual.
 
+
+# To always show function keys (F1, F2 and so on) in the Touch Bar for specific apps, 
+# choose Apple menu > System Settings, click Keyboard in the sidebar (you may need to scroll down), 
+# click Keyboard Shortcuts on the right, select Function Keys in the list on the left, then add the apps on the right.
+# https://support.apple.com/en-gb/guide/mac-help/mchl5a63b060/mac#:~:text=To%20always%20show%20function%20keys,the%20apps%20on%20the%20right.
