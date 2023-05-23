@@ -11,7 +11,7 @@ alias pt='open ~/pro.terminal'
 
 echo "alias pt='open ~/pro.terminal'" >> ~/.bash_profile
 
-set -e
+set -ex
 
 # Exclude -N "" to add passphrase
 ssh-keygen -t rsa -b 4096 -C "sams@example.com" -N "" -f ~/.ssh/id_rsa
