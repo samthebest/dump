@@ -54,6 +54,7 @@ wget -O settings.jar https://github.com/jkaving/intellij-colors-solarized/blob/m
 # brew install adoptopenjdk/openjdk/adoptopenjdk8
 
 # Java (compataible with other stuff) (not tested yet)
+sudo softwareupdate --install-rosetta
 brew install adoptopenjdk/openjdk/adoptopenjdk11
 
 # Install scala
