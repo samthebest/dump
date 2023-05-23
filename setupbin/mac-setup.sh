@@ -1,6 +1,9 @@
 #!/bin/bash
 # MAC SETUP SCRIPT
 
+# To run this script, this script calls the other two scripts, after which you must reboot
+# curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-setup.sh | bash
+
 # TODO Make this interactive
 
 # Checking if bash_profile already setup
@@ -24,7 +27,7 @@ defaults write com.apple.screencapture location ~/Documents/Screenshots
 # Change editor
 export EDITOR=nano
 
-set -e
+set -ex
 
 if [ "$already_setup" != "0" ]; then
     echo "# bash profile already setup" >> ~/.bash_profile
