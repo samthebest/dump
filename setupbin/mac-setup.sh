@@ -73,6 +73,10 @@ if [ "$already_setup" != "0" ]; then
     echo "if [ -f ~/.git-completion.bash ]; then" >> ~/.bash_profile
     echo "  . ~/.git-completion.bash" >> ~/.bash_profile
     echo "fi"  >> ~/.bash_profile
+    
+    echo "alias sbp=\"subl ~/.bash_profile\"" >> ~/.bash_profile
+    echo "alias dbp=\"source ~/.bash_profile\"" >> ~/.bash_profile
+    echo "alias cbp=\"cat ~/.bash_profile\"" >> ~/.bash_profile
 fi
 
 # Disable thing that makes it impossible to run apps from internet
