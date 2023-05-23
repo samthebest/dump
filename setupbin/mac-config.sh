@@ -18,6 +18,9 @@ defaults write com.apple.dock tilesize -int 1
 defaults write com.apple.dock largesize -float 512
 killall Dock
 
+# Make F keys default (not sure this works)
+defaults write -g com.apple.keyboard.fnState -bool true
+
 # NOT WORK Disable shortcut that clashes with Intellij
 # defaults write -g NSUserKeyEquivalents -dict-add "Open man Page in Terminal" nil
 # defaults write -g NSUserKeyEquivalents -dict-add "Search man Page Index in Terminal" nil
