@@ -45,8 +45,8 @@ brew install sublime-text
 
 # Download intellij and the solarized dark settings
 brew install intellij-idea-ce
-# Deprecated, have to use a plugin now
-# wget -O settings.jar https://github.com/jkaving/intellij-colors-solarized/blob/master/settings.jar?raw=true
+# Deprecated, have to use a plugin now, but plugin sucks
+wget -O settings.jar https://github.com/jkaving/intellij-colors-solarized/blob/master/settings.jar?raw=true
 
 # Install java (8 so compatible with Spark)
 # brew tap caskroom/versions
