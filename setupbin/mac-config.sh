@@ -18,9 +18,9 @@ defaults write com.apple.dock tilesize -int 1
 defaults write com.apple.dock largesize -float 512
 killall Dock
 
-# Disable shortcut that clashes with Intellij (not properly tested yet)
-defaults write -g NSUserKeyEquivalents -dict-add "Open man Page in Terminal" nil
-
+# NOT WORK Disable shortcut that clashes with Intellij
+# defaults write -g NSUserKeyEquivalents -dict-add "Open man Page in Terminal" nil
+# defaults write -g NSUserKeyEquivalents -dict-add "Search man Page Index in Terminal" nil
 
 
 # Track direction, and turning off stupid gestures and stuff is all manual.
