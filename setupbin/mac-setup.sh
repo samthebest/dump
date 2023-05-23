@@ -2,7 +2,8 @@
 # MAC SETUP SCRIPT
 
 # To run this script, this script calls the other two scripts, after which you must reboot
-# curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-setup.sh | bash
+# First run `chsh -s /bin/bash` then restart the terminal, then
+# curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-setup.sh >mac-setup.sh && chmod +x mac-setup.sh && ./mac-setup.sh
 
 # TODO Make this interactive
 
@@ -10,9 +11,14 @@
 grep "bash profile already setup" .bash_profile
 already_setup=$?
 
+set -ex
+
+# Make bash the default terminal
+chsh -s /bin/bash
 
 # Install brew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/sam/.bash_profile
 
 # Install nix
 sh <(curl -L https://nixos.org/nix/install)
@@ -27,7 +33,7 @@ defaults write com.apple.screencapture location ~/Documents/Screenshots
 # Change editor
 export EDITOR=nano
 
-set -ex
+
 
 if [ "$already_setup" != "0" ]; then
     echo "# bash profile already setup" >> ~/.bash_profile
@@ -99,8 +105,8 @@ mkdir -p ~/src
 # change the default shortcuts for snap right half and snap left half as they conflict with Intellij
 brew install spectacle
 
-curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-fully-automated.sh | bash
-curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-config.sh | bash
+curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-fully-automated.sh >mac-fully-automated.sh && chmod +x mac-fully-automated.sh && ./mac-fully-automated.sh
+curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-config.sh && chmod +x mac-config.sh && ./mac-config.sh
 
 # gcloud
 # curl https://sdk.cloud.google.com | bash
