@@ -110,7 +110,7 @@ mkdir -p ~/src
 brew install spectacle
 
 curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-fully-automated.sh >mac-fully-automated.sh && chmod +x mac-fully-automated.sh && ./mac-fully-automated.sh
-curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-config.sh && chmod +x mac-config.sh && ./mac-config.sh
+curl https://raw.githubusercontent.com/samthebest/dump/master/setupbin/mac-config.sh >mac-config.sh && chmod +x mac-config.sh && ./mac-config.sh
 
 # gcloud
 # curl https://sdk.cloud.google.com | bash
