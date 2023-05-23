@@ -13,6 +13,7 @@ echo "alias pt='open ~/pro.terminal'" >> ~/.bash_profile
 
 set -e
 
+# Exclude -N "" to add passphrase
 ssh-keygen -t rsa -b 4096 -C "sams@example.com" -N "" -f ~/.ssh/id_rsa
 
 # Skip annoying "yes" for cloning git repos
