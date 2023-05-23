@@ -11,6 +11,9 @@ already_setup=$?
 # Install brew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
+# Install nix
+sh <(curl -L https://nixos.org/nix/install)
+
 brew install google-chrome
 
 # Change screenshot location to something more appropriate than desktop
