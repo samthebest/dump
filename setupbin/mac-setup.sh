@@ -94,7 +94,10 @@ sudo spctl --master-disable
 
 brew install wget
 
-wget http://downloads.steelseriescdn.com/drivers/tools/steelseries-exactmouse-tool.dmg
+# Now I store it myself because the old website seems dodgy
+wget https://github.com/samthebest/dump/raw/master/setupbin/steelseries-exactmouse-tool.dmg
+
+# wget http://downloads.steelseriescdn.com/drivers/tools/steelseries-exactmouse-tool.dmg
 # Must then manually install the dmg (need to work out how to automate these steps:
 # https://apple.stackexchange.com/questions/73926/is-there-a-command-to-install-a-dmg
 # This seems best:
