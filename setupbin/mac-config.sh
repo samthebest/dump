@@ -4,6 +4,9 @@
 defaults write com.apple.menuextra.battery ShowPercent YES
 killall SystemUIServer
 
+# Turn off annoying key repeat blocker
+defaults write -g ApplePressAndHoldEnabled -bool false
+
 # Turn off annoying stuff
 defaults write .GlobalPreferences com.apple.mouse.scaling -1
 defaults write .GlobalPreferences com.apple.trackpad.scaling -1
