@@ -22,6 +22,14 @@ https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/
  - Code sharing/reuse is discouraged in multi-repo due to the overhead.  Suppose module A and B would naturally both depend on C, but instead they each have their own implementation, say C_A and C_B.  Now if a fix/feature is applied to one, say C_A, it won't get propogated to C_B, or we have to fix the bug twice.  In large projects this gets much worse.
  - Multirepo is an almost irreversible decision, it's hard to go from a multi to a mono, but it's easy to go from a mono to a multi.
 
+Sorting out the gitlab creds plugin in multi-repo has to be done N times, instead of 1.
+
+Upgrading any project to a newer version of a lib has to be done N times, instead of 1.
+
+Divergent codebases due to mismatching libs.
+
+Setting up gitlab settings, like branch protection rules has to be done N times, instead of 1.
+
 # Forcing Checks
 
 All projects can be forced to conformed to same checks, like security checks, file size checks, etc.
