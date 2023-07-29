@@ -1,0 +1,56 @@
+# Currently most of this gets populated from my setup scripts, should change my script to just pull this file.
+
+# bash profile already setup
+export EDITOR=nano
+HISTFILESIZE=10000000
+shopt -s histappend
+PROMPT_COMMAND="history -a; "
+HISTSIZE=1000000
+HISTFILESIZE=2000000
+export PS1='$(whoami)@$(hostname):$(pwd) '
+
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home
+
+function json {
+  python -m json.tool
+}
+
+function gh {
+    cat ~/.bash_history | grep $*
+}
+
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+alias pt='open ~/pro.terminal'
+alias sbp="subl ~/.bash_profile"
+alias dbp="source ~/.bash_profile"
+alias cbp="cat ~/.bash_profile"
+alias cdh="cd ~/src/hypervolt-repos"
+
+
+
+# New stuffs
+# New stuffs
+# New stuffs
+
+
+
+function nest_project {
+  dir=$1
+  file_list=/tmp/${dir}-file-list
+  mkdir $dir
+  exit_code=$?
+  if [ $exit_code != 0 ]; then
+    echo "ERROR: Could not create directory"
+  else
+    ls -a | grep -vE "^\.git$" | grep -vE "^\.$" | grep -vE "^\.\.$" | grep -vE "^${dir}$" > $file_list
+    while read line; do
+      echo "INFO: Running: mv $line ${dir}/"
+      mv $line ${dir}/  
+    done < $file_list
+  fi
+}
