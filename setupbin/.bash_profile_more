@@ -34,6 +34,33 @@ alias gp="git pull origin develop"
 alias gm="git pull origin master"
 
 
+function squash_until {
+  commit="$1"
+  message="$2"
+  branch=`git branch --show-current`
+  tmp_branch="${branch}-tmp-for-squash"
+  echo "INFO: Reseting ..."
+  git reset --soft $1
+  git checkout -b "${tmp_branch}"
+  echo "INFO: committing ..."
+  git commit -am "${message}"
+  echo "INFO: deleting ..."
+  git branch -D "${branch}"
+  read -p "Sure you want to run: 'git push origin :${branch}'?: " answer
+  if [ "$answer" == "yes" ]; then
+    git push origin :${branch}
+  else
+    echo "Aborting"
+  fi
+  echo "INFO: recreating ..."
+  git checkout -b "${branch}"
+  git branch -D "${tmp_branch}"
+  echo "INFO: pushing ..."
+  git push origin "${branch}"
+  echo "INFO: done"
+}
+
+
 
 # New stuffs
 # New stuffs
