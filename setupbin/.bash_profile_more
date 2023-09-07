@@ -29,7 +29,9 @@ alias pt='open ~/pro.terminal'
 alias sbp="subl ~/.bash_profile"
 alias dbp="source ~/.bash_profile"
 alias cbp="cat ~/.bash_profile"
-alias cdh="cd ~/src/hypervolt-repos"
+alias gs="git status"
+alias gp="git pull origin develop"
+alias gm="git pull origin master"
 
 
 
