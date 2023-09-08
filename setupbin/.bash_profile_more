@@ -34,6 +34,7 @@ alias gp="git pull origin develop"
 alias gm="git pull origin master"
 
 
+
 function squash_until {
   commit="$1"
   message="$2"
@@ -49,15 +50,15 @@ function squash_until {
   read -p "Sure you want to run: 'git push origin :${branch}'?: " answer
   if [ "$answer" == "yes" ]; then
     git push origin :${branch}
+    echo "INFO: recreating ..."
+    git checkout -b "${branch}"
+    git branch -D "${tmp_branch}"
+    echo "INFO: pushing ..."
+    git push origin "${branch}"
+    echo "INFO: done"
   else
     echo "Aborting"
   fi
-  echo "INFO: recreating ..."
-  git checkout -b "${branch}"
-  git branch -D "${tmp_branch}"
-  echo "INFO: pushing ..."
-  git push origin "${branch}"
-  echo "INFO: done"
 }
 
 
