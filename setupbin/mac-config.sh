@@ -7,6 +7,9 @@ killall SystemUIServer
 # Turn off key repeat blocker
 defaults write -g ApplePressAndHoldEnabled -bool false
 
+# Turn off super idiotic addition of full stop for no reason
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+
 # Turn off annoying stuff
 defaults write .GlobalPreferences com.apple.mouse.scaling -1
 defaults write .GlobalPreferences com.apple.trackpad.scaling -1
