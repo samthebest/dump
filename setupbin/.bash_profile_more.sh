@@ -36,29 +36,32 @@ alias gm="git pull origin master"
 
 
 function squash_until {
-  commit="$1"
-  message="$2"
-  branch=`git branch --show-current`
-  tmp_branch="${branch}-tmp-for-squash"
-  echo "INFO: Reseting ..."
-  git reset --soft $1
-  git checkout -b "${tmp_branch}"
-  echo "INFO: committing ..."
-  git commit -am "${message}"
-  echo "INFO: deleting ..."
-  git branch -D "${branch}"
-  read -p "Sure you want to run: 'git push origin :${branch}'?: " answer
-  if [ "$answer" == "yes" ]; then
-    git push origin :${branch}
-    echo "INFO: recreating ..."
-    git checkout -b "${branch}"
-    git branch -D "${tmp_branch}"
-    echo "INFO: pushing ..."
-    git push origin "${branch}"
-    echo "INFO: done"
-  else
-    echo "Aborting"
-  fi
+  (
+    set -e
+    commit="$1"
+    message="$2"
+    branch=`git branch --show-current`
+    tmp_branch="${branch}-tmp-for-squash"
+    echo "INFO: Reseting ..."
+    git reset --soft $1
+    git checkout -b "${tmp_branch}"
+    echo "INFO: committing ..."
+    git commit -am "${message}"
+    echo "INFO: deleting ..."
+    git branch -D "${branch}"
+    read -p "Sure you want to run: 'git push origin :${branch}'?: " answer
+    if [ "$answer" == "yes" ]; then
+      git push origin :${branch}
+      echo "INFO: recreating ..."
+      git checkout -b "${branch}"
+      git branch -D "${tmp_branch}"
+      echo "INFO: pushing ..."
+      git push origin "${branch}"
+      echo "INFO: done"
+    else
+      echo "Aborting"
+    fi
+  )
 }
 
 function last_merge_commit {
@@ -78,19 +81,24 @@ function squash {
 
 # apply all changes on develop in a single commit, , failing if there are merge conflicts
 function rebase_and_squash {
-  branch=`git rev-parse --abbrev-ref HEAD`
-  git reset --soft `last_merge_commit`
-  git stash
-  git checkout develop
-  git pull origin develop
-  git checkout -b ${branch}-rebased
-  git stash pop
-  exit_code=$?
-  if [ "${exit_code}" != 0 ]; then
-    echo "ERROR: FIX CONFLICTS"
-  else
-    git commit -am $1
-  fi
+  (
+    set -ex
+    branch=`git rev-parse --abbrev-ref HEAD`
+    git reset --soft `last_merge_commit`
+    git stash
+    git checkout develop
+    git pull origin develop
+    git checkout -b ${branch}-rebased
+    set +e
+    git stash pop
+    set -e
+    exit_code=$?
+    if [ "${exit_code}" != 0 ]; then
+      echo "ERROR: FIX CONFLICTS"
+    else
+      git commit -am "${1}"
+    fi
+  )
 }
 
 # the commit immediately after the given commit
