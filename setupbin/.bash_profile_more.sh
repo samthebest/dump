@@ -51,7 +51,9 @@ function squash_until {
     git branch -D "${branch}"
     read -p "Sure you want to run: 'git push origin :${branch}'?: " answer
     if [ "$answer" == "yes" ]; then
+      set +e
       git push origin :${branch}
+      set -e
       echo "INFO: recreating ..."
       git checkout -b "${branch}"
       git branch -D "${tmp_branch}"
@@ -106,7 +108,7 @@ function commit_after {
   git log --ancestry-path --format="%H" ${1}..HEAD | tail -1
 }
 
-function sq {
+function sq_to {
   commit="$1"
   if [ $commit == "" ]; then
     echo "ERROR: hash is empty"
@@ -116,6 +118,18 @@ function sq {
     squash_until $commit "$message"
   fi
 }
+
+function sq {
+  commit=`last_merge_commit`
+  if [ $commit == "" ]; then
+    echo "ERROR: hash is empty"
+  else  
+    commit_plus_one=`commit_after $commit`
+    message=`git log --format="%s" -n 1 $commit_plus_one`
+    squash_until $commit "$message"
+  fi
+}
+
 
 function git_undo {
   git reset -- $1
