@@ -78,7 +78,7 @@ function last_merge_commit {
 
 # squash until last merge commit, using $1 as the commit message
 function squash {
-  squash_until `last_merge_commit` $1
+  squash_until `last_merge_commit` "${1}"
 }
 
 # apply all changes on develop in a single commit, , failing if there are merge conflicts
