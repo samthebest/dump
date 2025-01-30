@@ -110,24 +110,28 @@ function commit_after {
 
 function sq_to {
   commit="$1"
-  if [ $commit == "" ]; then
+  set -e
+  if [ "${commit}" == "" ]; then
     echo "ERROR: hash is empty"
   else  
     commit_plus_one=`commit_after $commit`
     message=`git log --format="%s" -n 1 $commit_plus_one`
     squash_until $commit "$message"
   fi
+  set +e
 }
 
 function sq {
   commit=`last_merge_commit`
-  if [ $commit == "" ]; then
+  set -e
+  if [ "${commit}" == "" ]; then
     echo "ERROR: hash is empty"
   else  
     commit_plus_one=`commit_after $commit`
     message=`git log --format="%s" -n 1 $commit_plus_one`
     squash_until $commit "$message"
   fi
+  set +e
 }
 
 
