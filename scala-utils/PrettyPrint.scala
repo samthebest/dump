@@ -1,20 +1,26 @@
 package hypervolt.lang
 
 import cats.data.Chain
-import foo.clock.InstantUtils.{DurationSyntax, InstantWithSomeActuallyEasySyntax}
-import foo.lang.Syntax.DoubleSyntax
+import TODO.clock.InstantUtils.{DurationSyntax, InstantWithSomeActuallyEasySyntax}
+import TODO.lang.Syntax.DoubleSyntax
 import squants.energy.Energy
 import squants.market.Money
 
+import scala.reflect.runtime.universe.*
 import java.lang.reflect.{Array as _, *}
 import java.time.{DateTimeException, Instant}
+import java.util.UUID
 import scala.concurrent.duration.Duration
 
 case class PrettyMapper(isType: Any => Boolean, prettify: Any => String)
 
 object PrettyMapper {
-  def apply[T](f: T => String): PrettyMapper =
-    PrettyMapper(_.isInstanceOf[T], x => f(x.asInstanceOf[T]))
+  def apply[T: TypeTag](f: T => String): PrettyMapper =
+    PrettyMapper(
+      x =>
+        x != null && runtimeMirror(getClass.getClassLoader).reflect(x).symbol.toType <:< typeOf[T],
+      x => f(x.asInstanceOf[T]),
+    )
 }
 
 @annotation.nowarn("cat=w-flag-dead-code")
@@ -24,8 +30,14 @@ object PrettyPrint {
       a: Any,
       shortenNumbers: Boolean = false,
       domainMappers: List[PrettyMapper] = Nil,
+      excludeNoneFields: Boolean = false,
   ): String =
-    prettyfy(a, shortenNumbers = shortenNumbers, domainMappers = domainMappers)
+    prettyfy(
+      a = a,
+      shortenNumbers = shortenNumbers,
+      domainMappers = domainMappers,
+      excludeNoneFields = excludeNoneFields,
+    )
 
   def withPrefix(s: String, a: Any): String = prettyfy(a).prefixLines(s)
 
@@ -35,7 +47,8 @@ object PrettyPrint {
 
   def isBasicType(x: Any): Boolean = x match {
     case _: Double | _: Float | _: Long | _: Int | _: Short | _: Byte | _: Unit | _: Boolean |
-        _: Char | _: String | _: None.type | _: Energy | _: Money =>
+        _: Char | _: String | _: None.type | _: Energy | _: Money | _: UUID |
+        _: java.time.Duration | _: Instant =>
       true
     case Nil => true
     case _   => false
@@ -48,6 +61,7 @@ object PrettyPrint {
       shortenNumbers: Boolean = false,
       // Helpful to inject custom serialisations for a specific domain
       domainMappers: List[PrettyMapper] = Nil,
+      excludeNoneFields: Boolean = false,
   ): String = {
     val indent: String = " " * depth * indentSize
     val fieldIndent: String = indent + (" " * indentSize)
@@ -58,13 +72,23 @@ object PrettyPrint {
         depth = depth + 1,
         shortenNumbers = shortenNumbers,
         domainMappers = domainMappers,
+        excludeNoneFields = excludeNoneFields,
       )
 
     def nest(x: Any): String = s"\n$fieldIndent${nextDepth(x)}"
 
     def prettyfySeq(prefix: String, seq: Seq[Any]): String =
       if (seq.forall(isBasicType))
-        prefix + s"(${seq.map(prettyfy(_, shortenNumbers = shortenNumbers, domainMappers = domainMappers)).mkString(", ")})"
+        prefix + "(" + seq
+          .map(
+            prettyfy(
+              _,
+              shortenNumbers = shortenNumbers,
+              domainMappers = domainMappers,
+              excludeNoneFields = excludeNoneFields,
+            ),
+          )
+          .mkString(", ") + ")"
       else
         prefix + s"(${seq.map(nest).mkString(",")}\n$indent)"
 
@@ -82,6 +106,9 @@ object PrettyPrint {
           case e: DateTimeException =>
             throw new IllegalArgumentException(s"Dodgy instant: ${i.forceEpochMillis}", e)
         }
+
+      case uuid: UUID =>
+        s"\"${uuid.toString}\""
 
       case s: String if s.contains("\n") =>
         s"\n$fieldIndent" + "\"\"\"" + s.replace(
@@ -106,34 +133,39 @@ object PrettyPrint {
 
       case Some(x) =>
         if (isBasicType(x))
-          s"Some(${prettyfy(x, shortenNumbers = shortenNumbers, domainMappers = domainMappers)})"
+          "Some(" + prettyfy(
+            x,
+            shortenNumbers = shortenNumbers,
+            domainMappers = domainMappers,
+            excludeNoneFields = excludeNoneFields,
+          ) + ")"
         else
           s"Some(${nest(x)}\n$indent)"
 
       case Nil => "Nil"
 
-      case seq: Seq[_] if seq.isEmpty =>
+      case seq: Seq[?] if seq.isEmpty =>
         seq.toString()
 
-      case map: Map[_, _] if map.isEmpty =>
+      case map: Map[?, ?] if map.isEmpty =>
         map.toString()
 
-      case map: Map[_, _] =>
+      case map: Map[?, ?] =>
         s"Map(${map.toList
             .sortBy(_._1.toString)
             .map { case (key, value) => nest(key) + s" -> ${nextDepth(value)}" }
             .mkString(",")}\n$indent)"
 
-      case list: List[_] =>
+      case list: List[?] =>
         prettyfySeq("List", list)
 
-      case seq: Seq[_] =>
+      case seq: Seq[?] =>
         prettyfySeq("Seq", seq)
 
-      case array: Array[_] =>
+      case array: Array[?] =>
         prettyfySeq("Array", array.toSeq)
 
-      case chain: Chain[_] =>
+      case chain: Chain[?] =>
         throw new IllegalArgumentException(
           "Cannot pretty print Chain or NonEmptyChain due to weird bug in cats",
         )
@@ -151,12 +183,24 @@ object PrettyPrint {
         val fields = product.getClass.fields
         if (fields.isEmpty) product.productPrefix
         else
-          s"${product.productPrefix}(\n" + fields
-            .map { f =>
-              f.setAccessible(true)
-              s"$fieldIndent${f.getName} = ${nextDepth(f.get(product))}"
-            }
-            .mkString(",\n") + s"\n$indent)"
+          s"${product.productPrefix}(" +
+            (if (fields.size == 1) {
+               val f = fields.head
+               f.setAccessible(true)
+               // Should be sameDepth?
+               nextDepth(f.get(product))
+             } else {
+               "\n" +
+                 fields
+                   .map { f =>
+                     f.setAccessible(true)
+                     if (excludeNoneFields && f.get(product) == None) ""
+                     else s"$fieldIndent${f.getName} = ${nextDepth(f.get(product))}"
+                   }
+                   .filter(_.nonEmpty)
+                   .mkString(",\n") + s"\n$indent"
+             }) +
+            ")"
       case long: Long         => long.toString + "L"
       case d: Double          => d.unscientific
       case duration: Duration => if (shortenNumbers) duration.pretty else duration.toString
