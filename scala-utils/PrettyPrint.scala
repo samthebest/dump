@@ -1,13 +1,31 @@
+package hypervolt.lang
+
 import cats.data.Chain
-import hypervolt.clock.InstantUtils.InstantWithSomeActuallyEasySyntax
-import hypervolt.lang.Syntax.DoubleSyntax
+import foo.clock.InstantUtils.{DurationSyntax, InstantWithSomeActuallyEasySyntax}
+import foo.lang.Syntax.DoubleSyntax
+import squants.energy.Energy
+import squants.market.Money
 
-import java.lang.reflect.{Array => _, _}
+import java.lang.reflect.{Array as _, *}
 import java.time.{DateTimeException, Instant}
+import scala.concurrent.duration.Duration
 
+case class PrettyMapper(isType: Any => Boolean, prettify: Any => String)
+
+object PrettyMapper {
+  def apply[T](f: T => String): PrettyMapper =
+    PrettyMapper(_.isInstanceOf[T], x => f(x.asInstanceOf[T]))
+}
+
+@annotation.nowarn("cat=w-flag-dead-code")
 object PrettyPrint {
 
-  def apply(a: Any): String = prettyfy(a)
+  def apply(
+      a: Any,
+      shortenNumbers: Boolean = false,
+      domainMappers: List[PrettyMapper] = Nil,
+  ): String =
+    prettyfy(a, shortenNumbers = shortenNumbers, domainMappers = domainMappers)
 
   def withPrefix(s: String, a: Any): String = prettyfy(a).prefixLines(s)
 
@@ -17,42 +35,58 @@ object PrettyPrint {
 
   def isBasicType(x: Any): Boolean = x match {
     case _: Double | _: Float | _: Long | _: Int | _: Short | _: Byte | _: Unit | _: Boolean |
-        _: Char | _: String | _: None.type =>
+        _: Char | _: String | _: None.type | _: Energy | _: Money =>
       true
-    case _ => false
+    case Nil => true
+    case _   => false
   }
 
-  def prettyfy(a: Any, indentSize: Int = 2, depth: Int = 0): String = {
+  def prettyfy(
+      a: Any,
+      indentSize: Int = 2,
+      depth: Int = 0,
+      shortenNumbers: Boolean = false,
+      // Helpful to inject custom serialisations for a specific domain
+      domainMappers: List[PrettyMapper] = Nil,
+  ): String = {
     val indent: String = " " * depth * indentSize
     val fieldIndent: String = indent + (" " * indentSize)
-    val nextDepth: Any => String = prettyfy(_: Any, indentSize, depth + 1)
+    val nextDepth: Any => String =
+      prettyfy(
+        _: Any,
+        indentSize = indentSize,
+        depth = depth + 1,
+        shortenNumbers = shortenNumbers,
+        domainMappers = domainMappers,
+      )
 
     def nest(x: Any): String = s"\n$fieldIndent${nextDepth(x)}"
 
     def prettyfySeq(prefix: String, seq: Seq[Any]): String =
       if (seq.forall(isBasicType))
-        prefix + s"(${seq.map(prettyfy(_)).mkString(", ")})"
+        prefix + s"(${seq.map(prettyfy(_, shortenNumbers = shortenNumbers, domainMappers = domainMappers)).mkString(", ")})"
       else
         prefix + s"(${seq.map(nest).mkString(",")}\n$indent)"
 
     a match {
+      case x if domainMappers.exists(_.isType(x)) => domainMappers.find(_.isType(x)).get.prettify(x)
+
       case null => "null"
 
       case None => "None"
 
       case i: Instant =>
         try {
-//          Instant.ofEpochMilli(i.forceEpochMillis).pretty
-          i.pretty
+          "\"" + (if (shortenNumbers) i.pretty else i.prettyMillis) + "\""
         } catch {
           case e: DateTimeException =>
             throw new IllegalArgumentException(s"Dodgy instant: ${i.forceEpochMillis}", e)
         }
 
       case s: String if s.contains("\n") =>
-        s"\n${fieldIndent}" + "\"\"\"" + s.replace(
+        s"\n$fieldIndent" + "\"\"\"" + s.replace(
           "\n",
-          s"\n${fieldIndent}  |",
+          s"\n$fieldIndent  |",
         ) + "\"\"\".stripMargin"
 
       case s: String =>
@@ -72,9 +106,11 @@ object PrettyPrint {
 
       case Some(x) =>
         if (isBasicType(x))
-          s"Some(${prettyfy(x)})"
+          s"Some(${prettyfy(x, shortenNumbers = shortenNumbers, domainMappers = domainMappers)})"
         else
-          s"Some(${nest(x)})"
+          s"Some(${nest(x)}\n$indent)"
+
+      case Nil => "Nil"
 
       case seq: Seq[_] if seq.isEmpty =>
         seq.toString()
@@ -121,9 +157,12 @@ object PrettyPrint {
               s"$fieldIndent${f.getName} = ${nextDepth(f.get(product))}"
             }
             .mkString(",\n") + s"\n$indent)"
-      case long: Long => long.toString + "L"
-      case d: Double => d.unscientific
-      case _          => a.toString
+      case long: Long         => long.toString + "L"
+      case d: Double          => d.unscientific
+      case duration: Duration => if (shortenNumbers) duration.pretty else duration.toString
+      case energy: Energy     => s"KilowattHours(${energy.toKilowattHours.unscientific})"
+      case money: Money       => s"Money(${money.value.unscientific})"
+      case _                  => a.toString
     }
   }
 
@@ -135,23 +174,5 @@ object PrettyPrint {
             .isStatic(f.getModifiers) || f.getName == "bitmap$init$0",
         )
 
-  }
-
- implicit class DoubleSyntax(d: Double) {
-    def pretty: String = f"$d%.2f"
-    def pretty4: String = f"$d%.4f"
-    // Can't believe java has no easy way to do this
-    // TODO Add a flag for whether to include commas or not, or to truncate small digits
-    // strictly speaking the above shouldn't have commas or we won't be able to copy and paste the output back into Scala
-    def unscientific: String = {
-      val ugly = d.toString
-      if (!ugly.contains("E")) ugly
-      else {
-        val numberStr :: magStr :: Nil = ugly.filterNot(_ == '.').split("E").toList
-        val mag = magStr.toInt
-        if (mag > 0) numberStr.take(mag + 1).reverse.grouped(3).mkString(",").reverse + "." + numberStr.drop(mag + 1)
-        else "0." + List.fill(-mag - 1)("0").mkString + numberStr
-      }
-    }
   }
 }
