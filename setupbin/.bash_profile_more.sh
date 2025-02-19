@@ -93,8 +93,8 @@ function rebase_and_squash {
     git checkout -b ${branch}-rebased
     set +e
     git stash pop
-    set -e
     exit_code=$?
+    set -e
     if [ "${exit_code}" != 0 ]; then
       echo "ERROR: FIX CONFLICTS"
     else
