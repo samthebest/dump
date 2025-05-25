@@ -1,0 +1,27 @@
+# Basics
+
+Save:           C-x, C-s
+Exit:           C-x, C-c
+Undo:           C-x, u
+Select text:    C-space
+Cut:            C-w
+Cancel:         C-g
+Close buffer:   C-x k
+Other window:   C-x o      // useful for flipping to treemacs
+Comment block:  ESC + ;
+Prev tab:       C-x b
+
+# Customs
+
+Reload config:  C-c r
+Open config:    M-x cf   // TODO Make it a single command
+Delete line:    C-c x
+Copy text:      C-c c
+indent:         TAB
+Remove indent:  Shift + TAB
+Comment line:   C-c ;
+
+# Treemacs
+Open treemacs:  C-c t
+Larger:         >
+Smaller:        <
