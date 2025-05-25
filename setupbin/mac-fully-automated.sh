@@ -120,6 +120,10 @@ brew install --cask flux
 
 brew install steam
 
+# Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+
 # vagrant - a orchestration for virtual box
 #brew install vagrant
 
