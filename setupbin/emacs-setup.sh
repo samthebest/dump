@@ -147,6 +147,35 @@ cat <<EOF > ~/.emacs.d/init.el
               (setq deactivate-mark nil))))
 
 
+;;
+;; RUST
+;;
+(defun my/treemacs-create-module (module-name)
+  "Create a new Rust module named MODULE-NAME in the Treemacs-selected directory.
+Also appends `pub mod <name>;` to mod.rs in that directory."
+  (interactive "sModule name: ")
+  (require 'treemacs)
+  (let* ((btn (treemacs-current-button))
+         (path (treemacs-button-get btn :path))
+         (dir (if (file-directory-p path)
+                  path
+                (file-name-directory path)))
+         (new-file (expand-file-name (concat module-name ".rs") dir))
+         (mod-file (expand-file-name "mod.rs" dir)))
+    ;; Create the new file if it doesn't exist
+    (unless (file-exists-p new-file)
+      (with-temp-buffer (write-file new-file)))
+    ;; Add line to mod.rs
+    (with-current-buffer (find-file-noselect mod-file)
+      (goto-char (point-max))
+      (insert (format "\npub mod %s;" module-name))
+      (save-buffer))
+    (message "Created %s and updated mod.rs" new-file)))
+
+(global-set-key (kbd "C-c m") #'my/treemacs-create-module)
+
+
+
 
 ;; Save backups to                                                                                                                                                                                                                                    
 (setq backup-directory-alist
