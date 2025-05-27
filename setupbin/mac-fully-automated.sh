@@ -122,6 +122,7 @@ brew install steam
 
 # Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup component add rust-analyzer
 
 
 # vagrant - a orchestration for virtual box
