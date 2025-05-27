@@ -5,11 +5,25 @@ Exit:           C-x, C-c
 Undo:           C-x, u
 Select text:    C-space
 Cut:            C-w
+Paste:          CMD + V
 Cancel:         C-g
 Close buffer:   C-x k
 Other window:   C-x o      // useful for flipping to treemacs
 Comment block:  ESC + ;
 Prev tab:       C-x b
+Delete word:    M-DEL
+Close window:   C-x 0
+
+# IDE
+
+Step into:      M-.
+Go back:        M-,
+
+# Treemacs
+Open treemacs:  C-c t
+Larger:         >
+Smaller:        <
+Delete:         d
 
 # Customs
 
@@ -21,7 +35,10 @@ indent:         TAB
 Remove indent:  Shift + TAB
 Comment line:   C-c ;
 
-# Treemacs
-Open treemacs:  C-c t
-Larger:         >
-Smaller:        <
+## Treemacs
+Create Rust module in directory where cursor is:    C-c m
+
+## Rust
+
+reformat:       C-c C-f
+
