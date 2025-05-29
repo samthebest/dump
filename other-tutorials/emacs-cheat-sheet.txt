@@ -13,6 +13,7 @@ Comment block:  ESC + ;
 Prev tab:       C-x b
 Delete word:    M-DEL
 Close window:   C-x 0
+Find file:      C-c n   // Finds any file in the git repo
 
 # IDE
 
@@ -34,6 +35,8 @@ Copy text:      C-c c
 indent:         TAB
 Remove indent:  Shift + TAB
 Comment line:   C-c ;
+Rename:         C-c f6
+Reformat:       C-c C-f
 
 ## Treemacs
 Create Rust module in directory where cursor is:    C-c m
