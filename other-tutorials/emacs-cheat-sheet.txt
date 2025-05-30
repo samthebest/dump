@@ -9,7 +9,7 @@ Paste:          CMD + V
 Cancel:         C-g
 Close buffer:   C-x k
 Other window:   C-x o      // useful for flipping to treemacs
-Comment block:  ESC + ;
+Comment block:  M-;
 Prev tab:       C-x b
 Delete word:    M-DEL
 Close window:   C-x 0
@@ -26,6 +26,7 @@ Larger:         >
 Smaller:        <
 Delete:         d
 
+
 # Customs
 
 Reload config:  C-c r
@@ -37,11 +38,17 @@ Remove indent:  Shift + TAB
 Comment line:   C-c ;
 Rename:         C-c f6
 Reformat:       C-c C-f
+Next error:     C-c e
 
 ## Treemacs
-Create Rust module in directory where cursor is:    C-c m
+
+Create Rust module in directory where cursor is:     C-c m
+Create Rust package in directory where cursor is:    C-c p
+Rename file:                                         C-f <f6>
+Move file:                                           C-x <f6>  // Updates the mod.rs files also, but does not update imports yet
 
 ## Rust
 
 reformat:       C-c C-f
+create file:    C-c m   // Also updates the mod.rs 
 
