@@ -29,22 +29,23 @@ Delete:         d
 
 # Customs
 
-Reload config:  C-c r
-Open config:    M-x cf   // TODO Make it a single command
-Delete line:    C-c x
-Copy text:      C-c c
-indent:         TAB
-Remove indent:  Shift + TAB
-Comment line:   C-c ;
-Rename:         C-c f6
-Reformat:       C-c C-f
-Next error:     C-c e
+Reload config:          C-c r
+Open config:            M-x cf   // TODO Make it a single command
+Delete line:            C-c x
+Copy text:              C-c c
+indent:                 TAB
+Remove indent:          Shift + TAB
+Comment line:           C-c ;
+Rename:                 C-c f6
+Reformat:               C-c C-f
+Next error:             C-c e
+break string literal:   C-c RET
 
 ## Treemacs
 
 Create Rust module in directory where cursor is:     C-c m
 Create Rust package in directory where cursor is:    C-c p
-Rename file:                                         C-f <f6>
+Rename file:                                         C-c 6
 Move file:                                           C-x <f6>  // Updates the mod.rs files also, but does not update imports yet
 
 ## Rust
