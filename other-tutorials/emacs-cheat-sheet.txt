@@ -40,6 +40,14 @@ Rename:                 C-c f6
 Reformat:               C-c C-f
 Next error:             C-c e
 break string literal:   C-c RET
+Delete whitespace:      C-c w
+
+# Cursors
+
+Select next:            C-c g
+Select previous:        C-c h
+Select all:             C-c a
+Add cursors:            C-c 8   // MUST first mark text
 
 ## Treemacs
 
