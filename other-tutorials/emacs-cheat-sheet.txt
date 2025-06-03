@@ -1,3 +1,5 @@
+My convention - C-x for shortcuts that pertain to files, C-c for shortcuts pertaining to current file
+
 # Basics
 
 Save:           C-x, C-s
@@ -13,7 +15,6 @@ Comment block:  M-;
 Prev tab:       C-x b
 Delete word:    M-DEL
 Close window:   C-x 0
-Find file:      C-c n   // Finds any file in the git repo
 
 # IDE
 
@@ -41,23 +42,34 @@ Reformat:               C-c C-f
 Next error:             C-c e
 break string literal:   C-c RET
 Delete whitespace:      C-c w
+Type #:                 C-c 3
+Undo:                   C-c, u
+Find file:              C-x n   // Finds any file in the git repo
+Find text:              C-c f
+Move/swap line up:      C-c <up>
+Move/swap line down:    C-c <down>
 
-# Cursors
+## Cursors
 
 Select next:            C-c g
 Select previous:        C-c h
 Select all:             C-c a
 Add cursors:            C-c 8   // MUST first mark text
+Paste:                  C-c v   // CMD + v not work
 
 ## Treemacs
 
-Create Rust module in directory where cursor is:     C-c m
-Create Rust package in directory where cursor is:    C-c p
-Rename file:                                         C-c 6
+Rename file:                                         C-x 6
 Move file:                                           C-x <f6>  // Updates the mod.rs files also, but does not update imports yet
 
 ## Rust
 
 reformat:       C-c C-f
-create file:    C-c m   // Also updates the mod.rs 
+create file:    C-c m   // Also updates the mod.rs
+add derives:    C-c D
+
+### Treemacs Rust
+
+Create Rust module in directory where cursor is:     C-x m
+Create Rust package in directory where cursor is:    C-x p
 
