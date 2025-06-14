@@ -1,3 +1,6 @@
+DEPRECATED - USE ./bin/shortcuts.sh | grep <name of thing>
+
+
 My convention - C-x for shortcuts that pertain to files, C-c for shortcuts pertaining to current file
 
 # Basics
@@ -15,6 +18,8 @@ Comment block:  M-;
 Prev tab:       C-x b
 Delete word:    M-DEL
 Close window:   C-x 0
+Find in file:   C-s      // Forward
+Find in file:   C-r      // Backwards
 
 # IDE
 
@@ -33,6 +38,7 @@ Delete:         d
 Reload config:          C-c r
 Open config:            M-x cf   // TODO Make it a single command
 Delete line:            C-c x
+Copy line:              C-c l
 Copy text:              C-c c
 indent:                 TAB
 Remove indent:          Shift + TAB
@@ -55,7 +61,6 @@ Select next:            C-c g
 Select previous:        C-c h
 Select all:             C-c a
 Add cursors:            C-c 8   // MUST first mark text
-Paste:                  C-c v   // CMD + v not work
 
 ## Treemacs
 
