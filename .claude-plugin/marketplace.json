@@ -13,6 +13,12 @@
       "source": "./claude-skills/setup-claude-token-optimiser",
       "description": "Set up a scheduled kick that optimises Claude usage-window tokens for a dev who spreads work across the day",
       "version": "1.0.0"
+    },
+    {
+      "name": "find-ultra-quality-food",
+      "source": "./claude-skills/find-ultra-quality-food",
+      "description": "Audit restaurants for seed-oil-free & organic facts from websites, menus, articles & reviews",
+      "version": "1.0.0"
     }
   ]
 }

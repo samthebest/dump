@@ -54,3 +54,15 @@ Requires the Apify MCP (setup walkthrough in the skill).
 > ⚠️ **Heavy token usage.** Reads every review with a full‑strength agent → easily millions of
 > tokens per run. Prefer a personal account / API key, or run it at the end of your weekly
 > usage‑reset to burn tokens you'd otherwise lose.
+
+### find-ultra-quality-food
+
+`/find-ultra-quality-food <restaurants | "<category> in <place>">` — audit restaurants/takeaways
+for a few specific **health‑quality facts** about how the food is made: (1) uses **no seed oil**,
+(2) offers a **clear seed‑oil‑free option**, (3) offers **organic options**, (4) is **only
+organic**. Each fact gets a verdict + confidence (100% = stated on the official site/menu, 80% =
+multiple reviewers say so), gathered by full‑strength agents (one per outlet) that read websites,
+**download and OCR menus** (PDF/image), articles, and a light pass of reviews. Output is a ranked,
+easy‑to‑scan HTML matrix. Narrower and **much cheaper** than `food-review-review` — it extracts a
+few binary facts rather than clustering every review. The review pass can use the same Apify MCP,
+but it's optional (WebSearch/WebFetch carry most of it).
