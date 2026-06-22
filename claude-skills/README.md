@@ -4,13 +4,31 @@ Personal / shared [Claude Code](https://claude.com/claude-code) skills.
 
 ## Install
 
-Copy (or symlink) a skill directory into `~/.claude/skills/`:
+This repo is a Claude Code **plugin marketplace** (`.claude-plugin/marketplace.json` at the repo
+root). Add it, then enable the plugins you want:
 
-```bash
-cp -R claude-skills/setup-claude-token-optimiser ~/.claude/skills/
+```jsonc
+// ~/.claude/settings.json (or a project's .claude/settings.json)
+{
+  "extraKnownMarketplaces": {
+    "samthebest": { "source": { "source": "git", "url": "git@github.com:samthebest/dump.git" } }
+  },
+  "enabledPlugins": {
+    "setup-claude-token-optimiser@samthebest": true,
+    "food-review-review@samthebest": true
+  }
+}
 ```
 
-Then invoke it in Claude Code by its slash command.
+Or interactively: `/plugin marketplace add https://github.com/samthebest/dump` then
+`/plugin install <name>@samthebest`. The skills' slash commands then work
+(e.g. `/setup-claude-token-optimiser`).
+
+**Without a marketplace**, just copy one skill into `~/.claude/skills/`:
+
+```bash
+cp -R claude-skills/setup-claude-token-optimiser/skills/setup-claude-token-optimiser ~/.claude/skills/
+```
 
 ## Skills
 

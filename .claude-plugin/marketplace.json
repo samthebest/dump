@@ -1,0 +1,18 @@
+{
+  "name": "samthebest-dump",
+  "owner": { "name": "samthebest" },
+  "plugins": [
+    {
+      "name": "food-review-review",
+      "source": "./claude-skills/food-review-review",
+      "description": "Rank restaurants by genuine food quality & authenticity from every Google + TripAdvisor review",
+      "version": "1.0.0"
+    },
+    {
+      "name": "setup-claude-token-optimiser",
+      "source": "./claude-skills/setup-claude-token-optimiser",
+      "description": "Set up a scheduled kick that optimises Claude usage-window tokens for a dev who spreads work across the day",
+      "version": "1.0.0"
+    }
+  ]
+}

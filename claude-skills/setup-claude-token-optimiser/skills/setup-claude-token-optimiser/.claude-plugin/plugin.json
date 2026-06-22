@@ -1,0 +1,5 @@
+{
+  "name": "setup-claude-token-optimiser",
+  "description": "Set up a scheduled kick that optimises Claude usage-window tokens for a dev who spreads work across the day",
+  "version": "1.0.0"
+}
