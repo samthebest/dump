@@ -18,7 +18,7 @@
       "name": "find-ultra-quality-food",
       "source": "./claude-skills/find-ultra-quality-food",
       "description": "Audit restaurants for seed-oil-free & organic facts from websites, menus, articles & reviews",
-      "version": "1.0.0"
+      "version": "1.0.1"
     }
   ]
 }

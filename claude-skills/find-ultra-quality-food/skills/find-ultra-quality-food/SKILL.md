@@ -197,8 +197,17 @@ Use today's date for `meta.date`. Optionally write a one-line `take` per outlet 
 ```
 python3 <this-skill-dir>/scripts/build_report.py <combined.json> <out.html>
 ```
-(`<this-skill-dir>` = the directory containing this SKILL.md.) It produces a ranked matrix
-(best seed-oil/organic first; `unknown` sorts above a confirmed `uses`/`none`). Publish with the
+(`<this-skill-dir>` = the directory containing this SKILL.md.) It produces a ranked matrix —
+ranking rules (all handled by the generator):
+- **`unknown` is the LOWEST rung** in each ladder, below a confirmed `uses`/`none`: a verified
+  bad verdict outranks a place we know nothing about.
+- **Outlets that are `unknown` on BOTH dimensions are not ranked** — they drop into a compressed
+  "no published evidence" table at the foot, so the ranked cards stay scannable.
+- **Confidence is weighted into the score** (seed oil dominates; good rungs score
+  `base + 0.06×confidence`), so a higher-confidence weaker verdict can outrank a lower-confidence
+  stronger one — e.g. a `avoidable`@80% ranks above a `none`@60%.
+
+Publish with the
 **Artifact** tool (favicon a food emoji, e.g. 🍟/🥗/🫒). Give the user the URL plus a tight summary:
 which places are seed-oil-free, which have a seed-oil-free option, which are organic/only-organic,
 and how many came back `unknown` (and why — e.g. no website/menu online).

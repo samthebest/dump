@@ -39,31 +39,46 @@ Input JSON schema (combined.json)
 
 A "unknown" rung means NO evidence was found - it is NEVER a guess and NEVER a stand-in
 for a negative. Any rung other than "unknown" MUST carry at least one evidence item.
+
+Ranking
+-------
+"unknown" is the LOWEST rung in each ladder, below a confirmed bad verdict: a place we
+have verified something about (even something bad) ranks above one we know nothing about.
+Outlets where BOTH dimensions are "unknown" are pulled out of the ranking entirely into a
+compressed "no published evidence" table.
+
+Each ladder scores a verified GOOD rung as base + CONF_WEIGHT*confidence, so a
+higher-confidence weaker rung can beat a lower-confidence stronger rung (e.g. a
+seed-oil-free OPTION stated at 80% outranks a fully-seed-oil-free claim at only 60%).
+Seed oil is the dominant dimension (SEED_WEIGHT); organic breaks ties.
 """
 
 import html
 import json
 import sys
 
+CONF_WEIGHT = 0.06
+SEED_WEIGHT = 3
+
 SEED_OIL_RUNGS = {
-    "none":      {"label": "No seed oil",        "tone": "great",   "rank": 4,
+    "none":      {"label": "No seed oil",          "tone": "great",   "kind": "good", "base": 2,
                   "blurb": "Cooks entirely in non-seed fats (dripping/tallow/lard/butter/olive/coconut)."},
-    "avoidable": {"label": "Seed-oil-free option", "tone": "ok",    "rank": 2,
+    "avoidable": {"label": "Seed-oil-free option", "tone": "ok",      "kind": "good", "base": 1,
                   "blurb": "Seed oil is used, but a clear seed-oil-free choice exists."},
-    "uses":      {"label": "Uses seed oil",       "tone": "bad",    "rank": 0,
+    "uses":      {"label": "Uses seed oil",        "tone": "bad",     "kind": "bad",  "base": -2,
                   "blurb": "Cooks in seed/vegetable oil with no seed-oil-free option."},
-    "unknown":   {"label": "Unknown",             "tone": "unknown", "rank": 1,
+    "unknown":   {"label": "Unknown",              "tone": "unknown", "kind": "unknown", "base": -3,
                   "blurb": "No evidence found either way."},
 }
 
 ORGANIC_RUNGS = {
-    "only":    {"label": "Only organic",   "tone": "great",   "rank": 4,
+    "only":    {"label": "Only organic",    "tone": "great",   "kind": "good", "base": 2,
                 "blurb": "Every ingredient/dish is organic."},
-    "some":    {"label": "Organic options", "tone": "ok",     "rank": 2,
+    "some":    {"label": "Organic options", "tone": "ok",      "kind": "good", "base": 1,
                 "blurb": "Some organic dishes or ingredients are offered."},
-    "none":    {"label": "Not organic",    "tone": "bad",     "rank": 0,
+    "none":    {"label": "Not organic",     "tone": "bad",     "kind": "bad",  "base": -1,
                 "blurb": "No organic offering found."},
-    "unknown": {"label": "Unknown",        "tone": "unknown", "rank": 1,
+    "unknown": {"label": "Unknown",         "tone": "unknown", "kind": "unknown", "base": -2,
                 "blurb": "No evidence found either way."},
 }
 
@@ -92,11 +107,21 @@ def rung_meta(table, rung):
     return table[rung]
 
 
-def score(restaurant):
-    so = rung_meta(SEED_OIL_RUNGS, restaurant["seed_oil"]["rung"])["rank"]
-    org = rung_meta(ORGANIC_RUNGS, restaurant["organic"]["rung"])["rank"]
-    conf = restaurant["seed_oil"].get("confidence", 0) + restaurant["organic"].get("confidence", 0)
-    return (so * 2 + org, conf)
+def dim_score(table, dim):
+    meta = rung_meta(table, dim["rung"])
+    if meta["kind"] == "good":
+        return meta["base"] + CONF_WEIGHT * dim.get("confidence", 0)
+    return meta["base"]
+
+
+def both_unknown(r):
+    return r["seed_oil"]["rung"] == "unknown" and r["organic"]["rung"] == "unknown"
+
+
+def score(r):
+    total = SEED_WEIGHT * dim_score(SEED_OIL_RUNGS, r["seed_oil"]) + dim_score(ORGANIC_RUNGS, r["organic"])
+    conf = r["seed_oil"].get("confidence", 0) + r["organic"].get("confidence", 0)
+    return (total, conf)
 
 
 def badge(table, dim):
@@ -154,6 +179,28 @@ def restaurant_card(rank, r):
     </article>"""
 
 
+def unknown_table(rows):
+    if not rows:
+        return ""
+    trs = []
+    for r in sorted(rows, key=lambda x: x["name"].lower()):
+        site = (f'<a href="{esc(r["website"])}" target="_blank" rel="noopener">website &nearr;</a>'
+                if r.get("website") else "")
+        trs.append(f'<tr><td>{esc(r["name"])}</td><td>{esc(r.get("area", ""))}</td><td>{site}</td></tr>')
+    return f"""
+  <section class="unknown-block">
+    <h3>No published evidence &middot; {len(rows)} outlets</h3>
+    <p class="sub">Neither the cooking fat nor any organic sourcing is stated on these outlets' websites,
+       menus, articles or reviews. Not ranked - "unknown" is the honest verdict, not a negative.</p>
+    <div class="tablescroll">
+      <table class="compact">
+        <thead><tr><th>Outlet</th><th>Area</th><th></th></tr></thead>
+        <tbody>{''.join(trs)}</tbody>
+      </table>
+    </div>
+  </section>"""
+
+
 def tally(restaurants):
     so_none = sum(1 for r in restaurants if r["seed_oil"]["rung"] == "none")
     so_avoid = sum(1 for r in restaurants if r["seed_oil"]["rung"] == "avoidable")
@@ -164,18 +211,22 @@ def tally(restaurants):
 
 def build(data):
     meta = data.get("meta", {})
-    restaurants = sorted(data["restaurants"], key=score, reverse=True)
+    restaurants = data["restaurants"]
+    ranked = sorted((r for r in restaurants if not both_unknown(r)), key=score, reverse=True)
+    unknowns = [r for r in restaurants if both_unknown(r)]
     so_none, so_avoid, org_any, org_only = tally(restaurants)
     notes = f'<p class="notes">{esc(meta["notes"])}</p>' if meta.get("notes") else ""
-    cards = "\n".join(restaurant_card(i + 1, r) for i, r in enumerate(restaurants))
+    cards = "\n".join(restaurant_card(i + 1, r) for i, r in enumerate(ranked))
     legend = """
     <div class="legend">
       <strong>How to read this</strong>
       <ul>
-        <li><b>Seed oil:</b> <i>No seed oil</i> &gt; <i>Seed-oil-free option</i> &gt; <i>Unknown</i> &gt; <i>Uses seed oil</i>.
+        <li><b>Seed oil:</b> <i>No seed oil</i> &gt; <i>Seed-oil-free option</i> &gt; <i>Uses seed oil</i> &gt; <i>Unknown</i>.
             Seed/"vegetable" oils (rapeseed/canola, sunflower, soybean, corn, etc.) are the ones avoided; beef dripping, tallow, lard, butter, ghee, olive &amp; coconut are not seed oils.</li>
-        <li><b>Organic:</b> <i>Only organic</i> &gt; <i>Organic options</i> &gt; <i>Unknown</i> &gt; <i>Not organic</i>.</li>
-        <li><b>Confidence:</b> 100% = stated on the official website/menu; 80% = multiple reviewers/articles say so; lower = a single source. <i>Unknown</i> means nothing was found - it is never a guess.</li>
+        <li><b>Organic:</b> <i>Only organic</i> &gt; <i>Organic options</i> &gt; <i>Not organic</i> &gt; <i>Unknown</i>.</li>
+        <li><b>Confidence:</b> 100% = stated on the official website/menu; 80% = multiple reviewers/articles say so; lower = a single source.
+            Confidence is weighted into the rank, so a higher-confidence weaker verdict can outrank a lower-confidence stronger one.</li>
+        <li><b>Unknown</b> ranks below every verified verdict; outlets that are unknown on <i>both</i> dimensions are listed separately at the foot, not ranked.</li>
       </ul>
     </div>"""
     return f"""<title>Ultra-quality food &middot; {esc(meta.get("scope", "audit"))}</title>
@@ -189,7 +240,7 @@ def build(data):
   header .scope {{ color:#6a6256; font-size:18px; margin:0; }}
   header .meta {{ color:#8a8276; font-size:13px; margin:8px 0 0; }}
   .stats {{ display:flex; flex-wrap:wrap; gap:12px; margin:22px 0; }}
-  .stat {{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 16px; min-width:120px; }}
+  .stat {{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 16px; min-width:118px; }}
   .stat .n {{ font-size:24px; font-weight:700; }}
   .stat .l {{ font-size:12px; color:#7a7264; text-transform:uppercase; letter-spacing:.04em; }}
   .legend {{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 18px; margin:0 0 24px; font-size:13.5px; color:#4a463d; }}
@@ -217,12 +268,22 @@ def build(data):
   a.src {{ color:#1565c0; text-decoration:none; }}
   .ev .q {{ color:#33302a; }}
   .take {{ margin:12px 0 0; color:#565147; font-size:14px; }}
+  .unknown-block {{ margin:34px 0 0; }}
+  .unknown-block h3 {{ font-size:18px; margin:0 0 4px; }}
+  .unknown-block .sub {{ color:#8a8276; font-size:13px; margin:0 0 12px; }}
+  .tablescroll {{ overflow-x:auto; }}
+  table.compact {{ width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); border-radius:10px; font-size:13.5px; }}
+  table.compact th, table.compact td {{ text-align:left; padding:7px 12px; border-bottom:1px solid var(--line); white-space:nowrap; }}
+  table.compact th {{ font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:#9a9182; }}
+  table.compact tr:last-child td {{ border-bottom:none; }}
+  table.compact td:first-child {{ font-weight:600; white-space:normal; }}
+  table.compact a {{ color:#1565c0; text-decoration:none; }}
 </style>
 <div class="wrap">
   <header>
     <h1>Ultra-quality food audit</h1>
     <p class="scope">{esc(meta.get("scope", ""))}</p>
-    <p class="meta">{esc(meta.get("date", ""))} &middot; {len(restaurants)} places &middot;
+    <p class="meta">{esc(meta.get("date", ""))} &middot; {len(restaurants)} places ({len(ranked)} ranked, {len(unknowns)} no-evidence) &middot;
       sources: {esc(", ".join(SOURCE_LABELS.get(s, s) for s in meta.get("sources", [])))}</p>
     {notes}
   </header>
@@ -231,9 +292,11 @@ def build(data):
     <div class="stat"><div class="n">{so_avoid}</div><div class="l">Seed-oil-free option</div></div>
     <div class="stat"><div class="n">{org_any}</div><div class="l">Organic options</div></div>
     <div class="stat"><div class="n">{org_only}</div><div class="l">Only organic</div></div>
+    <div class="stat"><div class="n">{len(unknowns)}</div><div class="l">No evidence</div></div>
   </div>
   {legend}
   {cards}
+  {unknown_table(unknowns)}
 </div>"""
 
 
