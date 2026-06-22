@@ -24,3 +24,15 @@ with a long break) vs **when it doesn't** (one continuous block >5h, where you'd
 anyway). Sets up the kick script + crontab non‑interactively, and on macOS the state‑aware
 `offsleep`/`onsleep` + a boot LaunchDaemon (handing you the sudo commands to run). macOS‑focused
 (cron + `pmset`/`launchd`).
+
+### food-review-review
+
+`/food-review-review <restaurants | "<cuisine> in <place>">` — rank restaurants by genuine food
+quality and authenticity from **every** Google + TripAdvisor review (harvested via Apify),
+classifying each with parallel full‑strength agents (never sampling, never ML clustering).
+Discounts non‑food and unsophisticated‑palate complaints; produces a ranked visual HTML report.
+Requires the Apify MCP (setup walkthrough in the skill).
+
+> ⚠️ **Heavy token usage.** Reads every review with a full‑strength agent → easily millions of
+> tokens per run. Prefer a personal account / API key, or run it at the end of your weekly
+> usage‑reset to burn tokens you'd otherwise lose.
