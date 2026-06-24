@@ -77,3 +77,13 @@ website verbatim, the amenity listing, articles and (especially) **reviews** (wh
 "cool with the aircon" vs "no aircon, sweltering"). Output is a super‑simple ranked table: Has AC by
 confidence → No AC, with a faded pill for weakly‑evidenced verdicts and a compact "no AC info" table
 for the rest. Same machinery as `find-ultra-quality-food`, one fact.
+
+### uber-food-review
+
+`/uber-food-review <restaurants | "<category> in <place>">` — the **all‑in‑one** audit: runs all
+three skills above on one outlet list and renders a single **interactive** page scoring each place on
+**taste & authenticity** (`food-review-review`), **food quality** (organic & seed‑oil‑free,
+`find-ultra-quality-food`) and **air conditioning** (`find-restaurants-with-ac`). A **sort‑by
+dropdown** makes the chosen dimension the primary lexicographic key (default order: taste → food
+quality → AC). The heaviest skill — it includes the full per‑review `food-review-review` pass, so
+expect millions of tokens (see that skill's token warning).

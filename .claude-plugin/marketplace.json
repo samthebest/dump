@@ -25,6 +25,12 @@
       "source": "./claude-skills/find-restaurants-with-ac",
       "description": "Find which restaurants have air conditioning - one binary 'Has AC' verdict + confidence, from website, amenity listings & reviews",
       "version": "1.0.0"
+    },
+    {
+      "name": "uber-food-review",
+      "source": "./claude-skills/uber-food-review",
+      "description": "Combined audit: food authenticity/taste + quality (organic & seed-oil-free) + air conditioning, on one interactive page with a sort-by dropdown",
+      "version": "1.0.0"
     }
   ]
 }
