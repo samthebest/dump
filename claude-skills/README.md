@@ -66,3 +66,14 @@ multiple reviewers say so), gathered by full‑strength agents (one per outlet) 
 easy‑to‑scan HTML matrix. Narrower and **much cheaper** than `food-review-review` — it extracts a
 few binary facts rather than clustering every review. The review pass can use the same Apify MCP,
 but it's optional (WebSearch/WebFetch carry most of it).
+
+### find-restaurants-with-ac
+
+`/find-restaurants-with-ac <restaurants | "<category> in <place>">` — find which restaurants have
+**air conditioning**. One binary fact per outlet — **Has AC?** (`yes`/`no`/`unknown`) — with a
+**confidence** score from the number, recency and type of sources (official site / Google–TripAdvisor
+amenity listing > article > review), gathered by full‑strength agents (one per outlet) that read the
+website verbatim, the amenity listing, articles and (especially) **reviews** (which cut both ways:
+"cool with the aircon" vs "no aircon, sweltering"). Output is a super‑simple ranked table: Has AC by
+confidence → No AC, with a faded pill for weakly‑evidenced verdicts and a compact "no AC info" table
+for the rest. Same machinery as `find-ultra-quality-food`, one fact.
