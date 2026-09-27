@@ -7,3 +7,5 @@ B) you end up with systems and architecture with greater component and library r
 5. "You find it you fix" philosophy, i.e. in the best and nicest places I've worked, if you find a bug, you just fix it, you don't launch a witch hunt trying to track down author and make a big song and dance about it - although you made need to ask them questions.  If someone finds and fixes a bug in my code, I am *grateful*, not annoyed.  Usually companies which have very amicable and "happy" working environments seem to adopt the "I'll just fix this guys bug, I don't track him down and make him fix it". Of course can still mention him the PR as a heads up.
 
 All this well known in XP/Agile, has been for decades now. Nothing new here.
+
+Now, with Claude, the need for style guides and principles docs is super important.  I have in the order of 10k CLAUDE.md files and memories - that's becoming a HUGE guide, and if people have their own, it's going to potentially cause issues.
