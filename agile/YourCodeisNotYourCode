@@ -1,0 +1,9 @@
+1. It's just fact, it's company IP (unless it's an open source project)
+2. If you write code in a way only you can understand it then you have a bus factor of one.
+3. Cross functional teams and departments, with agreed standards, principles and style guides deliver faster across the strategy of the company for reasons:
+A) they can hire or transfer human resources across teams with less ramp up speed
+B) you end up with systems and architecture with greater component and library reuse, thus having a smaller more efficient codebase
+4. Fixing bugs while on a support rota or while a colleague is on holiday becomes harder or even dangerous. If you siloed codebases you somewhat necessitate multiple siloed support rotas. That could easily 2x - 5x the number of people on support.
+5. "You find it you fix" philosophy, i.e. in the best and nicest places I've worked, if you find a bug, you just fix it, you don't launch a witch hunt trying to track down author and make a big song and dance about it - although you made need to ask them questions.  If someone finds and fixes a bug in my code, I am *grateful*, not annoyed.  Usually companies which have very amicable and "happy" working environments seem to adopt the "I'll just fix this guys bug, I don't track him down and make him fix it". Of course can still mention him the PR as a heads up.
+
+All this well known in XP/Agile, has been for decades now. Nothing new here.
